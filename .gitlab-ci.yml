@@ -1,0 +1,13 @@
+stages:
+  - deploy_staging
+
+deploy_front_end:
+  stage: deploy_staging
+  interruptible: true
+  tags:
+    - front-end
+  only:
+    - main
+  script:
+    - cd _deployment/test
+    - ./deploy.sh

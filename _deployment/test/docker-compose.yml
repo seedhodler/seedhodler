@@ -1,0 +1,45 @@
+version: "3.4"
+
+services:
+  seedholder:
+    build:
+      context: ../../.
+      args:
+        - PROD=0
+    container_name: seedholder
+    depends_on:
+      - certbot
+    restart: always
+    env_file:
+      - './.env'
+      - '../../.env'
+    environment:
+      - NGINX_PORT=80
+    ports:
+      - "${LISTEN_HOST}:${GATEWAY_PORT_HTTP}:80"
+      - "${LISTEN_HOST}:${GATEWAY_PORT_SSL}:443"
+    volumes:
+      - ./gateway.conf:/external_confs/gateway.conf:ro
+      - ../../../volumes/certbot/conf:/etc/letsencrypt:ro
+      - ../../../volumes/certbot/www:/var/www/certbot:ro
+      - ../../public:/var/www/public
+    command: /bin/sh -c "envsubst '' < /external_confs/gateway.conf > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
+    networks:
+      - common
+
+  certbot:
+    container_name: lets_encrypt_certbot
+    image: certbot/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    restart: on-failure
+    volumes:
+      - ../../../volumes/certbot/conf:/etc/letsencrypt
+      - ../../../volumes/certbot/www:/var/www/certbot
+
+volumes:
+  seedholder:
+    driver: local
+
+networks:
+  common:
+    external: true
