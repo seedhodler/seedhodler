@@ -10,4 +10,4 @@ deploy_front_end:
     - master
   script:
     - cd _deployment/test
-    - ./deploy.sh
+    - bash deploy.sh
