@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-../.common/add-env-file-if-not-exists.sh
+bash ../.common/add-env-file-if-not-exists.sh
 
 set -e
 
