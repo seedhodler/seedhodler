@@ -7,7 +7,7 @@ deploy_front_end:
   tags:
     - front-end
   only:
-    - main
+    - master
   script:
     - cd _deployment/test
     - ./deploy.sh
