@@ -6,27 +6,30 @@ import { Select } from "components/Select"
 import ArrowRightIcon from "assets/icons/ArrowRight.svg"
 import { SelectNew } from "components/SelectNew"
 
+import Routes from "Routes"
+
 const App: React.FC = () => {
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        width: "500px",
-        height: "400px",
-        margin: "auto auto",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: variables.colorBg100,
-      }}
-    >
-      <Button iconRight={ArrowRightIcon} style={{ marginBottom: "1rem" }}>
-        Ok! Got it
-      </Button>
-      <Select style={{ marginBottom: "1rem" }} />
-      <SelectNew />
-    </div>
+    <Routes />
+    // <div
+    //   style={{
+    //     minHeight: "100vh",
+    //     width: "500px",
+    //     height: "400px",
+    //     margin: "auto auto",
+    //     display: "flex",
+    //     flexDirection: "column",
+    //     justifyContent: "center",
+    //     alignItems: "center",
+    //     backgroundColor: variables.colorBg100,
+    //   }}
+    // >
+    //   <Button iconRight={ArrowRightIcon} style={{ marginBottom: "1rem" }}>
+    //     Ok! Got it
+    //   </Button>
+    //   <Select style={{ marginBottom: "1rem" }} />
+    //   <SelectNew />
+    // </div>
   )
 }
 

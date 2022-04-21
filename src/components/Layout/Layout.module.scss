@@ -1,0 +1,83 @@
+@import "styles/Variables.module.scss";
+
+.mainContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.nav {
+  width: 400px;
+  height: 100%;
+  min-height: 100vh;
+  background-color: $colorBg200;
+  padding: 24px 22px 40px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.mainTitleContainer {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.mainTitle {
+  font-weight: $fwLightish;
+  font-size: 42px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: $colorText;
+  line-height: 24px;
+  margin-bottom: 16px;
+}
+
+.githubInfo {
+  font-size: 13px;
+  color: $colorTextLighter;
+  font-weight: $fwNormal;
+  line-height: 16px;
+  margin-bottom: 40px;
+}
+
+.link {
+  text-decoration: none;
+  color: $colorTextDark;
+}
+
+.checkmarkInfoContainer {
+  display: flex;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .infoContainer {
+    display: flex;
+    align-items: center;
+  }
+
+  .info {
+    font-weight: $fwNormal;
+    font-size: 14px;
+    line-height: 24px;
+    color: $colorBg400;
+    margin-left: 14px;
+  }
+
+  .additionalInfo {
+    height: 24px;
+    width: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: $radiiSmall;
+    background-color: $colorMainLightish;
+    font-weight: $fwNormal;
+    font-size: 15px;
+    line-height: 24px;
+  }
+}
