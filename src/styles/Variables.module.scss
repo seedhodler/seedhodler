@@ -1,4 +1,5 @@
 /* colors */
+$colorMainLight: #cabdff;
 $colorMain: #5c58bb;
 $colorMainDark: #413e83;
 
@@ -12,9 +13,10 @@ $colorErrorLight: #ffbc99;
 $colorErrorLightish: #ff6a55;
 $colorError: #fc4747;
 
-$colorBg: #fcfcfc;
-$colorBgDarkish: #f4f4f4;
-$colorBgDark: #6f767e;
+$colorBg100: #fcfcfc;
+$colorBg200: #f4f4f4;
+$colorBg300: #efefef;
+$colorBg400: #6f767e;
 
 $colorTextLight: rgba(252, 252, 252, 0.75);
 
@@ -32,3 +34,10 @@ $radii: 12px;
 
 /* transitions */
 $trans: all 0.1s ease-in-out;
+
+/* export variables to use in Components */
+:export {
+  colorMain: $colorMain;
+  colorBg100: $colorBg100;
+  colorMainLight: $colorMainLight;
+}

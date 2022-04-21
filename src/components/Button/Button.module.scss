@@ -1,4 +1,4 @@
-@import "styles/Variables.scss";
+@import "styles/Variables.module.scss";
 
 .btn {
   border: none;
@@ -9,9 +9,9 @@
 
   font-size: 15px;
   padding: 12px 20px;
+  color: $colorTextLight;
   background-color: $colorMain;
   border-radius: $radii;
-  color: $colorTextLight;
   font-weight: $fwBold;
   transition: $trans;
 
