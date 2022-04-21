@@ -1,0 +1,34 @@
+/* colors */
+$colorMain: #5c58bb;
+$colorMainDark: #413e83;
+
+$colorWarn: #ffd88d;
+
+$colorSuccessLight: #b5e4ca;
+$colorSuccess: #83bf6e;
+$colorSuccessDark: #144a23;
+
+$colorErrorLight: #ffbc99;
+$colorErrorLightish: #ff6a55;
+$colorError: #fc4747;
+
+$colorBg: #fcfcfc;
+$colorBgDarkish: #f4f4f4;
+$colorBgDark: #6f767e;
+
+$colorTextLight: rgba(252, 252, 252, 0.75);
+
+/* fonts */
+$fontFamily: "Inter", sans-serif;
+
+/* font weights */
+$fwLight: 400;
+$fwNormal: 600;
+$fwBold: 700;
+
+/* radiuses */
+$radiiSmall: 8px;
+$radii: 12px;
+
+/* transitions */
+$trans: all 0.1s ease-in-out;

@@ -1,5 +1,4 @@
 {
-    "cSpell.words": [
-        "seedhodler"
-    ]
+  "cSpell.words": ["seedhodler"],
+  "css.lint.unknownAtRules": "ignore"
 }
