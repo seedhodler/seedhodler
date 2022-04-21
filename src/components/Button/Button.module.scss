@@ -1,0 +1,29 @@
+@import "styles/Variables.module.scss";
+
+.btn {
+  border: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 15px;
+  padding: 12px 20px;
+  color: $colorTextLight;
+  background-color: $colorMain;
+  border-radius: $radii;
+  font-weight: $fwBold;
+  transition: $trans;
+
+  &:hover {
+    background-color: $colorMainDark;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+  }
+}
+
+.iconRight {
+  margin-left: 10px;
+}
+.iconLeft {
+  margin-right: 10px;
+}
