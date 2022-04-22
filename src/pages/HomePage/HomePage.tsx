@@ -6,6 +6,7 @@ import { Button } from "components/Button"
 import { Select } from "components/Select"
 import { SelectNew } from "components/SelectNew"
 import { Input } from "components/Input"
+import { Calc } from "components/Calc"
 
 type Props = {}
 
@@ -31,7 +32,13 @@ const HomePage: React.FC<Props> = () => {
       </Button>
       <Select style={{ marginBottom: "1rem" }} />
       {/* <SelectNew /> */}
-      <Input count={1} value={inputValue} /* onChange={() => setInputValue} */ onChange={setInputValue} />
+      <Input
+        count={1}
+        value={inputValue}
+        onChange={setInputValue}
+        variants={["final", "fact", "fence", "forest"]}
+      />
+      <Calc value={2} onPlus={() => {}} onMinus={() => {}} />
     </div>
   )
 }
