@@ -1,14 +1,17 @@
-import React from "react"
+import React, { useState } from "react"
 
 import variables from "styles/Variables.module.scss"
+import ArrowRightIcon from "assets/icons/ArrowRight.svg"
 import { Button } from "components/Button"
 import { Select } from "components/Select"
-import ArrowRightIcon from "assets/icons/ArrowRight.svg"
 import { SelectNew } from "components/SelectNew"
+import { Input } from "components/Input"
 
 type Props = {}
 
 const HomePage: React.FC<Props> = () => {
+  const [inputValue, setInputValue] = useState("Some value")
+
   return (
     <div
       style={{
@@ -27,7 +30,8 @@ const HomePage: React.FC<Props> = () => {
         Ok! Got it
       </Button>
       <Select style={{ marginBottom: "1rem" }} />
-      <SelectNew />
+      {/* <SelectNew /> */}
+      <Input count={1} value={inputValue} /* onChange={() => setInputValue} */ onChange={setInputValue} />
     </div>
   )
 }

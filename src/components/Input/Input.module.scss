@@ -1,0 +1,40 @@
+@import "styles/Variables.module.scss";
+
+.container {
+  position: relative;
+  font-weight: $fwNormal;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.count {
+  position: absolute;
+  height: 100%;
+  width: 4.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-right: 1rem;
+  color: $colorBg500;
+}
+
+.input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  background-color: transparent;
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: inherit;
+
+  padding: 1.2rem 1.2rem 1.2rem 4.2rem;
+  background-color: $colorBg200;
+  border-radius: $radii;
+  color: $colorTextDarkish;
+
+  &:hover,
+  &:focus {
+    outline: 2px solid $colorMain;
+  }
+}
