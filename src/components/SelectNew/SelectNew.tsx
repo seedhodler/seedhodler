@@ -3,9 +3,11 @@ import Select from "react-select"
 
 import variables from "styles/Variables.module.scss"
 
-type Props = {}
+type Props = {
+  [x: string]: any
+}
 
-const SelectNew: React.FC<Props> = () => {
+const SelectNew: React.FC<Props> = ({ ...restProps }) => {
   const options = [
     { value: "chocolate", label: "Chocolate" },
     { value: "strawberry", label: "Strawberry" },
@@ -45,6 +47,7 @@ const SelectNew: React.FC<Props> = () => {
           primary25: variables.colorMainLight,
         },
       })}
+      {...restProps}
     />
   )
 }

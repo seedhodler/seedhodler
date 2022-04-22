@@ -21,7 +21,12 @@ const Layout = () => {
           </p>
           <p className={classes.githubInfo}>
             In need of the source code?{" "}
-            <a href="google.com" target="_blank" rel="noreferrer noopener" className={classes.link}>
+            <a
+              href="https://code.alphax.digital/karen.mu/seedhodler"
+              target="_blank"
+              rel="noreferrer noopener"
+              className={classes.link}
+            >
               GitHub
             </a>
           </p>
@@ -31,7 +36,7 @@ const Layout = () => {
           <CheckmarkInfo>Secure when used Offline</CheckmarkInfo>
           <CheckmarkInfo>Split phrases and share with others</CheckmarkInfo>
         </div>
-        <CheckmarkInfo iconLeft={EllipseIcon} additionalInfo="4">
+        <CheckmarkInfo iconLeft={EllipseIcon} additionalInfo="4" className={classes.bottomMenu}>
           Help & getting started
         </CheckmarkInfo>
       </nav>
