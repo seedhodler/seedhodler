@@ -32,7 +32,12 @@ const HomePage: React.FC<Props> = () => {
       </Button>
       <Select style={{ marginBottom: "1rem" }} />
       {/* <SelectNew /> */}
-      <Input count={1} value={inputValue} onChange={setInputValue} style={{ marginBottom: "1rem" }} />
+      <Input
+        count={1}
+        value={inputValue}
+        onChange={setInputValue}
+        variants={["final", "fact", "fence", "forest"]}
+      />
       <Calc value={2} onPlus={() => {}} onMinus={() => {}} />
     </div>
   )

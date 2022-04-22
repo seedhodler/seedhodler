@@ -1,7 +1,8 @@
 import React from "react"
 import { Outlet } from "react-router-dom"
 
-import EllipseIcon from "assets/icons/Ellipse.svg"
+import QuestionMarkIcon from "assets/icons/QuestionMark.svg"
+import Logo from "assets/icons/Logo.svg"
 
 import CheckmarkInfo from "./CheckmarkInfo"
 import classes from "./Layout.module.scss"
@@ -11,10 +12,7 @@ const Layout = () => {
     <div className={classes.mainContainer}>
       <nav className={classes.nav}>
         <div>
-          <div className={classes.mainTitleContainer}>
-            <img src="" alt="Seedhodler" />
-            <p className={classes.mainTitle}>seedhodler</p>
-          </div>
+          <img src={Logo} alt="Seedhodler" className={classes.logo} />
           <p className={classes.subtitle}>
             Seedhodler is free and open source software. This project is currently a <b>work in progress</b>
             and should <b>not be used</b> by anyone for any reason whatsoever.
@@ -36,7 +34,7 @@ const Layout = () => {
           <CheckmarkInfo>Secure when used Offline</CheckmarkInfo>
           <CheckmarkInfo>Split phrases and share with others</CheckmarkInfo>
         </div>
-        <CheckmarkInfo iconLeft={EllipseIcon} additionalInfo="4" className={classes.bottomMenu}>
+        <CheckmarkInfo iconLeft={QuestionMarkIcon} additionalInfo="4" className={classes.bottomMenu}>
           Help & getting started
         </CheckmarkInfo>
       </nav>

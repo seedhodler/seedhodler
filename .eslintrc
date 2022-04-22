@@ -8,13 +8,6 @@
     "indent": ["warn", 2],
     "max-len": ["error", { "code": 110 }],
     "comma-dangle": ["error", "always-multiline"],
-    "semi": ["error", "never"],
-    "import/order": [
-      "error",
-      {
-        "groups": ["builtin", "external", "internal", "parent", "sibling", "index", "object", "type"],
-        "newline-between": "always-and-inside-groups"
-      }
-    ]
+    "semi": ["error", "never"]
   }
 }

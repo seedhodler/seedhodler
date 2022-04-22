@@ -6,10 +6,11 @@ type Props = {
   count: number
   value: string
   onChange: Dispatch<SetStateAction<string>>
+  variants?: string[]
   [x: string]: any
 }
 
-const Input: React.FC<Props> = ({ count, value, onChange, ...restProps }) => {
+const Input: React.FC<Props> = ({ count, value, onChange, variants, ...restProps }) => {
   return (
     <div className={classes.container}>
       <span className={classes.count}>{count}.</span>
@@ -20,6 +21,20 @@ const Input: React.FC<Props> = ({ count, value, onChange, ...restProps }) => {
         className={classes.input}
         {...restProps}
       />
+      {variants?.some(item => item.includes(value)) && (
+        <div className={classes.dropdownList}>
+          {variants.map(variant => {
+            if (variant.includes(value)) {
+              return (
+                <div onClick={() => onChange(variant)} key={variant} className={classes.dropdownListItem}>
+                  {variant}
+                </div>
+              )
+            }
+            return null
+          })}
+        </div>
+      )}
     </div>
   )
 }
