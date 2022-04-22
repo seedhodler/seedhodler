@@ -9,21 +9,19 @@
 
 .count {
   position: absolute;
-  height: 100%;
+  height: 48px;
   width: 4.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
 
   margin-right: 1rem;
-  color: $colorBg500;
+  color: $colorBg700;
 }
 
 .input {
   border: none;
   outline: none;
-  background-color: transparent;
-  background-color: transparent;
   font-weight: inherit;
   font-size: inherit;
   line-height: inherit;
@@ -32,6 +30,7 @@
   background-color: $colorBg200;
   border-radius: $radii;
   color: $colorTextDarkish;
+  transition: $trans;
 
   &:hover,
   &:focus {

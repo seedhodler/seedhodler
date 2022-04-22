@@ -1,0 +1,48 @@
+@import "styles/Variables.module.scss";
+
+.mainContainer {
+  display: flex;
+}
+
+.value {
+  width: 68px;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid $colorBg600;
+  border-bottom: 1px solid $colorBg600;
+  font-weight: $fwNormal;
+  font-size: 20px;
+  line-height: 32px;
+}
+
+%btn {
+  outline: none;
+  width: 56px;
+  height: 56px;
+  background-color: $colorBg500;
+  border: 1px solid $colorBg600;
+  transition: $trans;
+
+  &:hover,
+  &:focus {
+    border-color: $colorMain;
+    border-width: 2px;
+  }
+}
+
+.btnPlus {
+  @extend %btn;
+  border-radius: 0px 5px 5px 0px;
+
+  img {
+    /* To make plus icon spacing equal to minus icon spacings */
+    padding: 7px;
+  }
+}
+
+.btnMinus {
+  @extend %btn;
+  border-radius: 5px 0px 0px 5px;
+}
