@@ -3,6 +3,7 @@
 .mainContainer {
   display: flex;
   flex-direction: row;
+  background-color: $colorBg100;
 }
 
 .nav {
@@ -84,4 +85,9 @@
 .bottomMenu {
   padding-top: 2.8rem;
   border-top: 2px solid $colorBg400;
+}
+
+.contentContainer {
+  width: 968px;
+  margin: 0 auto;
 }
