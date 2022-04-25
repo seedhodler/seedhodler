@@ -39,7 +39,9 @@ const Layout = () => {
         </CheckmarkInfo>
       </nav>
 
-      <Outlet />
+      <main className={classes.contentContainer}>
+        <Outlet />
+      </main>
     </div>
   )
 }

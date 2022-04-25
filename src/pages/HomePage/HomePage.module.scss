@@ -1,1 +1,42 @@
 @import "styles/Variables.module.scss";
+
+.tabsContainer {
+  margin-top: 2.4rem;
+  margin-bottom: 1rem;
+  border-radius: $radiiBig;
+  background-color: $colorBg200;
+  display: flex;
+}
+
+.tabContent {
+  padding: 2.4rem;
+}
+
+.badgeContainer {
+  display: flex;
+  align-items: center;
+  color: $colorTextDark;
+  font-weight: $fwNormal;
+}
+
+.badge {
+  width: 16px;
+  height: 32px;
+  background: $colorSuccessLight;
+  border-radius: $radiiSmallest;
+  margin-right: 1.6rem;
+}
+
+.title {
+  font-size: 20px;
+  line-height: 32px;
+  margin-right: 3.3rem;
+}
+
+.bipInfo {
+  font-size: 14px;
+  line-height: 24px;
+  padding: 0.2rem 0.8rem;
+  background-color: $colorSuccessLight;
+  border-radius: 6px;
+}
