@@ -5,6 +5,8 @@
   font-weight: $fwNormal;
   font-size: 14px;
   line-height: 24px;
+  max-width: 450px;
+  margin-bottom: 0.2rem;
 }
 
 .count {
@@ -26,6 +28,7 @@
   font-size: inherit;
   line-height: inherit;
 
+  width: 100%;
   padding: 1.2rem 1.2rem 1.2rem 4.2rem;
   background-color: $colorBg200;
   border-radius: $radii;

@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["seedhodler"],
+  "cSpell.words": ["csstype", "seedhodler", "Toolset"],
   "css.lint.unknownAtRules": "ignore",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.bracketPairColorization.enabled": true,
