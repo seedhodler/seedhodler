@@ -10,33 +10,65 @@
 
 .tabContent {
   padding: 2.4rem;
+  font-weight: $fwNormal;
+  font-size: 14px;
+  color: $colorTextDarkish;
 }
 
-.badgeContainer {
+.configContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3.2rem;
+}
+
+.configLabelContainer {
   display: flex;
   align-items: center;
-  color: $colorTextDark;
-  font-weight: $fwNormal;
 }
 
-.badge {
-  width: 16px;
-  height: 32px;
-  background: $colorSuccessLight;
-  border-radius: $radiiSmallest;
-  margin-right: 1.6rem;
+.entropyGeneration {
+  color: $colorMain;
 }
 
-.title {
-  font-size: 20px;
-  line-height: 32px;
-  margin-right: 3.3rem;
+.selectLabelContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.4rem;
 }
 
-.bipInfo {
+.selectLabel {
   font-size: 14px;
   line-height: 24px;
-  padding: 0.2rem 0.8rem;
-  background-color: $colorSuccessLight;
-  border-radius: 6px;
+  margin-right: 0.5rem;
+}
+
+.blockDivider {
+  height: 1px;
+  background-color: $colorBg300;
+  margin-bottom: 3.2rem;
+}
+
+.generateBtn {
+  width: 100%;
+  margin-bottom: 3.4rem;
+}
+
+.blockLabelContainer {
+  display: flex;
+  align-items: center;
+}
+
+.seedPhraseContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: 360px;
+  margin-bottom: 3.6rem;
+}
+
+.sharesInfo {
+  font-size: 15px;
+  color: $colorBg700;
+  font-weight: $fwLightish;
 }

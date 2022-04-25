@@ -4,16 +4,11 @@ import Select from "react-select"
 import variables from "styles/Variables.module.scss"
 
 type Props = {
+  options: { value: string; label: string }[]
   [x: string]: any
 }
 
-const SelectNew: React.FC<Props> = ({ ...restProps }) => {
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ]
-
+const SelectNew: React.FC<Props> = ({ options, ...restProps }) => {
   // TODO: provide types
   const customStyles = {
     option: (provided: any, state: any) => ({
@@ -37,7 +32,7 @@ const SelectNew: React.FC<Props> = ({ ...restProps }) => {
   return (
     <Select
       options={options}
-      defaultValue={options[1]}
+      defaultValue={options[0]}
       theme={theme => ({
         ...theme,
         borderRadius: 12,

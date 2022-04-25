@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react"
+import CSS from "csstype"
 
 import classes from "./Input.module.scss"
 
@@ -7,18 +8,30 @@ type Props = {
   value: string
   onChange: Dispatch<SetStateAction<string>>
   variants?: string[]
+  className?: string
+  containerStyle?: CSS.Properties
   [x: string]: any
 }
 
-const Input: React.FC<Props> = ({ count, value, onChange, variants, ...restProps }) => {
+const Input: React.FC<Props> = ({
+  count,
+  value,
+  onChange,
+  variants,
+  className,
+  containerStyle,
+  ...restProps
+}) => {
+  const classNames = [classes.input, className].join(" ")
+
   return (
-    <div className={classes.container}>
+    <div className={classes.container} style={containerStyle}>
       <span className={classes.count}>{count}.</span>
       <input
         type="text"
         value={value}
         onChange={e => onChange(e.target.value)}
-        className={classes.input}
+        className={classNames}
         {...restProps}
       />
       {variants?.some(item => item.includes(value)) && (
