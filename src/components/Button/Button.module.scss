@@ -1,6 +1,6 @@
 @import "styles/Variables.module.scss";
 
-.btn {
+%btnBase {
   outline: none;
   border: none;
   display: flex;
@@ -16,11 +16,26 @@
   font-weight: $fwBold;
   transition: $trans;
 
-  &:hover,
-  &:focus {
+  &:hover:not([disabled]),
+  &:focus:not([disabled]) {
     background-color: $colorMainDark;
     box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
   }
+
+  &:disabled,
+  &[disabled] {
+    background-color: $colorBg650;
+    cursor: default;
+  }
+}
+
+.btn {
+  @extend %btnBase;
+}
+
+.btnFullWidth {
+  @extend %btnBase;
+  width: 100%;
 }
 
 .iconRight {

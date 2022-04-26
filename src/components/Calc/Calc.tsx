@@ -14,7 +14,7 @@ type Props = {
 const Calc: React.FC<Props> = ({ value, onPlus, onMinus }) => {
   return (
     <div className={classes.mainContainer}>
-      <button onClick={onPlus} className={classes.btnMinus}>
+      <button onClick={onMinus} className={classes.btnMinus}>
         <img src={RemoveIcon} alt="Minus" />
       </button>
       <span className={classes.value}>{value}</span>

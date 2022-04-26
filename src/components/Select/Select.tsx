@@ -2,11 +2,7 @@ import React from "react"
 
 import classes from "./Select.module.scss"
 
-type Props = {
-  [x: string]: any
-}
-
-const Select: React.FC<Props> = ({ ...restProps }) => {
+const Select: React.FC = ({ ...restProps }) => {
   return (
     <div className={classes.selectContainer} {...restProps}>
       <select name="cars" className={classes.select}>

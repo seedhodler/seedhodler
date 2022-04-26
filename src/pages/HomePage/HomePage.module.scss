@@ -30,32 +30,10 @@
   color: $colorMain;
 }
 
-.selectLabelContainer {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.4rem;
-}
-
-.selectLabel {
-  font-size: 14px;
-  line-height: 24px;
-  margin-right: 0.5rem;
-}
-
 .blockDivider {
   height: 1px;
   background-color: $colorBg300;
   margin-bottom: 3.2rem;
-}
-
-.generateBtn {
-  width: 100%;
-  margin-bottom: 3.4rem;
-}
-
-.blockLabelContainer {
-  display: flex;
-  align-items: center;
 }
 
 .seedPhraseContainer {
@@ -71,4 +49,22 @@
   font-size: 15px;
   color: $colorBg700;
   font-weight: $fwLightish;
+  margin-bottom: 3.6rem;
+}
+
+.thresholdSharesContainer {
+  display: flex;
+  margin-bottom: 3.2rem;
+}
+
+.calcContainer {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.calcTitle {
+  margin-bottom: 2.5rem;
+  font-size: 18px;
+  color: $colorTextDark;
 }

@@ -46,7 +46,8 @@ input:checked + .slider {
   background-color: $colorMain;
 }
 
-input:focus + .slider {
+input:focus + .slider,
+input:hover + .slider {
   box-shadow: 0 0 4px $colorMain;
 }
 

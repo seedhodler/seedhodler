@@ -7,9 +7,9 @@
 }
 
 .nav {
+  position: fixed;
   width: 400px;
   height: 100%;
-  min-height: 100vh;
   background-color: $colorBg200;
   padding: 2.4rem 2.2rem 4rem 3.2rem;
   display: flex;

@@ -5,10 +5,9 @@ import variables from "styles/Variables.module.scss"
 
 type Props = {
   options: { value: string; label: string }[]
-  [x: string]: any
 }
 
-const SelectNew: React.FC<Props> = ({ options, ...restProps }) => {
+const SelectNew: React.FC<Props> = ({ options }) => {
   // TODO: provide types
   const customStyles = {
     option: (provided: any, state: any) => ({
@@ -42,7 +41,6 @@ const SelectNew: React.FC<Props> = ({ options, ...restProps }) => {
           primary25: variables.colorMainLight,
         },
       })}
-      {...restProps}
     />
   )
 }
