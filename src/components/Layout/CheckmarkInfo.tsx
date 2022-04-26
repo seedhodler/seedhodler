@@ -9,14 +9,13 @@ type Props = {
   iconLeft?: string
   additionalInfo?: string
   className?: string
-  [x: string]: any
 }
 
-const CheckmarkInfo: React.FC<Props> = ({ iconLeft, children, additionalInfo, className, ...restProps }) => {
+const CheckmarkInfo: React.FC<Props> = ({ iconLeft, children, additionalInfo, className }) => {
   const mainClasses = [classes.checkmarkInfoContainer, className].join(" ")
 
   return (
-    <div className={mainClasses} {...restProps}>
+    <div className={mainClasses}>
       <div className={classes.infoContainer}>
         {iconLeft ? <img src={iconLeft} alt="Left icon" /> : <img src={CheckmarkIcon} alt="Checkmark" />}
         <span className={classes.info}>{children}</span>

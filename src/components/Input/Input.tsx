@@ -10,30 +10,15 @@ type Props = {
   variants?: string[]
   className?: string
   containerStyle?: CSS.Properties
-  [x: string]: any
 }
 
-const Input: React.FC<Props> = ({
-  count,
-  value,
-  onChange,
-  variants,
-  className,
-  containerStyle,
-  ...restProps
-}) => {
+const Input: React.FC<Props> = ({ count, value, onChange, variants, className, containerStyle }) => {
   const classNames = [classes.input, className].join(" ")
 
   return (
     <div className={classes.container} style={containerStyle}>
       <span className={classes.count}>{count}.</span>
-      <input
-        type="text"
-        value={value}
-        onChange={e => onChange(e.target.value)}
-        className={classNames}
-        {...restProps}
-      />
+      <input type="text" value={value} onChange={e => onChange(e.target.value)} className={classNames} />
       {variants?.some(item => item.includes(value)) && (
         <div className={classes.dropdownList}>
           {variants.map(variant => {

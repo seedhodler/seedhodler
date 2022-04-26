@@ -1,0 +1,13 @@
+@import "styles/Variables.module.scss";
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.4rem;
+  font-size: 14px;
+}
+
+.title {
+  line-height: 24px;
+  margin-right: 0.5rem;
+}

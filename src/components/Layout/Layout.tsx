@@ -7,15 +7,15 @@ import Logo from "assets/icons/Logo.svg"
 import CheckmarkInfo from "./CheckmarkInfo"
 import classes from "./Layout.module.scss"
 
-const Layout = () => {
+const Layout: React.FC = () => {
   return (
     <div className={classes.mainContainer}>
       <nav className={classes.nav}>
         <div>
           <img src={Logo} alt="Seedhodler" className={classes.logo} />
           <p className={classes.subtitle}>
-            Seedhodler is free and open source software. This project is currently a <b>work in progress</b>
-            and should <b>not be used</b> by anyone for any reason whatsoever.
+            Seedhodler is free and open source software. This project is currently a{" "} 
+            <b>work in progress</b> and should <b>not be used</b> by anyone for any reason whatsoever.
           </p>
           <p className={classes.githubInfo}>
             In need of the source code?{" "}
@@ -38,6 +38,7 @@ const Layout = () => {
           Help & getting started
         </CheckmarkInfo>
       </nav>
+      <div style={{ width: "400px" }}></div>
 
       <main className={classes.contentContainer}>
         <Outlet />
