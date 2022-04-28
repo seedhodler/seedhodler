@@ -24,7 +24,7 @@ const GenerateContent: React.FC = () => {
   const [thresholdValue, setThresholdValue] = useState(3)
   const [sharesValue, setSharesValue] = useState(6)
   const [manualEntropy, setManualEntropy] = useState("")
-  const [temp, setTemp] = useState("")
+  const [, setTemp] = useState("")
 
   const langOptions = [{ value: "english", label: "English" }]
   const wordCountOptions = [

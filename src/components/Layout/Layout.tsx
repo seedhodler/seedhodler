@@ -20,7 +20,7 @@ const Layout: React.FC = () => {
           <p className={classes.githubInfo}>
             In need of the source code?{" "}
             <a
-              href="https://code.alphax.digital/karen.mu/seedhodler"
+              href="https://github.com/seedhodler/seedhodlerV2/tree/main"
               target="_blank"
               rel="noreferrer noopener"
               className={classes.link}
