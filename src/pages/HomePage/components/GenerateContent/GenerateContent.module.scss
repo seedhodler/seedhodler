@@ -1,0 +1,124 @@
+@import "styles/Variables.module.scss";
+
+.configContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3.2rem;
+}
+
+.configLabelContainer {
+  display: flex;
+  align-items: center;
+}
+
+.entropyGeneration {
+  color: $colorMain;
+}
+
+.blockDivider {
+  height: 1px;
+  background-color: $colorBg300;
+  margin-bottom: 3.2rem;
+}
+
+.entropyContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.entropyOptionsContainer {
+  display: flex;
+  margin-bottom: 3.4rem;
+}
+
+.infoAndValidation {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.validation {
+  padding: 0.2rem 0.8rem;
+  background-color: $colorSuccessLight;
+  border-radius: $radiiSmallish;
+  color: $colorTextDark;
+  line-height: 24px;
+}
+
+.insightsLabel {
+  font-weight: 500;
+  font-size: 15px;
+  color: $colorBg700;
+  margin-bottom: 2.4rem;
+}
+
+.insightsContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.insightBlock {
+  width: 50%;
+  margin-bottom: 3.6rem;
+}
+
+.insightTitle {
+  font-size: 15px;
+  color: $colorTextDark;
+  margin-bottom: 1rem;
+}
+
+.insightContentContainer {
+  display: flex;
+  align-items: center;
+}
+
+.insightBadge {
+  font-weight: $fwBold;
+  color: $colorBg100;
+  font-size: 12px;
+  padding: 0.4rem 0.8rem;
+  margin-right: 0.6rem;
+  background-color: $colorErrorLightish;
+  border-radius: $radiiSmallest;
+}
+
+.insightContent {
+  font-weight: $fwBold;
+  font-size: 12px;
+  color: $colorBg700;
+  padding: 0.4rem 0;
+}
+
+.seedPhraseContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: 360px;
+  margin-bottom: 3.6rem;
+}
+
+.sharesInfo {
+  font-size: 15px;
+  color: $colorBg700;
+  font-weight: $fwLightish;
+  margin-bottom: 3.6rem;
+}
+
+.thresholdSharesContainer {
+  display: flex;
+  margin-bottom: 3.2rem;
+}
+
+.calcContainer {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.calcTitle {
+  margin-bottom: 2.5rem;
+  font-size: 18px;
+  color: $colorTextDark;
+}

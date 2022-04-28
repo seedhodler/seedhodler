@@ -10,61 +10,8 @@
 
 .tabContent {
   padding: 2.4rem;
+  padding-bottom: 5rem;
   font-weight: $fwNormal;
   font-size: 14px;
   color: $colorTextDarkish;
-}
-
-.configContainer {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 3.2rem;
-}
-
-.configLabelContainer {
-  display: flex;
-  align-items: center;
-}
-
-.entropyGeneration {
-  color: $colorMain;
-}
-
-.blockDivider {
-  height: 1px;
-  background-color: $colorBg300;
-  margin-bottom: 3.2rem;
-}
-
-.seedPhraseContainer {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  height: 360px;
-  margin-bottom: 3.6rem;
-}
-
-.sharesInfo {
-  font-size: 15px;
-  color: $colorBg700;
-  font-weight: $fwLightish;
-  margin-bottom: 3.6rem;
-}
-
-.thresholdSharesContainer {
-  display: flex;
-  margin-bottom: 3.2rem;
-}
-
-.calcContainer {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-}
-
-.calcTitle {
-  margin-bottom: 2.5rem;
-  font-size: 18px;
-  color: $colorTextDark;
 }
