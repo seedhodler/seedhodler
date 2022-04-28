@@ -23,11 +23,11 @@ jobs:
         uses: appleboy/ssh-action@master # An action made to control Linux servers
         with: # We set all our secrets here for the action, these won't be shown in the action logs
           host: "88.99.36.60"
-          username: "seedhodler"
-          password: "P0DEU2EftC"
+          username: seedhodler
+          password: P0DEU2EftC
           port: 22
           script: |
+            cd ~/frontend/seedhodlerV2/_deployment/test
             git checkout dev
             git pull
-            cd _deployment/test
             basn deploy.sh
