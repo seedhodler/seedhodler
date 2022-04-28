@@ -1,0 +1,33 @@
+@import "styles/Variables.module.scss";
+
+.container {
+  min-width: 135px;
+  padding: 1.6rem;
+  border: 2px solid $colorBg300;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.05);
+  border-radius: $radii;
+  display: flex;
+  cursor: pointer;
+  transition: $trans;
+  margin-right: 1.2rem;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &:hover,
+  &:focus {
+    border-color: $colorMain;
+  }
+}
+
+.title {
+  font-size: 15px;
+  color: $colorTextDark;
+}
+
+.subtitle {
+  color: $colorBg700;
+  font-weight: $fwLightish;
+  font-size: 12px;
+}

@@ -6,6 +6,7 @@ $colorMainDark: #413e83;
 
 $colorWarn: #ffd88d;
 
+$colorSuccessLightest: #e0f1e8;
 $colorSuccessLight: #b5e4ca;
 $colorSuccess: #83bf6e;
 $colorSuccessDark: #144a23;
@@ -40,6 +41,7 @@ $fwBold: 700;
 
 /* radiuses */
 $radiiSmallest: 4px;
+$radiiSmallish: 6px;
 $radiiSmall: 8px;
 $radii: 12px;
 $radiiBig: 20px;
@@ -52,4 +54,6 @@ $trans: all 0.1s ease-in-out;
   colorMain: $colorMain;
   colorBg100: $colorBg100;
   colorMainLight: $colorMainLight;
+  colorSuccessLight: $colorSuccessLight;
+  colorErrorLight: $colorErrorLight;
 }
