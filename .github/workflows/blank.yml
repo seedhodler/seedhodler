@@ -30,4 +30,4 @@ jobs:
             cd ~/frontend/seedhodlerV2/_deployment/test
             git checkout dev
             git pull
-            basn deploy.sh
+            sn deploy.sh
