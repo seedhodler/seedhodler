@@ -45,6 +45,51 @@
   line-height: 24px;
 }
 
+.insightsLabel {
+  font-weight: 500;
+  font-size: 15px;
+  color: $colorBg700;
+  margin-bottom: 2.4rem;
+}
+
+.insightsContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.insightBlock {
+  width: 50%;
+  margin-bottom: 3.6rem;
+}
+
+.insightTitle {
+  font-size: 15px;
+  color: $colorTextDark;
+  margin-bottom: 1rem;
+}
+
+.insightContentContainer {
+  display: flex;
+  align-items: center;
+}
+
+.insightBadge {
+  font-weight: $fwBold;
+  color: $colorBg100;
+  font-size: 12px;
+  padding: 0.4rem 0.8rem;
+  margin-right: 0.6rem;
+  background-color: $colorErrorLightish;
+  border-radius: $radiiSmallest;
+}
+
+.insightContent {
+  font-weight: $fwBold;
+  font-size: 12px;
+  color: $colorBg700;
+  padding: 0.4rem 0;
+}
+
 .seedPhraseContainer {
   display: flex;
   flex-direction: column;

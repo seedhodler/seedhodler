@@ -16,6 +16,7 @@ import { Textarea } from "components/Textarea"
 import { BadgeTitle } from "../BadgeTitle"
 import classes from "./GenerateContent.module.scss"
 import { EntropyValueType } from "../EntropyValueType"
+import { ColorOptions } from "../BadgeTitle/BadgeTitle"
 
 const GenerateContent: React.FC = () => {
   const [isAdvanced, setIsAdvanced] = useState(false)
@@ -49,7 +50,7 @@ const GenerateContent: React.FC = () => {
 
   return (
     <div className={classes.tabContent}>
-      <BadgeTitle title="Phrase" additionalInfo="BIP 39" color="success" />
+      <BadgeTitle title="Phrase" additionalInfo="BIP 39" color={ColorOptions.Success} />
       <div className={classes.configContainer}>
         <div>
           <InfoTitle title="Language" />
@@ -102,7 +103,33 @@ const GenerateContent: React.FC = () => {
           <Textarea value={manualEntropy} onChange={setManualEntropy} style={{ marginBottom: "3.4rem" }} />
         </>
       )}
-
+      {isDetails && (
+        <>
+          <BadgeTitle title="Entropy details" color={ColorOptions.Error} />
+          <p className={classes.insightsLabel}>Here are more insights into your manual input</p>
+          <div className={classes.insightsContainer}>
+            <div className={classes.insightBlock}>
+              <p className={classes.insightTitle}>Time to Crack</p>
+              <div className={classes.insightContentContainer}>
+                <span className={classes.insightBadge}>Centuries</span>
+                <p className={classes.insightContent}>Repeats like "aaa" are easy to guess</p>
+              </div>
+            </div>
+            <div className={classes.insightBlock}>
+              <p className={classes.insightTitle}>Total Bits</p>
+              <p className={classes.insightContent}>176</p>
+            </div>
+            <div className={classes.insightBlock}>
+              <p className={classes.insightTitle}>Entropy Type</p>
+              <p className={classes.insightContent}>Binary [0-1] , 101010011</p>
+            </div>
+            <div className={classes.insightBlock}>
+              <p className={classes.insightTitle}>Raw Entropy Words</p>
+              <p className={classes.insightContent}>15</p>
+            </div>
+          </div>
+        </>
+      )}
       <Button fullWidth style={{ marginBottom: "3.4rem" }}>
         Generate Phrase
       </Button>
@@ -123,7 +150,7 @@ const GenerateContent: React.FC = () => {
           />
         ))}
       </div>
-      <BadgeTitle title="Split Phrase into shares" color="success" />
+      <BadgeTitle title="Split Phrase into shares" color={ColorOptions.Success} />
       <p className={classes.sharesInfo}>
         The generated Phrase can now be split into up to 6 different shares. These can then be combined to
         restore your Phrase
