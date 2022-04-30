@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import CoinIcon from "assets/icons/Coin.svg"
 import CardsIcon from "assets/icons/Cards.svg"
@@ -12,60 +12,63 @@ import { Input } from "components/Input"
 import { SelectNew } from "components/SelectNew"
 import { Switch } from "components/Switch"
 import { Textarea } from "components/Textarea"
-import { Languages, generateMnemonic } from "helpers/bip39utils"
+import { generateMnemonic, generateMnemonicFromEntropy } from "helpers/bip39utils"
+import { langOptions, wordCountOptions } from "constants/options"
 
 import { BadgeTitle } from "../BadgeTitle"
-import classes from "./GenerateContent.module.scss"
 import { EntropyValueType } from "../EntropyValueType"
 import { ColorOptions } from "../BadgeTitle/BadgeTitle"
+import classes from "./GenerateContent.module.scss"
 
 const GenerateContent: React.FC = () => {
+  const [selectedLang, setSelectedLang] = useState(langOptions[0].value)
+  const [selectedWordCount, setSelectedWordCount] = useState(wordCountOptions[0].value)
   const [mnemonic, setMnemonic] = useState(["", "", "", "", "", "", "", "", "", "", "", ""])
   console.log(mnemonic)
-  const [isAdvanced, setIsAdvanced] = useState(true)
+  const [isAdvanced, setIsAdvanced] = useState(false)
   const [isDetails, setIsDetails] = useState(false)
+  const [entropyTypeId, setEntropyTypeId] = useState(0)
+  const [entropyValue, setEntropyValue] = useState("")
   const [thresholdValue, setThresholdValue] = useState(3)
   const [sharesValue, setSharesValue] = useState(6)
-  const [entropyValue, setEntropyValue] = useState("")
-  const [entropyTypeId, setEntropyTypeId] = useState(0)
-
-  const langOptions = [{ value: "english", label: "English" }]
-  const wordCountOptions = [
-    { value: "12", label: "12" },
-    { value: "24", label: "24" },
-  ]
 
   let count = 0
+  const isGenerateBtnDisabled = isAdvanced
+    ? +selectedWordCount === 12
+      ? entropyValue.length < 128
+      : entropyValue.length < 256
+    : false
 
   const handleGeneratePhase = () => {
-    const mnemonic = generateMnemonic(Languages.English, 12)
+    let mnemonic
+    if (isAdvanced) {
+      mnemonic = generateMnemonicFromEntropy(selectedLang, entropyValue)
+    } else {
+      mnemonic = generateMnemonic(selectedLang, +selectedWordCount)
+    }
     const mnemonicArr = mnemonic.split(" ")
     setMnemonic(mnemonicArr)
   }
 
+  useEffect(() => {
+    setMnemonic(new Array(+selectedWordCount).fill(""))
+  }, [selectedWordCount])
+
   return (
     <div className={classes.tabContent}>
-      {/* <input
-        type="text"
-        value={entropyValue}
-        onChange={e => {
-          const reg = /[0-1]/
-          if (reg.test(e.currentTarget.value)) {
-            setEntropyValue(e.target.value)
-          } else {
-            // TODO: show message about invalid input
-          }
-        }}
-      /> */}
       <BadgeTitle title="Phrase" additionalInfo="BIP 39" color={ColorOptions.Success} />
       <div className={classes.configContainer}>
         <div>
           <InfoTitle title="Language" />
-          <SelectNew options={langOptions} />
+          <SelectNew defaultValue={selectedLang} onChange={setSelectedLang} options={langOptions} />
         </div>
         <div>
           <InfoTitle title="Word Count" />
-          <SelectNew options={wordCountOptions} />
+          <SelectNew
+            defaultValue={selectedWordCount}
+            onChange={setSelectedWordCount}
+            options={wordCountOptions}
+          />
         </div>
       </div>
       <div className={classes.configContainer}>
@@ -135,6 +138,7 @@ const GenerateContent: React.FC = () => {
             value={entropyValue}
             onChange={setEntropyValue}
             regExp={/[^0-1]/}
+            maxBitsValue={+selectedWordCount === 12 ? 128 : 256}
             style={{ marginBottom: "3.4rem" }}
           />
         </>
@@ -153,7 +157,7 @@ const GenerateContent: React.FC = () => {
             </div>
             <div className={classes.insightBlock}>
               <p className={classes.insightTitle}>Total Bits</p>
-              <p className={classes.insightContent}>176</p>
+              <p className={classes.insightContent}>{entropyValue.length}</p>
             </div>
             <div className={classes.insightBlock}>
               <p className={classes.insightTitle}>Entropy Type</p>
@@ -166,11 +170,19 @@ const GenerateContent: React.FC = () => {
           </div>
         </>
       )}
-      <Button fullWidth style={{ marginBottom: "3.4rem" }} onClick={handleGeneratePhase}>
+      <Button
+        fullWidth
+        style={{ marginBottom: "3.4rem" }}
+        onClick={handleGeneratePhase}
+        disabled={isGenerateBtnDisabled}
+      >
         Generate Phrase
       </Button>
       <InfoTitle title="BIP39 Seed Phrase" />
-      <div className={classes.seedPhraseContainer}>
+      <div
+        className={classes.seedPhraseContainer}
+        style={{ height: selectedWordCount === "12" ? "360px" : "720px" }}
+      >
         {mnemonic.map((word, index) => (
           <Input
             key={Math.random()}
@@ -181,8 +193,8 @@ const GenerateContent: React.FC = () => {
             containerStyle={{
               width: "49%",
               marginBottom: "1.2rem",
-              alignSelf: index >= 6 ? "flex-end" : "flex-start",
-              // alignSelf: index >= wordCount / 2 ? "flex-end" : "flex-start",
+              // alignSelf: index >= 6 ? "flex-end" : "flex-start",
+              alignSelf: index >= +selectedWordCount / 2 ? "flex-end" : "flex-start",
             }}
           />
         ))}

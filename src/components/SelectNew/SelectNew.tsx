@@ -1,37 +1,22 @@
-import React from "react"
-import Select from "react-select"
+import React, { Dispatch, SetStateAction } from "react"
+import Select, { OnChangeValue } from "react-select"
 
 import variables from "styles/Variables.module.scss"
 
 type Props = {
-  options: { value: string; label: string }[]
+  defaultValue: string
+  options: { label: string; value: string }[]
+  onChange: Dispatch<SetStateAction<string>>
 }
 
-const SelectNew: React.FC<Props> = ({ options }) => {
-  // TODO: provide types
-  const customStyles = {
-    option: (provided: any, state: any) => ({
-      ...provided,
-      borderBottom: "1px dotted pink",
-      color: state.isSelected ? "red" : "blue",
-      padding: 20,
-    }),
-    control: () => ({
-      // none of react-select's styles are passed to <Control />
-      width: 200,
-    }),
-    singleValue: (provided: any, state: any) => {
-      const opacity = state.isDisabled ? 0.5 : 1
-      const transition = "opacity 300ms"
-
-      return { ...provided, opacity, transition }
-    },
-  }
-
+const SelectNew: React.FC<Props> = ({ defaultValue, options, onChange }) => {
   return (
     <Select
       options={options}
-      defaultValue={options[0]}
+      defaultValue={options.find(item => item.value === defaultValue)}
+      onChange={(selectedOption: OnChangeValue<{ label: string; value: string }, false>) =>
+        onChange(selectedOption?.value as string)
+      }
       theme={theme => ({
         ...theme,
         borderRadius: 12,

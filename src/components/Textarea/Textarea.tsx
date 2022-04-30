@@ -7,16 +7,19 @@ type Props = {
   value: string
   onChange: Dispatch<SetStateAction<string>>
   regExp?: RegExp
+  maxBitsValue: number
   style?: CSS.Properties
 }
 
-const Textarea: React.FC<Props> = ({ value, onChange, regExp, style }) => {
+const Textarea: React.FC<Props> = ({ value, onChange, regExp, maxBitsValue, style }) => {
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    let newValue = e.target.value
-    if (regExp) {
-      newValue = e.target.value.replace(regExp, "")
+    if (e.target.value.length <= maxBitsValue) {
+      let newValue = e.target.value
+      if (regExp) {
+        newValue = e.target.value.replace(regExp, "")
+      }
+      onChange(newValue)
     }
-    onChange(newValue)
   }
 
   return (
