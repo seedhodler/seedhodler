@@ -50,6 +50,12 @@
   width: 100%;
   border-radius: $radii;
   padding: 1.6rem;
+  z-index: 1;
+  visibility: hidden;
+}
+
+.input:focus + .dropdownList {
+  visibility: visible;
 }
 
 .dropdownListItem {

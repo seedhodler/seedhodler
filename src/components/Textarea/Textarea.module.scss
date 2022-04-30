@@ -2,9 +2,13 @@
 
 .textarea {
   width: 100%;
-  background-color: $colorSuccessLightest;
   border-radius: $radii;
   outline: none;
-  border: 2px solid $colorSuccessLight;
   padding: 1rem;
+  background-color: $colorBg200;
+  border: 2px solid $colorTextLighter;
+
+  font-size: 14px;
+  font-weight: $fwNormal;
+  color: $colorTextDarkish;
 }

@@ -24,11 +24,17 @@
   background-color: $colorBg500;
   border: 1px solid $colorBg600;
   transition: $trans;
+  cursor: pointer;
 
-  &:hover,
-  &:focus {
+  &:hover:not([disabled]),
+  &:focus:not([disabled]) {
     border-color: $colorMain;
     border-width: 2px;
+  }
+
+  &:disabled,
+  &[disabled] {
+    cursor: default;
   }
 }
 

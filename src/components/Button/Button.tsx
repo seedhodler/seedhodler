@@ -5,6 +5,7 @@ import classes from "./Button.module.scss"
 
 type Props = {
   children: string
+  onClick: () => void
   iconLeft?: string
   iconRight?: string
   fullWidth?: boolean
@@ -15,6 +16,7 @@ type Props = {
 
 const Button: React.FC<Props> = ({
   iconLeft,
+  onClick,
   iconRight,
   children,
   fullWidth,
@@ -25,7 +27,7 @@ const Button: React.FC<Props> = ({
   const classNames = [fullWidth ? classes.btnFullWidth : classes.btn, className].join(" ")
 
   return (
-    <button className={classNames} style={style} disabled={disabled}>
+    <button onClick={onClick} className={classNames} style={style} disabled={disabled}>
       {iconLeft && <img src={iconLeft} alt="Left icon" className={classes.iconLeft} />}
       {children}
       {iconRight && <img src={iconRight} alt="Left icon" className={classes.iconRight} />}
