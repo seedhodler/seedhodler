@@ -47,7 +47,8 @@ $radii: 12px;
 $radiiBig: 20px;
 
 /* transitions */
-$trans: all 0.1s ease-in-out;
+$transAll: all 0.1s ease-in-out;
+$transColor: color 0.1s ease-in-out;
 
 /* export variables to use in Components */
 :export {

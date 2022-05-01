@@ -33,7 +33,7 @@
   background-color: $colorBg200;
   border-radius: $radii;
   color: $colorTextDarkish;
-  transition: $trans;
+  transition: $transAll;
 
   &:hover,
   &:focus {
@@ -51,18 +51,13 @@
   border-radius: $radii;
   padding: 1.6rem;
   z-index: 1;
-  visibility: hidden;
-}
-
-.input:focus + .dropdownList {
-  visibility: visible;
 }
 
 .dropdownListItem {
   border-radius: $radii;
   padding: 1.2rem;
-  transition: $trans;
   color: $colorBg700;
+  transition: $transColor;
 
   &:hover {
     background-color: $colorBg200;

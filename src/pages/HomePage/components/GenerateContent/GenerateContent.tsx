@@ -9,10 +9,10 @@ import { Button } from "components/Button"
 import { Calc } from "components/Calc"
 import { InfoTitle } from "components/InfoTitle"
 import { Input } from "components/Input"
-import { SelectNew } from "components/SelectNew"
+import { Select } from "components/Select"
 import { Switch } from "components/Switch"
 import { Textarea } from "components/Textarea"
-import { generateMnemonic, generateMnemonicFromEntropy } from "helpers/bip39utils"
+import { generateMnemonic, generateMnemonicFromEntropy } from "helpers"
 import { langOptions, wordCountOptions } from "constants/options"
 
 import { BadgeTitle } from "../BadgeTitle"
@@ -23,8 +23,7 @@ import classes from "./GenerateContent.module.scss"
 const GenerateContent: React.FC = () => {
   const [selectedLang, setSelectedLang] = useState(langOptions[0].value)
   const [selectedWordCount, setSelectedWordCount] = useState(wordCountOptions[0].value)
-  const [mnemonic, setMnemonic] = useState(["", "", "", "", "", "", "", "", "", "", "", ""])
-  console.log(mnemonic)
+  const [mnemonic, setMnemonic] = useState(new Array(12).fill(""))
   const [isAdvanced, setIsAdvanced] = useState(false)
   const [isDetails, setIsDetails] = useState(false)
   const [entropyTypeId, setEntropyTypeId] = useState(0)
@@ -60,11 +59,11 @@ const GenerateContent: React.FC = () => {
       <div className={classes.configContainer}>
         <div>
           <InfoTitle title="Language" />
-          <SelectNew defaultValue={selectedLang} onChange={setSelectedLang} options={langOptions} />
+          <Select defaultValue={selectedLang} onChange={setSelectedLang} options={langOptions} />
         </div>
         <div>
           <InfoTitle title="Word Count" />
-          <SelectNew
+          <Select
             defaultValue={selectedWordCount}
             onChange={setSelectedWordCount}
             options={wordCountOptions}
@@ -185,7 +184,7 @@ const GenerateContent: React.FC = () => {
       >
         {mnemonic.map((word, index) => (
           <Input
-            key={Math.random()}
+            key={index}
             count={++count}
             index={index}
             value={word}
@@ -193,7 +192,6 @@ const GenerateContent: React.FC = () => {
             containerStyle={{
               width: "49%",
               marginBottom: "1.2rem",
-              // alignSelf: index >= 6 ? "flex-end" : "flex-start",
               alignSelf: index >= +selectedWordCount / 2 ? "flex-end" : "flex-start",
             }}
           />

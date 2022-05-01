@@ -1,19 +1,33 @@
-import React from "react"
+import React, { Dispatch, SetStateAction } from "react"
+import Select, { OnChangeValue } from "react-select"
 
-import classes from "./Select.module.scss"
+import variables from "styles/Variables.module.scss"
 
-const Select: React.FC = ({ ...restProps }) => {
+type Props = {
+  defaultValue: string
+  options: { label: string; value: string }[]
+  onChange: Dispatch<SetStateAction<string>>
+}
+
+const CustomSelect: React.FC<Props> = ({ defaultValue, options, onChange }) => {
   return (
-    <div className={classes.selectContainer} {...restProps}>
-      <select name="cars" className={classes.select}>
-        <option value="volvo">Volvo</option>
-        <option value="saab">Saab</option>
-        <option value="mercedes">Mercedes</option>
-        <option value="audi">Audi</option>
-      </select>
-      <span className={classes.customArrow}></span>
-    </div>
+    <Select
+      options={options}
+      defaultValue={options.find(item => item.value === defaultValue)}
+      onChange={(selectedOption: OnChangeValue<{ label: string; value: string }, false>) =>
+        onChange(selectedOption?.value as string)
+      }
+      theme={theme => ({
+        ...theme,
+        borderRadius: 12,
+        colors: {
+          ...theme.colors,
+          primary: variables.colorMain,
+          primary25: variables.colorMainLight,
+        },
+      })}
+    />
   )
 }
 
-export default Select
+export default CustomSelect

@@ -23,7 +23,7 @@
   height: 56px;
   background-color: $colorBg500;
   border: 1px solid $colorBg600;
-  transition: $trans;
+  transition: $transAll;
   cursor: pointer;
 
   &:hover:not([disabled]),

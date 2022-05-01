@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react"
+import React, { useState, Dispatch, SetStateAction } from "react"
 import CSS from "csstype"
 import * as bip39 from "bip39"
 
@@ -14,11 +14,16 @@ type Props = {
 }
 
 const Input: React.FC<Props> = ({ count, index, value, onChange, className, containerStyle }) => {
+  const [showDropdown, setShowDropdown] = useState(false)
+
   const classNames = [classes.input, className].join(" ")
   const wordlist = bip39.wordlists.english
 
-  const handleChange = (newValue: string) => {
+  const handleChange = (newValue: string, isDropdownItemClick?: boolean) => {
     onChange(mnemonicArr => mnemonicArr.map((word, wordIndex) => (wordIndex === index ? newValue : word)))
+    if (isDropdownItemClick && showDropdown) {
+      setShowDropdown(false)
+    }
   }
 
   let variantsCounter = 0
@@ -28,37 +33,30 @@ const Input: React.FC<Props> = ({ count, index, value, onChange, className, cont
       {count && <span className={classes.count}>{count}.</span>}
       <input
         type="text"
-        defaultValue={value}
+        value={value}
         onChange={e => handleChange(e.target.value)}
-        // onBlur={e => {
-        //   value !== e.target.value &&
-        //     onChange(mnemonicArr =>
-        //       mnemonicArr.map((word, wordIndex) => (wordIndex === index ? e.target.value : word)),
-        //     )
-        // }}
+        onClick={() => setShowDropdown(prev => !prev)}
         className={classNames}
       />
-      {value.length !== 0 &&
-        wordlist.some(item => item.includes(value) && item !== value) &&
-        !wordlist.some(item => item === value) && (
-          <div className={classes.dropdownList}>
-            {wordlist.map(variant => {
-              if (variantsCounter < 5 && variant.includes(value)) {
-                variantsCounter++
-                return (
-                  <div
-                    onClick={() => handleChange(variant)}
-                    key={variant}
-                    className={classes.dropdownListItem}
-                  >
-                    {variant}
-                  </div>
-                )
-              }
-              return null
-            })}
-          </div>
-        )}
+      {showDropdown && value.length !== 0 && (
+        <div className={classes.dropdownList}>
+          {wordlist.map(variant => {
+            if (variantsCounter < 5 && variant.includes(value.toLowerCase())) {
+              variantsCounter++
+              return (
+                <div
+                  onClick={() => handleChange(variant, true)}
+                  key={variant}
+                  className={classes.dropdownListItem}
+                >
+                  {variant}
+                </div>
+              )
+            }
+            return null
+          })}
+        </div>
+      )}
     </div>
   )
 }

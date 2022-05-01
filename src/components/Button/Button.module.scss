@@ -15,7 +15,7 @@
   background-color: $colorMain;
   border-radius: $radii;
   font-weight: $fwBold;
-  transition: $trans;
+  transition: $transAll;
 
   &:hover:not([disabled]),
   &:focus:not([disabled]) {
