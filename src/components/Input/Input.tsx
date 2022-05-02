@@ -48,6 +48,7 @@ const Input: React.FC<Props> = ({ count, index, value, onChange, className, cont
                   onClick={() => handleChange(variant, true)}
                   key={variant}
                   className={classes.dropdownListItem}
+                  tabIndex={0}
                 >
                   {variant}
                 </div>

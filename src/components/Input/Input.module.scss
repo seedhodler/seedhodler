@@ -54,12 +54,14 @@
 }
 
 .dropdownListItem {
+  outline: none;
   border-radius: $radii;
   padding: 1.2rem;
   color: $colorBg700;
   transition: $transColor;
 
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: $colorBg200;
     color: $colorTextDark;
   }

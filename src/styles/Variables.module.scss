@@ -45,11 +45,13 @@ $radiiSmallest: 4px;
 $radiiSmallish: 6px;
 $radiiSmall: 8px;
 $radii: 12px;
+$radiiMedium: 16px;
 $radiiBig: 20px;
 
 /* transitions */
 $transAll: all 0.1s ease-in-out;
 $transColor: color 0.1s ease-in-out;
+$transModal: all 0.3s ease-in-out;
 
 /* export variables to use in Components */
 :export {

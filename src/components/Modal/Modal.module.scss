@@ -1,0 +1,48 @@
+@import "styles/Variables.module.scss";
+
+%backdropBase {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: $transModal;
+}
+
+.backdrop {
+  @extend %backdropBase;
+}
+
+.backdropActive {
+  @extend %backdropBase;
+  opacity: 1;
+  pointer-events: all;
+}
+
+%contentBase {
+  background-color: $colorBg100;
+  padding: 2.4rem;
+  box-shadow: 0px 0px 14px -4px rgba(0, 0, 0, 0.05), 0px 32px 48px -8px rgba(0, 0, 0, 0.1);
+  border-radius: $radiiMedium;
+  width: 40%;
+  height: 50%;
+
+  transform: scale(0.5);
+  transition: $transModal;
+}
+
+.content {
+  @extend %contentBase;
+}
+
+.contentActive {
+  @extend %contentBase;
+  transform: scale(1);
+}
