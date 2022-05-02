@@ -87,8 +87,36 @@
   border-top: 2px solid $colorBg400;
 }
 
+.placeholder {
+  min-width: 400px;
+}
+.placeholder:after {
+  content: "\200b";
+}
+
 .contentContainer {
   max-width: 968px;
   width: 100%;
   margin: 0 auto;
+}
+
+.onlineNotification {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 4px solid $colorError;
+  background-color: $colorErrorOnlineBg;
+  padding: 1rem;
+}
+
+.onlineMessage {
+  color: $colorError;
+  font-size: 12px;
+  font-weight: $fwLightish;
+}
+
+.securityNotice {
+  font-weight: $fwNormal;
+  margin-bottom: 0;
+  color: $colorTextDarkish;
 }

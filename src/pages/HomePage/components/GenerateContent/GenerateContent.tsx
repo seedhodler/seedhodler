@@ -24,8 +24,8 @@ const GenerateContent: React.FC = () => {
   const [selectedLang, setSelectedLang] = useState(langOptions[0].value)
   const [selectedWordCount, setSelectedWordCount] = useState(wordCountOptions[0].value)
   const [mnemonic, setMnemonic] = useState(new Array(12).fill(""))
-  const [isAdvanced, setIsAdvanced] = useState(false)
-  const [isDetails, setIsDetails] = useState(false)
+  const [isAdvanced, setIsAdvanced] = useState(true)
+  const [isDetails, setIsDetails] = useState(true)
   const [entropyTypeId, setEntropyTypeId] = useState(0)
   const [entropyValue, setEntropyValue] = useState("")
   const [thresholdValue, setThresholdValue] = useState(3)
@@ -136,7 +136,7 @@ const GenerateContent: React.FC = () => {
           <Textarea
             value={entropyValue}
             onChange={setEntropyValue}
-            regExp={/[^0-1]/}
+            // regExp={/[^0-1]/}
             maxBitsValue={+selectedWordCount === 12 ? 128 : 256}
             style={{ marginBottom: "3.4rem" }}
           />
@@ -144,6 +144,26 @@ const GenerateContent: React.FC = () => {
       )}
       {isDetails && (
         <>
+          <div style={{ backgroundColor: "red", color: "white", padding: "3rem", marginBottom: "3rem" }}>
+            {entropyTypeId === 2 && (
+              <>
+                Entered base6 in base10: {parseInt(entropyValue, 6)}
+                <br />
+                Entered base6 in binary: {parseInt(entropyValue, 6).toString(2)}
+                <br />
+                Bits: {parseInt(entropyValue, 6).toString(2).length}
+              </>
+            )}
+            {entropyTypeId === 3 && (
+              <>
+                Entered base10 value: {entropyValue}
+                <br />
+                Entered base10 in binary: {(+entropyValue).toString(2)}
+                <br />
+                Bits: {(+entropyValue).toString(2).length}
+              </>
+            )}
+          </div>
           <BadgeTitle title="Entropy details" color={ColorOptions.Error} />
           <p className={classes.insightsLabel}>Here are more insights into your manual input</p>
           <div className={classes.insightsContainer}>

@@ -1,13 +1,26 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Outlet } from "react-router-dom"
 
 import QuestionMarkIcon from "assets/icons/QuestionMark.svg"
 import Logo from "assets/icons/Logo.svg"
+import { InfoTitle } from "components/InfoTitle"
 
 import CheckmarkInfo from "./CheckmarkInfo"
 import classes from "./Layout.module.scss"
 
 const Layout: React.FC = () => {
+  const [isOnline, setIsOnline] = useState(window.navigator.onLine)
+
+  useEffect(() => {
+    window.addEventListener("online", () => setIsOnline(true))
+    window.addEventListener("offline", () => setIsOnline(false))
+
+    return () => {
+      window.removeEventListener("online", () => setIsOnline(true))
+      window.removeEventListener("offline", () => setIsOnline(false))
+    }
+  }, [])
+
   return (
     <div className={classes.mainContainer}>
       <nav className={classes.nav}>
@@ -38,11 +51,21 @@ const Layout: React.FC = () => {
           Help & getting started
         </CheckmarkInfo>
       </nav>
-      <div style={{ width: "400px" }}></div>
+      <div className={classes.placeholder}></div>
 
-      <main className={classes.contentContainer}>
-        <Outlet />
-      </main>
+      <div style={{ width: "100%" }}>
+        {isOnline && (
+          <div className={classes.onlineNotification}>
+            <InfoTitle title="Security Notice" className={classes.securityNotice} />
+            <p className={classes.onlineMessage}>
+              You are currently online. This tool should only be used when offline
+            </p>
+          </div>
+        )}
+        <main className={classes.contentContainer}>
+          <Outlet />
+        </main>
+      </div>
     </div>
   )
 }
