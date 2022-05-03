@@ -71,7 +71,7 @@ $breakpoints: (
     @content;
   }
 }
-@mixin lg-d {
+@mixin sm-d {
   @media (max-width: (map-get($breakpoints, md) - 0.2px)) {
     @content;
   }
