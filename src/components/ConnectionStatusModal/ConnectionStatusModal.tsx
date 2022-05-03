@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react"
 
-import { ColorOptions } from "enums"
+import { ColorOptions } from "constants/index"
 import ArrowRightIcon from "assets/icons/ArrowRight.svg"
 import InternetRedIcon from "assets/icons/InternetRed.svg"
 import InternetGrayIcon from "assets/icons/InternetGray.svg"

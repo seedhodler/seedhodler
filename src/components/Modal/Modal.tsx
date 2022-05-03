@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction } from "react"
 
 import CloseIcon from "assets/icons/Close.svg"
 import { BadgeTitle } from "pages/HomePage/components/BadgeTitle"
-import { ColorOptions } from "enums"
+import { ColorOptions } from "constants/index"
 
 import classes from "./Modal.module.scss"
 

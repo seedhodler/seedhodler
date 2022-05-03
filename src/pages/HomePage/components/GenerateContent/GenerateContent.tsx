@@ -13,8 +13,7 @@ import { Select } from "components/Select"
 import { Switch } from "components/Switch"
 import { Textarea } from "components/Textarea"
 import { generateMnemonic, generateMnemonicFromEntropy } from "helpers"
-import { langOptions, wordCountOptions } from "constants/options"
-import { ColorOptions } from "enums"
+import { ColorOptions, langOptions, wordCountOptions } from "constants/index"
 
 import { BadgeTitle } from "../BadgeTitle"
 import { EntropyValueType } from "../EntropyValueType"
@@ -24,8 +23,8 @@ const GenerateContent: React.FC = () => {
   const [selectedLang, setSelectedLang] = useState(langOptions[0].value)
   const [selectedWordCount, setSelectedWordCount] = useState(wordCountOptions[0].value)
   const [mnemonic, setMnemonic] = useState(new Array(12).fill(""))
-  const [isAdvanced, setIsAdvanced] = useState(true)
-  const [isDetails, setIsDetails] = useState(true)
+  const [isAdvanced, setIsAdvanced] = useState(false)
+  const [isDetails, setIsDetails] = useState(false)
   const [entropyTypeId, setEntropyTypeId] = useState(0)
   const [entropyValue, setEntropyValue] = useState("")
   const [thresholdValue, setThresholdValue] = useState(3)
@@ -47,6 +46,24 @@ const GenerateContent: React.FC = () => {
     }
     const mnemonicArr = mnemonic.split(" ")
     setMnemonic(mnemonicArr)
+  }
+
+  // TODO: !!! recheck function
+  // There's no built-in parsing for base 6, so:
+  // @ts-ignore
+  function parseBigInt(str, base = 10) {
+    if (typeof base !== "number" || isNaN(base) || base < 2 || base > 36) {
+      throw new Error(`parseBigInt doesn't support base ${base}`)
+    }
+    let num = BigInt(0)
+    // @ts-ignore
+    base = BigInt(base)
+    for (const digit of str) {
+      // @ts-ignore
+      num *= base
+      num += BigInt(parseInt(digit, 6))
+    }
+    return num
   }
 
   useEffect(() => {
@@ -71,7 +88,12 @@ const GenerateContent: React.FC = () => {
         </div>
       </div>
       <div className={classes.configContainer}>
-        <div className={classes.configLabelContainer}>
+        <div
+          className={classes.configLabelContainer}
+          title={`None of these advanced functions are necessary for successful generating and 
+splitting your seed phrase. when used incorrectly these advanced functions may lead to  
+generating of unsafe seed phrases that can be (and will be) guessed easily. Be careful!`}
+        >
           <p>
             Advanced Toolset -{" "}
             <span className={classes.entropyGeneration}>
@@ -149,18 +171,18 @@ const GenerateContent: React.FC = () => {
               <>
                 Entered base6 in base10: {parseInt(entropyValue, 6)}
                 <br />
-                Entered base6 in binary: {parseInt(entropyValue, 6).toString(2)}
+                Entered base6 in binary: {parseBigInt(entropyValue, 6).toString(2)}
                 <br />
                 Bits: {parseInt(entropyValue, 6).toString(2).length}
               </>
             )}
             {entropyTypeId === 3 && (
               <>
-                Entered base10 value: {entropyValue}
+                Entered base10 value: {BigInt(entropyValue)}
                 <br />
-                Entered base10 in binary: {(+entropyValue).toString(2)}
+                Entered base10 in binary: {BigInt(entropyValue).toString(2)}
                 <br />
-                Bits: {(+entropyValue).toString(2).length}
+                Bits: {BigInt(entropyValue).toString(2).length}
               </>
             )}
           </div> */}

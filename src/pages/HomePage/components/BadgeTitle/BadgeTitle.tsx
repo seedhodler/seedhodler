@@ -2,7 +2,7 @@ import React from "react"
 import CSS from "csstype"
 
 import variables from "styles/Variables.module.scss"
-import { ColorOptions } from "enums"
+import { ColorOptions } from "constants/index"
 
 import classes from "./BadgeTitle.module.scss"
 
