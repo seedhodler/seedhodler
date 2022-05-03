@@ -6,20 +6,17 @@ import classes from "./Textarea.module.scss"
 type Props = {
   value: string
   onChange: Dispatch<SetStateAction<string>>
-  regExp?: RegExp
-  maxBitsValue: number
+  regex?: RegExp
   style?: CSS.Properties
 }
 
-const Textarea: React.FC<Props> = ({ value, onChange, regExp, maxBitsValue, style }) => {
+const Textarea: React.FC<Props> = ({ value, onChange, regex, style }) => {
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    if (e.target.value.length <= maxBitsValue) {
-      let newValue = e.target.value
-      if (regExp) {
-        newValue = e.target.value.replace(regExp, "")
-      }
-      onChange(newValue)
+    let newValue = e.target.value
+    if (regex) {
+      newValue = e.target.value.replace(regex, "")
     }
+    onChange(newValue)
   }
 
   return (

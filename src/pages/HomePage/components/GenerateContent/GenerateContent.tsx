@@ -23,32 +23,55 @@ const GenerateContent: React.FC = () => {
   const [selectedLang, setSelectedLang] = useState(langOptions[0].value)
   const [selectedWordCount, setSelectedWordCount] = useState(wordCountOptions[0].value)
   const [mnemonic, setMnemonic] = useState(new Array(12).fill(""))
-  const [isAdvanced, setIsAdvanced] = useState(false)
-  const [isDetails, setIsDetails] = useState(false)
+  const [isAdvanced, setIsAdvanced] = useState(true)
+  const [isDetails, setIsDetails] = useState(true)
   const [entropyTypeId, setEntropyTypeId] = useState(0)
   const [entropyValue, setEntropyValue] = useState("")
   const [thresholdValue, setThresholdValue] = useState(3)
   const [sharesValue, setSharesValue] = useState(6)
 
+  const regexVariants = {
+    0: /[^0-1]/,
+    2: /[^0-5]/,
+    3: /[^0-9]/,
+  }
+
+  const entropiesAsBinary = {
+    0: entropyValue,
+    // TODO: remove once logic will be ready
+    1: "0",
+    // TODO: temp condition to remove error when entering value for Number entropy
+    2: entropyTypeId === 2 ? parseBigInt(entropyValue || "0", 6).toString(2) : "0",
+    3: BigInt(entropyValue).toString(2),
+  }
+  const selectedEntropyAsBinary = entropiesAsBinary[entropyTypeId as keyof typeof entropiesAsBinary]
+
   let count = 0
-  const isGenerateBtnDisabled = isAdvanced
-    ? +selectedWordCount === 12
-      ? entropyValue.length < 128
-      : entropyValue.length < 256
-    : false
+  const minBits = +selectedWordCount === 12 ? 128 : 256
+
+  const isGenerateBtnDisabled = isAdvanced && selectedEntropyAsBinary.length < minBits
 
   const handleGeneratePhase = () => {
     let mnemonic
-    if (isAdvanced) {
-      mnemonic = generateMnemonicFromEntropy(selectedLang, entropyValue)
-    } else {
+    if (!isAdvanced) {
       mnemonic = generateMnemonic(selectedLang, +selectedWordCount)
+    } else {
+      const entropyToPass = selectedEntropyAsBinary.slice(
+        selectedEntropyAsBinary.length - minBits,
+        selectedEntropyAsBinary.length,
+      )
+      mnemonic = generateMnemonicFromEntropy(selectedLang, entropyToPass)
     }
     const mnemonicArr = mnemonic.split(" ")
     setMnemonic(mnemonicArr)
   }
 
-  // TODO: !!! recheck function
+  const handleEntropyChange = (id: number) => {
+    setEntropyValue("")
+    setEntropyTypeId(id)
+  }
+
+  // TODO: !!! recheck function and remove TS ignore
   // There's no built-in parsing for base 6, so:
   // @ts-ignore
   function parseBigInt(str, base = 10) {
@@ -70,16 +93,18 @@ const GenerateContent: React.FC = () => {
     setMnemonic(new Array(+selectedWordCount).fill(""))
   }, [selectedWordCount])
 
+  console.log(selectedEntropyAsBinary)
+
   return (
     <div className={classes.tabContent}>
       <BadgeTitle title="Phrase" additionalInfo="BIP 39" color={ColorOptions.Success} />
       <div className={classes.configContainer}>
         <div>
-          <InfoTitle title="Language" />
+          <InfoTitle title="Language" desc="Language __placeholder" />
           <Select defaultValue={selectedLang} onChange={setSelectedLang} options={langOptions} />
         </div>
         <div>
-          <InfoTitle title="Word Count" />
+          <InfoTitle title="Word Count" desc="Word Count __placeholder" />
           <Select
             defaultValue={selectedWordCount}
             onChange={setSelectedWordCount}
@@ -113,79 +138,61 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
         <>
           <BadgeTitle title="Entropy Generation" style={{ marginBottom: "2.6rem" }} />
           <div className={classes.entropyContainer}>
-            <div>
-              <InfoTitle title="Entropy Value Type" />
+            <div className={classes.wrapperColumn}>
+              <InfoTitle title="Entropy Value Type" desc="Entropy Value Type __placeholder" />
               <div className={classes.entropyOptionsContainer}>
                 <EntropyValueType
                   title="Coin Flip"
                   subtitle="[1,2]"
                   isActive={entropyTypeId === 0}
-                  onClick={() => setEntropyTypeId(0)}
+                  onClick={() => handleEntropyChange(0)}
                   icon={CoinIcon}
                 />
                 <EntropyValueType
                   title="Card"
                   subtitle="[A2-9TJQK[CDHS]"
                   isActive={entropyTypeId === 1}
-                  onClick={() => setEntropyTypeId(1)}
+                  onClick={() => handleEntropyChange(1)}
                   icon={CardsIcon}
                 />
                 <EntropyValueType
                   title="Dice"
                   subtitle="[1-6]"
                   isActive={entropyTypeId === 2}
-                  onClick={() => setEntropyTypeId(2)}
+                  onClick={() => handleEntropyChange(2)}
                   icon={DiceIcon}
                 />
                 <EntropyValueType
                   title="Numbers"
                   subtitle="[0-9]"
                   isActive={entropyTypeId === 3}
-                  onClick={() => setEntropyTypeId(3)}
+                  onClick={() => handleEntropyChange(3)}
                   icon={NumbersIcon}
                 />
               </div>
             </div>
-            <div>
-              <InfoTitle title="Mouse" />
+            <div className={classes.wrapperColumn}>
+              <InfoTitle title="Mouse" desc="Mouse __placeholder" />
               <Button onClick={() => {}}>Start calculation</Button>
             </div>
           </div>
           <div className={classes.infoAndValidation}>
-            <InfoTitle title="Manual - Enter your own entropy" />
+            <InfoTitle
+              title="Manual - Enter your own entropy"
+              desc="Manual - Enter your own entropy __placeholder"
+            />
             <div className={classes.validation}>Valid Entropy</div>
           </div>
           <Textarea
             value={entropyValue}
             onChange={setEntropyValue}
-            regExp={/[^0-1]/}
-            maxBitsValue={+selectedWordCount === 12 ? 128 : 256}
+            regex={regexVariants[entropyTypeId as keyof typeof regexVariants]}
             style={{ marginBottom: "3.4rem" }}
           />
         </>
       )}
       {isDetails && (
         <>
-          {/* <div style={{ backgroundColor: "red", color: "white", padding: "3rem", marginBottom: "3rem" }}>
-            {entropyTypeId === 2 && (
-              <>
-                Entered base6 in base10: {parseInt(entropyValue, 6)}
-                <br />
-                Entered base6 in binary: {parseBigInt(entropyValue, 6).toString(2)}
-                <br />
-                Bits: {parseInt(entropyValue, 6).toString(2).length}
-              </>
-            )}
-            {entropyTypeId === 3 && (
-              <>
-                Entered base10 value: {BigInt(entropyValue)}
-                <br />
-                Entered base10 in binary: {BigInt(entropyValue).toString(2)}
-                <br />
-                Bits: {BigInt(entropyValue).toString(2).length}
-              </>
-            )}
-          </div> */}
           <BadgeTitle title="Entropy details" color={ColorOptions.ErrorLight} />
           <p className={classes.insightsLabel}>Here are more insights into your manual input</p>
           <div className={classes.insightsContainer}>
@@ -198,7 +205,9 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
             </div>
             <div className={classes.insightBlock}>
               <p className={classes.insightTitle}>Total Bits</p>
-              <p className={classes.insightContent}>{entropyValue.length}</p>
+              <p className={classes.insightContent}>
+                {selectedEntropyAsBinary.length} / {minBits}
+              </p>
             </div>
             <div className={classes.insightBlock}>
               <p className={classes.insightTitle}>Entropy Type</p>
@@ -219,7 +228,7 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
       >
         Generate Phrase
       </Button>
-      <InfoTitle title="BIP39 Seed Phrase" />
+      <InfoTitle title="BIP39 Seed Phrase" desc="BIP39 Seed Phrase __placeholder" />
       <div
         className={classes.seedPhraseContainer}
         style={{ height: selectedWordCount === "12" ? "360px" : "720px" }}
@@ -248,7 +257,7 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
           </p>
           <div className={classes.thresholdSharesContainer}>
             <div className={classes.calcContainer}>
-              <InfoTitle title="Threshold" className={classes.calcTitle} />
+              <InfoTitle title="Threshold" desc="Threshold __placeholder" className={classes.calcTitle} />
               <Calc
                 value={thresholdValue}
                 onPlus={() => setThresholdValue(prev => (prev >= 6 ? prev : ++prev))}
@@ -256,7 +265,7 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
               />
             </div>
             <div className={classes.calcContainer}>
-              <InfoTitle title="Shares" className={classes.calcTitle} />
+              <InfoTitle title="Shares" desc="Shares __placeholder" className={classes.calcTitle} />
               <Calc
                 value={sharesValue}
                 onPlus={() => setSharesValue(prev => (prev >= 6 ? prev : ++prev))}

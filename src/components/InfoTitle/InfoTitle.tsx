@@ -7,12 +7,12 @@ import classes from "./InfoTitle.module.scss"
 
 type Props = {
   title: string
-  desc?: string
+  desc: string
   className?: string
   style?: CSS.Properties
 }
 
-const InfoTitle: React.FC<Props> = ({ title, desc = "Description placeholder", className, style }) => {
+const InfoTitle: React.FC<Props> = ({ title, desc, className, style }) => {
   const classNames = [classes.titleContainer, className].join(" ")
 
   return (

@@ -53,6 +53,30 @@ $transAll: all 0.1s ease-in-out;
 $transColor: color 0.1s ease-in-out;
 $transModal: all 0.3s ease-in-out;
 
+/* breakpoint */
+$breakpoints: (
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+);
+
+@mixin lg-d {
+  @media (max-width: (map-get($breakpoints, xl) - 0.2px)) {
+    @content;
+  }
+}
+@mixin md-d {
+  @media (max-width: (map-get($breakpoints, lg) - 0.2px)) {
+    @content;
+  }
+}
+@mixin lg-d {
+  @media (max-width: (map-get($breakpoints, md) - 0.2px)) {
+    @content;
+  }
+}
+
 /* export variables to use in Components */
 :export {
   colorMain: $colorMain;

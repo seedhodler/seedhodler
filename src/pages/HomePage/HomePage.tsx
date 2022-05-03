@@ -16,12 +16,14 @@ const HomePage: React.FC = () => {
       <div className={classes.tabsContainer}>
         <Tab
           title="Generate"
+          desc="Generate __placeholder"
           icon={GenerateIcon}
           active={activeTabId === 0}
           onClick={() => setActiveTabId(0)}
         />
         <Tab
           title="Restore"
+          desc="Restore __placeholder"
           icon={RestoreIcon}
           active={activeTabId === 1}
           onClick={() => setActiveTabId(1)}

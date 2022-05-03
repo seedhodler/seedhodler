@@ -43,12 +43,16 @@ const Layout: React.FC<Props> = ({ isOnline }) => {
           Help & getting started
         </CheckmarkInfo>
       </nav>
-      <div className={classes.placeholder}></div>
+      <div className={classes.navPlaceholder}></div>
 
       <div style={{ width: "100%" }}>
         {isOnline && (
           <div className={classes.onlineNotification}>
-            <InfoTitle title="Security Notice" className={classes.securityNotice} />
+            <InfoTitle
+              title="Security Notice"
+              desc="Security Notice __placeholder"
+              className={classes.securityNotice}
+            />
             <p className={classes.onlineMessage}>
               You are currently online. This tool should only be used when offline
             </p>
