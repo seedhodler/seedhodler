@@ -1,0 +1,48 @@
+@import "styles/Variables.module.scss";
+
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  align-items: center;
+}
+
+.description {
+  font-weight: $fwLight;
+  font-size: 20px;
+  color: $colorTextDark;
+  margin-bottom: 2.4rem;
+}
+
+.checkmarksTitle {
+  font-weight: $fwBold;
+  font-size: 20px;
+  margin-bottom: 2.6rem;
+}
+
+.checkmarkInfo {
+  color: $colorTextDark !important;
+  font-weight: $fwBold !important;
+  font-size: 24px !important;
+}
+
+.stepTwoContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.internetIconContainer {
+  position: relative;
+  background-color: $colorBg300;
+  padding: 2.4rem;
+  border-radius: 50%;
+  margin-bottom: 3.6rem;
+}
+
+.checkmarkIcon {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}

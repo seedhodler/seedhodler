@@ -14,10 +14,10 @@ import { Switch } from "components/Switch"
 import { Textarea } from "components/Textarea"
 import { generateMnemonic, generateMnemonicFromEntropy } from "helpers"
 import { langOptions, wordCountOptions } from "constants/options"
+import { ColorOptions } from "enums"
 
 import { BadgeTitle } from "../BadgeTitle"
 import { EntropyValueType } from "../EntropyValueType"
-import { ColorOptions } from "../BadgeTitle/BadgeTitle"
 import classes from "./GenerateContent.module.scss"
 
 const GenerateContent: React.FC = () => {
@@ -136,7 +136,7 @@ const GenerateContent: React.FC = () => {
           <Textarea
             value={entropyValue}
             onChange={setEntropyValue}
-            // regExp={/[^0-1]/}
+            regExp={/[^0-1]/}
             maxBitsValue={+selectedWordCount === 12 ? 128 : 256}
             style={{ marginBottom: "3.4rem" }}
           />
@@ -144,7 +144,7 @@ const GenerateContent: React.FC = () => {
       )}
       {isDetails && (
         <>
-          <div style={{ backgroundColor: "red", color: "white", padding: "3rem", marginBottom: "3rem" }}>
+          {/* <div style={{ backgroundColor: "red", color: "white", padding: "3rem", marginBottom: "3rem" }}>
             {entropyTypeId === 2 && (
               <>
                 Entered base6 in base10: {parseInt(entropyValue, 6)}
@@ -163,8 +163,8 @@ const GenerateContent: React.FC = () => {
                 Bits: {(+entropyValue).toString(2).length}
               </>
             )}
-          </div>
-          <BadgeTitle title="Entropy details" color={ColorOptions.Error} />
+          </div> */}
+          <BadgeTitle title="Entropy details" color={ColorOptions.ErrorLight} />
           <p className={classes.insightsLabel}>Here are more insights into your manual input</p>
           <div className={classes.insightsContainer}>
             <div className={classes.insightBlock}>

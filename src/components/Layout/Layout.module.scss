@@ -48,40 +48,6 @@
   }
 }
 
-.checkmarkInfoContainer {
-  display: flex;
-  margin-bottom: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  .infoContainer {
-    display: flex;
-    align-items: center;
-  }
-
-  .info {
-    font-weight: $fwNormal;
-    font-size: 14px;
-    line-height: 24px;
-    color: $colorBg700;
-    margin-left: 1.4rem;
-  }
-
-  .additionalInfo {
-    height: 24px;
-    width: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: $radiiSmall;
-    background-color: $colorMainLightish;
-    font-weight: $fwNormal;
-    font-size: 15px;
-    line-height: 24px;
-  }
-}
-
 .bottomMenu {
   padding-top: 2.8rem;
   border-top: 2px solid $colorBg400;

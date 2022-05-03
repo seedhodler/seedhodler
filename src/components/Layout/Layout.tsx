@@ -1,34 +1,26 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { Outlet } from "react-router-dom"
 
 import QuestionMarkIcon from "assets/icons/QuestionMark.svg"
 import Logo from "assets/icons/Logo.svg"
 import { InfoTitle } from "components/InfoTitle"
+import { CheckmarkInfo } from "components/CheckmarkInfo"
 
-import CheckmarkInfo from "./CheckmarkInfo"
 import classes from "./Layout.module.scss"
 
-const Layout: React.FC = () => {
-  const [isOnline, setIsOnline] = useState(window.navigator.onLine)
+type Props = {
+  isOnline: boolean
+}
 
-  useEffect(() => {
-    window.addEventListener("online", () => setIsOnline(true))
-    window.addEventListener("offline", () => setIsOnline(false))
-
-    return () => {
-      window.removeEventListener("online", () => setIsOnline(true))
-      window.removeEventListener("offline", () => setIsOnline(false))
-    }
-  }, [])
-
+const Layout: React.FC<Props> = ({ isOnline }) => {
   return (
     <div className={classes.mainContainer}>
       <nav className={classes.nav}>
         <div>
           <img src={Logo} alt="Seedhodler" className={classes.logo} />
           <p className={classes.subtitle}>
-            Seedhodler is free and open source software. This project is currently a{" "} 
-            <b>work in progress</b> and should <b>not be used</b> by anyone for any reason whatsoever.
+            Seedhodler is free and open source software. This project is currently a <b>work in progress</b>
+            and should <b>not be used</b> by anyone for any reason whatsoever.
           </p>
           <p className={classes.githubInfo}>
             In need of the source code?{" "}

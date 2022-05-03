@@ -2,19 +2,15 @@ import React from "react"
 import CSS from "csstype"
 
 import variables from "styles/Variables.module.scss"
+import { ColorOptions } from "enums"
 
 import classes from "./BadgeTitle.module.scss"
-
-export enum ColorOptions {
-  Main,
-  Success,
-  Error,
-}
 
 const colors = {
   [ColorOptions.Main]: variables.colorMainLight,
   [ColorOptions.Success]: variables.colorSuccessLight,
-  [ColorOptions.Error]: variables.colorErrorLight,
+  [ColorOptions.ErrorLight]: variables.colorErrorLight,
+  [ColorOptions.Error]: variables.colorError,
 }
 
 type Props = {
