@@ -23,8 +23,8 @@ const GenerateContent: React.FC = () => {
   const [selectedLang, setSelectedLang] = useState(langOptions[0].value)
   const [selectedWordCount, setSelectedWordCount] = useState(wordCountOptions[0].value)
   const [mnemonic, setMnemonic] = useState(new Array(12).fill(""))
-  const [isAdvanced, setIsAdvanced] = useState(true)
-  const [isDetails, setIsDetails] = useState(true)
+  const [isAdvanced, setIsAdvanced] = useState(false)
+  const [isDetails, setIsDetails] = useState(false)
   const [entropyTypeId, setEntropyTypeId] = useState(0)
   const [entropyValue, setEntropyValue] = useState("")
   const [thresholdValue, setThresholdValue] = useState(3)
@@ -260,7 +260,9 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
               <InfoTitle title="Threshold" desc="Threshold __placeholder" className={classes.calcTitle} />
               <Calc
                 value={thresholdValue}
-                onPlus={() => setThresholdValue(prev => (prev >= 6 ? prev : ++prev))}
+                plusDisabled={thresholdValue >= sharesValue}
+                minusDisabled={sharesValue <= 1}
+                onPlus={() => setThresholdValue(prev => ++prev)}
                 onMinus={() => setThresholdValue(prev => (prev <= 0 ? prev : --prev))}
               />
             </div>
@@ -268,7 +270,8 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
               <InfoTitle title="Shares" desc="Shares __placeholder" className={classes.calcTitle} />
               <Calc
                 value={sharesValue}
-                onPlus={() => setSharesValue(prev => (prev >= 6 ? prev : ++prev))}
+                minusDisabled={sharesValue <= 1 || sharesValue <= thresholdValue}
+                onPlus={() => setSharesValue(prev => ++prev)}
                 onMinus={() => setSharesValue(prev => (prev <= 0 ? prev : --prev))}
               />
             </div>

@@ -7,18 +7,20 @@ import classes from "./Calc.module.scss"
 
 type Props = {
   value: number
+  plusDisabled?: boolean
+  minusDisabled?: boolean
   onPlus: () => void
   onMinus: () => void
 }
 
-const Calc: React.FC<Props> = ({ value, onPlus, onMinus }) => {
+const Calc: React.FC<Props> = ({ value, plusDisabled, minusDisabled, onPlus, onMinus }) => {
   return (
     <div className={classes.mainContainer}>
-      <button onClick={onMinus} disabled={value <= 0} className={classes.btnMinus}>
+      <button onClick={onMinus} disabled={minusDisabled} className={classes.btnMinus}>
         <img src={RemoveIcon} alt="Minus" />
       </button>
       <span className={classes.value}>{value}</span>
-      <button onClick={onPlus} disabled={value >= 6} className={classes.btnPlus}>
+      <button onClick={onPlus} disabled={plusDisabled} className={classes.btnPlus}>
         <img src={AddIcon} alt="Plus" />
       </button>
     </div>
