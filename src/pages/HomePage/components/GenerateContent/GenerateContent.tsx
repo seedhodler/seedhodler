@@ -13,7 +13,7 @@ import { Select } from "components/Select"
 import { Switch } from "components/Switch"
 import { Textarea } from "components/Textarea"
 import { generateMnemonic, generateMnemonicFromEntropy, parseBigInt } from "helpers"
-import { ColorOptions, langOptions, wordCountOptions } from "constants/index"
+import { ColorOptions, langOptions, wordCountOptions, cardDictionary } from "constants/index"
 
 import { BadgeTitle } from "../BadgeTitle"
 import { EntropyValueType } from "../EntropyValueType"
@@ -30,27 +30,72 @@ const GenerateContent: React.FC = () => {
   const [thresholdValue, setThresholdValue] = useState(3)
   const [sharesValue, setSharesValue] = useState(6)
 
+  let count = 0
+  const minBits = +selectedWordCount === 12 ? 128 : 256
+
   const regexVariants = {
     0: /[^0-1]/,
     2: /[^1-6]/,
     3: /[^0-9]/,
   }
 
+  const getBinaryFromCardEntropy = (entropyValue: string) => {
+    let resultBinary = ""
+
+    const cardsArr = entropyValue.match(/.{1,2}/g)
+    cardsArr?.forEach(card => {
+      const cardAsBinary = cardDictionary[card.toLowerCase() as keyof typeof cardDictionary]
+      if (card.length === 2 && cardAsBinary) {
+        resultBinary += cardAsBinary
+      }
+    })
+
+    return resultBinary
+  }
+
   const entropiesAsBinary = {
     0: entropyValue,
     // TODO: remove once logic will be ready
-    1: "0",
+    1: getBinaryFromCardEntropy(entropyValue),
     // TODO: temp condition to remove error when entering value for Number entropy
     // replace(/6/g, "0") - workaround to use 1-6 in dice, instead of 0-5
     2: entropyTypeId === 2 ? parseBigInt(entropyValue.replace(/6/g, "0") || "0", 6).toString(2) : "0",
-    3: BigInt(entropyValue).toString(2),
+    3: entropyTypeId === 2 ? BigInt(entropyValue).toString(2) : "0",
   }
   const selectedEntropyAsBinary = entropiesAsBinary[entropyTypeId as keyof typeof entropiesAsBinary]
 
-  let count = 0
-  const minBits = +selectedWordCount === 12 ? 128 : 256
-
-  const isGenerateBtnDisabled = isAdvanced && selectedEntropyAsBinary.length < minBits
+  const entropyDetails = {
+    0: {
+      timeToCrack: "temp",
+      totalBits: `${entropyValue.length} / ${minBits}`,
+      entropyType: "Binary [0-1], 101010011",
+      rawEntropyWords: "?",
+      // entropyAsBinary: entropyValue,
+    },
+    1: {
+      timeToCrack: "temp",
+      totalBits: `${selectedEntropyAsBinary.length} / ${minBits}`,
+      entropyType: "Card [A2-9TJQK][CDHS], ahqs9dtc",
+      rawEntropyWords: "?",
+      // entropyAsBinary: getBinaryFromCardEntropy(entropyValue),
+    },
+    2: {
+      timeToCrack: "temp",
+      totalBits: `${selectedEntropyAsBinary.length} / ${minBits}`,
+      entropyType: "Dice [1-6], 25356341",
+      rawEntropyWords: "?",
+      // entropyAsBinary:
+      //   entropyTypeId === 2 ? parseBigInt(entropyValue.replace(/6/g, "0") || "0", 6).toString(2) : "0",
+    },
+    3: {
+      timeToCrack: "temp",
+      totalBits: `${selectedEntropyAsBinary.length} / ${minBits}`,
+      entropyType: "Numbers [0-9], 90834528",
+      rawEntropyWords: "?",
+      // entropyAsBinary: entropyTypeId === 2 ? BigInt(entropyValue).toString(2) : "0",
+    },
+  }
+  const selectedEntropyDetails = entropyDetails[entropyTypeId as keyof typeof entropyDetails]
 
   const handleGeneratePhase = () => {
     let mnemonic
@@ -103,7 +148,9 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
           <p>
             Advanced Toolset -{" "}
             <span className={classes.entropyGeneration}>
-              {isAdvanced ? "Careful, extremely dangerous when used incorrectly 🔥" : "Entropy Generation"}
+              {isAdvanced
+                ? "Careful, extremely dangerous when used incorrectly 🔥"
+                : "Entropy Generation"}
             </span>
           </p>
           <img src={InfoGrayIcon} alt="Info" style={{ marginLeft: "0.5rem" }} />
@@ -181,22 +228,20 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
               <p className={classes.insightTitle}>Time to Crack</p>
               <div className={classes.insightContentContainer}>
                 <span className={classes.insightBadge}>Centuries</span>
-                <p className={classes.insightContent}>Repeats like "aaa" are easy to guess</p>
+                <p className={classes.insightContent}>{selectedEntropyDetails.timeToCrack}</p>
               </div>
             </div>
             <div className={classes.insightBlock}>
               <p className={classes.insightTitle}>Total Bits</p>
-              <p className={classes.insightContent}>
-                {selectedEntropyAsBinary.length} / {minBits}
-              </p>
+              <p className={classes.insightContent}>{selectedEntropyDetails.totalBits}</p>
             </div>
             <div className={classes.insightBlock}>
               <p className={classes.insightTitle}>Entropy Type</p>
-              <p className={classes.insightContent}>Binary [0-1] , 101010011</p>
+              <p className={classes.insightContent}>{selectedEntropyDetails.entropyType}</p>
             </div>
             <div className={classes.insightBlock}>
               <p className={classes.insightTitle}>Raw Entropy Words</p>
-              <p className={classes.insightContent}>15</p>
+              <p className={classes.insightContent}>{selectedEntropyDetails.rawEntropyWords}</p>
             </div>
           </div>
         </>
@@ -205,7 +250,7 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
         fullWidth
         style={{ marginBottom: "3.4rem" }}
         onClick={handleGeneratePhase}
-        disabled={isGenerateBtnDisabled}
+        disabled={isAdvanced && selectedEntropyAsBinary.length < minBits}
       >
         Generate Phrase
       </Button>
@@ -233,12 +278,16 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
         <>
           <BadgeTitle title="Split Phrase into shares" color={ColorOptions.Success} />
           <p className={classes.sharesInfo}>
-            The generated Phrase can now be split into up to 6 different shares. These can then be combined to
-            restore your Phrase
+            The generated Phrase can now be split into up to 6 different shares. These can then be
+            combined to restore your Phrase
           </p>
           <div className={classes.thresholdSharesContainer}>
             <div className={classes.calcContainer}>
-              <InfoTitle title="Threshold" desc="Threshold __placeholder" className={classes.calcTitle} />
+              <InfoTitle
+                title="Threshold"
+                desc="Threshold __placeholder"
+                className={classes.calcTitle}
+              />
               <Calc
                 value={thresholdValue}
                 plusDisabled={thresholdValue >= sharesValue}
