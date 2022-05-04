@@ -12,7 +12,7 @@ import { Input } from "components/Input"
 import { Select } from "components/Select"
 import { Switch } from "components/Switch"
 import { Textarea } from "components/Textarea"
-import { generateMnemonic, generateMnemonicFromEntropy } from "helpers"
+import { generateMnemonic, generateMnemonicFromEntropy, parseBigInt } from "helpers"
 import { ColorOptions, langOptions, wordCountOptions } from "constants/index"
 
 import { BadgeTitle } from "../BadgeTitle"
@@ -32,7 +32,7 @@ const GenerateContent: React.FC = () => {
 
   const regexVariants = {
     0: /[^0-1]/,
-    2: /[^0-5]/,
+    2: /[^1-6]/,
     3: /[^0-9]/,
   }
 
@@ -41,7 +41,8 @@ const GenerateContent: React.FC = () => {
     // TODO: remove once logic will be ready
     1: "0",
     // TODO: temp condition to remove error when entering value for Number entropy
-    2: entropyTypeId === 2 ? parseBigInt(entropyValue || "0", 6).toString(2) : "0",
+    // replace(/6/g, "0") - workaround to use 1-6 in dice, instead of 0-5
+    2: entropyTypeId === 2 ? parseBigInt(entropyValue.replace(/6/g, "0") || "0", 6).toString(2) : "0",
     3: BigInt(entropyValue).toString(2),
   }
   const selectedEntropyAsBinary = entropiesAsBinary[entropyTypeId as keyof typeof entropiesAsBinary]
@@ -71,29 +72,9 @@ const GenerateContent: React.FC = () => {
     setEntropyTypeId(id)
   }
 
-  // TODO: !!! recheck function and remove TS ignore
-  // There's no built-in parsing for base 6, so:
-  // @ts-ignore
-  function parseBigInt(str, base = 10) {
-    if (typeof base !== "number" || isNaN(base) || base < 2 || base > 36) {
-      throw new Error(`parseBigInt doesn't support base ${base}`)
-    }
-    let num = BigInt(0)
-    // @ts-ignore
-    base = BigInt(base)
-    for (const digit of str) {
-      // @ts-ignore
-      num *= base
-      num += BigInt(parseInt(digit, 6))
-    }
-    return num
-  }
-
   useEffect(() => {
     setMnemonic(new Array(+selectedWordCount).fill(""))
   }, [selectedWordCount])
-
-  console.log(selectedEntropyAsBinary)
 
   return (
     <div className={classes.tabContent}>
