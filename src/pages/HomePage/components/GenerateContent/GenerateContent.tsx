@@ -12,8 +12,8 @@ import { Input } from "components/Input"
 import { Select } from "components/Select"
 import { Switch } from "components/Switch"
 import { Textarea } from "components/Textarea"
-import { generateMnemonic, generateMnemonicFromEntropy, parseBigInt } from "helpers"
-import { ColorOptions, langOptions, wordCountOptions, cardDictionary } from "constants/index"
+import { generateMnemonic, generateMnemonicFromEntropy, getEntropyDetails } from "helpers"
+import { ColorOptions, langOptions, wordCountOptions } from "constants/index"
 
 import { BadgeTitle } from "../BadgeTitle"
 import { EntropyValueType } from "../EntropyValueType"
@@ -32,70 +32,11 @@ const GenerateContent: React.FC = () => {
 
   let count = 0
   const minBits = +selectedWordCount === 12 ? 128 : 256
-
-  const regexVariants = {
-    0: /[^0-1]/,
-    2: /[^1-6]/,
-    3: /[^0-9]/,
-  }
-
-  const getBinaryFromCardEntropy = (entropyValue: string) => {
-    let resultBinary = ""
-
-    const cardsArr = entropyValue.match(/.{1,2}/g)
-    cardsArr?.forEach(card => {
-      const cardAsBinary = cardDictionary[card.toLowerCase() as keyof typeof cardDictionary]
-      if (card.length === 2 && cardAsBinary) {
-        resultBinary += cardAsBinary
-      }
-    })
-
-    return resultBinary
-  }
-
-  const entropiesAsBinary = {
-    0: entropyValue,
-    // TODO: remove once logic will be ready
-    1: getBinaryFromCardEntropy(entropyValue),
-    // TODO: temp condition to remove error when entering value for Number entropy
-    // replace(/6/g, "0") - workaround to use 1-6 in dice, instead of 0-5
-    2: entropyTypeId === 2 ? parseBigInt(entropyValue.replace(/6/g, "0") || "0", 6).toString(2) : "0",
-    3: entropyTypeId === 2 ? BigInt(entropyValue).toString(2) : "0",
-  }
-  const selectedEntropyAsBinary = entropiesAsBinary[entropyTypeId as keyof typeof entropiesAsBinary]
-
-  const entropyDetails = {
-    0: {
-      timeToCrack: "temp",
-      totalBits: `${entropyValue.length} / ${minBits}`,
-      entropyType: "Binary [0-1], 101010011",
-      rawEntropyWords: "?",
-      // entropyAsBinary: entropyValue,
-    },
-    1: {
-      timeToCrack: "temp",
-      totalBits: `${selectedEntropyAsBinary.length} / ${minBits}`,
-      entropyType: "Card [A2-9TJQK][CDHS], ahqs9dtc",
-      rawEntropyWords: "?",
-      // entropyAsBinary: getBinaryFromCardEntropy(entropyValue),
-    },
-    2: {
-      timeToCrack: "temp",
-      totalBits: `${selectedEntropyAsBinary.length} / ${minBits}`,
-      entropyType: "Dice [1-6], 25356341",
-      rawEntropyWords: "?",
-      // entropyAsBinary:
-      //   entropyTypeId === 2 ? parseBigInt(entropyValue.replace(/6/g, "0") || "0", 6).toString(2) : "0",
-    },
-    3: {
-      timeToCrack: "temp",
-      totalBits: `${selectedEntropyAsBinary.length} / ${minBits}`,
-      entropyType: "Numbers [0-9], 90834528",
-      rawEntropyWords: "?",
-      // entropyAsBinary: entropyTypeId === 2 ? BigInt(entropyValue).toString(2) : "0",
-    },
-  }
-  const selectedEntropyDetails = entropyDetails[entropyTypeId as keyof typeof entropyDetails]
+  const { selectedEntropyAsBinary, selectedEntropyDetails, regex } = getEntropyDetails(
+    entropyValue,
+    entropyTypeId,
+    minBits,
+  )
 
   const handleGeneratePhase = () => {
     let mnemonic
@@ -214,7 +155,7 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
           <Textarea
             value={entropyValue}
             onChange={setEntropyValue}
-            regex={regexVariants[entropyTypeId as keyof typeof regexVariants]}
+            regex={regex}
             style={{ marginBottom: "3.4rem" }}
           />
         </>
