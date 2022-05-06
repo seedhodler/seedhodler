@@ -27,7 +27,11 @@ const ConnectionStatusModal: React.FC<Props> = ({
   setCurrentStep,
 }) => {
   const isFirstStep = currentStep === 0
-  const btnText = isFirstStep ? "Ok! Got it" : isOnline ? "Continue at your own risk!" : "The coast is clear"
+  const btnText = isFirstStep
+    ? "Ok! Got it"
+    : isOnline
+    ? "Continue at your own risk!"
+    : "The coast is clear"
 
   const handleBtnClick = () => {
     if (isFirstStep) {
@@ -49,9 +53,9 @@ const ConnectionStatusModal: React.FC<Props> = ({
           {isFirstStep ? (
             <>
               <p className={classes.description}>
-                Now we are going to take you through the process of generating your Seed recovery phrases.
-                Your Seedhodler recovery phrase is either a 12 or 24-word phrase that will be used to restore
-                your assets whenever necessary.
+                Now we are going to take you through the process of generating your Seed recovery
+                phrases. Your Seedhodler recovery phrase is either a 12 or 24-word phrase that will be
+                used to restore your assets whenever necessary.
               </p>
               <p className={classes.checkmarksTitle}>You will need:</p>
               <CheckmarkInfo filled infoClassName={classes.checkmarkInfo}>
@@ -67,8 +71,8 @@ const ConnectionStatusModal: React.FC<Props> = ({
           ) : (
             <>
               <p className={classes.description}>
-                For security reasons this application should only be used in an offline Environment. Reducing
-                any possibilities for Hacking is key to keeping you assets safe.
+                For security reasons this application should only be used in an offline Environment.
+                Reducing any possibilities for Hacking is key to keeping you assets safe.
               </p>
               <p className={classes.checkmarksTitle} style={{ marginBottom: "3.6rem" }}>
                 Connection Status:
@@ -82,12 +86,15 @@ const ConnectionStatusModal: React.FC<Props> = ({
                 </div>
                 {isOnline ? (
                   <>
-                    <p className={classes.checkmarksTitle} style={{ fontSize: "24px" }}>
+                    <p
+                      className={classes.checkmarksTitle}
+                      style={{ fontSize: "24px", textAlign: "center" }}
+                    >
                       Beware! You are Currently Online
                     </p>
                     <p className={classes.description} style={{ textAlign: "center" }}>
-                      It would be best to physically disconnect any cables from the internet or turn off your
-                      Network Adapters
+                      It would be best to physically disconnect any cables from the internet or turn off
+                      your Network Adapters
                     </p>
                   </>
                 ) : (

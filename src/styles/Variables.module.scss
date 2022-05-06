@@ -23,6 +23,7 @@ $colorBg400: #e1e1e1;
 $colorBg500: #f7f7f7;
 $colorBg600: #e1e4eb;
 $colorBg650: rgba(111, 118, 126, 0.4);
+$colorBg670: #cdcdcd;
 $colorBg700: #6f767e;
 
 $colorTextLight: rgba(252, 252, 252, 0.75);
@@ -61,18 +62,23 @@ $breakpoints: (
   xl: 1280px,
 );
 
-@mixin lg-d {
+@mixin xl-d {
   @media (max-width: (map-get($breakpoints, xl) - 0.2px)) {
     @content;
   }
 }
-@mixin md-d {
+@mixin lg-d {
   @media (max-width: (map-get($breakpoints, lg) - 0.2px)) {
     @content;
   }
 }
-@mixin lg-d {
+@mixin md-d {
   @media (max-width: (map-get($breakpoints, md) - 0.2px)) {
+    @content;
+  }
+}
+@mixin sm-d {
+  @media (max-width: (map-get($breakpoints, sm) - 0.2px)) {
     @content;
   }
 }

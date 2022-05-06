@@ -5,7 +5,7 @@
   "trailingComma": "all",
   "semi": false,
   "endOfLine": "auto",
-  "printWidth": 110,
+  "printWidth": 105,
   "arrowParens": "avoid",
   "tabWidth": 2
 }

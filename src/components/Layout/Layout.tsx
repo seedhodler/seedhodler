@@ -19,8 +19,8 @@ const Layout: React.FC<Props> = ({ isOnline }) => {
         <div>
           <img src={Logo} alt="Seedhodler" className={classes.logo} />
           <p className={classes.subtitle}>
-            Seedhodler is free and open source software. This project is currently a <b>work in progress</b>
-            and should <b>not be used</b> by anyone for any reason whatsoever.
+            Seedhodler is free and open source software. This project is currently a{" "}
+            <b>work in progress</b> and should <b>not be used</b> by anyone for any reason whatsoever.
           </p>
           <p className={classes.githubInfo}>
             In need of the source code?{" "}

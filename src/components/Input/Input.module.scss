@@ -16,8 +16,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
-  margin-right: 1rem;
   color: $colorBg700;
 }
 
@@ -33,11 +31,12 @@
   background-color: $colorBg200;
   border-radius: $radii;
   color: $colorTextDarkish;
+  outline: 2px solid transparent;
   transition: $transAll;
 
   &:hover,
   &:focus {
-    outline: 2px solid $colorMain;
+    outline-color: $colorMain;
   }
 }
 
