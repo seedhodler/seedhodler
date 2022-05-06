@@ -29,6 +29,7 @@ const Shares: React.FC<Props> = ({ shares, activeShareItemId, setActiveShareItem
       <div className={classes.sharesContainer}>
         <div className={classes.sharesHeader}>
           <button
+            disabled={activeShareItemId <= 0}
             onClick={() => setActiveShareItemId(prev => (prev <= 0 ? prev : --prev))}
             className={classes.navigationBtn}
           >
@@ -39,6 +40,7 @@ const Shares: React.FC<Props> = ({ shares, activeShareItemId, setActiveShareItem
             <span className={classes.shareNumberHeader}>Share - {activeShareItemId + 1}</span>
           </div>
           <button
+            disabled={activeShareItemId >= shares.length - 1}
             onClick={() => setActiveShareItemId(prev => (prev >= shares.length - 1 ? prev : ++prev))}
             className={classes.navigationBtn}
           >
@@ -59,7 +61,9 @@ const Shares: React.FC<Props> = ({ shares, activeShareItemId, setActiveShareItem
           ))}
         </div>
         <div className={classes.blockDivider} style={{ marginBottom: "2.4rem" }}></div>
-        <p className={classes.shareNumberText}>1/6 splits</p>
+        <p className={classes.shareNumberText}>
+          {activeShareItemId + 1}/{shares.length} splits
+        </p>
       </div>
       <div className={classes.navigationContainer}>{navigation}</div>
     </>

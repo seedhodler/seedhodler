@@ -7,6 +7,12 @@
   background-color: $colorMain;
 }
 
+.blockDivider {
+  height: 1px;
+  background-color: $colorBg300;
+  margin-bottom: 3.2rem;
+}
+
 .sharesContainer {
   padding: 2.4rem;
   background-color: $colorBg100;
@@ -53,6 +59,13 @@
   &:focus:not([disabled]) {
     border-color: $colorMain;
   }
+
+  &:disabled,
+  &[disabled] {
+    cursor: default;
+    background-color: transparent;
+    border-color: transparent;
+  }
 }
 
 .shareItemsContainer {
@@ -97,12 +110,14 @@
   margin: 3.2rem 0;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 %navigationItemBase {
   @extend %dot;
   margin-right: 1rem;
   transition: $transAll;
+  margin-bottom: 0.6rem;
 
   &:last-child() {
     margin-right: 0;

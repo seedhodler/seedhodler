@@ -18,14 +18,14 @@ import {
   getEntropyDetails,
   getFormattedShares,
   hexStringToByteArray,
+  mnemonicToEntropy,
 } from "helpers"
 import { ColorOptions, langOptions, wordCountOptions } from "constants/index"
 
+import { Shares } from "../Shares"
 import { BadgeTitle } from "../BadgeTitle"
 import { EntropyValueType } from "../EntropyValueType"
 import classes from "./GenerateContent.module.scss"
-import { mnemonicToEntropy } from "bip39"
-import { Shares } from "../Shares"
 
 const GenerateContent: React.FC = () => {
   const [selectedLang, setSelectedLang] = useState(langOptions[0].value)
@@ -49,6 +49,8 @@ const GenerateContent: React.FC = () => {
   )
 
   const handleGenerateShares = () => {
+    setActiveShareItemId(0)
+
     const mnemonicStr = mnemonic.join(" ")
     const groups = [[thresholdNumber, sharesNumber]]
     const masterSecret = hexStringToByteArray(mnemonicToEntropy(mnemonicStr))
@@ -58,6 +60,9 @@ const GenerateContent: React.FC = () => {
   }
 
   const handleGeneratePhase = () => {
+    setShares(null)
+    setActiveShareItemId(0)
+
     let mnemonic
     if (!isAdvanced) {
       mnemonic = generateMnemonic(selectedLang, +selectedWordCount)
@@ -267,7 +272,7 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
               />
             </div>
           </div>
-          <Button onClick={handleGenerateShares} fullWidth style={{ marginBottom: "6.5rem" }}>
+          <Button onClick={handleGenerateShares} fullWidth style={{ marginBottom: "3.6rem" }}>
             Split
           </Button>
           {shares && (
@@ -277,7 +282,7 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
               setActiveShareItemId={setActiveShareItemId}
             />
           )}
-          <Button onClick={() => {}} fullWidth disabled>
+          <Button onClick={() => {}} fullWidth disabled={!Boolean(shares)}>
             Export / Save Shares
           </Button>
         </>
