@@ -2,13 +2,13 @@ import React, { Dispatch, SetStateAction } from "react"
 
 import CloseIcon from "assets/icons/Close.svg"
 import { BadgeTitle } from "pages/HomePage/components/BadgeTitle"
-import { ColorOptions } from "constants/index"
+import { BadgeColorOptions } from "constants/index"
 
 import classes from "./Modal.module.scss"
 
 type Props = {
   title: string
-  badgeColor?: ColorOptions
+  badgeColor?: BadgeColorOptions
   isActive: boolean
   setIsActive: Dispatch<SetStateAction<boolean>>
   children: JSX.Element
@@ -16,14 +16,20 @@ type Props = {
 
 const Modal: React.FC<Props> = ({
   title,
-  badgeColor = ColorOptions.Success,
+  badgeColor = BadgeColorOptions.Success,
   isActive,
   setIsActive,
   children,
 }) => {
   return (
-    <div onClick={() => setIsActive(false)} className={isActive ? classes.backdropActive : classes.backdrop}>
-      <div onClick={e => e.stopPropagation()} className={isActive ? classes.contentActive : classes.content}>
+    <div
+      onClick={() => setIsActive(false)}
+      className={isActive ? classes.backdropActive : classes.backdrop}
+    >
+      <div
+        onClick={e => e.stopPropagation()}
+        className={isActive ? classes.contentActive : classes.content}
+      >
         <div className={classes.modalHeader}>
           <BadgeTitle title={title} color={badgeColor} style={{ marginBottom: 0 }} />
           <button onClick={() => setIsActive(false)} className={classes.closeBtn}>

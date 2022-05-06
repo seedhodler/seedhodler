@@ -39,7 +39,7 @@
 
 .shareNumberHeader {
   margin-left: 1rem;
-  font-weight: $fwNormal;
+  font-weight: $fwSemiBold;
   color: $colorTextDark;
   font-size: 20px;
 }
@@ -53,11 +53,10 @@
   justify-content: center;
   align-items: center;
   transition: $transAll;
-  border: 1px solid $colorBg300;
 
   &:hover:not([disabled]),
   &:focus:not([disabled]) {
-    border-color: $colorMain;
+    background-color: darken($colorBg300, 10%);
   }
 
   &:disabled,
@@ -70,7 +69,6 @@
 
 .shareItemsContainer {
   margin-bottom: 2.4rem;
-  height: 550px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -78,7 +76,7 @@
 
 .shareNumberText {
   color: $colorBg700;
-  font-weight: $fwNormal;
+  font-weight: $fwSemiBold;
   font-size: 18px;
 }
 
@@ -90,10 +88,6 @@
   padding: 1.2rem 1.2rem 1.2rem 4.2rem;
   margin-bottom: 1.2rem;
   width: 49%;
-
-  &:nth-child(10n) {
-    margin-bottom: 0;
-  }
 }
 
 .shareItemCount {

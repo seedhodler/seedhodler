@@ -2,21 +2,21 @@ import React from "react"
 import CSS from "csstype"
 
 import variables from "styles/Variables.module.scss"
-import { ColorOptions } from "constants/index"
+import { BadgeColorOptions } from "constants/index"
 
 import classes from "./BadgeTitle.module.scss"
 
 const colors = {
-  [ColorOptions.Main]: variables.colorMainLight,
-  [ColorOptions.Success]: variables.colorSuccessLight,
-  [ColorOptions.ErrorLight]: variables.colorErrorLight,
-  [ColorOptions.Error]: variables.colorError,
+  [BadgeColorOptions.Main]: variables.colorMainLight,
+  [BadgeColorOptions.Success]: variables.colorSuccessLight,
+  [BadgeColorOptions.ErrorLight]: variables.colorErrorLight,
+  [BadgeColorOptions.Error]: variables.colorError,
 }
 
 type Props = {
   title: string
   additionalInfo?: string
-  color?: ColorOptions
+  color?: BadgeColorOptions
   className?: string
   style?: CSS.Properties
 }
@@ -24,7 +24,7 @@ type Props = {
 const BadgeTitle: React.FC<Props> = ({
   title,
   additionalInfo,
-  color = ColorOptions.Main,
+  color = BadgeColorOptions.Main,
   className,
   style,
 }) => {

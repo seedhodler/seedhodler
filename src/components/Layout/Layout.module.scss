@@ -43,7 +43,7 @@
   font-size: 13px;
   line-height: 16px;
   color: $colorTextLighter;
-  font-weight: $fwNormal;
+  font-weight: $fwSemiBold;
   margin-bottom: 4rem;
 }
 
@@ -82,11 +82,11 @@
 .onlineMessage {
   color: $colorError;
   font-size: 12px;
-  font-weight: $fwLightish;
+  font-weight: $fwNormal;
 }
 
 .securityNotice {
-  font-weight: $fwNormal;
+  font-weight: $fwSemiBold;
   margin-bottom: 0;
   color: $colorTextDarkish;
 }

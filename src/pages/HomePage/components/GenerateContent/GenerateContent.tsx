@@ -20,7 +20,7 @@ import {
   hexStringToByteArray,
   mnemonicToEntropy,
 } from "helpers"
-import { ColorOptions, langOptions, wordCountOptions } from "constants/index"
+import { BadgeColorOptions, ButtonColorOptions, langOptions, wordCountOptions } from "constants/index"
 
 import { Shares } from "../Shares"
 import { BadgeTitle } from "../BadgeTitle"
@@ -88,7 +88,7 @@ const GenerateContent: React.FC = () => {
 
   return (
     <div className={classes.tabContent}>
-      <BadgeTitle title="Phrase" additionalInfo="BIP 39" color={ColorOptions.Success} />
+      <BadgeTitle title="Phrase" additionalInfo="BIP 39" color={BadgeColorOptions.Success} />
       <div className={classes.configContainer}>
         <div>
           <InfoTitle title="Language" desc="Language __placeholder" />
@@ -186,7 +186,7 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
       )}
       {isDetails && (
         <>
-          <BadgeTitle title="Entropy details" color={ColorOptions.ErrorLight} />
+          <BadgeTitle title="Entropy details" color={BadgeColorOptions.ErrorLight} />
           <p className={classes.insightsLabel}>Here are more insights into your manual input</p>
           <div className={classes.insightsContainer}>
             <div className={classes.insightBlock}>
@@ -241,7 +241,7 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
       </div>
       {mnemonic.every(word => word.length !== 0) && (
         <>
-          <BadgeTitle title="Split Phrase into shares" color={ColorOptions.Success} />
+          <BadgeTitle title="Split Phrase into shares" color={BadgeColorOptions.Success} />
           <p className={classes.sharesInfo}>
             The generated Phrase can now be split into up to 6 different shares. These can then be
             combined to restore your Phrase
@@ -280,9 +280,15 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
               shares={shares}
               activeShareItemId={activeShareItemId}
               setActiveShareItemId={setActiveShareItemId}
+              selectedWordCount={+selectedWordCount}
             />
           )}
-          <Button onClick={() => {}} fullWidth disabled={!Boolean(shares)}>
+          <Button
+            onClick={() => {}}
+            disabled={!Boolean(shares)}
+            fullWidth
+            color={ButtonColorOptions.Success}
+          >
             Export / Save Shares
           </Button>
         </>

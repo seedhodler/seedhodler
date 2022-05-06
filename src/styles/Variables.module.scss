@@ -2,7 +2,6 @@
 $colorMainLight: #cabdff;
 $colorMainLightish: #cabdfe;
 $colorMain: #5c58bb;
-$colorMainDark: #413e83;
 
 $colorWarn: #ffd88d;
 
@@ -37,8 +36,8 @@ $fontFamily: "Inter", sans-serif;
 
 /* font weights */
 $fwLight: 400;
-$fwLightish: 500;
-$fwNormal: 600;
+$fwNormal: 500;
+$fwSemiBold: 600;
 $fwBold: 700;
 
 /* radiuses */
@@ -89,6 +88,6 @@ $breakpoints: (
   colorBg100: $colorBg100;
   colorMainLight: $colorMainLight;
   colorSuccessLight: $colorSuccessLight;
-  colorErrorLight: $colorErrorLight;
   colorError: $colorError;
+  colorErrorLight: $colorErrorLight;
 }
