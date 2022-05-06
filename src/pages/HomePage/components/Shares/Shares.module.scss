@@ -1,0 +1,119 @@
+@import "styles/Variables.module.scss";
+
+%dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: $colorMain;
+}
+
+.sharesContainer {
+  padding: 2.4rem;
+  background-color: $colorBg100;
+  box-shadow: 0px 0px 14px -4px rgba(0, 0, 0, 0.05), 0px 32px 48px -8px rgba(0, 0, 0, 0.1);
+  border-radius: $radiiMedium;
+  margin-bottom: 4.5rem;
+}
+
+.sharesHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.4rem;
+}
+
+.shareNumberContainer {
+  display: flex;
+  align-items: center;
+}
+
+.mark {
+  @extend %dot;
+}
+
+.shareNumberHeader {
+  margin-left: 1rem;
+  font-weight: $fwNormal;
+  color: $colorTextDark;
+  font-size: 20px;
+}
+
+.navigationBtn {
+  background-color: $colorBg300;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: $transAll;
+  border: 1px solid $colorBg300;
+
+  &:hover:not([disabled]),
+  &:focus:not([disabled]) {
+    border-color: $colorMain;
+  }
+}
+
+.shareItemsContainer {
+  margin-bottom: 2.4rem;
+  height: 550px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.shareNumberText {
+  color: $colorBg700;
+  font-weight: $fwNormal;
+  font-size: 18px;
+}
+
+.shareItem {
+  position: relative;
+  background-color: $colorBg200;
+  border: 1px dashed $colorBg670;
+  border-radius: $radii;
+  padding: 1.2rem 1.2rem 1.2rem 4.2rem;
+  margin-bottom: 1.2rem;
+  width: 49%;
+
+  &:nth-child(10n) {
+    margin-bottom: 0;
+  }
+}
+
+.shareItemCount {
+  position: absolute;
+  left: 0;
+  width: 4.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $colorBg700;
+}
+
+.navigationContainer {
+  margin: 3.2rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+%navigationItemBase {
+  @extend %dot;
+  margin-right: 1rem;
+  transition: $transAll;
+
+  &:last-child() {
+    margin-right: 0;
+  }
+}
+
+.navigationItem {
+  @extend %navigationItemBase;
+  background-color: $colorBg670;
+}
+
+.navigationItemActive {
+  @extend %navigationItemBase;
+}
