@@ -80,26 +80,6 @@
   font-size: 18px;
 }
 
-.shareItem {
-  position: relative;
-  background-color: $colorBg200;
-  border: 1px dashed $colorBg670;
-  border-radius: $radii;
-  padding: 1.2rem 1.2rem 1.2rem 4.2rem;
-  margin-bottom: 1.2rem;
-  width: 49%;
-}
-
-.shareItemCount {
-  position: absolute;
-  left: 0;
-  width: 4.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: $colorBg700;
-}
-
 .navigationContainer {
   margin: 3.2rem 0;
   display: flex;

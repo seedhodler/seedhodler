@@ -1,7 +1,7 @@
 import React from "react"
 import CSS from "csstype"
 
-import { ButtonColorOptions } from "constants/index"
+import { ButtonColorsEnum } from "constants/index"
 
 import classes from "./Button.module.scss"
 
@@ -12,15 +12,15 @@ type Props = {
   iconRight?: string
   fullWidth?: boolean
   disabled?: boolean
-  color?: ButtonColorOptions
+  color?: ButtonColorsEnum
   className?: string
   style?: CSS.Properties
 }
 
 const colorClasses = {
-  [ButtonColorOptions.Main]: classes.btnColorMain,
-  [ButtonColorOptions.Success]: classes.btnColorSuccess,
-  [ButtonColorOptions.ErrorLightish]: classes.btnColorErrorLightish,
+  [ButtonColorsEnum.Main]: classes.btnColorMain,
+  [ButtonColorsEnum.Success]: classes.btnColorSuccess,
+  [ButtonColorsEnum.ErrorLightish]: classes.btnColorErrorLightish,
 }
 
 const Button: React.FC<Props> = ({
@@ -30,7 +30,7 @@ const Button: React.FC<Props> = ({
   children,
   fullWidth,
   disabled,
-  color = ButtonColorOptions.Main,
+  color = ButtonColorsEnum.Main,
   className,
   style,
 }) => {

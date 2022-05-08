@@ -4,6 +4,7 @@ import PrevIcon from "assets/icons/Prev.svg"
 import NextIcon from "assets/icons/Next.svg"
 
 import classes from "./Shares.module.scss"
+import { TextPlace } from "components/TextPlace"
 
 type Props = {
   shares: string[]
@@ -59,16 +60,13 @@ const Shares: React.FC<Props> = ({
           style={{ height: selectedWordCount === 12 ? "560px" : "960px" }}
         >
           {shares[activeShareItemId].split(" ").map((shareItem, index) => (
-            <div
-              key={index}
-              className={classes.shareItem}
+            <TextPlace
+              text={shareItem}
+              count={index + 1}
               style={{
                 alignSelf: index <= (selectedWordCount === 12 ? 9 : 16) ? "flex-start" : "flex-end",
               }}
-            >
-              <span className={classes.shareItemCount}>{++index}.</span>
-              {shareItem}
-            </div>
+            />
           ))}
         </div>
         <div className={classes.blockDivider} style={{ marginBottom: "2.4rem" }}></div>

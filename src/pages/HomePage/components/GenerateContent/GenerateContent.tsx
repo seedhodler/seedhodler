@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react"
 
+import LogoIcon from "assets/icons/Logo.svg"
 import CoinIcon from "assets/icons/Coin.svg"
 import CardsIcon from "assets/icons/Cards.svg"
 import DiceIcon from "assets/icons/Dice.svg"
 import NumbersIcon from "assets/icons/Numbers.svg"
 import InfoGrayIcon from "assets/icons/InfoGray.svg"
+import PrintIcon from "assets/icons/Print.svg"
+import ArrowRightIcon from "assets/icons/ArrowRight.svg"
 import { Button } from "components/Button"
 import { Calc } from "components/Calc"
 import { InfoTitle } from "components/InfoTitle"
@@ -12,6 +15,10 @@ import { Input } from "components/Input"
 import { Select } from "components/Select"
 import { Switch } from "components/Switch"
 import { Textarea } from "components/Textarea"
+import { Modal } from "components/Modal"
+import { AdditionalInfo } from "components/AdditionalInfo"
+import { TextPlace } from "components/TextPlace"
+import { BadgeColorsEnum, ButtonColorsEnum, langOptions, wordCountOptions } from "constants/index"
 import {
   generateMnemonic,
   generateMnemonicFromEntropy,
@@ -20,10 +27,9 @@ import {
   hexStringToByteArray,
   mnemonicToEntropy,
 } from "helpers"
-import { BadgeColorOptions, ButtonColorOptions, langOptions, wordCountOptions } from "constants/index"
 
 import { Shares } from "../Shares"
-import { BadgeTitle } from "../BadgeTitle"
+import { BadgeTitle } from "../../../../components/BadgeTitle"
 import { EntropyValueType } from "../EntropyValueType"
 import classes from "./GenerateContent.module.scss"
 
@@ -39,6 +45,7 @@ const GenerateContent: React.FC = () => {
   const [sharesNumber, setSharesNumber] = useState(6)
   const [shares, setShares] = useState<null | string[]>(null)
   const [activeShareItemId, setActiveShareItemId] = useState(0)
+  const [isPrintModalActive, setIsPrintModalActive] = useState(true)
 
   let inputCount = 0
   const minBits = +selectedWordCount === 12 ? 128 : 256
@@ -88,7 +95,7 @@ const GenerateContent: React.FC = () => {
 
   return (
     <div className={classes.tabContent}>
-      <BadgeTitle title="Phrase" additionalInfo="BIP 39" color={BadgeColorOptions.Success} />
+      <BadgeTitle title="Phrase" additionalInfo="BIP 39" color={BadgeColorsEnum.Success} />
       <div className={classes.configContainer}>
         <div>
           <InfoTitle title="Language" desc="Language __placeholder" />
@@ -106,9 +113,9 @@ const GenerateContent: React.FC = () => {
       <div className={classes.configContainer}>
         <div
           className={classes.configLabelContainer}
-          title={`None of these advanced functions are necessary for successful generating and 
-splitting your seed phrase. when used incorrectly these advanced functions may lead to  
-generating of unsafe seed phrases that can be (and will be) guessed easily. Be careful!`}
+          title={`None of these advanced functions are necessary for successful generating and
+    splitting your seed phrase. when used incorrectly these advanced functions may lead to
+    generating of unsafe seed phrases that can be (and will be) guessed easily. Be careful!`}
         >
           <p>
             Advanced Toolset -{" "}
@@ -186,7 +193,7 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
       )}
       {isDetails && (
         <>
-          <BadgeTitle title="Entropy details" color={BadgeColorOptions.ErrorLight} />
+          <BadgeTitle title="Entropy details" color={BadgeColorsEnum.ErrorLight} />
           <p className={classes.insightsLabel}>Here are more insights into your manual input</p>
           <div className={classes.insightsContainer}>
             <div className={classes.insightBlock}>
@@ -241,7 +248,7 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
       </div>
       {mnemonic.every(word => word.length !== 0) && (
         <>
-          <BadgeTitle title="Split Phrase into shares" color={BadgeColorOptions.Success} />
+          <BadgeTitle title="Split Phrase into shares" color={BadgeColorsEnum.Success} />
           <p className={classes.sharesInfo}>
             The generated Phrase can now be split into up to 6 different shares. These can then be
             combined to restore your Phrase
@@ -284,15 +291,65 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
             />
           )}
           <Button
-            onClick={() => {}}
+            onClick={() => setIsPrintModalActive(true)}
             disabled={!Boolean(shares)}
             fullWidth
-            color={ButtonColorOptions.Success}
+            color={ButtonColorsEnum.Success}
           >
             Export / Save Shares
           </Button>
         </>
       )}
+      <Modal
+        title="Print - Seedhodler Phraseholder"
+        isActive={isPrintModalActive}
+        setIsActive={setIsPrintModalActive}
+      >
+        <>
+          <p className={classes.modalDescription}>
+            Before continuing please either print the provided Seedhodler Phraseholder or use pen and
+            paper to write down your generated phrases.
+          </p>
+          <div className={classes.modalContentContainer}>
+            <div className={classes.modalHeaderContainer}>
+              <div style={{ width: "60px" }}></div>
+              <img src={LogoIcon} alt="Logo" />
+              <AdditionalInfo info="BIP 39" />
+            </div>
+            <p className={classes.modalInnerDescription}>
+              Use the Seedhodler Phraseholder to write down your generated phrases.
+            </p>
+            <div
+              className={classes.seedPhraseContainer}
+              style={{ height: selectedWordCount === "12" ? "360px" : "720px" }}
+            >
+              {mnemonic.map((word, index) => (
+                <TextPlace
+                  text=""
+                  count={index + 1}
+                  style={{
+                    width: "48%",
+                    alignSelf:
+                      index <= (selectedWordCount === "12" ? 5 : 11) ? "flex-start" : "flex-end",
+                  }}
+                />
+              ))}
+            </div>
+            <p className={classes.modalInnerDescription} style={{ marginBottom: 0 }}>
+              etc.
+              <br /> In seedhodler we trust.
+            </p>
+          </div>
+          <div className={classes.modalButtonsContainer}>
+            <Button onClick={() => {}} iconRight={PrintIcon} color={ButtonColorsEnum.ErrorLightish}>
+              Print
+            </Button>
+            <Button onClick={() => {}} iconRight={ArrowRightIcon}>
+              Continue
+            </Button>
+          </div>
+        </>
+      </Modal>
     </div>
   )
 }

@@ -131,3 +131,38 @@
   font-size: 18px;
   color: $colorTextDark;
 }
+
+.modalDescription {
+  font-weight: $fwLight;
+  font-size: 20px;
+  color: $colorTextDark;
+  margin-bottom: 2.4rem;
+}
+
+.modalContentContainer {
+  padding: 5rem;
+  padding-bottom: 3.6rem;
+  border: 2px dashed $colorBg700;
+  border-radius: $radiiSmall;
+  margin-bottom: 1.8rem;
+}
+
+.modalHeaderContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.modalInnerDescription {
+  font-weight: $fwLight;
+  font-size: 20px;
+  text-align: center;
+  color: $colorTextDark;
+  margin-bottom: 5.6rem;
+}
+
+.modalButtonsContainer {
+  display: flex;
+  justify-content: space-between;
+}

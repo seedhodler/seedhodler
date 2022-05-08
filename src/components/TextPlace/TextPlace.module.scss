@@ -1,0 +1,21 @@
+@import "styles/Variables.module.scss";
+
+.textPlace {
+  position: relative;
+  background-color: $colorBg200;
+  border: 1px dashed $colorBg670;
+  border-radius: $radii;
+  padding: 1.2rem 1.2rem 1.2rem 4.2rem;
+  margin-bottom: 1.2rem;
+  width: 49%;
+}
+
+.count {
+  position: absolute;
+  left: 0;
+  width: 4.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $colorBg700;
+}

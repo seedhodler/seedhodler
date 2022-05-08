@@ -2,6 +2,8 @@
 
 %backdropBase {
   position: fixed;
+  top: 0;
+  left: 0;
   height: 100%;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.4);
@@ -35,7 +37,9 @@
   border-radius: $radiiMedium;
   width: 45%;
   min-width: 350px;
-  height: 65%;
+  // height: 65%;
+  max-height: 900px;
+  min-height: 650px;
   overflow: auto;
 
   transform: scale(0.5);
