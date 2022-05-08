@@ -61,6 +61,7 @@ const Shares: React.FC<Props> = ({
         >
           {shares[activeShareItemId].split(" ").map((shareItem, index) => (
             <TextPlace
+              key={index}
               text={shareItem}
               count={index + 1}
               style={{

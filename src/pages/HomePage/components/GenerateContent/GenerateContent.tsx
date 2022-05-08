@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react"
 
+// @ts-ignore
+import phrase12pdf from "assets/pdf/Seedhodler12.pdf"
+// @ts-ignore
+import phrase24pdf from "assets/pdf/Seedhodler24.pdf"
 import LogoIcon from "assets/icons/Logo.svg"
 import CoinIcon from "assets/icons/Coin.svg"
 import CardsIcon from "assets/icons/Cards.svg"
@@ -45,7 +49,7 @@ const GenerateContent: React.FC = () => {
   const [sharesNumber, setSharesNumber] = useState(6)
   const [shares, setShares] = useState<null | string[]>(null)
   const [activeShareItemId, setActiveShareItemId] = useState(0)
-  const [isPrintModalActive, setIsPrintModalActive] = useState(true)
+  const [isPrintModalActive, setIsPrintModalActive] = useState(false)
 
   let inputCount = 0
   const minBits = +selectedWordCount === 12 ? 128 : 256
@@ -321,10 +325,11 @@ const GenerateContent: React.FC = () => {
             </p>
             <div
               className={classes.seedPhraseContainer}
-              style={{ height: selectedWordCount === "12" ? "360px" : "720px" }}
+              style={{ height: selectedWordCount === "12" ? "360px" : "680px" }}
             >
-              {mnemonic.map((word, index) => (
+              {mnemonic.map((_, index) => (
                 <TextPlace
+                  key={index}
                   text=""
                   count={index + 1}
                   style={{
@@ -341,7 +346,17 @@ const GenerateContent: React.FC = () => {
             </p>
           </div>
           <div className={classes.modalButtonsContainer}>
-            <Button onClick={() => {}} iconRight={PrintIcon} color={ButtonColorsEnum.ErrorLightish}>
+            <Button
+              onClick={() =>
+                window.open(
+                  selectedWordCount === "12" ? phrase12pdf : phrase24pdf,
+                  "PRINT",
+                  "height=720,width=1280",
+                )
+              }
+              iconRight={PrintIcon}
+              color={ButtonColorsEnum.ErrorLightish}
+            >
               Print
             </Button>
             <Button onClick={() => {}} iconRight={ArrowRightIcon}>
