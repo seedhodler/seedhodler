@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react"
 
-// @ts-ignore
-import phrase12pdf from "assets/pdf/Seedhodler12.pdf"
-// @ts-ignore
-import phrase24pdf from "assets/pdf/Seedhodler24.pdf"
-import LogoIcon from "assets/icons/Logo.svg"
 import CoinIcon from "assets/icons/Coin.svg"
 import CardsIcon from "assets/icons/Cards.svg"
 import DiceIcon from "assets/icons/Dice.svg"
 import NumbersIcon from "assets/icons/Numbers.svg"
 import InfoGrayIcon from "assets/icons/InfoGray.svg"
-import PrintIcon from "assets/icons/Print.svg"
-import ArrowRightIcon from "assets/icons/ArrowRight.svg"
 import { Button } from "components/Button"
 import { Calc } from "components/Calc"
 import { InfoTitle } from "components/InfoTitle"
@@ -19,9 +12,6 @@ import { Input } from "components/Input"
 import { Select } from "components/Select"
 import { Switch } from "components/Switch"
 import { Textarea } from "components/Textarea"
-import { Modal } from "components/Modal"
-import { AdditionalInfo } from "components/AdditionalInfo"
-import { TextPlace } from "components/TextPlace"
 import { BadgeColorsEnum, ButtonColorsEnum, langOptions, wordCountOptions } from "constants/index"
 import {
   generateMnemonic,
@@ -35,6 +25,7 @@ import {
 import { Shares } from "../Shares"
 import { BadgeTitle } from "../../../../components/BadgeTitle"
 import { EntropyValueType } from "../EntropyValueType"
+import { PrintModal } from "../PrintModal"
 import classes from "./GenerateContent.module.scss"
 
 const GenerateContent: React.FC = () => {
@@ -304,67 +295,12 @@ const GenerateContent: React.FC = () => {
           </Button>
         </>
       )}
-      <Modal
-        title="Print - Seedhodler Phraseholder"
-        isActive={isPrintModalActive}
-        setIsActive={setIsPrintModalActive}
-      >
-        <>
-          <p className={classes.modalDescription}>
-            Before continuing please either print the provided Seedhodler Phraseholder or use pen and
-            paper to write down your generated phrases.
-          </p>
-          <div className={classes.modalContentContainer}>
-            <div className={classes.modalHeaderContainer}>
-              <div style={{ width: "60px" }}></div>
-              <img src={LogoIcon} alt="Logo" />
-              <AdditionalInfo info="BIP 39" />
-            </div>
-            <p className={classes.modalInnerDescription}>
-              Use the Seedhodler Phraseholder to write down your generated phrases.
-            </p>
-            <div
-              className={classes.seedPhraseContainer}
-              style={{ height: selectedWordCount === "12" ? "360px" : "680px" }}
-            >
-              {mnemonic.map((_, index) => (
-                <TextPlace
-                  key={index}
-                  text=""
-                  count={index + 1}
-                  style={{
-                    width: "48%",
-                    alignSelf:
-                      index <= (selectedWordCount === "12" ? 5 : 11) ? "flex-start" : "flex-end",
-                  }}
-                />
-              ))}
-            </div>
-            <p className={classes.modalInnerDescription} style={{ marginBottom: 0 }}>
-              etc.
-              <br /> In seedhodler we trust.
-            </p>
-          </div>
-          <div className={classes.modalButtonsContainer}>
-            <Button
-              onClick={() =>
-                window.open(
-                  selectedWordCount === "12" ? phrase12pdf : phrase24pdf,
-                  "PRINT",
-                  "height=720,width=1280",
-                )
-              }
-              iconRight={PrintIcon}
-              color={ButtonColorsEnum.ErrorLightish}
-            >
-              Print
-            </Button>
-            <Button onClick={() => {}} iconRight={ArrowRightIcon}>
-              Continue
-            </Button>
-          </div>
-        </>
-      </Modal>
+      <PrintModal
+        isPrintModalActive={isPrintModalActive}
+        setIsPrintModalActive={setIsPrintModalActive}
+        selectedWordCount={+selectedWordCount}
+        mnemonic={mnemonic}
+      />
     </div>
   )
 }

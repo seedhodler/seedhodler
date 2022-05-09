@@ -1,0 +1,44 @@
+@import "styles/Variables.module.scss";
+
+.description {
+  font-weight: $fwLight;
+  font-size: 20px;
+  color: $colorTextDark;
+  margin-bottom: 2.4rem;
+}
+
+.contentContainer {
+  padding: 5rem;
+  padding-bottom: 3.6rem;
+  border: 2px dashed $colorBg700;
+  border-radius: $radiiSmall;
+  margin-bottom: 1.8rem;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.innerDescription {
+  font-weight: $fwLight;
+  font-size: 20px;
+  text-align: center;
+  color: $colorTextDark;
+  margin-bottom: 5.6rem;
+}
+
+.textPlacesContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 3.6rem;
+}
+
+.buttonsContainer {
+  display: flex;
+  justify-content: space-between;
+}
