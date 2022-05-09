@@ -8,7 +8,7 @@ export enum BadgeColorsEnum {
 }
 
 export const badgeColorsObj = {
-  [BadgeColorsEnum.Main]: variables.colorMainLight,
+  [BadgeColorsEnum.Main]: variables.colorMain,
   [BadgeColorsEnum.Success]: variables.colorSuccessLight,
   [BadgeColorsEnum.ErrorLight]: variables.colorErrorLight,
   [BadgeColorsEnum.Error]: variables.colorError,

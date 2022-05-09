@@ -1,0 +1,19 @@
+@import "styles/Variables.module.scss";
+
+.shareHeaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.shareHeaderDot {
+  @extend %dot;
+}
+
+.shareHeaderText {
+  font-weight: $fwSemiBold;
+  font-size: 20px;
+  color: $colorTextDark;
+}

@@ -23,9 +23,9 @@ import {
 } from "helpers"
 
 import { Shares } from "../Shares"
+import { PostModal } from "../PostModal"
 import { BadgeTitle } from "../../../../components/BadgeTitle"
 import { EntropyValueType } from "../EntropyValueType"
-import { PrintModal } from "../PrintModal"
 import classes from "./GenerateContent.module.scss"
 
 const GenerateContent: React.FC = () => {
@@ -40,9 +40,8 @@ const GenerateContent: React.FC = () => {
   const [sharesNumber, setSharesNumber] = useState(6)
   const [shares, setShares] = useState<null | string[]>(null)
   const [activeShareItemId, setActiveShareItemId] = useState(0)
-  const [isPrintModalActive, setIsPrintModalActive] = useState(false)
+  const [isPrintModalActive, setIsPrintModalActive] = useState(true)
 
-  let inputCount = 0
   const minBits = +selectedWordCount === 12 ? 128 : 256
   const { selectedEntropyAsBinary, selectedEntropyDetails, regex } = getEntropyDetails(
     entropyValue,
@@ -229,7 +228,7 @@ const GenerateContent: React.FC = () => {
         {mnemonic.map((word, index) => (
           <Input
             key={index}
-            count={++inputCount}
+            count={index + 1}
             index={index}
             value={word}
             onChange={setMnemonic}
@@ -295,11 +294,12 @@ const GenerateContent: React.FC = () => {
           </Button>
         </>
       )}
-      <PrintModal
+      <PostModal
         isPrintModalActive={isPrintModalActive}
         setIsPrintModalActive={setIsPrintModalActive}
         selectedWordCount={+selectedWordCount}
         mnemonic={mnemonic}
+        shares={shares}
       />
     </div>
   )

@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react"
+import React, { useEffect, Dispatch, SetStateAction } from "react"
 
 import CloseIcon from "assets/icons/Close.svg"
 import { BadgeTitle } from "components/BadgeTitle"
@@ -21,6 +21,16 @@ const Modal: React.FC<Props> = ({
   setIsActive,
   children,
 }) => {
+  useEffect(() => {
+    if (isActive) {
+      document.body.style.overflow = "hidden"
+    }
+
+    return () => {
+      document.body.style.overflow = "unset"
+    }
+  }, [isActive])
+
   return (
     <div
       onClick={() => setIsActive(false)}

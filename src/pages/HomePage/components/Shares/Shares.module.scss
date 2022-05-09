@@ -1,15 +1,7 @@
 @import "styles/Variables.module.scss";
 
-%dot {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background-color: $colorMain;
-}
-
 .blockDivider {
-  height: 1px;
-  background-color: $colorBg300;
+  @extend %divider;
   margin-bottom: 3.2rem;
 }
 
@@ -33,7 +25,7 @@
   align-items: center;
 }
 
-.mark {
+.dot {
   @extend %dot;
 }
 

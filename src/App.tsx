@@ -5,7 +5,8 @@ import { ConnectionStatusModal } from "components/ConnectionStatusModal"
 
 const App: React.FC = () => {
   const [isOnline, setIsOnline] = useState(window.navigator.onLine)
-  const [isModalActive, setIsModalActive] = useState(true)
+  // TODO: revert
+  const [isModalActive, setIsModalActive] = useState(false)
   const [currentStep, setCurrentStep] = useState(0)
 
   useEffect(() => {

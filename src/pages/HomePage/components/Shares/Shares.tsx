@@ -43,7 +43,7 @@ const Shares: React.FC<Props> = ({
             <img src={PrevIcon} alt="Arrow left" />
           </button>
           <div className={classes.shareNumberContainer}>
-            <div className={classes.mark}></div>
+            <div className={classes.dot}></div>
             <span className={classes.shareNumberHeader}>Share - {activeShareItemId + 1}</span>
           </div>
           <button

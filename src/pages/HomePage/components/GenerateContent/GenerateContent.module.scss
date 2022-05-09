@@ -24,8 +24,7 @@
 }
 
 .blockDivider {
-  height: 1px;
-  background-color: $colorBg300;
+  @extend %divider;
   margin-bottom: 3.2rem;
 }
 
