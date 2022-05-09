@@ -11,7 +11,7 @@ type Props = {
   setIsPrintModalActive: Dispatch<SetStateAction<boolean>>
   selectedWordCount: number
   mnemonic: string[]
-  shares: string[] | null
+  shares: string[]
 }
 
 const PostModal: React.FC<Props> = ({

@@ -40,7 +40,7 @@ const GenerateContent: React.FC = () => {
   const [sharesNumber, setSharesNumber] = useState(6)
   const [shares, setShares] = useState<null | string[]>(null)
   const [activeShareItemId, setActiveShareItemId] = useState(0)
-  const [isPrintModalActive, setIsPrintModalActive] = useState(true)
+  const [isPrintModalActive, setIsPrintModalActive] = useState(false)
 
   const minBits = +selectedWordCount === 12 ? 128 : 256
   const { selectedEntropyAsBinary, selectedEntropyDetails, regex } = getEntropyDetails(
@@ -299,7 +299,7 @@ const GenerateContent: React.FC = () => {
         setIsPrintModalActive={setIsPrintModalActive}
         selectedWordCount={+selectedWordCount}
         mnemonic={mnemonic}
-        shares={shares}
+        shares={shares!}
       />
     </div>
   )
