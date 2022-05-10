@@ -12,6 +12,7 @@ import { Input } from "components/Input"
 import { Select } from "components/Select"
 import { Switch } from "components/Switch"
 import { Textarea } from "components/Textarea"
+import { BadgeColorsEnum, ButtonColorsEnum, langOptions, wordCountOptions } from "constants/index"
 import {
   generateMnemonic,
   generateMnemonicFromEntropy,
@@ -20,10 +21,10 @@ import {
   hexStringToByteArray,
   mnemonicToEntropy,
 } from "helpers"
-import { ColorOptions, langOptions, wordCountOptions } from "constants/index"
 
 import { Shares } from "../Shares"
-import { BadgeTitle } from "../BadgeTitle"
+import { PostModal } from "../PostModal"
+import { BadgeTitle } from "../../../../components/BadgeTitle"
 import { EntropyValueType } from "../EntropyValueType"
 import classes from "./GenerateContent.module.scss"
 
@@ -39,8 +40,8 @@ const GenerateContent: React.FC = () => {
   const [sharesNumber, setSharesNumber] = useState(6)
   const [shares, setShares] = useState<null | string[]>(null)
   const [activeShareItemId, setActiveShareItemId] = useState(0)
+  const [isPrintModalActive, setIsPrintModalActive] = useState(false)
 
-  let inputCount = 0
   const minBits = +selectedWordCount === 12 ? 128 : 256
   const { selectedEntropyAsBinary, selectedEntropyDetails, regex } = getEntropyDetails(
     entropyValue,
@@ -88,7 +89,7 @@ const GenerateContent: React.FC = () => {
 
   return (
     <div className={classes.tabContent}>
-      <BadgeTitle title="Phrase" additionalInfo="BIP 39" color={ColorOptions.Success} />
+      <BadgeTitle title="Phrase" additionalInfo="BIP 39" color={BadgeColorsEnum.Success} />
       <div className={classes.configContainer}>
         <div>
           <InfoTitle title="Language" desc="Language __placeholder" />
@@ -106,9 +107,9 @@ const GenerateContent: React.FC = () => {
       <div className={classes.configContainer}>
         <div
           className={classes.configLabelContainer}
-          title={`None of these advanced functions are necessary for successful generating and 
-splitting your seed phrase. when used incorrectly these advanced functions may lead to  
-generating of unsafe seed phrases that can be (and will be) guessed easily. Be careful!`}
+          title={`None of these advanced functions are necessary for successful generating and
+    splitting your seed phrase. when used incorrectly these advanced functions may lead to
+    generating of unsafe seed phrases that can be (and will be) guessed easily. Be careful!`}
         >
           <p>
             Advanced Toolset -{" "}
@@ -186,7 +187,7 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
       )}
       {isDetails && (
         <>
-          <BadgeTitle title="Entropy details" color={ColorOptions.ErrorLight} />
+          <BadgeTitle title="Entropy details" color={BadgeColorsEnum.ErrorLight} />
           <p className={classes.insightsLabel}>Here are more insights into your manual input</p>
           <div className={classes.insightsContainer}>
             <div className={classes.insightBlock}>
@@ -227,7 +228,7 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
         {mnemonic.map((word, index) => (
           <Input
             key={index}
-            count={++inputCount}
+            count={index + 1}
             index={index}
             value={word}
             onChange={setMnemonic}
@@ -241,7 +242,7 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
       </div>
       {mnemonic.every(word => word.length !== 0) && (
         <>
-          <BadgeTitle title="Split Phrase into shares" color={ColorOptions.Success} />
+          <BadgeTitle title="Split Phrase into shares" color={BadgeColorsEnum.Success} />
           <p className={classes.sharesInfo}>
             The generated Phrase can now be split into up to 6 different shares. These can then be
             combined to restore your Phrase
@@ -280,13 +281,27 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
               shares={shares}
               activeShareItemId={activeShareItemId}
               setActiveShareItemId={setActiveShareItemId}
+              selectedWordCount={+selectedWordCount}
             />
           )}
-          <Button onClick={() => {}} fullWidth disabled={!Boolean(shares)}>
+          <Button
+            onClick={() => setIsPrintModalActive(true)}
+            disabled={!Boolean(shares)}
+            fullWidth
+            color={ButtonColorsEnum.Success}
+          >
             Export / Save Shares
           </Button>
         </>
       )}
+      <PostModal
+        isPrintModalActive={isPrintModalActive}
+        setIsPrintModalActive={setIsPrintModalActive}
+        selectedWordCount={+selectedWordCount}
+        mnemonic={mnemonic}
+        shares={shares!}
+        thresholdNumber={thresholdNumber}
+      />
     </div>
   )
 }

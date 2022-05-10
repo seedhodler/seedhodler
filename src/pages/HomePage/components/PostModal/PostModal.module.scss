@@ -1,0 +1,86 @@
+@import "styles/Variables.module.scss";
+
+.descriptionContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.description {
+  font-weight: $fwLight;
+  font-size: 20px;
+  color: $colorTextDark;
+  margin-bottom: 2.4rem;
+}
+
+.contentContainer {
+  padding: 5rem;
+  padding-bottom: 3.6rem;
+  border: 2px dashed $colorBg700;
+  border-radius: $radiiSmall;
+  margin-bottom: 1.8rem;
+}
+
+.logoContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.innerDescription {
+  font-weight: $fwLight;
+  font-size: 20px;
+  text-align: center;
+  color: $colorTextDark;
+  margin-bottom: 5.6rem;
+}
+
+.textPlacesContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 3.6rem;
+}
+
+.buttonsContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modalContentContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.blockDivider {
+  @extend %divider;
+  margin-bottom: 1rem;
+}
+
+.textPlacesContainer {
+  height: 210px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin-bottom: 2.8rem;
+}
+
+.shareNumberInfo {
+  text-align: center;
+  font-size: 24px;
+  font-weight: $fwSemiBold;
+  margin-bottom: 2.4rem;
+  color: $colorBg700;
+}
+
+.additionalInfo {
+  text-align: center;
+  color: $colorTextDark;
+  font-size: 20px;
+  font-weight: $fwLight;
+}

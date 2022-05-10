@@ -1,6 +1,6 @@
 @import "styles/Variables.module.scss";
 
-%btnBase {
+@mixin btnBase($color) {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -10,14 +10,14 @@
   font-size: 15px;
   padding: 1.2rem 2rem;
   color: $colorBg100;
-  background-color: $colorMain;
+  background-color: $color;
   border-radius: $radii;
   font-weight: $fwBold;
   transition: $transAll;
 
   &:hover:not([disabled]),
   &:focus:not([disabled]) {
-    background-color: $colorMainDark;
+    background-color: darken($color, 10%);
     box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
   }
 
@@ -28,12 +28,17 @@
   }
 }
 
-.btn {
-  @extend %btnBase;
+.btnColorMain {
+  @include btnBase($colorMain);
+}
+.btnColorSuccess {
+  @include btnBase($colorSuccess);
+}
+.btnColorErrorLightish {
+  @include btnBase($colorErrorLightish);
 }
 
-.btnFullWidth {
-  @extend %btnBase;
+.fullWidth {
   width: 100%;
 }
 

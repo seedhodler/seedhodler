@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react"
 
-import { ColorOptions } from "constants/index"
+import { BadgeColorsEnum } from "constants/index"
 import ArrowRightIcon from "assets/icons/ArrowRight.svg"
 import InternetRedIcon from "assets/icons/InternetRed.svg"
 import InternetGrayIcon from "assets/icons/InternetGray.svg"
@@ -43,7 +43,7 @@ const ConnectionStatusModal: React.FC<Props> = ({
 
   return (
     <Modal
-      badgeColor={isFirstStep ? ColorOptions.Success : ColorOptions.Error}
+      badgeColor={isFirstStep ? BadgeColorsEnum.Success : BadgeColorsEnum.Error}
       title={isFirstStep ? "Getting Started" : "Make Sure you are Offline"}
       isActive={isModalActive}
       setIsActive={setIsModalActive}

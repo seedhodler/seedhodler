@@ -5,7 +5,7 @@
   align-items: center;
   color: $colorTextDark;
   margin-bottom: 3.6rem;
-  font-weight: $fwBold;
+  font-weight: $fwSemiBold;
 }
 
 .badge {
@@ -20,12 +20,4 @@
   font-size: 20px;
   line-height: 32px;
   margin-right: 3.3rem;
-}
-
-.additionalInfo {
-  font-size: 14px;
-  line-height: 24px;
-  padding: 0.2rem 0.8rem;
-  background-color: $colorSuccessLight;
-  border-radius: $radiiSmallish;
 }

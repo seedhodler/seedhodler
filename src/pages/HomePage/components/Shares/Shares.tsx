@@ -4,14 +4,21 @@ import PrevIcon from "assets/icons/Prev.svg"
 import NextIcon from "assets/icons/Next.svg"
 
 import classes from "./Shares.module.scss"
+import { TextPlace } from "components/TextPlace"
 
 type Props = {
   shares: string[]
   activeShareItemId: number
   setActiveShareItemId: Dispatch<SetStateAction<number>>
+  selectedWordCount: number
 }
 
-const Shares: React.FC<Props> = ({ shares, activeShareItemId, setActiveShareItemId }) => {
+const Shares: React.FC<Props> = ({
+  shares,
+  activeShareItemId,
+  setActiveShareItemId,
+  selectedWordCount,
+}) => {
   const navigation = []
 
   for (let i = 0; i < shares.length; i++) {
@@ -36,7 +43,7 @@ const Shares: React.FC<Props> = ({ shares, activeShareItemId, setActiveShareItem
             <img src={PrevIcon} alt="Arrow left" />
           </button>
           <div className={classes.shareNumberContainer}>
-            <div className={classes.mark}></div>
+            <div className={classes.dot}></div>
             <span className={classes.shareNumberHeader}>Share - {activeShareItemId + 1}</span>
           </div>
           <button
@@ -48,16 +55,19 @@ const Shares: React.FC<Props> = ({ shares, activeShareItemId, setActiveShareItem
           </button>
         </div>
         <div className={classes.blockDivider} style={{ marginBottom: "2.4rem" }}></div>
-        <div className={classes.shareItemsContainer}>
+        <div
+          className={classes.shareItemsContainer}
+          style={{ height: selectedWordCount === 12 ? "560px" : "960px" }}
+        >
           {shares[activeShareItemId].split(" ").map((shareItem, index) => (
-            <div
+            <TextPlace
               key={index}
-              className={classes.shareItem}
-              style={{ alignSelf: index <= 9 ? "flex-start" : "flex-end" }}
-            >
-              <span className={classes.shareItemCount}>{++index}.</span>
-              {shareItem}
-            </div>
+              text={shareItem}
+              count={index + 1}
+              style={{
+                alignSelf: index <= (selectedWordCount === 12 ? 9 : 16) ? "flex-start" : "flex-end",
+              }}
+            />
           ))}
         </div>
         <div className={classes.blockDivider} style={{ marginBottom: "2.4rem" }}></div>
