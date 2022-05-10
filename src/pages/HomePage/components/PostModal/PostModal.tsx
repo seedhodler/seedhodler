@@ -12,6 +12,7 @@ type Props = {
   selectedWordCount: number
   mnemonic: string[]
   shares: string[]
+  thresholdNumber: number
 }
 
 const PostModal: React.FC<Props> = ({
@@ -20,6 +21,7 @@ const PostModal: React.FC<Props> = ({
   selectedWordCount,
   mnemonic,
   shares,
+  thresholdNumber,
 }) => {
   const [currentStep, setCurrentStep] = useState(0)
 
@@ -38,7 +40,7 @@ const PostModal: React.FC<Props> = ({
     1: {
       title: "Backup",
       badgeColor: BadgeColorsEnum.Main,
-      Component: <BackupContent shares={shares} />,
+      Component: <BackupContent shares={shares} thresholdNumber={thresholdNumber} />,
     },
   }
   const currentComponentInfo = componentsInfo[currentStep as keyof typeof componentsInfo]

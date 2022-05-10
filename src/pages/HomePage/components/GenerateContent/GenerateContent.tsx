@@ -300,6 +300,7 @@ const GenerateContent: React.FC = () => {
         selectedWordCount={+selectedWordCount}
         mnemonic={mnemonic}
         shares={shares!}
+        thresholdNumber={thresholdNumber}
       />
     </div>
   )
