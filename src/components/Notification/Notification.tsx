@@ -12,7 +12,7 @@ type Props = {
 
 const Notification: React.FC<Props> = ({ isActive, setIsActive }) => {
   return (
-    <Modal isNotification isActive={isActive} setIsActive={setIsActive} title="Temp">
+    <Modal isNotification isActive={isActive} setIsActive={setIsActive}>
       <div className={classes.notificationContainer}>
         <div className={classes.screenshotContainer}>
           <img src={Screenshot} alt="Screenshot" />

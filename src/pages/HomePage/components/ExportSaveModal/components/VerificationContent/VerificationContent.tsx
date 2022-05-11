@@ -5,14 +5,14 @@ import { ShareHeader } from "components/ShareHeader"
 import { TextPlace } from "components/TextPlace"
 import { Button } from "components/Button"
 
-import classes from "../../PostModal.module.scss"
+import classes from "../../ExportSaveModal.module.scss"
 
 type Props = {
   shares: string[]
   thresholdNumber: number
 }
 
-const BackupContent: React.FC<Props> = ({ shares, thresholdNumber }) => {
+const VerificationContent: React.FC<Props> = ({ shares, thresholdNumber }) => {
   const [currentShareId, setCurrentShareId] = useState(0)
   const [currentStep, setCurrentStep] = useState(0)
   const isFirstStep = currentStep === 0
@@ -92,4 +92,4 @@ const BackupContent: React.FC<Props> = ({ shares, thresholdNumber }) => {
   )
 }
 
-export default BackupContent
+export default VerificationContent

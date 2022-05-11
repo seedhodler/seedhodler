@@ -10,7 +10,7 @@ import { Button } from "components/Button"
 import { TextPlace } from "components/TextPlace"
 import { ButtonColorsEnum } from "constants/index"
 
-import classes from "../../PostModal.module.scss"
+import classes from "../../ExportSaveModal.module.scss"
 
 type Props = {
   selectedWordCount: number

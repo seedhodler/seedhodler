@@ -1,4 +1,5 @@
 import React, { useEffect, Dispatch, SetStateAction } from "react"
+import CSS from "csstype"
 
 import CloseIcon from "assets/icons/Close.svg"
 import { BadgeTitle } from "components/BadgeTitle"
@@ -6,14 +7,15 @@ import { BadgeColorsEnum } from "constants/index"
 
 import classes from "./Modal.module.scss"
 
-type Props = {
-  title: string
+type PropsBase = {
   badgeColor?: BadgeColorsEnum
   isActive: boolean
   setIsActive: Dispatch<SetStateAction<boolean>>
-  isNotification?: boolean
   children: JSX.Element
+  style?: CSS.Properties
 }
+type Props = PropsBase &
+  ({ title: string; isNotification?: false } | { title?: string; isNotification: true })
 
 const Modal: React.FC<Props> = ({
   title,
@@ -22,6 +24,7 @@ const Modal: React.FC<Props> = ({
   setIsActive,
   isNotification,
   children,
+  style,
 }) => {
   useEffect(() => {
     if (isActive) {
@@ -42,6 +45,7 @@ const Modal: React.FC<Props> = ({
         <div
           onClick={e => e.stopPropagation()}
           className={isActive ? classes.contentActive : classes.content}
+          style={style}
         >
           <div className={classes.modalHeader}>
             <BadgeTitle title={title} color={badgeColor} style={{ marginBottom: 0 }} />

@@ -4,6 +4,7 @@ import { Modal } from "components/Modal"
 import { BadgeColorsEnum } from "constants/index"
 
 import { PrintContent } from "./components/PrintContent"
+import { VerificationContent } from "./components/VerificationContent"
 import { BackupContent } from "./components/BackupContent"
 
 type Props = {
@@ -13,15 +14,17 @@ type Props = {
   mnemonic: string[]
   shares: string[]
   thresholdNumber: number
+  sharesNumber: number
 }
 
-const PostModal: React.FC<Props> = ({
+const ExportSaveModal: React.FC<Props> = ({
   isPrintModalActive,
   setIsPrintModalActive,
   selectedWordCount,
   mnemonic,
   shares,
   thresholdNumber,
+  sharesNumber,
 }) => {
   const [currentStep, setCurrentStep] = useState(0)
 
@@ -40,13 +43,27 @@ const PostModal: React.FC<Props> = ({
     1: {
       title: "Backup",
       badgeColor: BadgeColorsEnum.Main,
-      Component: <BackupContent shares={shares} thresholdNumber={thresholdNumber} />,
+      Component: (
+        <BackupContent
+          shares={shares}
+          setCurrentStep={setCurrentStep}
+          selectedWordCount={selectedWordCount}
+          sharesNumber={sharesNumber}
+        />
+      ),
+    },
+    2: {
+      title: "Verification",
+      badgeColor: BadgeColorsEnum.Main,
+      Component: <VerificationContent shares={shares} thresholdNumber={thresholdNumber} />,
     },
   }
   const currentComponentInfo = componentsInfo[currentStep as keyof typeof componentsInfo]
 
   useEffect(() => {
-    setCurrentStep(0)
+    if (isPrintModalActive) {
+      setCurrentStep(0)
+    }
   }, [isPrintModalActive])
 
   return (
@@ -55,10 +72,11 @@ const PostModal: React.FC<Props> = ({
       isActive={isPrintModalActive}
       setIsActive={setIsPrintModalActive}
       badgeColor={currentComponentInfo.badgeColor}
+      style={{ height: currentStep === 0 || currentStep === 1 ? "auto" : "" }}
     >
       {currentComponentInfo.Component}
     </Modal>
   )
 }
 
-export default PostModal
+export default ExportSaveModal

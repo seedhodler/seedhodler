@@ -24,7 +24,7 @@ import {
 } from "helpers"
 
 import { Shares } from "../Shares"
-import { PostModal } from "../PostModal"
+import { ExportSaveModal } from "../ExportSaveModal"
 import { BadgeTitle } from "../../../../components/BadgeTitle"
 import { EntropyValueType } from "../EntropyValueType"
 import classes from "./GenerateContent.module.scss"
@@ -111,8 +111,8 @@ const GenerateContent: React.FC = () => {
         <div
           className={classes.configLabelContainer}
           title={`None of these advanced functions are necessary for successful generating and
-    splitting your seed phrase. when used incorrectly these advanced functions may lead to
-    generating of unsafe seed phrases that can be (and will be) guessed easily. Be careful!`}
+splitting your seed phrase. when used incorrectly these advanced functions may lead to
+generating of unsafe seed phrases that can be (and will be) guessed easily. Be careful!`}
         >
           <p>
             Advanced Toolset -{" "}
@@ -286,13 +286,14 @@ const GenerateContent: React.FC = () => {
           </Button>
         </>
       )}
-      <PostModal
+      <ExportSaveModal
         isPrintModalActive={isPrintModalActive}
         setIsPrintModalActive={setIsPrintModalActive}
         selectedWordCount={+selectedWordCount}
         mnemonic={mnemonic}
         shares={shares!}
         thresholdNumber={thresholdNumber}
+        sharesNumber={sharesNumber}
       />
     </div>
   )
