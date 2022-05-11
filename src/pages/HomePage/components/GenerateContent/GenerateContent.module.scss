@@ -76,21 +76,6 @@
   margin-bottom: 1rem;
 }
 
-.insightContentContainer {
-  display: flex;
-  align-items: center;
-}
-
-.insightBadge {
-  font-weight: $fwBold;
-  color: $colorBg100;
-  font-size: 12px;
-  padding: 0.4rem 0.8rem;
-  margin-right: 0.6rem;
-  background-color: $colorErrorLightish;
-  border-radius: $radiiSmallest;
-}
-
 .insightContent {
   font-weight: $fwBold;
   font-size: 12px;

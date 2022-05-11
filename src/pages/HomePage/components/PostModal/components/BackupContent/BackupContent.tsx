@@ -28,11 +28,32 @@ const BackupContent: React.FC<Props> = ({ shares, thresholdNumber }) => {
     }
   }
 
+  const getRandomInt = (min: number, max: number) => {
+    min = Math.ceil(min)
+    max = Math.floor(max)
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+
+  const generateRandomIds = () => {
+    const ids = []
+
+    do {
+      const generatedId = getRandomInt(0, 19)
+      if (ids.indexOf(generatedId) === -1) {
+        ids.push(generatedId)
+      }
+    } while (ids.length < 5)
+
+    return ids
+  }
+
   const shareNumberInfo = (
     <p className={classes.shareNumberInfo}>
       {currentShareId + 1} / {thresholdNumber} Shares
     </p>
   )
+
+  console.log(generateRandomIds())
 
   return (
     <div className={classes.modalContentContainer}>
@@ -61,7 +82,9 @@ const BackupContent: React.FC<Props> = ({ shares, thresholdNumber }) => {
         </div>
         {isFirstStep && shareNumberInfo}
         <p className={classes.additionalInfo}>
-          We will confirm your written recovery phrase on the next screen.
+          {isFirstStep
+            ? "We will confirm your written recovery phrase on the next screen."
+            : "Please tap each word in the correct order"}
         </p>
       </div>
       <Button onClick={handleNext} iconRight={ArrowRightIcon}>

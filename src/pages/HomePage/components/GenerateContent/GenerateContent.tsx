@@ -37,7 +37,7 @@ const GenerateContent: React.FC = () => {
   const [entropyTypeId, setEntropyTypeId] = useState(0)
   const [entropyValue, setEntropyValue] = useState("")
   const [thresholdNumber, setThresholdNumber] = useState(3)
-  const [sharesNumber, setSharesNumber] = useState(6)
+  const [sharesNumber, setSharesNumber] = useState(5)
   const [shares, setShares] = useState<null | string[]>(null)
   const [activeShareItemId, setActiveShareItemId] = useState(0)
   const [isPrintModalActive, setIsPrintModalActive] = useState(false)
@@ -191,23 +191,12 @@ const GenerateContent: React.FC = () => {
           <p className={classes.insightsLabel}>Here are more insights into your manual input</p>
           <div className={classes.insightsContainer}>
             <div className={classes.insightBlock}>
-              <p className={classes.insightTitle}>Time to Crack</p>
-              <div className={classes.insightContentContainer}>
-                <span className={classes.insightBadge}>Centuries</span>
-                <p className={classes.insightContent}>{selectedEntropyDetails.timeToCrack}</p>
-              </div>
-            </div>
-            <div className={classes.insightBlock}>
-              <p className={classes.insightTitle}>Total Bits</p>
-              <p className={classes.insightContent}>{selectedEntropyDetails.totalBits}</p>
-            </div>
-            <div className={classes.insightBlock}>
               <p className={classes.insightTitle}>Entropy Type</p>
               <p className={classes.insightContent}>{selectedEntropyDetails.entropyType}</p>
             </div>
             <div className={classes.insightBlock}>
-              <p className={classes.insightTitle}>Raw Entropy Words</p>
-              <p className={classes.insightContent}>{selectedEntropyDetails.rawEntropyWords}</p>
+              <p className={classes.insightTitle}>Total Bits</p>
+              <p className={classes.insightContent}>{selectedEntropyDetails.totalBits}</p>
             </div>
           </div>
         </>
