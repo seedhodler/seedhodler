@@ -88,7 +88,7 @@ const GenerateContent: React.FC = () => {
     setMnemonic(new Array(+selectedWordCount).fill(""))
   }, [selectedWordCount])
 
-  generatePdf()
+  // generatePdf()
 
   return (
     <div className={classes.tabContent}>

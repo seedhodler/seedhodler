@@ -1,18 +1,17 @@
 import { PDFDocument } from "pdf-lib"
-// @ts-ignore
 import Seedhodler12 from "assets/pdf/Seedhodler12.pdf"
-// @ts-ignore
 import Seedhodler24 from "assets/pdf/Seedhodler24.pdf"
-// @ts-ignore
 import Share12 from "assets/pdf/Share12.pdf"
-// @ts-ignore
 import Share24 from "assets/pdf/Share24.pdf"
 
 export const generatePdf = async () => {
   const mergedPdf = await PDFDocument.create()
 
-  const seedhodler12pdf = await PDFDocument.load(Seedhodler12)
-  const share12pdf = await PDFDocument.load(Share12)
+  const seedhodler12bytes = await fetch(Seedhodler12).then(res => res.arrayBuffer())
+  const share12bytes = await fetch(Share12).then(res => res.arrayBuffer())
+
+  const seedhodler12pdf = await PDFDocument.load(seedhodler12bytes)
+  const share12pdf = await PDFDocument.load(share12bytes)
 
   const copiedPagesA = await mergedPdf.copyPages(seedhodler12pdf, seedhodler12pdf.getPageIndices())
   copiedPagesA.forEach(page => mergedPdf.addPage(page))

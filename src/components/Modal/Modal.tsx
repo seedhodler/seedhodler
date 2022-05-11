@@ -11,6 +11,7 @@ type Props = {
   badgeColor?: BadgeColorsEnum
   isActive: boolean
   setIsActive: Dispatch<SetStateAction<boolean>>
+  isNotification?: boolean
   children: JSX.Element
 }
 
@@ -19,6 +20,7 @@ const Modal: React.FC<Props> = ({
   badgeColor = BadgeColorsEnum.Success,
   isActive,
   setIsActive,
+  isNotification,
   children,
 }) => {
   useEffect(() => {
@@ -36,18 +38,22 @@ const Modal: React.FC<Props> = ({
       onClick={() => setIsActive(false)}
       className={isActive ? classes.backdropActive : classes.backdrop}
     >
-      <div
-        onClick={e => e.stopPropagation()}
-        className={isActive ? classes.contentActive : classes.content}
-      >
-        <div className={classes.modalHeader}>
-          <BadgeTitle title={title} color={badgeColor} style={{ marginBottom: 0 }} />
-          <button onClick={() => setIsActive(false)} className={classes.closeBtn}>
-            <img src={CloseIcon} alt="Close" />
-          </button>
+      {!isNotification ? (
+        <div
+          onClick={e => e.stopPropagation()}
+          className={isActive ? classes.contentActive : classes.content}
+        >
+          <div className={classes.modalHeader}>
+            <BadgeTitle title={title} color={badgeColor} style={{ marginBottom: 0 }} />
+            <button onClick={() => setIsActive(false)} className={classes.closeBtn}>
+              <img src={CloseIcon} alt="Close" />
+            </button>
+          </div>
+          {children}
         </div>
-        {children}
-      </div>
+      ) : (
+        <div className={classes.notificationContainer}>{children}</div>
+      )}
     </div>
   )
 }

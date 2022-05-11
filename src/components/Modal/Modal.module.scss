@@ -72,3 +72,12 @@
   border-radius: 50%;
   cursor: pointer;
 }
+
+.notificationContainer {
+  background-color: $colorWarn;
+  align-self: flex-end;
+  width: 100%;
+  padding: 2rem 4rem;
+  display: flex;
+  justify-content: space-between;
+}

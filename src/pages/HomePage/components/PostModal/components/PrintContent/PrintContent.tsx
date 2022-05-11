@@ -1,8 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react"
 
-// @ts-ignore
 import phrase12pdf from "assets/pdf/Seedhodler12.pdf"
-// @ts-ignore
 import phrase24pdf from "assets/pdf/Seedhodler24.pdf"
 import LogoIcon from "assets/icons/Logo.svg"
 import PrintIcon from "assets/icons/Print.svg"

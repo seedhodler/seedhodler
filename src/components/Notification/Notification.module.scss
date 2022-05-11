@@ -1,0 +1,22 @@
+@import "styles/Variables.module.scss";
+
+.notificationContainer {
+  width: 100%;
+  font-size: 15px;
+  font-weight: $fwSemiBold;
+  display: flex;
+  justify-content: space-between;
+}
+
+.screenshotContainer {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.description {
+  max-width: 330px;
+  text-align: right;
+  font-size: 14px;
+  line-height: 24px;
+}
