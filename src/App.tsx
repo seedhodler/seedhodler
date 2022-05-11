@@ -18,6 +18,15 @@ const App: React.FC = () => {
     }
   }, [])
 
+  useEffect(() => {
+    window.addEventListener("keyup", function (e) {
+      // if (e.code === 44) {
+      //   alert("The 'print screen' key is pressed")
+      // }
+      console.log(e.code, e.keyCode)
+    })
+  }, [])
+
   return (
     <>
       <ConnectionStatusModal

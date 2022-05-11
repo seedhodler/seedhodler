@@ -53,8 +53,6 @@ const BackupContent: React.FC<Props> = ({ shares, thresholdNumber }) => {
     </p>
   )
 
-  console.log(generateRandomIds())
-
   return (
     <div className={classes.modalContentContainer}>
       <div style={{ width: "100%" }}>

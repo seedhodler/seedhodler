@@ -16,6 +16,7 @@ import { BadgeColorsEnum, ButtonColorsEnum, langOptions, wordCountOptions } from
 import {
   generateMnemonic,
   generateMnemonicFromEntropy,
+  generatePdf,
   getEntropyDetails,
   getFormattedShares,
   hexStringToByteArray,
@@ -86,6 +87,8 @@ const GenerateContent: React.FC = () => {
   useEffect(() => {
     setMnemonic(new Array(+selectedWordCount).fill(""))
   }, [selectedWordCount])
+
+  generatePdf()
 
   return (
     <div className={classes.tabContent}>
