@@ -1,6 +1,7 @@
 import React, { useState, Dispatch, SetStateAction } from "react"
 
 import ArrowRightIcon from "assets/icons/ArrowRight.svg"
+import ArrowLeftIcon from "assets/icons/ArrowLeft.svg"
 import { Button } from "components/Button"
 import { ShareHeader } from "components/ShareHeader"
 import { TextPlace } from "components/TextPlace"
@@ -14,17 +15,25 @@ type Props = {
   sharesNumber: number
 }
 
+enum ActionEnum {
+  Prev,
+  Next,
+}
+
 const BackupContent: React.FC<Props> = ({ shares, setCurrentStep, selectedWordCount, sharesNumber }) => {
   const [shareId, setShareId] = useState(0)
 
-  console.log(shares)
-  console.log(shareId)
-
-  const handleNext = () => {
-    if (shareId + 1 < sharesNumber) {
-      setShareId(prev => ++prev)
+  const handleNavigation = (type: ActionEnum) => {
+    if (type === ActionEnum.Next) {
+      if (shareId + 1 < sharesNumber) {
+        setShareId(prev => ++prev)
+      } else {
+        setCurrentStep(prev => ++prev)
+      }
     } else {
-      setCurrentStep(prev => ++prev)
+      if (shareId > 0) {
+        setShareId(prev => --prev)
+      }
     }
   }
 
@@ -61,9 +70,18 @@ const BackupContent: React.FC<Props> = ({ shares, setCurrentStep, selectedWordCo
         </p>
         <div className={classes.blockDivider} style={{ marginBottom: "2.4rem" }}></div>
       </div>
-      <Button onClick={handleNext} iconRight={ArrowRightIcon}>
-        Next
-      </Button>
+      <div className={classes.buttonsContainer} style={{ width: "300px" }}>
+        <Button
+          onClick={() => handleNavigation(ActionEnum.Prev)}
+          iconLeft={ArrowLeftIcon}
+          disabled={shareId <= 0}
+        >
+          Prev
+        </Button>
+        <Button onClick={() => handleNavigation(ActionEnum.Next)} iconRight={ArrowRightIcon}>
+          Next
+        </Button>
+      </div>
     </div>
   )
 }

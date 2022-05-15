@@ -13,7 +13,6 @@ type Props = {
   selectedWordCount: number
   mnemonic: string[]
   shares: string[]
-  thresholdNumber: number
   sharesNumber: number
 }
 
@@ -23,7 +22,6 @@ const ExportSaveModal: React.FC<Props> = ({
   selectedWordCount,
   mnemonic,
   shares,
-  thresholdNumber,
   sharesNumber,
 }) => {
   const [currentStep, setCurrentStep] = useState(0)
@@ -55,7 +53,13 @@ const ExportSaveModal: React.FC<Props> = ({
     2: {
       title: "Verification",
       badgeColor: BadgeColorsEnum.Main,
-      Component: <VerificationContent shares={shares} thresholdNumber={thresholdNumber} />,
+      Component: (
+        <VerificationContent
+          shares={shares}
+          sharesNumber={sharesNumber}
+          selectedWordCount={selectedWordCount}
+        />
+      ),
     },
   }
   const currentComponentInfo = componentsInfo[currentStep as keyof typeof componentsInfo]
@@ -72,7 +76,7 @@ const ExportSaveModal: React.FC<Props> = ({
       isActive={isPrintModalActive}
       setIsActive={setIsPrintModalActive}
       badgeColor={currentComponentInfo.badgeColor}
-      style={{ height: currentStep === 0 || currentStep === 1 ? "auto" : "" }}
+      style={{ height: "auto" }}
     >
       {currentComponentInfo.Component}
     </Modal>

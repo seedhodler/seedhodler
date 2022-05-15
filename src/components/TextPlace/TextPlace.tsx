@@ -6,12 +6,15 @@ import classes from "./TextPlace.module.scss"
 type Props = {
   text: string
   count: number
+  className?: string
   style?: CSS.Properties
 }
 
-const TextPlace: React.FC<Props> = ({ text, count, style }) => {
+const TextPlace: React.FC<Props> = ({ text, count, className, style }) => {
+  const classNames = [classes.textPlace, className].join(" ")
+
   return (
-    <div className={classes.textPlace} style={style}>
+    <div className={classNames} style={style}>
       <span className={classes.count}>{count}.</span>
       {text}&nbsp;
     </div>

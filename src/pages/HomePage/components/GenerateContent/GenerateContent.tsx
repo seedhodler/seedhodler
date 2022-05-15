@@ -292,7 +292,6 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
         selectedWordCount={+selectedWordCount}
         mnemonic={mnemonic}
         shares={shares!}
-        thresholdNumber={thresholdNumber}
         sharesNumber={sharesNumber}
       />
     </div>
