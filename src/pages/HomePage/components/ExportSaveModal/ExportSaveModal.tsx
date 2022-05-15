@@ -29,7 +29,7 @@ const ExportSaveModal: React.FC<Props> = ({
   const componentsInfo = {
     0: {
       title: "Print - Seedhodler Phraseholder",
-      badgeColor: BadgeColorsEnum.Success,
+      badgeColor: BadgeColorsEnum.SuccessLight,
       Component: (
         <PrintContent
           selectedWordCount={selectedWordCount}
@@ -58,8 +58,14 @@ const ExportSaveModal: React.FC<Props> = ({
           shares={shares}
           sharesNumber={sharesNumber}
           selectedWordCount={selectedWordCount}
+          setCurrentStep={setCurrentStep}
         />
       ),
+    },
+    3: {
+      title: "Successful",
+      badgeColor: BadgeColorsEnum.Success,
+      Component: <h1>Congratulations!</h1>,
     },
   }
   const currentComponentInfo = componentsInfo[currentStep as keyof typeof componentsInfo]

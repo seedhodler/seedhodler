@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect, Dispatch, SetStateAction } from "react"
 
 import ArrowRightIcon from "assets/icons/ArrowRight.svg"
 import { ShareHeader } from "components/ShareHeader"
@@ -18,30 +18,89 @@ type Props = {
   shares: string[]
   sharesNumber: number
   selectedWordCount: number
+  setCurrentStep: Dispatch<SetStateAction<number>>
 }
 
-const VerificationContent: React.FC<Props> = ({ shares, sharesNumber, selectedWordCount }) => {
+const VerificationContent: React.FC<Props> = ({
+  shares,
+  sharesNumber,
+  selectedWordCount,
+  setCurrentStep,
+}) => {
   const [currentShareId, setCurrentShareId] = useState(0)
   const splitShareItem = shares[currentShareId].split(" ")
-
+  console.log(splitShareItem)
   const maxId = selectedWordCount === 12 ? 19 : 32
-  const closedWords = getUniqueArr(0, maxId, CLOSED_INPUTS_NUMBER)
-    .sort((a, b) => a - b)
-    .map((listIndex, i) => {
-      const word = splitShareItem[listIndex]
-      return {
-        index: listIndex,
-        word,
-        wordNumber: slip39wordlist.indexOf(word),
-        isActive: i === 0 ? true : false,
-        isFulfilled: false,
-      }
-    })
-  const options = getOptions(closedWords.map(item => item.wordNumber))
+  const [closedWords, setClosedWords] = useState(
+    getUniqueArr(0, maxId, CLOSED_INPUTS_NUMBER)
+      .sort((a, b) => a - b)
+      .map((listIndex, i) => {
+        const word = splitShareItem[listIndex]
+        return {
+          index: listIndex,
+          word,
+          wordNumber: slip39wordlist.indexOf(word),
+          isActive: i === 0 ? true : false,
+          isFulfilled: false,
+        }
+      }),
+  )
+  const [options, setOptions] = useState(getOptions(closedWords.map(item => item.wordNumber)))
+
+  const handleOptionClick = (word: string) => {
+    const activeClosedWord = closedWords.find(item => item.isActive)
+    const activeClosedWordIndex = closedWords.findIndex(item => item.isActive)
+
+    if (activeClosedWord!.word === word) {
+      activeClosedWord!.isActive = false
+      activeClosedWord!.isFulfilled = true
+      setClosedWords(prev =>
+        prev.map((item, index) => {
+          if (item.word === word) {
+            return activeClosedWord!
+          }
+          if (index === activeClosedWordIndex + 1) {
+            item.isActive = true
+            return item
+          }
+          return item
+        }),
+      )
+      setOptions(prev =>
+        prev.map(item => {
+          if (item.word === word) {
+            item.selected = true
+          }
+          return item
+        }),
+      )
+    }
+  }
 
   const handleNext = () => {
-    setCurrentShareId(prev => ++prev)
+    if (currentShareId < sharesNumber) {
+      setCurrentShareId(prev => ++prev)
+    } else {
+      setCurrentStep(prev => ++prev)
+    }
   }
+
+  useEffect(() => {
+    const newClosedWords = getUniqueArr(0, maxId, CLOSED_INPUTS_NUMBER)
+      .sort((a, b) => a - b)
+      .map((listIndex, i) => {
+        const word = splitShareItem[listIndex]
+        return {
+          index: listIndex,
+          word,
+          wordNumber: slip39wordlist.indexOf(word),
+          isActive: i === 0 ? true : false,
+          isFulfilled: false,
+        }
+      })
+    setClosedWords(newClosedWords)
+    setOptions(getOptions(newClosedWords.map(item => item.wordNumber)))
+  }, [currentShareId])
 
   return (
     <div className={classes.modalContentContainer}>
@@ -90,13 +149,25 @@ const VerificationContent: React.FC<Props> = ({ shares, sharesNumber, selectedWo
         </p>
         <div className={classes.optionsContainer}>
           {options.map(item => (
-            <button key={item.word} className={classes.option}>
+            <button
+              key={item.word}
+              onClick={() => handleOptionClick(item.word)}
+              className={classes.option}
+              style={{
+                backgroundColor: item.selected ? variables.colorMain : "",
+                cursor: item.selected ? "default" : "",
+              }}
+            >
               {item.word}
             </button>
           ))}
         </div>
       </div>
-      <Button onClick={handleNext} iconRight={ArrowRightIcon}>
+      <Button
+        disabled={closedWords.some(item => !item.isFulfilled)}
+        onClick={handleNext}
+        iconRight={ArrowRightIcon}
+      >
         Next
       </Button>
     </div>

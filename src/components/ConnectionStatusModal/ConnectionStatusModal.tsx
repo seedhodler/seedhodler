@@ -43,7 +43,7 @@ const ConnectionStatusModal: React.FC<Props> = ({
 
   return (
     <Modal
-      badgeColor={isFirstStep ? BadgeColorsEnum.Success : BadgeColorsEnum.Error}
+      badgeColor={isFirstStep ? BadgeColorsEnum.SuccessLight : BadgeColorsEnum.Error}
       title={isFirstStep ? "Getting Started" : "Make Sure you are Offline"}
       isActive={isModalActive}
       setIsActive={setIsModalActive}

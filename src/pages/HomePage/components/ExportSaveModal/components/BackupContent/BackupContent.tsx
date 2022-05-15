@@ -70,7 +70,7 @@ const BackupContent: React.FC<Props> = ({ shares, setCurrentStep, selectedWordCo
         </p>
         <div className={classes.blockDivider} style={{ marginBottom: "2.4rem" }}></div>
       </div>
-      <div className={classes.buttonsContainer} style={{ width: "300px" }}>
+      <div className={classes.buttonsContainer} style={{ width: "100%" }}>
         <Button
           onClick={() => handleNavigation(ActionEnum.Prev)}
           iconLeft={ArrowLeftIcon}

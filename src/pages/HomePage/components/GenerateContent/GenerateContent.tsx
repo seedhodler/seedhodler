@@ -16,7 +16,6 @@ import { BadgeColorsEnum, ButtonColorsEnum, langOptions, wordCountOptions } from
 import {
   generateMnemonic,
   generateMnemonicFromEntropy,
-  generatePdf,
   getEntropyDetails,
   getFormattedShares,
   hexStringToByteArray,
@@ -92,7 +91,7 @@ const GenerateContent: React.FC = () => {
 
   return (
     <div className={classes.tabContent}>
-      <BadgeTitle title="Phrase" additionalInfo="BIP 39" color={BadgeColorsEnum.Success} />
+      <BadgeTitle title="Phrase" additionalInfo="BIP 39" color={BadgeColorsEnum.SuccessLight} />
       <div className={classes.configContainer}>
         <div>
           <InfoTitle title="Language" desc="Language __placeholder" />
@@ -234,7 +233,7 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
       </div>
       {mnemonic.every(word => word.length !== 0) && (
         <>
-          <BadgeTitle title="Split Phrase into shares" color={BadgeColorsEnum.Success} />
+          <BadgeTitle title="Split Phrase into shares" color={BadgeColorsEnum.SuccessLight} />
           <p className={classes.sharesInfo}>
             The generated Phrase can now be split into up to 6 different shares. These can then be
             combined to restore your Phrase

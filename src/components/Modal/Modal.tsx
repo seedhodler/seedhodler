@@ -19,7 +19,7 @@ type Props = PropsBase &
 
 const Modal: React.FC<Props> = ({
   title,
-  badgeColor = BadgeColorsEnum.Success,
+  badgeColor = BadgeColorsEnum.SuccessLight,
   isActive,
   setIsActive,
   isNotification,
