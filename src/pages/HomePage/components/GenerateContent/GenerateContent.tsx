@@ -21,6 +21,7 @@ import {
   hexStringToByteArray,
   mnemonicToEntropy,
 } from "helpers"
+import variables from "styles/Variables.module.scss"
 
 import { Shares } from "../Shares"
 import { ExportSaveModal } from "../ExportSaveModal"
@@ -48,6 +49,7 @@ const GenerateContent: React.FC = () => {
     entropyTypeId,
     minBits,
   )
+  const isEntropyTooShort = selectedEntropyAsBinary.length < minBits
 
   const handleGenerateShares = () => {
     setActiveShareItemId(0)
@@ -175,7 +177,16 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
               title="Manual - Enter your own entropy"
               desc="Manual - Enter your own entropy __placeholder"
             />
-            <div className={classes.validation}>Valid Entropy</div>
+            <div
+              className={classes.validation}
+              style={{
+                backgroundColor: isEntropyTooShort
+                  ? variables.colorErrorLight
+                  : variables.colorSuccessLight,
+              }}
+            >
+              {isEntropyTooShort ? "Entropy is too short" : "Valid Entropy"}
+            </div>
           </div>
           <Textarea
             value={entropyValue}
@@ -205,7 +216,7 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
         fullWidth
         style={{ marginBottom: "3.4rem" }}
         onClick={handleGeneratePhase}
-        disabled={isAdvanced && selectedEntropyAsBinary.length < minBits}
+        disabled={isAdvanced && isEntropyTooShort}
       >
         Generate Phrase
       </Button>
