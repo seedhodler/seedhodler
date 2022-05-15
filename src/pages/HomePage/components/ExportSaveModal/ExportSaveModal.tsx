@@ -6,10 +6,11 @@ import { BadgeColorsEnum } from "constants/index"
 import { PrintContent } from "./components/PrintContent"
 import { VerificationContent } from "./components/VerificationContent"
 import { BackupContent } from "./components/BackupContent"
+import { SuccessContent } from "./components/SuccessContent"
 
 type Props = {
-  isPrintModalActive: boolean
-  setIsPrintModalActive: Dispatch<SetStateAction<boolean>>
+  isExportSaveModalActive: boolean
+  setIsExportSaveModalActive: Dispatch<SetStateAction<boolean>>
   selectedWordCount: number
   mnemonic: string[]
   shares: string[]
@@ -17,8 +18,8 @@ type Props = {
 }
 
 const ExportSaveModal: React.FC<Props> = ({
-  isPrintModalActive,
-  setIsPrintModalActive,
+  isExportSaveModalActive,
+  setIsExportSaveModalActive,
   selectedWordCount,
   mnemonic,
   shares,
@@ -65,22 +66,23 @@ const ExportSaveModal: React.FC<Props> = ({
     3: {
       title: "Successful",
       badgeColor: BadgeColorsEnum.Success,
-      Component: <h1>Congratulations!</h1>,
+      Component: <SuccessContent setIsExportSaveModalActive={setIsExportSaveModalActive} />,
     },
   }
   const currentComponentInfo = componentsInfo[currentStep as keyof typeof componentsInfo]
 
   useEffect(() => {
-    if (isPrintModalActive) {
+    if (isExportSaveModalActive) {
       setCurrentStep(0)
     }
-  }, [isPrintModalActive])
+  }, [isExportSaveModalActive])
 
   return (
     <Modal
       title={currentComponentInfo.title}
-      isActive={isPrintModalActive}
-      setIsActive={setIsPrintModalActive}
+      isActive={isExportSaveModalActive}
+      isConfetti={currentStep === 3}
+      setIsActive={setIsExportSaveModalActive}
       badgeColor={currentComponentInfo.badgeColor}
       style={{ height: "auto" }}
     >

@@ -95,3 +95,26 @@
   font-weight: $fwBold;
   font-size: 13px;
 }
+
+.infoBlock {
+  position: relative;
+  margin-bottom: 2.4rem;
+}
+
+.infoBlockHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid $colorTextDark;
+  padding-bottom: 1.2rem;
+  font-size: 15px;
+  color: $colorTextDark;
+}
+
+.infoBlockDescription {
+  margin-top: 2.4rem;
+  font-weight: $fwNormal;
+  font-size: 15px;
+  color: $colorBg700;
+  line-height: 24px;
+}

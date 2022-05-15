@@ -40,7 +40,7 @@ const GenerateContent: React.FC = () => {
   const [sharesNumber, setSharesNumber] = useState(5)
   const [shares, setShares] = useState<null | string[]>(null)
   const [activeShareItemId, setActiveShareItemId] = useState(0)
-  const [isPrintModalActive, setIsPrintModalActive] = useState(false)
+  const [isExportSaveModalActive, setIsExportSaveModalActive] = useState(false)
 
   const minBits = +selectedWordCount === 12 ? 128 : 256
   const { selectedEntropyAsBinary, selectedEntropyDetails, regex } = getEntropyDetails(
@@ -86,8 +86,6 @@ const GenerateContent: React.FC = () => {
   useEffect(() => {
     setMnemonic(new Array(+selectedWordCount).fill(""))
   }, [selectedWordCount])
-
-  // generatePdf()
 
   return (
     <div className={classes.tabContent}>
@@ -276,7 +274,7 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
             />
           )}
           <Button
-            onClick={() => setIsPrintModalActive(true)}
+            onClick={() => setIsExportSaveModalActive(true)}
             disabled={!Boolean(shares)}
             fullWidth
             color={ButtonColorsEnum.Success}
@@ -286,8 +284,8 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
         </>
       )}
       <ExportSaveModal
-        isPrintModalActive={isPrintModalActive}
-        setIsPrintModalActive={setIsPrintModalActive}
+        isExportSaveModalActive={isExportSaveModalActive}
+        setIsExportSaveModalActive={setIsExportSaveModalActive}
         selectedWordCount={+selectedWordCount}
         mnemonic={mnemonic}
         shares={shares!}

@@ -5,14 +5,10 @@ import { ShareHeader } from "components/ShareHeader"
 import { TextPlace } from "components/TextPlace"
 import { Button } from "components/Button"
 import variables from "styles/Variables.module.scss"
-import { slip39wordlist } from "constants/index"
+import { slip39wordlist, CLOSED_INPUTS_NUMBER } from "constants/index"
+import { getOptions, getUniqueArr } from "helpers"
 
 import classes from "../../ExportSaveModal.module.scss"
-
-// TODO: temp
-import { getOptions, getUniqueArr } from "helpers/VERIFICATION_UTILS"
-
-const CLOSED_INPUTS_NUMBER = 5
 
 type Props = {
   shares: string[]
@@ -51,7 +47,7 @@ const VerificationContent: React.FC<Props> = ({
     const activeClosedWord = closedWords.find(item => item.isActive)
     const activeClosedWordIndex = closedWords.findIndex(item => item.isActive)
 
-    if (activeClosedWord!.word === word) {
+    if (activeClosedWord?.word === word) {
       activeClosedWord!.isActive = false
       activeClosedWord!.isFulfilled = true
       setClosedWords(prev =>
@@ -78,7 +74,7 @@ const VerificationContent: React.FC<Props> = ({
   }
 
   const handleNext = () => {
-    if (currentShareId < sharesNumber) {
+    if (currentShareId + 1 < sharesNumber) {
       setCurrentShareId(prev => ++prev)
     } else {
       setCurrentStep(prev => ++prev)

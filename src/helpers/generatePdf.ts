@@ -19,6 +19,5 @@ export const generatePdf = async () => {
   const copiedPagesB = await mergedPdf.copyPages(share12pdf, share12pdf.getPageIndices())
   copiedPagesB.forEach(page => mergedPdf.addPage(page))
 
-  const result = await mergedPdf.save()
-  console.log(result)
+  return mergedPdf.save()
 }
