@@ -54,7 +54,7 @@ const Modal: React.FC<Props> = ({
       <div
         onClick={() => setIsActive(false)}
         className={isActive ? classes.backdropActive : classes.backdrop}
-        style={{ zIndex: isNotification ? 100 : "auto" }}
+        style={{ zIndex: isNotification ? 100 : "" }}
       >
         {!isNotification ? (
           <div
