@@ -71,9 +71,7 @@ export const getEntropyFromMouse = (
   }
 
   if (entropy.length >= MAX_LEN) {
-    console.log("entropy:", entropy)
     shuffle(entropy)
-    console.log("suffledEntropy:", entropy)
     setIsMouseCapture(false)
     setEntropyValue(entropy.join(""))
   }
