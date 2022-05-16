@@ -4,7 +4,7 @@ export {
   mnemonicToEntropy,
   mnemonicToSeed,
 } from "./bip39utils"
-export { hexStringToByteArray } from "./entropyUtils"
+export { hexStringToByteArray, getEntropyFromMouse } from "./entropyUtils"
 export { getFormattedShares } from "./slip39utils"
 
 export { parseBigInt } from "./parseUtils"

@@ -11,22 +11,20 @@ const App: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0)
 
   useEffect(() => {
-    window.addEventListener("online", () => setIsOnline(true))
-    window.addEventListener("offline", () => setIsOnline(false))
-    window.addEventListener("keyup", e => {
+    const handlePrintScreenClick = (e: KeyboardEvent) => {
       if (e.code === "PrintScreen") {
         setIsNotification(true)
       }
-    })
+    }
+
+    window.addEventListener("online", () => setIsOnline(true))
+    window.addEventListener("offline", () => setIsOnline(false))
+    window.addEventListener("keyup", handlePrintScreenClick)
 
     return () => {
       window.removeEventListener("online", () => setIsOnline(true))
       window.removeEventListener("offline", () => setIsOnline(false))
-      window.removeEventListener("keyup", e => {
-        if (e.code === "PrintScreen") {
-          setIsNotification(true)
-        }
-      })
+      window.removeEventListener("keyup", handlePrintScreenClick)
     }
   }, [])
 

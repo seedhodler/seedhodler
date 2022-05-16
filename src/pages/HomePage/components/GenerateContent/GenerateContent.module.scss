@@ -37,6 +37,46 @@
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 3.4rem;
+  column-gap: 1.2rem;
+  row-gap: 0.6rem;
+}
+
+@mixin mouseButtonBase($percentage) {
+  background: linear-gradient(to right, $colorMain 0% $percentage, $colorBg700 $percentage 100%);
+}
+
+.mouseButton0 {
+  @include mouseButtonBase(0%);
+}
+.mouseButton10 {
+  @include mouseButtonBase(10%);
+}
+.mouseButton20 {
+  @include mouseButtonBase(20%);
+}
+.mouseButton30 {
+  @include mouseButtonBase(30%);
+}
+.mouseButton40 {
+  @include mouseButtonBase(40%);
+}
+.mouseButton50 {
+  @include mouseButtonBase(50%);
+}
+.mouseButton60 {
+  @include mouseButtonBase(60%);
+}
+.mouseButton70 {
+  @include mouseButtonBase(70%);
+}
+.mouseButton80 {
+  @include mouseButtonBase(80%);
+}
+.mouseButton90 {
+  @include mouseButtonBase(90%);
+}
+.mouseButton100 {
+  @include mouseButtonBase(100%);
 }
 
 .infoAndValidation {

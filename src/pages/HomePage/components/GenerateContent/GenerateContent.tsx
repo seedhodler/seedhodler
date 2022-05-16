@@ -20,6 +20,7 @@ import {
   getFormattedShares,
   hexStringToByteArray,
   mnemonicToEntropy,
+  getEntropyFromMouse,
 } from "helpers"
 import variables from "styles/Variables.module.scss"
 
@@ -42,6 +43,8 @@ const GenerateContent: React.FC = () => {
   const [shares, setShares] = useState<null | string[]>(null)
   const [activeShareItemId, setActiveShareItemId] = useState(0)
   const [isExportSaveModalActive, setIsExportSaveModalActive] = useState(false)
+  const [isMouseCapture, setIsMouseCapture] = useState(false)
+  const [mousePercentage, setMousePercentage] = useState(0)
 
   const minBits = +selectedWordCount === 12 ? 128 : 256
   const { selectedEntropyAsBinary, selectedEntropyDetails, regex } = getEntropyDetails(
@@ -85,9 +88,31 @@ const GenerateContent: React.FC = () => {
     setEntropyTypeId(id)
   }
 
+  const handleMouseEntropy = () => {
+    setMousePercentage(0)
+    setIsMouseCapture(true)
+  }
+
   useEffect(() => {
     setMnemonic(new Array(+selectedWordCount).fill(""))
   }, [selectedWordCount])
+
+  const entropy: number[] = []
+
+  useEffect(() => {
+    document.addEventListener("mousemove", e =>
+      getEntropyFromMouse(
+        e,
+        minBits,
+        entropy,
+        isMouseCapture,
+        setIsMouseCapture,
+        setEntropyValue,
+        mousePercentage,
+        setMousePercentage,
+      ),
+    )
+  }, [isMouseCapture, setIsMouseCapture])
 
   return (
     <div className={classes.tabContent}>
@@ -169,7 +194,9 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
             </div>
             <div className={classes.wrapperColumn}>
               <InfoTitle title="Mouse" desc="Mouse __placeholder" />
-              <Button onClick={() => {}}>Start calculation</Button>
+              <Button onClick={handleMouseEntropy} className={classes["mouseButton" + mousePercentage]}>
+                {isMouseCapture ? "Calculating..." : "Start calculation"}
+              </Button>
             </div>
           </div>
           <div className={classes.infoAndValidation}>
