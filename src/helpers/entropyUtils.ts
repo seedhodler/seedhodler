@@ -38,15 +38,16 @@ const shuffle = (array: number[]) => {
   return array
 }
 
-const entropy: number[] = []
-
 export const getEntropyFromMouse = (
   e: MouseEvent,
   minBits: 128 | 256,
+  entropy: number[],
   setIsMouseCapture: Dispatch<SetStateAction<boolean>>,
   setEntropyValue: Dispatch<SetStateAction<string>>,
   setMousePercentage: Dispatch<SetStateAction<number>>,
 ) => {
+  console.log(entropy)
+
   const MAX_LEN = minBits // size of entropy's array
   if (entropy.length >= MAX_LEN) return
   const now = Date.now()

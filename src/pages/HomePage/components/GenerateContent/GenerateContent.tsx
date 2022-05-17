@@ -46,6 +46,7 @@ const GenerateContent: React.FC = () => {
   const [isMouseCapture, setIsMouseCapture] = useState(false)
   const [mousePercentage, setMousePercentage] = useState(0)
   const [mouseCountdownValue, setMouseCountdownValue] = useState(3)
+  const entropy: number[] = []
 
   const minBits = +selectedWordCount === 12 ? 128 : 256
   const { selectedEntropyAsBinary, selectedEntropyDetails, regex } = getEntropyDetails(
@@ -91,7 +92,7 @@ const GenerateContent: React.FC = () => {
 
   const onMouseMove = useCallback(
     (e: MouseEvent) =>
-      getEntropyFromMouse(e, minBits, setIsMouseCapture, setEntropyValue, setMousePercentage),
+      getEntropyFromMouse(e, minBits, entropy, setIsMouseCapture, setEntropyValue, setMousePercentage),
     [minBits],
   )
 
@@ -121,20 +122,11 @@ const GenerateContent: React.FC = () => {
     setMnemonic(new Array(+selectedWordCount).fill(""))
   }, [selectedWordCount])
 
-  // useEffect(() => {
-  //   document.removeEventListener("mousemove", e =>
-  //     getEntropyFromMouse(
-  //       e,
-  //       minBits,
-  //       entropy,
-  //       isMouseCapture,
-  //       setIsMouseCapture,
-  //       setEntropyValue,
-  //       mousePercentage,
-  //       setMousePercentage,
-  //     ),
-  //   )
-  // }, [isMouseCapture, setIsMouseCapture])
+  useEffect(() => {
+    if (!isMouseCapture) {
+      document.removeEventListener("mousemove", onMouseMove)
+    }
+  }, [isMouseCapture, onMouseMove])
 
   return (
     <div className={classes.tabContent}>

@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react"
 
-import phrase12pdf from "assets/pdf/Seedhodler12.pdf"
-import phrase24pdf from "assets/pdf/Seedhodler24.pdf"
+// import phrase12pdf from "assets/pdf/Seedhodler12.pdf"
+// import phrase24pdf from "assets/pdf/Seedhodler24.pdf"
 import LogoIcon from "assets/icons/Logo.svg"
 import PrintIcon from "assets/icons/Print.svg"
 import ArrowRightIcon from "assets/icons/ArrowRight.svg"
@@ -9,6 +9,7 @@ import { AdditionalInfo } from "components/AdditionalInfo"
 import { Button } from "components/Button"
 import { TextPlace } from "components/TextPlace"
 import { ButtonColorsEnum } from "constants/index"
+import { blobToSaveAs, generatePdf } from "helpers"
 
 import classes from "../../ExportSaveModal.module.scss"
 
@@ -16,17 +17,27 @@ type Props = {
   selectedWordCount: number
   mnemonic: string[]
   setCurrentStep: Dispatch<SetStateAction<number>>
+  sharesNumber: number
 }
 
-const PrintContent: React.FC<Props> = ({ selectedWordCount, mnemonic, setCurrentStep }) => {
+const PrintContent: React.FC<Props> = ({
+  selectedWordCount,
+  mnemonic,
+  setCurrentStep,
+  sharesNumber,
+}) => {
   const handlePrint = async () => {
-    const docWindow = window.open(
-      selectedWordCount === 12 ? phrase12pdf : phrase24pdf,
-      "PRINT",
-      "height=720,width=1280",
-    )
-    docWindow?.focus()
-    docWindow?.print()
+    // const docWindow = window.open(
+    //   selectedWordCount === 12 ? phrase12pdf : phrase24pdf,
+    //   "PRINT",
+    //   "height=720,width=1280",
+    // )
+    // docWindow?.focus()
+    // docWindow?.print()
+
+    const pdfBytes = await generatePdf(+selectedWordCount, sharesNumber)
+    const blob = new Blob([pdfBytes], { type: "text/plain" })
+    blobToSaveAs("Seedhodler.pdf", blob)
   }
 
   return (
