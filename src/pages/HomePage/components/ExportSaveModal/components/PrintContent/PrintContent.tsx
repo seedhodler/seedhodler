@@ -1,8 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react"
 
-// @ts-ignore
 import phrase12pdf from "assets/pdf/Seedhodler12.pdf"
-// @ts-ignore
 import phrase24pdf from "assets/pdf/Seedhodler24.pdf"
 import LogoIcon from "assets/icons/Logo.svg"
 import PrintIcon from "assets/icons/Print.svg"
@@ -12,7 +10,7 @@ import { Button } from "components/Button"
 import { TextPlace } from "components/TextPlace"
 import { ButtonColorsEnum } from "constants/index"
 
-import classes from "../../PostModal.module.scss"
+import classes from "../../ExportSaveModal.module.scss"
 
 type Props = {
   selectedWordCount: number
@@ -21,6 +19,16 @@ type Props = {
 }
 
 const PrintContent: React.FC<Props> = ({ selectedWordCount, mnemonic, setCurrentStep }) => {
+  const handlePrint = async () => {
+    const docWindow = window.open(
+      selectedWordCount === 12 ? phrase12pdf : phrase24pdf,
+      "PRINT",
+      "height=720,width=1280",
+    )
+    docWindow?.focus()
+    docWindow?.print()
+  }
+
   return (
     <>
       <p className={classes.description}>
@@ -58,19 +66,7 @@ const PrintContent: React.FC<Props> = ({ selectedWordCount, mnemonic, setCurrent
         </p>
       </div>
       <div className={classes.buttonsContainer}>
-        <Button
-          onClick={() => {
-            const docWindow = window.open(
-              selectedWordCount === 12 ? phrase12pdf : phrase24pdf,
-              "PRINT",
-              "height=720,width=1280",
-            )
-            docWindow?.focus()
-            docWindow?.print()
-          }}
-          iconRight={PrintIcon}
-          color={ButtonColorsEnum.ErrorLightish}
-        >
+        <Button onClick={handlePrint} iconRight={PrintIcon} color={ButtonColorsEnum.ErrorLightish}>
           Print
         </Button>
         <Button onClick={() => setCurrentStep(prev => ++prev)} iconRight={ArrowRightIcon}>

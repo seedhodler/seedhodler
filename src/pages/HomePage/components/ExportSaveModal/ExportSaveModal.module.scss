@@ -40,7 +40,7 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  justify-content: space-between;
+  // justify-content: space-between;
   margin-bottom: 3.6rem;
 }
 
@@ -62,14 +62,6 @@
   margin-bottom: 1rem;
 }
 
-.textPlacesContainer {
-  height: 210px;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  margin-bottom: 2.8rem;
-}
-
 .shareNumberInfo {
   text-align: center;
   font-size: 24px;
@@ -83,4 +75,46 @@
   color: $colorTextDark;
   font-size: 20px;
   font-weight: $fwLight;
+}
+
+.optionsContainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 4rem;
+  margin-bottom: 2.4rem;
+  row-gap: 0.4rem;
+  column-gap: 1rem;
+}
+
+.option {
+  padding: 0.8rem 1.6rem;
+  border-radius: $radiiSmall;
+  background-color: $colorTextLighter;
+  color: $colorBg100;
+  font-weight: $fwBold;
+  font-size: 13px;
+}
+
+.infoBlock {
+  position: relative;
+  margin-bottom: 2.4rem;
+}
+
+.infoBlockHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid $colorTextDark;
+  padding-bottom: 1.2rem;
+  font-size: 15px;
+  color: $colorTextDark;
+}
+
+.infoBlockDescription {
+  margin-top: 2.4rem;
+  font-weight: $fwNormal;
+  font-size: 15px;
+  color: $colorBg700;
+  line-height: 24px;
 }

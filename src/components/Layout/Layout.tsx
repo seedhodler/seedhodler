@@ -43,9 +43,8 @@ const Layout: React.FC<Props> = ({ isOnline }) => {
           Help & getting started
         </CheckmarkInfo>
       </nav>
-      <div className={classes.navPlaceholder}></div>
 
-      <div style={{ width: "100%" }}>
+      <div className={classes.mainContentContainer}>
         {isOnline && (
           <div className={classes.onlineNotification}>
             <InfoTitle

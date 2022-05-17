@@ -1,0 +1,45 @@
+@import "styles/Variables.module.scss";
+
+.container {
+  font-weight: $fwSemiBold;
+  font-size: 14px;
+  padding: 2.4rem;
+  padding-bottom: 0;
+  color: $colorBg700;
+}
+
+.sharesContainer {
+  padding: 2.4rem;
+  background-color: $colorBg100;
+  box-shadow: 0px 0px 14px -4px rgba(0, 0, 0, 0.05), 0px 32px 48px -8px rgba(0, 0, 0, 0.1);
+  border-radius: $radiiMedium;
+}
+
+.sharesHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2.4rem;
+}
+
+.shareNumberContainer {
+  display: flex;
+  align-items: center;
+}
+
+.dot {
+  @extend %dot;
+}
+
+.shareNumberHeader {
+  margin-left: 1rem;
+  font-weight: $fwSemiBold;
+  color: $colorTextDark;
+  font-size: 20px;
+}
+
+.shareItemsContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useCallback } from "react"
 
 import CoinIcon from "assets/icons/Coin.svg"
 import CardsIcon from "assets/icons/Cards.svg"
@@ -20,10 +20,12 @@ import {
   getFormattedShares,
   hexStringToByteArray,
   mnemonicToEntropy,
+  getEntropyFromMouse,
 } from "helpers"
+import variables from "styles/Variables.module.scss"
 
 import { Shares } from "../Shares"
-import { PostModal } from "../PostModal"
+import { ExportSaveModal } from "../ExportSaveModal"
 import { BadgeTitle } from "../../../../components/BadgeTitle"
 import { EntropyValueType } from "../EntropyValueType"
 import classes from "./GenerateContent.module.scss"
@@ -37,10 +39,13 @@ const GenerateContent: React.FC = () => {
   const [entropyTypeId, setEntropyTypeId] = useState(0)
   const [entropyValue, setEntropyValue] = useState("")
   const [thresholdNumber, setThresholdNumber] = useState(3)
-  const [sharesNumber, setSharesNumber] = useState(6)
+  const [sharesNumber, setSharesNumber] = useState(5)
   const [shares, setShares] = useState<null | string[]>(null)
   const [activeShareItemId, setActiveShareItemId] = useState(0)
-  const [isPrintModalActive, setIsPrintModalActive] = useState(false)
+  const [isExportSaveModalActive, setIsExportSaveModalActive] = useState(false)
+  const [isMouseCapture, setIsMouseCapture] = useState(false)
+  const [mousePercentage, setMousePercentage] = useState(0)
+  const [mouseCountdownValue, setMouseCountdownValue] = useState(3)
 
   const minBits = +selectedWordCount === 12 ? 128 : 256
   const { selectedEntropyAsBinary, selectedEntropyDetails, regex } = getEntropyDetails(
@@ -48,6 +53,7 @@ const GenerateContent: React.FC = () => {
     entropyTypeId,
     minBits,
   )
+  const isEntropyTooShort = selectedEntropyAsBinary.length < minBits
 
   const handleGenerateShares = () => {
     setActiveShareItemId(0)
@@ -83,13 +89,56 @@ const GenerateContent: React.FC = () => {
     setEntropyTypeId(id)
   }
 
+  const onMouseMove = useCallback(
+    (e: MouseEvent) =>
+      getEntropyFromMouse(e, minBits, setIsMouseCapture, setEntropyValue, setMousePercentage),
+    [minBits],
+  )
+
+  const handleMouseEntropy = () => {
+    setMouseCountdownValue(3)
+    setMousePercentage(0)
+
+    // let localCount = 3
+    if (!isMouseCapture) {
+      // const countdownId = setInterval(() => {
+      //   setMouseCountdownValue(prev => --prev)
+      //   localCount--
+      //   if (localCount <= 0) {
+      //     setIsMouseCapture(true)
+      //     clearInterval(countdownId)
+      //   }
+      // }, 1000)
+      setIsMouseCapture(true)
+      document.addEventListener("mousemove", onMouseMove)
+    } else {
+      setIsMouseCapture(false)
+      document.removeEventListener("mousemove", onMouseMove)
+    }
+  }
+
   useEffect(() => {
     setMnemonic(new Array(+selectedWordCount).fill(""))
   }, [selectedWordCount])
 
+  // useEffect(() => {
+  //   document.removeEventListener("mousemove", e =>
+  //     getEntropyFromMouse(
+  //       e,
+  //       minBits,
+  //       entropy,
+  //       isMouseCapture,
+  //       setIsMouseCapture,
+  //       setEntropyValue,
+  //       mousePercentage,
+  //       setMousePercentage,
+  //     ),
+  //   )
+  // }, [isMouseCapture, setIsMouseCapture])
+
   return (
     <div className={classes.tabContent}>
-      <BadgeTitle title="Phrase" additionalInfo="BIP 39" color={BadgeColorsEnum.Success} />
+      <BadgeTitle title="Phrase" additionalInfo="BIP 39" color={BadgeColorsEnum.SuccessLight} />
       <div className={classes.configContainer}>
         <div>
           <InfoTitle title="Language" desc="Language __placeholder" />
@@ -108,8 +157,8 @@ const GenerateContent: React.FC = () => {
         <div
           className={classes.configLabelContainer}
           title={`None of these advanced functions are necessary for successful generating and
-    splitting your seed phrase. when used incorrectly these advanced functions may lead to
-    generating of unsafe seed phrases that can be (and will be) guessed easily. Be careful!`}
+splitting your seed phrase. when used incorrectly these advanced functions may lead to
+generating of unsafe seed phrases that can be (and will be) guessed easily. Be careful!`}
         >
           <p>
             Advanced Toolset -{" "}
@@ -167,7 +216,9 @@ const GenerateContent: React.FC = () => {
             </div>
             <div className={classes.wrapperColumn}>
               <InfoTitle title="Mouse" desc="Mouse __placeholder" />
-              <Button onClick={() => {}}>Start calculation</Button>
+              <Button onClick={handleMouseEntropy} className={classes["mouseButton" + mousePercentage]}>
+                {isMouseCapture ? "Calculating..." : "Start calculation"}
+              </Button>
             </div>
           </div>
           <div className={classes.infoAndValidation}>
@@ -175,7 +226,16 @@ const GenerateContent: React.FC = () => {
               title="Manual - Enter your own entropy"
               desc="Manual - Enter your own entropy __placeholder"
             />
-            <div className={classes.validation}>Valid Entropy</div>
+            <div
+              className={classes.validation}
+              style={{
+                backgroundColor: isEntropyTooShort
+                  ? variables.colorErrorLight
+                  : variables.colorSuccessLight,
+              }}
+            >
+              {isEntropyTooShort ? "Entropy is too short" : "Valid Entropy"}
+            </div>
           </div>
           <Textarea
             value={entropyValue}
@@ -191,23 +251,12 @@ const GenerateContent: React.FC = () => {
           <p className={classes.insightsLabel}>Here are more insights into your manual input</p>
           <div className={classes.insightsContainer}>
             <div className={classes.insightBlock}>
-              <p className={classes.insightTitle}>Time to Crack</p>
-              <div className={classes.insightContentContainer}>
-                <span className={classes.insightBadge}>Centuries</span>
-                <p className={classes.insightContent}>{selectedEntropyDetails.timeToCrack}</p>
-              </div>
-            </div>
-            <div className={classes.insightBlock}>
-              <p className={classes.insightTitle}>Total Bits</p>
-              <p className={classes.insightContent}>{selectedEntropyDetails.totalBits}</p>
-            </div>
-            <div className={classes.insightBlock}>
               <p className={classes.insightTitle}>Entropy Type</p>
               <p className={classes.insightContent}>{selectedEntropyDetails.entropyType}</p>
             </div>
             <div className={classes.insightBlock}>
-              <p className={classes.insightTitle}>Raw Entropy Words</p>
-              <p className={classes.insightContent}>{selectedEntropyDetails.rawEntropyWords}</p>
+              <p className={classes.insightTitle}>Total Bits</p>
+              <p className={classes.insightContent}>{selectedEntropyDetails.totalBits}</p>
             </div>
           </div>
         </>
@@ -216,7 +265,7 @@ const GenerateContent: React.FC = () => {
         fullWidth
         style={{ marginBottom: "3.4rem" }}
         onClick={handleGeneratePhase}
-        disabled={isAdvanced && selectedEntropyAsBinary.length < minBits}
+        disabled={isAdvanced && isEntropyTooShort}
       >
         Generate Phrase
       </Button>
@@ -242,7 +291,7 @@ const GenerateContent: React.FC = () => {
       </div>
       {mnemonic.every(word => word.length !== 0) && (
         <>
-          <BadgeTitle title="Split Phrase into shares" color={BadgeColorsEnum.Success} />
+          <BadgeTitle title="Split Phrase into shares" color={BadgeColorsEnum.SuccessLight} />
           <p className={classes.sharesInfo}>
             The generated Phrase can now be split into up to 6 different shares. These can then be
             combined to restore your Phrase
@@ -285,7 +334,7 @@ const GenerateContent: React.FC = () => {
             />
           )}
           <Button
-            onClick={() => setIsPrintModalActive(true)}
+            onClick={() => setIsExportSaveModalActive(true)}
             disabled={!Boolean(shares)}
             fullWidth
             color={ButtonColorsEnum.Success}
@@ -294,13 +343,13 @@ const GenerateContent: React.FC = () => {
           </Button>
         </>
       )}
-      <PostModal
-        isPrintModalActive={isPrintModalActive}
-        setIsPrintModalActive={setIsPrintModalActive}
+      <ExportSaveModal
+        isExportSaveModalActive={isExportSaveModalActive}
+        setIsExportSaveModalActive={setIsExportSaveModalActive}
         selectedWordCount={+selectedWordCount}
         mnemonic={mnemonic}
         shares={shares!}
-        thresholdNumber={thresholdNumber}
+        sharesNumber={sharesNumber}
       />
     </div>
   )

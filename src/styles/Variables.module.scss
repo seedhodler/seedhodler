@@ -24,6 +24,7 @@ $colorBg600: #e1e4eb;
 $colorBg650: rgba(111, 118, 126, 0.4);
 $colorBg670: #cdcdcd;
 $colorBg700: #6f767e;
+$colorBg800: #c4c4c4;
 
 $colorTextLight: rgba(252, 252, 252, 0.75);
 $colorTextLighter: #9a9fa5;
@@ -99,8 +100,10 @@ $breakpoints: (
 :export {
   colorMain: $colorMain;
   colorMainLight: $colorMainLight;
+  colorSuccess: $colorSuccess;
   colorSuccessLight: $colorSuccessLight;
   colorError: $colorError;
   colorErrorLight: $colorErrorLight;
   colorBg100: $colorBg100;
+  colorBg800: $colorBg800;
 }

@@ -9,7 +9,7 @@ type Props = {
   color?: BadgeColorsEnum
 }
 
-const AdditionalInfo: React.FC<Props> = ({ info, color = BadgeColorsEnum.Success }) => {
+const AdditionalInfo: React.FC<Props> = ({ info, color = BadgeColorsEnum.SuccessLight }) => {
   return (
     <span
       className={classes.additionalInfo}

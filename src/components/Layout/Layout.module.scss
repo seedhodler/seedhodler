@@ -20,13 +20,6 @@
     display: none;
   }
 }
-.navPlaceholder {
-  min-width: 400px;
-
-  @include md-d {
-    display: none;
-  }
-}
 
 .logo {
   margin-bottom: 3rem;
@@ -68,6 +61,15 @@
   max-width: 968px;
   width: 100%;
   margin: 0 auto;
+}
+
+.mainContentContainer {
+  width: 100%;
+  margin-left: 400px;
+
+  @include md-d {
+    margin-left: 0;
+  }
 }
 
 .onlineNotification {
