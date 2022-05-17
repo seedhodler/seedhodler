@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useCallback } from "react"
 
 import CoinIcon from "assets/icons/Coin.svg"
 import CardsIcon from "assets/icons/Cards.svg"
@@ -45,6 +45,7 @@ const GenerateContent: React.FC = () => {
   const [isExportSaveModalActive, setIsExportSaveModalActive] = useState(false)
   const [isMouseCapture, setIsMouseCapture] = useState(false)
   const [mousePercentage, setMousePercentage] = useState(0)
+  const [mouseCountdownValue, setMouseCountdownValue] = useState(3)
 
   const minBits = +selectedWordCount === 12 ? 128 : 256
   const { selectedEntropyAsBinary, selectedEntropyDetails, regex } = getEntropyDetails(
@@ -88,31 +89,52 @@ const GenerateContent: React.FC = () => {
     setEntropyTypeId(id)
   }
 
+  const onMouseMove = useCallback(
+    (e: MouseEvent) =>
+      getEntropyFromMouse(e, minBits, setIsMouseCapture, setEntropyValue, setMousePercentage),
+    [minBits],
+  )
+
   const handleMouseEntropy = () => {
+    setMouseCountdownValue(3)
     setMousePercentage(0)
-    setIsMouseCapture(true)
+
+    // let localCount = 3
+    if (!isMouseCapture) {
+      // const countdownId = setInterval(() => {
+      //   setMouseCountdownValue(prev => --prev)
+      //   localCount--
+      //   if (localCount <= 0) {
+      //     setIsMouseCapture(true)
+      //     clearInterval(countdownId)
+      //   }
+      // }, 1000)
+      setIsMouseCapture(true)
+      document.addEventListener("mousemove", onMouseMove)
+    } else {
+      setIsMouseCapture(false)
+      document.removeEventListener("mousemove", onMouseMove)
+    }
   }
 
   useEffect(() => {
     setMnemonic(new Array(+selectedWordCount).fill(""))
   }, [selectedWordCount])
 
-  const entropy: number[] = []
-
-  useEffect(() => {
-    document.addEventListener("mousemove", e =>
-      getEntropyFromMouse(
-        e,
-        minBits,
-        entropy,
-        isMouseCapture,
-        setIsMouseCapture,
-        setEntropyValue,
-        mousePercentage,
-        setMousePercentage,
-      ),
-    )
-  }, [isMouseCapture, setIsMouseCapture])
+  // useEffect(() => {
+  //   document.removeEventListener("mousemove", e =>
+  //     getEntropyFromMouse(
+  //       e,
+  //       minBits,
+  //       entropy,
+  //       isMouseCapture,
+  //       setIsMouseCapture,
+  //       setEntropyValue,
+  //       mousePercentage,
+  //       setMousePercentage,
+  //     ),
+  //   )
+  // }, [isMouseCapture, setIsMouseCapture])
 
   return (
     <div className={classes.tabContent}>

@@ -38,23 +38,22 @@ const shuffle = (array: number[]) => {
   return array
 }
 
+const entropy: number[] = []
+
 export const getEntropyFromMouse = (
   e: MouseEvent,
   minBits: 128 | 256,
-  entropy: number[],
-  isMouseCapture: boolean,
   setIsMouseCapture: Dispatch<SetStateAction<boolean>>,
   setEntropyValue: Dispatch<SetStateAction<string>>,
-  mousePercentage: number,
   setMousePercentage: Dispatch<SetStateAction<number>>,
 ) => {
   const MAX_LEN = minBits // size of entropy's array
   if (entropy.length >= MAX_LEN) return
   const now = Date.now()
   if (now >= 1 && now % 10 !== 0) return
-  if (!isMouseCapture) {
-    return
-  }
+  // if (!isMouseCapture) {
+  //   return
+  // }
   const iw = window.innerWidth
   const ih = window.innerHeight
   const iwPlusIh = iw + ih
@@ -66,9 +65,7 @@ export const getEntropyFromMouse = (
 
   const percentage = Math.floor((entropy.length / minBits) * 100)
   const roundToNearest10 = Math.ceil(percentage / 10) * 10
-  if (mousePercentage !== roundToNearest10) {
-    setMousePercentage(roundToNearest10)
-  }
+  setMousePercentage(roundToNearest10)
 
   if (entropy.length >= MAX_LEN) {
     shuffle(entropy)

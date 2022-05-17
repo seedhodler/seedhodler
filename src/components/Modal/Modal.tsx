@@ -43,7 +43,6 @@ const Modal: React.FC<Props> = ({
     <>
       {isActive && isConfetti && (
         <Confetti
-          gravity={0.2}
           style={{
             position: "fixed",
             top: 0,

@@ -75,7 +75,7 @@ const Shares: React.FC<Props> = ({
           {activeShareItemId + 1}/{shares.length} splits
         </p>
       </div>
-      <div className={classes.navigationContainer}>{navigation}</div>
+      {shares.length > 1 && <div className={classes.navigationContainer}>{navigation}</div>}
     </>
   )
 }

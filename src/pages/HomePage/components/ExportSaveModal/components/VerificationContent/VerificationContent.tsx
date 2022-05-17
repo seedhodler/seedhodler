@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Dispatch, SetStateAction } from "react"
+import React, { useState, useEffect, useRef, Dispatch, SetStateAction } from "react"
 
 import ArrowRightIcon from "assets/icons/ArrowRight.svg"
 import { ShareHeader } from "components/ShareHeader"
@@ -23,6 +23,7 @@ const VerificationContent: React.FC<Props> = ({
   selectedWordCount,
   setCurrentStep,
 }) => {
+  const containerRef = useRef() as React.MutableRefObject<HTMLDivElement>
   const [currentShareId, setCurrentShareId] = useState(0)
   const splitShareItem = shares[currentShareId].split(" ")
   console.log(splitShareItem)
@@ -82,24 +83,26 @@ const VerificationContent: React.FC<Props> = ({
   }
 
   useEffect(() => {
-    const newClosedWords = getUniqueArr(0, maxId, CLOSED_INPUTS_NUMBER)
-      .sort((a, b) => a - b)
-      .map((listIndex, i) => {
-        const word = splitShareItem[listIndex]
-        return {
-          index: listIndex,
-          word,
-          wordNumber: slip39wordlist.indexOf(word),
-          isActive: i === 0 ? true : false,
-          isFulfilled: false,
-        }
-      })
-    setClosedWords(newClosedWords)
-    setOptions(getOptions(newClosedWords.map(item => item.wordNumber)))
+    if (containerRef) {
+      const newClosedWords = getUniqueArr(0, maxId, CLOSED_INPUTS_NUMBER)
+        .sort((a, b) => a - b)
+        .map((listIndex, i) => {
+          const word = splitShareItem[listIndex]
+          return {
+            index: listIndex,
+            word,
+            wordNumber: slip39wordlist.indexOf(word),
+            isActive: i === 0 ? true : false,
+            isFulfilled: false,
+          }
+        })
+      setClosedWords(newClosedWords)
+      setOptions(getOptions(newClosedWords.map(item => item.wordNumber)))
+    }
   }, [currentShareId])
 
   return (
-    <div className={classes.modalContentContainer}>
+    <div ref={containerRef} className={classes.modalContentContainer}>
       <div style={{ width: "100%" }}>
         <div className={classes.descriptionContainer}>
           <p className={classes.description}>Lets verify your recovery phrase.</p>
