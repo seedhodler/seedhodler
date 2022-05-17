@@ -1,0 +1,41 @@
+{
+  "files": {
+    "main.css": "/seedhodlerV2/static/css/main.a8108d3c.css",
+    "main.js": "/seedhodlerV2/static/js/main.a4f7636c.js",
+    "static/js/787.c7156b49.chunk.js": "/seedhodlerV2/static/js/787.c7156b49.chunk.js",
+    "static/media/Share12.pdf": "/seedhodlerV2/static/media/Share12.3c6d586607a5914920ed.pdf",
+    "static/media/Seedhodler24.pdf": "/seedhodlerV2/static/media/Seedhodler24.a37eee968be98eca210c.pdf",
+    "static/media/Seedhodler12.pdf": "/seedhodlerV2/static/media/Seedhodler12.7d14567de62afbecb763.pdf",
+    "static/media/Dice.svg": "/seedhodlerV2/static/media/Dice.d63ea87d7f71f4333f15229ae4328fb9.svg",
+    "static/media/Coin.svg": "/seedhodlerV2/static/media/Coin.d90e5975d12f0c8e2c31aa584d982979.svg",
+    "static/media/Logo.svg": "/seedhodlerV2/static/media/Logo.96b142702e388033d6f0d78e0d750d5d.svg",
+    "static/media/RestoreWithBg.svg": "/seedhodlerV2/static/media/RestoreWithBg.a7e9e169e1298e912ee7c4ca8d24325a.svg",
+    "static/media/Cards.svg": "/seedhodlerV2/static/media/Cards.e680d2653fb162e99e80eb02d0bd08b9.svg",
+    "static/media/InternetGray.svg": "/seedhodlerV2/static/media/InternetGray.0a921f9ab481d002baaedbf6953dd413.svg",
+    "static/media/InternetRed.svg": "/seedhodlerV2/static/media/InternetRed.04a67f555f67da921acba56759c06430.svg",
+    "static/media/Screenshot.svg": "/seedhodlerV2/static/media/Screenshot.c59352d3dbdb1fa9de467024c17f7105.svg",
+    "static/media/GenerateWithBg.svg": "/seedhodlerV2/static/media/GenerateWithBg.20d0887f0a9f428d6805061f224cf178.svg",
+    "static/media/Congrats.svg": "/seedhodlerV2/static/media/Congrats.48d121fdf1276a43898431b23ea6ded9.svg",
+    "static/media/Numbers.svg": "/seedhodlerV2/static/media/Numbers.afd52fd1366b4510f94af8f3309c68e2.svg",
+    "index.html": "/seedhodlerV2/index.html",
+    "static/media/QuestionMark.svg": "/seedhodlerV2/static/media/QuestionMark.12656eb9f093e215c1e8c2a6e88f9298.svg",
+    "static/media/InfoGray.svg": "/seedhodlerV2/static/media/InfoGray.615fe25e6922405a18c98a660d65d730.svg",
+    "static/media/Checkmark.svg": "/seedhodlerV2/static/media/Checkmark.0457b4e5b212950652bf92127dbdd023.svg",
+    "static/media/Print.svg": "/seedhodlerV2/static/media/Print.9390886228df5bd4b5fadb0472b0cfe1.svg",
+    "static/media/Close.svg": "/seedhodlerV2/static/media/Close.e4965db63434244bbc7187b5aaeb684c.svg",
+    "static/media/ArrowLeft.svg": "/seedhodlerV2/static/media/ArrowLeft.dccaaab1ea35a1fa5a78a40f16e586ba.svg",
+    "static/media/Next.svg": "/seedhodlerV2/static/media/Next.0abe5eb933f5f62a1f25a914819b63a4.svg",
+    "static/media/Prev.svg": "/seedhodlerV2/static/media/Prev.c208433423c4a4c89c80f23e773361b4.svg",
+    "static/media/Add.svg": "/seedhodlerV2/static/media/Add.f34ebf0a3787db752824eb7ea284d7c6.svg",
+    "static/media/CheckmarkFilled.svg": "/seedhodlerV2/static/media/CheckmarkFilled.3dd19f1b3d5ce72ebb57d294eaa27e6a.svg",
+    "static/media/ArrowRight.svg": "/seedhodlerV2/static/media/ArrowRight.f519bbf8c810969628669d754e22c219.svg",
+    "static/media/Remove.svg": "/seedhodlerV2/static/media/Remove.a4fb9d38a94c3f4fdc4ca493fa448f64.svg",
+    "main.a8108d3c.css.map": "/seedhodlerV2/static/css/main.a8108d3c.css.map",
+    "main.a4f7636c.js.map": "/seedhodlerV2/static/js/main.a4f7636c.js.map",
+    "787.c7156b49.chunk.js.map": "/seedhodlerV2/static/js/787.c7156b49.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a8108d3c.css",
+    "static/js/main.a4f7636c.js"
+  ]
+}
