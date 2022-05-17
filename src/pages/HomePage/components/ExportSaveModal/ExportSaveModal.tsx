@@ -36,6 +36,7 @@ const ExportSaveModal: React.FC<Props> = ({
           selectedWordCount={selectedWordCount}
           mnemonic={mnemonic}
           setCurrentStep={setCurrentStep}
+          sharesNumber={sharesNumber}
         />
       ),
     },
