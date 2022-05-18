@@ -35,7 +35,6 @@ const GenerateContent: React.FC = () => {
   const [selectedWordCount, setSelectedWordCount] = useState(wordCountOptions[0].value)
   const [mnemonic, setMnemonic] = useState(new Array(12).fill(""))
   const [isAdvanced, setIsAdvanced] = useState(false)
-  const [isDetails, setIsDetails] = useState(false)
   const [entropyTypeId, setEntropyTypeId] = useState(0)
   const [entropyValue, setEntropyValue] = useState("")
   const [thresholdNumber, setThresholdNumber] = useState(3)
@@ -54,7 +53,19 @@ const GenerateContent: React.FC = () => {
     entropyTypeId,
     minBits,
   )
+  const entropyToPass = selectedEntropyAsBinary.slice(
+    selectedEntropyAsBinary.length - minBits,
+    selectedEntropyAsBinary.length,
+  )
   const isEntropyTooShort = selectedEntropyAsBinary.length < minBits
+
+  useEffect(() => {
+    if (entropyToPass.length >= 128) {
+      const mnemonic = generateMnemonicFromEntropy(selectedLang, entropyToPass)
+      const mnemonicArr = mnemonic.split(" ")
+      setMnemonic(mnemonicArr)
+    }
+  }, [selectedLang, entropyToPass])
 
   const handleGenerateShares = () => {
     setActiveShareItemId(0)
@@ -75,10 +86,6 @@ const GenerateContent: React.FC = () => {
     if (!isAdvanced) {
       mnemonic = generateMnemonic(selectedLang, +selectedWordCount)
     } else {
-      const entropyToPass = selectedEntropyAsBinary.slice(
-        selectedEntropyAsBinary.length - minBits,
-        selectedEntropyAsBinary.length,
-      )
       mnemonic = generateMnemonicFromEntropy(selectedLang, entropyToPass)
     }
     const mnemonicArr = mnemonic.split(" ")
@@ -117,6 +124,10 @@ const GenerateContent: React.FC = () => {
       document.removeEventListener("mousemove", onMouseMove)
     }
   }
+
+  // if (isAdvanced && binaryLength >= minBits) {
+  //   handleGeneratePhase()
+  // }
 
   useEffect(() => {
     setMnemonic(new Array(+selectedWordCount).fill(""))
@@ -164,10 +175,6 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
         </div>
         <Switch checked={isAdvanced} onChange={setIsAdvanced} />
       </div>
-      <div className={classes.configContainer} style={{ marginBottom: "1.6rem" }}>
-        <p>Show entropy details</p>
-        <Switch checked={isDetails} onChange={setIsDetails} />
-      </div>
       <div className={classes.blockDivider}></div>
       {isAdvanced && (
         <>
@@ -185,7 +192,7 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
                 />
                 <EntropyValueType
                   title="Card"
-                  subtitle="[A2-9TJQK[CDHS]"
+                  subtitle="[A2-9TJQK][CDHS]"
                   isActive={entropyTypeId === 1}
                   onClick={() => handleEntropyChange(1)}
                   icon={CardsIcon}
@@ -226,7 +233,8 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
                   : variables.colorSuccessLight,
               }}
             >
-              {isEntropyTooShort ? "Entropy is too short" : "Valid Entropy"}
+              {isEntropyTooShort ? "Entropy is too short" : "Valid Entropy"} (
+              {selectedEntropyDetails.totalBits})
             </div>
           </div>
           <Textarea
@@ -237,30 +245,16 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
           />
         </>
       )}
-      {isDetails && (
-        <>
-          <BadgeTitle title="Entropy details" color={BadgeColorsEnum.ErrorLight} />
-          <p className={classes.insightsLabel}>Here are more insights into your manual input</p>
-          <div className={classes.insightsContainer}>
-            <div className={classes.insightBlock}>
-              <p className={classes.insightTitle}>Entropy Type</p>
-              <p className={classes.insightContent}>{selectedEntropyDetails.entropyType}</p>
-            </div>
-            <div className={classes.insightBlock}>
-              <p className={classes.insightTitle}>Total Bits</p>
-              <p className={classes.insightContent}>{selectedEntropyDetails.totalBits}</p>
-            </div>
-          </div>
-        </>
+      {!isAdvanced && (
+        <Button
+          fullWidth
+          style={{ marginBottom: "3.4rem" }}
+          onClick={handleGeneratePhase}
+          disabled={isAdvanced && isEntropyTooShort}
+        >
+          Generate Phrase
+        </Button>
       )}
-      <Button
-        fullWidth
-        style={{ marginBottom: "3.4rem" }}
-        onClick={handleGeneratePhase}
-        disabled={isAdvanced && isEntropyTooShort}
-      >
-        Generate Phrase
-      </Button>
       <InfoTitle title="BIP39 Seed Phrase" desc="BIP39 Seed Phrase __placeholder" />
       <div
         className={classes.seedPhraseContainer}
