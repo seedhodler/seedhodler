@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react"
+import React, { useState, Dispatch, SetStateAction } from "react"
 
 // import phrase12pdf from "assets/pdf/Seedhodler12.pdf"
 // import phrase24pdf from "assets/pdf/Seedhodler24.pdf"
@@ -12,6 +12,7 @@ import { ButtonColorsEnum } from "constants/index"
 import { blobToSaveAs, generatePdf } from "helpers"
 
 import classes from "../../ExportSaveModal.module.scss"
+import { Loader } from "components/Loader"
 
 type Props = {
   selectedWordCount: number
@@ -26,18 +27,17 @@ const PrintContent: React.FC<Props> = ({
   setCurrentStep,
   sharesNumber,
 }) => {
-  const handlePrint = async () => {
-    // const docWindow = window.open(
-    //   selectedWordCount === 12 ? phrase12pdf : phrase24pdf,
-    //   "PRINT",
-    //   "height=720,width=1280",
-    // )
-    // docWindow?.focus()
-    // docWindow?.print()
+  const [isCreatingPdf, setIsCreatingPdf] = useState(false)
 
+  const handlePrint = async () => {
+    setIsCreatingPdf(true)
     const pdfBytes = await generatePdf(+selectedWordCount, sharesNumber)
-    const blob = new Blob([pdfBytes], { type: "text/plain" })
-    blobToSaveAs("Seedhodler.pdf", blob)
+    const blob = new Blob([pdfBytes], { type: "application/pdf" })
+    const fileUrl = URL.createObjectURL(blob)
+    const docWindow = window.open(fileUrl, "PRINT", "height=720,width=1280")
+    docWindow?.focus()
+    docWindow?.print()
+    setIsCreatingPdf(false)
   }
 
   return (
@@ -77,8 +77,14 @@ const PrintContent: React.FC<Props> = ({
         </p>
       </div>
       <div className={classes.buttonsContainer}>
-        <Button onClick={handlePrint} iconRight={PrintIcon} color={ButtonColorsEnum.ErrorLightish}>
-          Print
+        <Button
+          onClick={handlePrint}
+          isLoading={isCreatingPdf}
+          disabled={isCreatingPdf}
+          iconRight={PrintIcon}
+          color={ButtonColorsEnum.ErrorLightish}
+        >
+          {!isCreatingPdf ? "Print" : "Printing..."}
         </Button>
         <Button onClick={() => setCurrentStep(prev => ++prev)} iconRight={ArrowRightIcon}>
           Continue

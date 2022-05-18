@@ -2,12 +2,14 @@ import React from "react"
 import CSS from "csstype"
 
 import { ButtonColorsEnum } from "constants/index"
+import { Loader } from "components/Loader"
 
 import classes from "./Button.module.scss"
 
 type Props = {
   children: string
   onClick: () => void
+  isLoading?: boolean
   iconLeft?: string
   iconRight?: string
   fullWidth?: boolean
@@ -26,6 +28,7 @@ const colorClasses = {
 const Button: React.FC<Props> = ({
   iconLeft,
   onClick,
+  isLoading,
   iconRight,
   children,
   fullWidth,
@@ -43,7 +46,11 @@ const Button: React.FC<Props> = ({
     <button onClick={onClick} className={classNames.join(" ")} style={style} disabled={disabled}>
       {iconLeft && <img src={iconLeft} alt="Left icon" className={classes.iconLeft} />}
       {children}
-      {iconRight && <img src={iconRight} alt="Left icon" className={classes.iconRight} />}
+      {isLoading ? (
+        <Loader style={{ marginLeft: "0.6rem" }} />
+      ) : (
+        iconRight && <img src={iconRight} alt="Left icon" className={classes.iconRight} />
+      )}
     </button>
   )
 }

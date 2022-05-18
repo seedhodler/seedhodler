@@ -53,7 +53,7 @@ const Layout: React.FC<Props> = ({ isOnline }) => {
               className={classes.securityNotice}
             />
             <p className={classes.onlineMessage}>
-              You are currently online. This tool should only be used when offline
+              You are currently online. This tool should only be used in an offline environment
             </p>
           </div>
         )}
