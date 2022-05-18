@@ -4,6 +4,8 @@
   display: flex;
   flex-direction: row;
   background-color: $colorBg100;
+  min-height: 100vh;
+  height: 100%;
 }
 
 .nav {
