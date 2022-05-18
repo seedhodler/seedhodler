@@ -125,10 +125,6 @@ const GenerateContent: React.FC = () => {
     }
   }
 
-  // if (isAdvanced && binaryLength >= minBits) {
-  //   handleGeneratePhase()
-  // }
-
   useEffect(() => {
     setMnemonic(new Array(+selectedWordCount).fill(""))
   }, [selectedWordCount])
