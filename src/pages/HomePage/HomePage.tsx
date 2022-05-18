@@ -29,7 +29,9 @@ const HomePage: React.FC = () => {
           onClick={() => setActiveTabId(1)}
         />
       </div>
-      <div className={classes.tabContent}>{activeTabId === 0 ? <GenerateContent /> : <RestoreContent />}</div>
+      <div className={classes.tabContent}>
+        {activeTabId === 0 ? <GenerateContent /> : <RestoreContent />}
+      </div>
     </>
   )
 }
