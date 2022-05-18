@@ -2,9 +2,9 @@
 
 @mixin btnBase($color) {
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
+  column-gap: 1rem;
   cursor: pointer;
 
   font-size: 15px;
@@ -40,11 +40,4 @@
 
 .fullWidth {
   width: 100%;
-}
-
-.iconRight {
-  margin-left: 1rem;
-}
-.iconLeft {
-  margin-right: 1rem;
 }

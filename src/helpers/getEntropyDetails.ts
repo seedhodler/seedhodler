@@ -32,34 +32,31 @@ export const getEntropyDetails = (entropyValue: string, entropyTypeId: number, m
     3: entropyTypeId === 3 ? BigInt(entropyValue).toString(2) : "0",
   }
   const selectedEntropyAsBinary = entropiesAsBinary[entropyTypeId as keyof typeof entropiesAsBinary]
+  const binaryLength = selectedEntropyAsBinary.length
 
   const entropyDetails = {
     0: {
-      timeToCrack: "temp",
       totalBits: `${entropyValue.length} / ${minBits}`,
       entropyType: "Binary [0-1], 101010011",
-      rawEntropyWords: "?",
     },
     1: {
-      timeToCrack: "temp",
-      totalBits: `${selectedEntropyAsBinary.length} / ${minBits}`,
+      totalBits: `${binaryLength} / ${minBits}`,
       entropyType: "Card [A2-9TJQK][CDHS], ahqs9dtc",
-      rawEntropyWords: "?",
     },
     2: {
-      timeToCrack: "temp",
-      totalBits: `${selectedEntropyAsBinary.length} / ${minBits}`,
+      totalBits: `${binaryLength} / ${minBits}`,
       entropyType: "Dice [1-6], 25356341",
-      rawEntropyWords: "?",
     },
     3: {
-      timeToCrack: "temp",
-      totalBits: `${selectedEntropyAsBinary.length} / ${minBits}`,
+      totalBits: `${binaryLength} / ${minBits}`,
       entropyType: "Numbers [0-9], 90834528",
-      rawEntropyWords: "?",
     },
   }
   const selectedEntropyDetails = entropyDetails[entropyTypeId as keyof typeof entropyDetails]
 
-  return { selectedEntropyAsBinary, selectedEntropyDetails, regex }
+  return {
+    selectedEntropyAsBinary,
+    selectedEntropyDetails,
+    regex,
+  }
 }

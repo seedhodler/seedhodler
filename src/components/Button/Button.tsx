@@ -44,13 +44,9 @@ const Button: React.FC<Props> = ({
 
   return (
     <button onClick={onClick} className={classNames.join(" ")} style={style} disabled={disabled}>
-      {iconLeft && <img src={iconLeft} alt="Left icon" className={classes.iconLeft} />}
+      {iconLeft && <img src={iconLeft} alt="Left icon" />}
       {children}
-      {isLoading ? (
-        <Loader style={{ marginLeft: "0.6rem" }} />
-      ) : (
-        iconRight && <img src={iconRight} alt="Left icon" className={classes.iconRight} />
-      )}
+      {isLoading ? <Loader /> : iconRight && <img src={iconRight} alt="Left icon" />}
     </button>
   )
 }
