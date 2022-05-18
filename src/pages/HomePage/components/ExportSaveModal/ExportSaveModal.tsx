@@ -26,6 +26,8 @@ const ExportSaveModal: React.FC<Props> = ({
   sharesNumber,
 }) => {
   const [currentStep, setCurrentStep] = useState(0)
+  const [shareId, setShareId] = useState(0)
+  const [verifiedShareIds, setVerifiedShareIds] = useState<number[]>([])
 
   const componentsInfo = {
     0: {
@@ -49,6 +51,8 @@ const ExportSaveModal: React.FC<Props> = ({
           setCurrentStep={setCurrentStep}
           selectedWordCount={selectedWordCount}
           sharesNumber={sharesNumber}
+          shareId={shareId}
+          setShareId={setShareId}
         />
       ),
     },
@@ -61,6 +65,8 @@ const ExportSaveModal: React.FC<Props> = ({
           sharesNumber={sharesNumber}
           selectedWordCount={selectedWordCount}
           setCurrentStep={setCurrentStep}
+          verifiedShareIds={verifiedShareIds}
+          setVerifiedShareIds={setVerifiedShareIds}
         />
       ),
     },
@@ -75,6 +81,7 @@ const ExportSaveModal: React.FC<Props> = ({
   useEffect(() => {
     if (isExportSaveModalActive) {
       setCurrentStep(0)
+      setShareId(0)
     }
   }, [isExportSaveModalActive])
 
