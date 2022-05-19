@@ -296,7 +296,13 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
                 plusDisabled={thresholdNumber >= sharesNumber}
                 minusDisabled={thresholdNumber <= 1}
                 onPlus={() => setThresholdNumber(prev => ++prev)}
-                onMinus={() => setThresholdNumber(prev => (prev <= 1 ? prev : --prev))}
+                onMinus={() => {
+                  // only 1-of-1 member sharing allowed when threshold is 1
+                  if (thresholdNumber === 2) {
+                    setSharesNumber(1)
+                  }
+                  setThresholdNumber(prev => (prev <= 1 ? prev : --prev))
+                }}
               />
             </div>
             <div className={classes.calcContainer}>
@@ -305,7 +311,13 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
                 value={sharesNumber}
                 plusDisabled={sharesNumber >= 16}
                 minusDisabled={sharesNumber <= 1 || sharesNumber <= thresholdNumber}
-                onPlus={() => setSharesNumber(prev => (prev >= 16 ? prev : ++prev))}
+                onPlus={() => {
+                  // only 1-of-1 member sharing allowed when threshold is 1
+                  if (sharesNumber === 1) {
+                    setThresholdNumber(2)
+                  }
+                  setSharesNumber(prev => (prev >= 16 ? prev : ++prev))
+                }}
                 onMinus={() => setSharesNumber(prev => (prev <= 1 ? prev : --prev))}
               />
             </div>
