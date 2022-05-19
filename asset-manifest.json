@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/seedhodlerV2/static/css/main.a8108d3c.css",
-    "main.js": "/seedhodlerV2/static/js/main.100cebf7.js",
+    "main.css": "/seedhodlerV2/static/css/main.01377e8b.css",
+    "main.js": "/seedhodlerV2/static/js/main.c836f173.js",
     "static/js/787.c7156b49.chunk.js": "/seedhodlerV2/static/js/787.c7156b49.chunk.js",
     "static/media/Share24.pdf": "/seedhodlerV2/static/media/Share24.4eaa01f2854ad55156e8.pdf",
     "static/media/Share12.pdf": "/seedhodlerV2/static/media/Share12.3c6d586607a5914920ed.pdf",
@@ -12,8 +12,6 @@
     "static/media/Logo.svg": "/seedhodlerV2/static/media/Logo.96b142702e388033d6f0d78e0d750d5d.svg",
     "static/media/RestoreWithBg.svg": "/seedhodlerV2/static/media/RestoreWithBg.a7e9e169e1298e912ee7c4ca8d24325a.svg",
     "static/media/Cards.svg": "/seedhodlerV2/static/media/Cards.e680d2653fb162e99e80eb02d0bd08b9.svg",
-    "static/media/InternetGray.svg": "/seedhodlerV2/static/media/InternetGray.0a921f9ab481d002baaedbf6953dd413.svg",
-    "static/media/InternetRed.svg": "/seedhodlerV2/static/media/InternetRed.04a67f555f67da921acba56759c06430.svg",
     "static/media/Screenshot.svg": "/seedhodlerV2/static/media/Screenshot.c59352d3dbdb1fa9de467024c17f7105.svg",
     "static/media/GenerateWithBg.svg": "/seedhodlerV2/static/media/GenerateWithBg.20d0887f0a9f428d6805061f224cf178.svg",
     "static/media/Congrats.svg": "/seedhodlerV2/static/media/Congrats.48d121fdf1276a43898431b23ea6ded9.svg",
@@ -31,12 +29,12 @@
     "static/media/CheckmarkFilled.svg": "/seedhodlerV2/static/media/CheckmarkFilled.3dd19f1b3d5ce72ebb57d294eaa27e6a.svg",
     "static/media/ArrowRight.svg": "/seedhodlerV2/static/media/ArrowRight.f519bbf8c810969628669d754e22c219.svg",
     "static/media/Remove.svg": "/seedhodlerV2/static/media/Remove.a4fb9d38a94c3f4fdc4ca493fa448f64.svg",
-    "main.a8108d3c.css.map": "/seedhodlerV2/static/css/main.a8108d3c.css.map",
-    "main.100cebf7.js.map": "/seedhodlerV2/static/js/main.100cebf7.js.map",
+    "main.01377e8b.css.map": "/seedhodlerV2/static/css/main.01377e8b.css.map",
+    "main.c836f173.js.map": "/seedhodlerV2/static/js/main.c836f173.js.map",
     "787.c7156b49.chunk.js.map": "/seedhodlerV2/static/js/787.c7156b49.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a8108d3c.css",
-    "static/js/main.100cebf7.js"
+    "static/css/main.01377e8b.css",
+    "static/js/main.c836f173.js"
   ]
 }
