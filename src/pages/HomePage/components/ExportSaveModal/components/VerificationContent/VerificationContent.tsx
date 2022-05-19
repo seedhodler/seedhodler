@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef, Dispatch, SetStateAction } from "react"
+import React, { useState, useRef, Dispatch, SetStateAction } from "react"
 
 import ArrowRightIcon from "assets/icons/ArrowRight.svg"
+import ArrowLeftIcon from "assets/icons/ArrowLeft.svg"
 import { ShareHeader } from "components/ShareHeader"
 import { TextPlace } from "components/TextPlace"
 import { Button } from "components/Button"
 import variables from "styles/Variables.module.scss"
-import { slip39wordlist, CLOSED_INPUTS_NUMBER } from "constants/index"
-import { getOptions, getUniqueArr } from "helpers"
+import { NavigationEnum } from "constants/"
 
 import classes from "../../ExportSaveModal.module.scss"
 
@@ -15,6 +15,28 @@ type Props = {
   sharesNumber: number
   selectedWordCount: number
   setCurrentStep: Dispatch<SetStateAction<number>>
+  verifiedShareIds: number[]
+  setVerifiedShareIds: Dispatch<SetStateAction<number[]>>
+  allClosedWords: {
+    index: number
+    word: string
+    wordNumber: number
+    isActive: boolean
+    isFulfilled: boolean
+  }[][]
+  allOptions: { word: string; wordNumber: number; selected: boolean }[][]
+  setAllClosedWords: Dispatch<
+    SetStateAction<
+      {
+        index: number
+        word: string
+        wordNumber: number
+        isActive: boolean
+        isFulfilled: boolean
+      }[][]
+    >
+  >
+  setAllOptions: Dispatch<SetStateAction<{ word: string; wordNumber: number; selected: boolean }[][]>>
 }
 
 const VerificationContent: React.FC<Props> = ({
@@ -22,27 +44,19 @@ const VerificationContent: React.FC<Props> = ({
   sharesNumber,
   selectedWordCount,
   setCurrentStep,
+  verifiedShareIds,
+  setVerifiedShareIds,
+  allClosedWords,
+  allOptions,
+  setAllClosedWords,
+  setAllOptions,
 }) => {
   const containerRef = useRef() as React.MutableRefObject<HTMLDivElement>
   const [currentShareId, setCurrentShareId] = useState(0)
   const splitShareItem = shares[currentShareId].split(" ")
   console.log(splitShareItem)
-  const maxId = selectedWordCount === 12 ? 19 : 32
-  const [closedWords, setClosedWords] = useState(
-    getUniqueArr(0, maxId, CLOSED_INPUTS_NUMBER)
-      .sort((a, b) => a - b)
-      .map((listIndex, i) => {
-        const word = splitShareItem[listIndex]
-        return {
-          index: listIndex,
-          word,
-          wordNumber: slip39wordlist.indexOf(word),
-          isActive: i === 0 ? true : false,
-          isFulfilled: false,
-        }
-      }),
-  )
-  const [options, setOptions] = useState(getOptions(closedWords.map(item => item.wordNumber)))
+  const closedWords = allClosedWords[currentShareId]
+  const options = allOptions[currentShareId]
 
   const handleOptionClick = (word: string) => {
     const activeClosedWord = closedWords.find(item => item.isActive)
@@ -51,55 +65,57 @@ const VerificationContent: React.FC<Props> = ({
     if (activeClosedWord?.word === word) {
       activeClosedWord!.isActive = false
       activeClosedWord!.isFulfilled = true
-      setClosedWords(prev =>
-        prev.map((item, index) => {
-          if (item.word === word) {
-            return activeClosedWord!
+      setAllClosedWords(prev =>
+        prev.map((closedWordsArr, i) => {
+          if (i === currentShareId) {
+            closedWordsArr.map((item, index) => {
+              if (item.word === word) {
+                return activeClosedWord!
+              }
+              if (index === activeClosedWordIndex + 1) {
+                item.isActive = true
+                return item
+              }
+              return item
+            })
           }
-          if (index === activeClosedWordIndex + 1) {
-            item.isActive = true
-            return item
-          }
-          return item
+          return closedWordsArr
         }),
       )
-      setOptions(prev =>
-        prev.map(item => {
-          if (item.word === word) {
-            item.selected = true
+      setAllOptions(prev =>
+        prev.map((optionsArr, i) => {
+          if (i === currentShareId) {
+            optionsArr.map(item => {
+              if (item.word === word) {
+                item.selected = true
+              }
+              return item
+            })
           }
-          return item
+          return optionsArr
         }),
       )
     }
   }
 
-  const handleNext = () => {
-    if (currentShareId + 1 < sharesNumber) {
-      setCurrentShareId(prev => ++prev)
+  const handleNavigation = (type: NavigationEnum) => {
+    if (type === NavigationEnum.Next) {
+      if (!verifiedShareIds.includes(currentShareId)) {
+        setVerifiedShareIds(prev => [...prev, currentShareId])
+      }
+      if (currentShareId + 1 < sharesNumber) {
+        setCurrentShareId(prev => ++prev)
+      } else {
+        setCurrentStep(prev => ++prev)
+      }
     } else {
-      setCurrentStep(prev => ++prev)
+      if (currentShareId === 0) {
+        setCurrentStep(prev => --prev)
+      } else {
+        setCurrentShareId(prev => --prev)
+      }
     }
   }
-
-  useEffect(() => {
-    if (containerRef) {
-      const newClosedWords = getUniqueArr(0, maxId, CLOSED_INPUTS_NUMBER)
-        .sort((a, b) => a - b)
-        .map((listIndex, i) => {
-          const word = splitShareItem[listIndex]
-          return {
-            index: listIndex,
-            word,
-            wordNumber: slip39wordlist.indexOf(word),
-            isActive: i === 0 ? true : false,
-            isFulfilled: false,
-          }
-        })
-      setClosedWords(newClosedWords)
-      setOptions(getOptions(newClosedWords.map(item => item.wordNumber)))
-    }
-  }, [currentShareId])
 
   return (
     <div ref={containerRef} className={classes.modalContentContainer}>
@@ -119,7 +135,7 @@ const VerificationContent: React.FC<Props> = ({
           {splitShareItem.map((word, index) => {
             let text = word
             const currentWordObj = closedWords.find(item => item.index === index)
-            if (currentWordObj) {
+            if (currentWordObj && !verifiedShareIds.includes(currentShareId)) {
               text = currentWordObj.isFulfilled ? currentWordObj.word : "......"
             }
             return (
@@ -162,13 +178,18 @@ const VerificationContent: React.FC<Props> = ({
           ))}
         </div>
       </div>
-      <Button
-        disabled={closedWords.some(item => !item.isFulfilled)}
-        onClick={handleNext}
-        iconRight={ArrowRightIcon}
-      >
-        Next
-      </Button>
+      <div className={classes.buttonsContainer}>
+        <Button onClick={() => handleNavigation(NavigationEnum.Prev)} iconLeft={ArrowLeftIcon}>
+          Prev
+        </Button>
+        <Button
+          disabled={closedWords.some(item => !item.isFulfilled)}
+          onClick={() => handleNavigation(NavigationEnum.Next)}
+          iconRight={ArrowRightIcon}
+        >
+          Next
+        </Button>
+      </div>
     </div>
   )
 }

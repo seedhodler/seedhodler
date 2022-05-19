@@ -1,7 +1,8 @@
 import React, { useState, useEffect, Dispatch, SetStateAction } from "react"
 
 import { Modal } from "components/Modal"
-import { BadgeColorsEnum } from "constants/index"
+import { BadgeColorsEnum, CLOSED_WORDS_NUMBER, slip39wordlist } from "constants/index"
+import { getOptions, getUniqueArr } from "helpers"
 
 import { PrintContent } from "./components/PrintContent"
 import { VerificationContent } from "./components/VerificationContent"
@@ -26,6 +27,32 @@ const ExportSaveModal: React.FC<Props> = ({
   sharesNumber,
 }) => {
   const [currentStep, setCurrentStep] = useState(0)
+  const [shareId, setShareId] = useState(0)
+  const [verifiedShareIds, setVerifiedShareIds] = useState<number[]>([])
+
+  const splitShares = shares?.map(share => share.split(" "))
+  const maxId = selectedWordCount === 12 ? 19 : 32
+  const [allClosedWords, setAllClosedWords] = useState(
+    splitShares?.map(splitShare =>
+      getUniqueArr(0, maxId, CLOSED_WORDS_NUMBER)
+        .sort((a, b) => a - b)
+        .map((listIndex, i) => {
+          const word = splitShare[listIndex]
+          return {
+            index: listIndex,
+            word,
+            wordNumber: slip39wordlist.indexOf(word),
+            isActive: i === 0 ? true : false,
+            isFulfilled: false,
+          }
+        }),
+    ),
+  )
+  const [allOptions, setAllOptions] = useState(
+    allClosedWords?.map(closeWordsOneShare =>
+      getOptions(closeWordsOneShare.map(wordObj => wordObj.wordNumber)),
+    ),
+  )
 
   const componentsInfo = {
     0: {
@@ -49,6 +76,8 @@ const ExportSaveModal: React.FC<Props> = ({
           setCurrentStep={setCurrentStep}
           selectedWordCount={selectedWordCount}
           sharesNumber={sharesNumber}
+          shareId={shareId}
+          setShareId={setShareId}
         />
       ),
     },
@@ -61,6 +90,12 @@ const ExportSaveModal: React.FC<Props> = ({
           sharesNumber={sharesNumber}
           selectedWordCount={selectedWordCount}
           setCurrentStep={setCurrentStep}
+          verifiedShareIds={verifiedShareIds}
+          setVerifiedShareIds={setVerifiedShareIds}
+          allClosedWords={allClosedWords}
+          allOptions={allOptions}
+          setAllClosedWords={setAllClosedWords}
+          setAllOptions={setAllOptions}
         />
       ),
     },
@@ -75,8 +110,32 @@ const ExportSaveModal: React.FC<Props> = ({
   useEffect(() => {
     if (isExportSaveModalActive) {
       setCurrentStep(0)
+      setShareId(0)
     }
   }, [isExportSaveModalActive])
+
+  useEffect(() => {
+    const newClosedWords = splitShares?.map(splitShare =>
+      getUniqueArr(0, maxId, CLOSED_WORDS_NUMBER)
+        .sort((a, b) => a - b)
+        .map((listIndex, i) => {
+          const word = splitShare[listIndex]
+          return {
+            index: listIndex,
+            word,
+            wordNumber: slip39wordlist.indexOf(word),
+            isActive: i === 0 ? true : false,
+            isFulfilled: false,
+          }
+        }),
+    )
+    setAllClosedWords(newClosedWords)
+    setAllOptions(
+      newClosedWords?.map(closeWordsOneShare =>
+        getOptions(closeWordsOneShare.map(wordObj => wordObj.wordNumber)),
+      ),
+    )
+  }, [shares])
 
   return (
     <Modal

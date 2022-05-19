@@ -21,3 +21,8 @@ export enum ButtonColorsEnum {
   Success,
   ErrorLightish,
 }
+
+export enum NavigationEnum {
+  Prev,
+  Next,
+}

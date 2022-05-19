@@ -50,9 +50,6 @@ export const getEntropyFromMouse = (
   if (entropy.length >= MAX_LEN) return
   const now = Date.now()
   if (now >= 1 && now % 10 !== 0) return
-  // if (!isMouseCapture) {
-  //   return
-  // }
   const iw = window.innerWidth
   const ih = window.innerHeight
   const iwPlusIh = iw + ih
