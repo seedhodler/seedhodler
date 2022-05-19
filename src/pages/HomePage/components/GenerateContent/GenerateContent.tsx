@@ -53,10 +53,7 @@ const GenerateContent: React.FC = () => {
     entropyTypeId,
     minBits,
   )
-  const entropyToPass = selectedEntropyAsBinary.slice(
-    selectedEntropyAsBinary.length - minBits,
-    selectedEntropyAsBinary.length,
-  )
+  const entropyToPass = selectedEntropyAsBinary.slice(0, minBits)
   const isEntropyTooShort = selectedEntropyAsBinary.length < minBits
 
   const handleGeneratePhase = () => {
@@ -96,6 +93,7 @@ const GenerateContent: React.FC = () => {
   )
 
   const handleMouseEntropy = () => {
+    setEntropyTypeId(0)
     setMouseCountdownValue(3)
     setMousePercentage(0)
 
@@ -117,6 +115,11 @@ const GenerateContent: React.FC = () => {
     }
   }
 
+  const handleWordCountChange = (wordCountValue: string) => {
+    setEntropyValue("")
+    setSelectedWordCount(wordCountValue)
+  }
+
   useEffect(() => {
     setMnemonic(new Array(+selectedWordCount).fill(""))
   }, [selectedWordCount])
@@ -128,7 +131,7 @@ const GenerateContent: React.FC = () => {
   }, [isMouseCapture, onMouseMove])
 
   useEffect(() => {
-    if (entropyToPass.length >= 128) {
+    if (entropyToPass.length >= minBits) {
       const mnemonic = generateMnemonicFromEntropy(selectedLang, entropyToPass)
       const mnemonicArr = mnemonic.split(" ")
       setMnemonic(mnemonicArr)
@@ -147,13 +150,13 @@ const GenerateContent: React.FC = () => {
       <div className={classes.configContainer}>
         <div>
           <InfoTitle title="Language" desc="Language __placeholder" />
-          <Select defaultValue={selectedLang} onChange={setSelectedLang} options={langOptions} />
+          <Select defaultValue={selectedLang} onChange={() => setSelectedLang} options={langOptions} />
         </div>
         <div>
           <InfoTitle title="Word Count" desc="Word Count __placeholder" />
           <Select
             defaultValue={selectedWordCount}
-            onChange={setSelectedWordCount}
+            onChange={handleWordCountChange}
             options={wordCountOptions}
           />
         </div>
@@ -243,6 +246,8 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
             value={entropyValue}
             onChange={setEntropyValue}
             regex={regex}
+            minBits={minBits}
+            entropyTypeId={entropyTypeId}
             style={{ marginBottom: "3.4rem" }}
           />
         </>

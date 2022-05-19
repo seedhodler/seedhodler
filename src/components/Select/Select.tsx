@@ -6,7 +6,7 @@ import variables from "styles/Variables.module.scss"
 type Props = {
   defaultValue: string
   options: { label: string; value: string }[]
-  onChange: Dispatch<SetStateAction<string>>
+  onChange: (newValue: string) => void
 }
 
 const CustomSelect: React.FC<Props> = ({ defaultValue, options, onChange }) => {
