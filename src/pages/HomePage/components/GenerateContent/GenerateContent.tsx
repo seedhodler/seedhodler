@@ -59,25 +59,6 @@ const GenerateContent: React.FC = () => {
   )
   const isEntropyTooShort = selectedEntropyAsBinary.length < minBits
 
-  useEffect(() => {
-    if (entropyToPass.length >= 128) {
-      const mnemonic = generateMnemonicFromEntropy(selectedLang, entropyToPass)
-      const mnemonicArr = mnemonic.split(" ")
-      setMnemonic(mnemonicArr)
-    }
-  }, [selectedLang, entropyToPass])
-
-  const handleGenerateShares = () => {
-    setActiveShareItemId(0)
-
-    const mnemonicStr = mnemonic.join(" ")
-    const groups = [[thresholdNumber, sharesNumber]]
-    const masterSecret = hexStringToByteArray(mnemonicToEntropy(mnemonicStr))
-
-    const shares = getFormattedShares(masterSecret, "", 1, groups)
-    setShares(shares)
-  }
-
   const handleGeneratePhase = () => {
     setShares(null)
     setActiveShareItemId(0)
@@ -92,7 +73,18 @@ const GenerateContent: React.FC = () => {
     setMnemonic(mnemonicArr)
   }
 
-  const handleEntropyChange = (id: number) => {
+  const handleGenerateShares = () => {
+    setActiveShareItemId(0)
+
+    const mnemonicStr = mnemonic.join(" ")
+    const groups = [[thresholdNumber, sharesNumber]]
+    const masterSecret = hexStringToByteArray(mnemonicToEntropy(mnemonicStr))
+
+    const shares = getFormattedShares(masterSecret, "", 1, groups)
+    setShares(shares)
+  }
+
+  const handleEntropyTypeChange = (id: number) => {
     setEntropyValue("")
     setEntropyTypeId(id)
   }
@@ -125,10 +117,6 @@ const GenerateContent: React.FC = () => {
     }
   }
 
-  // if (isAdvanced && binaryLength >= minBits) {
-  //   handleGeneratePhase()
-  // }
-
   useEffect(() => {
     setMnemonic(new Array(+selectedWordCount).fill(""))
   }, [selectedWordCount])
@@ -138,6 +126,20 @@ const GenerateContent: React.FC = () => {
       document.removeEventListener("mousemove", onMouseMove)
     }
   }, [isMouseCapture, onMouseMove])
+
+  useEffect(() => {
+    if (entropyToPass.length >= 128) {
+      const mnemonic = generateMnemonicFromEntropy(selectedLang, entropyToPass)
+      const mnemonicArr = mnemonic.split(" ")
+      setMnemonic(mnemonicArr)
+    }
+  }, [selectedLang, entropyToPass])
+
+  useEffect(() => {
+    if (shares) {
+      handleGenerateShares()
+    }
+  }, [thresholdNumber, sharesNumber])
 
   return (
     <div className={classes.tabContent}>
@@ -187,28 +189,28 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
                   title="Coin Flip"
                   subtitle="[1,2]"
                   isActive={entropyTypeId === 0}
-                  onClick={() => handleEntropyChange(0)}
+                  onClick={() => handleEntropyTypeChange(0)}
                   icon={CoinIcon}
                 />
                 <EntropyValueType
                   title="Card"
                   subtitle="[A2-9TJQK][CDHS]"
                   isActive={entropyTypeId === 1}
-                  onClick={() => handleEntropyChange(1)}
+                  onClick={() => handleEntropyTypeChange(1)}
                   icon={CardsIcon}
                 />
                 <EntropyValueType
                   title="Dice"
                   subtitle="[1-6]"
                   isActive={entropyTypeId === 2}
-                  onClick={() => handleEntropyChange(2)}
+                  onClick={() => handleEntropyTypeChange(2)}
                   icon={DiceIcon}
                 />
                 <EntropyValueType
                   title="Numbers"
                   subtitle="[0-9]"
                   isActive={entropyTypeId === 3}
-                  onClick={() => handleEntropyChange(3)}
+                  onClick={() => handleEntropyTypeChange(3)}
                   icon={NumbersIcon}
                 />
               </div>
@@ -294,7 +296,13 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
                 plusDisabled={thresholdNumber >= sharesNumber}
                 minusDisabled={thresholdNumber <= 1}
                 onPlus={() => setThresholdNumber(prev => ++prev)}
-                onMinus={() => setThresholdNumber(prev => (prev <= 1 ? prev : --prev))}
+                onMinus={() => {
+                  // only 1-of-1 member sharing allowed when threshold is 1
+                  if (thresholdNumber === 2) {
+                    setSharesNumber(1)
+                  }
+                  setThresholdNumber(prev => (prev <= 1 ? prev : --prev))
+                }}
               />
             </div>
             <div className={classes.calcContainer}>
@@ -303,14 +311,22 @@ generating of unsafe seed phrases that can be (and will be) guessed easily. Be c
                 value={sharesNumber}
                 plusDisabled={sharesNumber >= 16}
                 minusDisabled={sharesNumber <= 1 || sharesNumber <= thresholdNumber}
-                onPlus={() => setSharesNumber(prev => (prev >= 16 ? prev : ++prev))}
+                onPlus={() => {
+                  // only 1-of-1 member sharing allowed when threshold is 1
+                  if (sharesNumber === 1) {
+                    setThresholdNumber(2)
+                  }
+                  setSharesNumber(prev => (prev >= 16 ? prev : ++prev))
+                }}
                 onMinus={() => setSharesNumber(prev => (prev <= 1 ? prev : --prev))}
               />
             </div>
           </div>
-          <Button onClick={handleGenerateShares} fullWidth style={{ marginBottom: "3.6rem" }}>
-            Split
-          </Button>
+          {!shares && (
+            <Button onClick={handleGenerateShares} fullWidth style={{ marginBottom: "3.6rem" }}>
+              Split
+            </Button>
+          )}
           {shares && (
             <Shares
               shares={shares}

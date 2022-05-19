@@ -1,10 +1,11 @@
-import React, { useState, Dispatch, SetStateAction } from "react"
+import React, { Dispatch, SetStateAction } from "react"
 
 import ArrowRightIcon from "assets/icons/ArrowRight.svg"
 import ArrowLeftIcon from "assets/icons/ArrowLeft.svg"
 import { Button } from "components/Button"
 import { ShareHeader } from "components/ShareHeader"
 import { TextPlace } from "components/TextPlace"
+import { NavigationEnum } from "constants/"
 
 import classes from "../../ExportSaveModal.module.scss"
 
@@ -13,19 +14,23 @@ type Props = {
   setCurrentStep: Dispatch<SetStateAction<number>>
   selectedWordCount: number
   sharesNumber: number
+  shareId: number
+  setShareId: Dispatch<SetStateAction<number>>
 }
 
-enum ActionEnum {
-  Prev,
-  Next,
-}
+const BackupContent: React.FC<Props> = ({
+  shares,
+  setCurrentStep,
+  selectedWordCount,
+  sharesNumber,
+  shareId,
+  setShareId,
+}) => {
+  const isNotLastShare = shareId + 1 < sharesNumber
 
-const BackupContent: React.FC<Props> = ({ shares, setCurrentStep, selectedWordCount, sharesNumber }) => {
-  const [shareId, setShareId] = useState(0)
-
-  const handleNavigation = (type: ActionEnum) => {
-    if (type === ActionEnum.Next) {
-      if (shareId + 1 < sharesNumber) {
+  const handleNavigation = (type: NavigationEnum) => {
+    if (type === NavigationEnum.Next) {
+      if (isNotLastShare) {
         setShareId(prev => ++prev)
       } else {
         setCurrentStep(prev => ++prev)
@@ -33,6 +38,8 @@ const BackupContent: React.FC<Props> = ({ shares, setCurrentStep, selectedWordCo
     } else {
       if (shareId > 0) {
         setShareId(prev => --prev)
+      } else {
+        setCurrentStep(prev => --prev)
       }
     }
   }
@@ -65,20 +72,18 @@ const BackupContent: React.FC<Props> = ({ shares, setCurrentStep, selectedWordCo
         <p className={classes.shareNumberInfo}>
           {shareId + 1} / {sharesNumber} Shares
         </p>
-        <p className={classes.additionalInfo} style={{ marginBottom: "2.4rem" }}>
-          We will confirm your written recovery phrase on the next screen.
-        </p>
+        {!isNotLastShare && (
+          <p className={classes.additionalInfo} style={{ marginBottom: "2.4rem" }}>
+            We will confirm your written recovery phrase on the next screen.
+          </p>
+        )}
         <div className={classes.blockDivider} style={{ marginBottom: "2.4rem" }}></div>
       </div>
-      <div className={classes.buttonsContainer} style={{ width: "100%" }}>
-        <Button
-          onClick={() => handleNavigation(ActionEnum.Prev)}
-          iconLeft={ArrowLeftIcon}
-          disabled={shareId <= 0}
-        >
+      <div className={classes.buttonsContainer}>
+        <Button onClick={() => handleNavigation(NavigationEnum.Prev)} iconLeft={ArrowLeftIcon}>
           Prev
         </Button>
-        <Button onClick={() => handleNavigation(ActionEnum.Next)} iconRight={ArrowRightIcon}>
+        <Button onClick={() => handleNavigation(NavigationEnum.Next)} iconRight={ArrowRightIcon}>
           Next
         </Button>
       </div>

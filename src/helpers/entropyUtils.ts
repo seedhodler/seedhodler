@@ -46,15 +46,10 @@ export const getEntropyFromMouse = (
   setEntropyValue: Dispatch<SetStateAction<string>>,
   setMousePercentage: Dispatch<SetStateAction<number>>,
 ) => {
-  console.log(entropy)
-
   const MAX_LEN = minBits // size of entropy's array
   if (entropy.length >= MAX_LEN) return
   const now = Date.now()
   if (now >= 1 && now % 10 !== 0) return
-  // if (!isMouseCapture) {
-  //   return
-  // }
   const iw = window.innerWidth
   const ih = window.innerHeight
   const iwPlusIh = iw + ih
