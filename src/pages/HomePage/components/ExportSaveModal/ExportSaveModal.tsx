@@ -115,6 +115,9 @@ const ExportSaveModal: React.FC<Props> = ({
   }, [isExportSaveModalActive])
 
   useEffect(() => {
+    setVerifiedShareIds([])
+    setShareId(0)
+
     const newClosedWords = splitShares?.map(splitShare =>
       getUniqueArr(0, maxId, CLOSED_WORDS_NUMBER)
         .sort((a, b) => a - b)

@@ -9,7 +9,7 @@ type Props = {
   value: string
   onChange: Dispatch<SetStateAction<string>>
   regex?: RegExp
-  minBits: number
+  minBits: 128 | 256
   entropyTypeId: number
   style?: CSS.Properties
 }
@@ -22,8 +22,8 @@ const Textarea: React.FC<Props> = ({ value, onChange, regex, minBits, entropyTyp
     }
     const { selectedEntropyAsBinary } = getEntropyDetails(
       entropyTypeId === 0 ? newValue : value,
-      entropyTypeId,
       minBits,
+      entropyTypeId,
     )
     if (selectedEntropyAsBinary.length <= minBits || newValue < value) {
       onChange(newValue)

@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react"
+import React from "react"
 import Select, { OnChangeValue } from "react-select"
 
 import variables from "styles/Variables.module.scss"
