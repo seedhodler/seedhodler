@@ -7,7 +7,7 @@ import { HelpModal } from "components/HelpModal"
 const App: React.FC = () => {
   const [isNotification, setIsNotification] = useState(false)
   const [isOnline, setIsOnline] = useState(window.navigator.onLine)
-  const [isHelpModalActive, setIsHelpModalActive] = useState(true)
+  const [isHelpModalActive, setIsHelpModalActive] = useState(false)
 
   useEffect(() => {
     const handlePrintScreenClick = (e: KeyboardEvent) => {

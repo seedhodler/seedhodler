@@ -89,11 +89,18 @@ $breakpoints: (
   border-radius: 50%;
   background-color: $colorMain;
 }
-
 %divider {
   height: 1px;
   background-color: $colorBg300;
   margin-bottom: 3.2rem;
+}
+%validation {
+  padding: 0.2rem 0.8rem;
+  border-radius: $radiiSmallish;
+  color: $colorTextDark;
+  line-height: 24px;
+  transition: $transAll;
+  background-color: $colorSuccessLight;
 }
 
 /* export variables to use in Components */
@@ -105,5 +112,6 @@ $breakpoints: (
   colorError: $colorError;
   colorErrorLight: $colorErrorLight;
   colorBg100: $colorBg100;
+  colorBg200: $colorBg200;
   colorBg800: $colorBg800;
 }

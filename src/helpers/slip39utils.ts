@@ -12,9 +12,5 @@ export const getFormattedShares = (
     groups,
   })
 
-  // for the case when we have multiple share groups
-  // const shares = groups.map((_, index) => slipNode.fromPath("r/" + index).mnemonics)
-  // return shares
-
   return slipNode.fromPath("r/" + 0).mnemonics
 }

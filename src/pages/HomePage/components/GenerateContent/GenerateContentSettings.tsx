@@ -39,7 +39,11 @@ export const GenerateContentSettings: React.FC<GenerateContentSettingsProps> = (
       <div className={classes.configContainer}>
         <div>
           <InfoTitle title="Language" desc="Language __placeholder" />
-          <Select defaultValue={selectedLang} onChange={() => setSelectedLang} options={langOptions} />
+          <Select
+            defaultValue={selectedLang}
+            onChange={(selectedLangValue: string) => setSelectedLang(selectedLangValue)}
+            options={langOptions}
+          />
         </div>
         <div>
           <InfoTitle title="Word Count" desc="Word Count __placeholder" />

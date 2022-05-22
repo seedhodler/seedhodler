@@ -23,6 +23,7 @@ const colorClasses = {
   [ButtonColorsEnum.Main]: classes.btnColorMain,
   [ButtonColorsEnum.Success]: classes.btnColorSuccess,
   [ButtonColorsEnum.ErrorLightish]: classes.btnColorErrorLightish,
+  [ButtonColorsEnum.Neutral]: classes.btnColorNeutral,
 }
 
 const Button: React.FC<Props> = ({

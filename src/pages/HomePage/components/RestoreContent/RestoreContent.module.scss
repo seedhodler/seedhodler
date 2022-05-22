@@ -1,1 +1,30 @@
 @import "styles/Variables.module.scss";
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wordCountContainer {
+  display: flex;
+  align-items: center;
+  column-gap: 1.2rem;
+}
+
+.validation {
+  @extend %validation;
+}
+
+.shareContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin-bottom: 3.2rem;
+}
+
+.sharesCountContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3.6rem;
+}

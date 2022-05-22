@@ -52,6 +52,7 @@ const Layout: React.FC<Props> = ({ isOnline, setIsHelpModalActive }) => {
             <InfoTitle
               title="Security Notice"
               desc="Security Notice __placeholder"
+              isError
               className={classes.securityNotice}
             />
             <p className={classes.onlineMessage}>

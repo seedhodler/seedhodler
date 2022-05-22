@@ -2,15 +2,20 @@ import React, { Dispatch, SetStateAction } from "react"
 
 import PrevIcon from "assets/icons/Prev.svg"
 import NextIcon from "assets/icons/Next.svg"
+import BinIcon from "assets/icons/Bin.svg"
+import { TextPlace } from "components/TextPlace"
+import { Button } from "components/Button"
+import { ButtonColorsEnum } from "constants/"
 
 import classes from "./Shares.module.scss"
-import { TextPlace } from "components/TextPlace"
 
 type Props = {
   shares: string[]
   activeShareItemId: number
   setActiveShareItemId: Dispatch<SetStateAction<number>>
   selectedWordCount: number
+  isRestore?: boolean
+  onDelete?: () => void
 }
 
 const Shares: React.FC<Props> = ({
@@ -18,6 +23,8 @@ const Shares: React.FC<Props> = ({
   activeShareItemId,
   setActiveShareItemId,
   selectedWordCount,
+  isRestore,
+  onDelete = () => {},
 }) => {
   const navigation = []
 
@@ -71,9 +78,17 @@ const Shares: React.FC<Props> = ({
           ))}
         </div>
         <div className={classes.blockDivider} style={{ marginBottom: "2.4rem" }}></div>
-        <p className={classes.shareNumberText}>
-          {activeShareItemId + 1}/{shares.length} splits
-        </p>
+
+        <div className={classes.bottomInfoContainer}>
+          <p className={classes.shareNumberText}>
+            {activeShareItemId + 1}/{shares.length} splits
+          </p>
+          {isRestore && (
+            <Button onClick={onDelete} iconRight={BinIcon} color={ButtonColorsEnum.Neutral}>
+              Delete
+            </Button>
+          )}
+        </div>
       </div>
       {shares.length > 1 && <div className={classes.navigationContainer}>{navigation}</div>}
     </>
