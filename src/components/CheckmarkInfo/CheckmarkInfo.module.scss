@@ -32,4 +32,11 @@
     font-size: 15px;
     line-height: 24px;
   }
+
+  .smallDot {
+    height: 16px;
+    width: 16px;
+    background-color: $colorMain;
+    border-radius: 50%;
+  }
 }

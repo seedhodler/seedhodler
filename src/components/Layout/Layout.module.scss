@@ -13,7 +13,6 @@
   width: 400px;
   height: 100%;
   background-color: $colorBg200;
-  padding: 2.4rem 2.2rem 4rem 3.2rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -54,9 +53,33 @@
   }
 }
 
-.bottomMenu {
-  padding-top: 2.8rem;
+.navContentTop {
+  padding: 2.4rem 2.2rem 0 3.2rem;
+}
+
+.helpButton {
+  display: flex;
+  align-items: center;
+  column-gap: 1.4rem;
+  padding: 2.4rem 2.2rem 5rem 3.2rem;
+  font-weight: $fwSemiBold;
+  font-size: 15px;
   border-top: 2px solid $colorBg400;
+  transition: $transAll;
+  color: $colorBg700;
+
+  &:hover {
+    background-color: $colorMain;
+    color: $colorBg100;
+
+    & * {
+      fill: $colorBg100;
+    }
+  }
+}
+
+.test * {
+  fill: green;
 }
 
 .contentContainer {

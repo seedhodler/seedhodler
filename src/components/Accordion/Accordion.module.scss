@@ -1,0 +1,61 @@
+@import "styles/Variables.module.scss";
+
+.accordionContainer {
+  background: $colorBg500;
+  font-size: 16px;
+  font-weight: $fwNormal;
+  margin-bottom: 2.4rem;
+}
+
+.accordionLabel {
+  font-size: inherit;
+  font-weight: inherit;
+
+  width: 100%;
+  color: $colorTextDark;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.8rem;
+  border: 1px solid $colorBg400;
+  border-radius: $radiiSmallest;
+  background-color: $colorBg100;
+
+  img {
+    transition: transform 0.2s ease-in-out;
+
+    &.active {
+      transform: scaleY(-1);
+    }
+  }
+
+  &:hover,
+  &:active {
+    background-color: $colorBg500;
+  }
+}
+
+.accordionContent {
+  line-height: 28px;
+  border-bottom-left-radius: $radiiSmallest;
+  border-bottom-right-radius: $radiiSmallest;
+  border: 1px solid $colorBg400;
+  border-top: none;
+  //   padding: 0 1.6rem;
+
+  height: 0px;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out, height 0.2s 0.2s ease-in-out;
+
+  pointer-events: none;
+
+  p {
+    padding: 0.8rem 1.6rem;
+    pointer-events: none;
+  }
+}
+
+.animated {
+  opacity: 1;
+  transition: height 0.2s ease-in-out, opacity 0.2s 0.2s ease-in-out;
+}

@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react"
 
 import Routes from "Routes"
 import { Notification } from "components/Notification"
+import { HelpModal } from "components/HelpModal"
 
 const App: React.FC = () => {
   const [isNotification, setIsNotification] = useState(false)
   const [isOnline, setIsOnline] = useState(window.navigator.onLine)
+  const [isHelpModalActive, setIsHelpModalActive] = useState(true)
 
   useEffect(() => {
     const handlePrintScreenClick = (e: KeyboardEvent) => {
@@ -27,8 +29,9 @@ const App: React.FC = () => {
 
   return (
     <>
+      <HelpModal isActive={isHelpModalActive} setIsActive={setIsHelpModalActive} />
       <Notification isActive={isNotification} setIsActive={setIsNotification} />
-      <Routes isOnline={isOnline} />
+      <Routes isOnline={isOnline} setIsHelpModalActive={setIsHelpModalActive} />
     </>
   )
 }

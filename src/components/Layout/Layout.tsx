@@ -1,7 +1,7 @@
-import React from "react"
+import React, { Dispatch, SetStateAction } from "react"
 import { Outlet } from "react-router-dom"
 
-import QuestionMarkIcon from "assets/icons/QuestionMark.svg"
+import { ReactComponent as QuestionMarkIcon } from "assets/icons/QuestionMark.svg"
 import Logo from "assets/icons/Logo.svg"
 import { InfoTitle } from "components/InfoTitle"
 import { CheckmarkInfo } from "components/CheckmarkInfo"
@@ -10,13 +10,14 @@ import classes from "./Layout.module.scss"
 
 type Props = {
   isOnline: boolean
+  setIsHelpModalActive: Dispatch<SetStateAction<boolean>>
 }
 
-const Layout: React.FC<Props> = ({ isOnline }) => {
+const Layout: React.FC<Props> = ({ isOnline, setIsHelpModalActive }) => {
   return (
     <div className={classes.mainContainer}>
       <nav className={classes.nav}>
-        <div>
+        <div className={classes.navContentTop}>
           <img src={Logo} alt="Seedhodler" className={classes.logo} />
           <p className={classes.subtitle}>
             Seedhodler is free and open source software. This project is currently a{" "}
@@ -33,15 +34,16 @@ const Layout: React.FC<Props> = ({ isOnline }) => {
               GitHub
             </a>
           </p>
-          <CheckmarkInfo>Easily Generate your seed recovery phrase</CheckmarkInfo>
-          <CheckmarkInfo>Restore your recovery phrase</CheckmarkInfo>
-          <CheckmarkInfo>Edit your key Entropy</CheckmarkInfo>
-          <CheckmarkInfo>Secure when used Offline</CheckmarkInfo>
-          <CheckmarkInfo>Split phrases and share with others</CheckmarkInfo>
+          <CheckmarkInfo isCheckmark={false}>Easily Generate your seed recovery phrase</CheckmarkInfo>
+          <CheckmarkInfo isCheckmark={false}>Restore your recovery phrase</CheckmarkInfo>
+          <CheckmarkInfo isCheckmark={false}>Edit your key Entropy</CheckmarkInfo>
+          <CheckmarkInfo isCheckmark={false}>Secure when used Offline</CheckmarkInfo>
+          <CheckmarkInfo isCheckmark={false}>Split phrases and share with others</CheckmarkInfo>
         </div>
-        <CheckmarkInfo iconLeft={QuestionMarkIcon} additionalInfo="4" className={classes.bottomMenu}>
+        <button onClick={() => setIsHelpModalActive(prev => !prev)} className={classes.helpButton}>
+          <QuestionMarkIcon />
           Help & getting started
-        </CheckmarkInfo>
+        </button>
       </nav>
 
       <div className={classes.mainContentContainer}>

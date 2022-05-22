@@ -8,6 +8,7 @@ import classes from "./CheckmarkInfo.module.scss"
 
 type Props = {
   children: string
+  isCheckmark?: boolean
   iconLeft?: string
   filled?: boolean
   additionalInfo?: string
@@ -17,8 +18,9 @@ type Props = {
 }
 
 const CheckmarkInfo: React.FC<Props> = ({
-  iconLeft,
   children,
+  isCheckmark = true,
+  iconLeft,
   filled,
   additionalInfo,
   className,
@@ -33,8 +35,14 @@ const CheckmarkInfo: React.FC<Props> = ({
       <div className={classes.infoContainer}>
         {iconLeft ? (
           <img src={iconLeft} alt="Left icon" />
+        ) : isCheckmark ? (
+          <img
+            src={filled ? CheckmarkFilledIcon : CheckmarkIcon}
+            alt="Checkmark"
+            style={{ width: "20px" }}
+          />
         ) : (
-          <img src={filled ? CheckmarkFilledIcon : CheckmarkIcon} alt="Checkmark" style={{ width: "20px" }} />
+          <div className={classes.smallDot}></div>
         )}
         <span className={infoClasses}>{children}</span>
       </div>
