@@ -24,8 +24,8 @@ const RestoreContent: React.FC = () => {
   const [enteredShares, setEnteredShares] = useState<string[][]>([])
   const [activeShareItemId, setActiveShareItemId] = useState(0)
   const enteredSharesAsString = enteredShares.map(shareItem => shareItem.join(" "))
-  const [mnemonic, setMnemonic] = useState(new Array(+selectedWordCount).fill(""))
-  const isFullMnemonic = mnemonic.every(word => word.length > 0)
+  const [restoredMnemonic, setRestoredMnemonic] = useState(new Array(+selectedWordCount).fill(""))
+  const isFullMnemonic = restoredMnemonic.every(word => word.length > 0)
 
   const handleWordCountChange = (wordCountValue: string) => {
     setSelectedWordCount(wordCountValue)
@@ -42,10 +42,11 @@ const RestoreContent: React.FC = () => {
   }
 
   useEffect(() => {
+    setInfoMessage("")
     setActiveShareItemId(0)
     setCurrentShare(new Array(shareLength).fill(""))
     setEnteredShares([])
-    setMnemonic(new Array(+selectedWordCount).fill(""))
+    setRestoredMnemonic(new Array(+selectedWordCount).fill(""))
   }, [shareLength, selectedWordCount])
 
   useEffect(() => {
@@ -61,7 +62,8 @@ const RestoreContent: React.FC = () => {
         )
       } else {
         //@ts-ignore
-        setMnemonic(restoreResult.mnemonic.split(" "))
+        setRestoredMnemonic(restoreResult.mnemonic.split(" "))
+        setInfoMessage(`${enteredShares.length} of ${enteredShares.length} splits added`)
       }
     }
   }, [enteredShares, enteredSharesAsString])
@@ -138,7 +140,14 @@ const RestoreContent: React.FC = () => {
           />
           {infoMessage.length > 0 && (
             <div className={classes.sharesCountContainer}>
-              <div className={classes.validation} style={{ backgroundColor: variables.colorBg200 }}>
+              <div
+                className={classes.validation}
+                style={{
+                  backgroundColor: restoredMnemonic[0].length
+                    ? variables.colorSuccessLight
+                    : variables.colorBg200,
+                }}
+              >
                 {infoMessage}
               </div>
             </div>
@@ -165,7 +174,7 @@ const RestoreContent: React.FC = () => {
         className={classes.shareContainer}
         style={{ height: selectedWordCount === "12" ? "360px" : "720px" }}
       >
-        {mnemonic.map((word, index) => (
+        {restoredMnemonic.map((word, index) => (
           <TextPlace
             key={index}
             text={word}
