@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/seedhodlerV2/static/css/main.01377e8b.css",
-    "main.js": "/seedhodlerV2/static/js/main.c836f173.js",
+    "main.css": "/seedhodlerV2/static/css/main.3234aa17.css",
+    "main.js": "/seedhodlerV2/static/js/main.1439b809.js",
     "static/js/787.c7156b49.chunk.js": "/seedhodlerV2/static/js/787.c7156b49.chunk.js",
     "static/media/Share24.pdf": "/seedhodlerV2/static/media/Share24.4eaa01f2854ad55156e8.pdf",
     "static/media/Share12.pdf": "/seedhodlerV2/static/media/Share12.3c6d586607a5914920ed.pdf",
@@ -17,8 +17,11 @@
     "static/media/Congrats.svg": "/seedhodlerV2/static/media/Congrats.48d121fdf1276a43898431b23ea6ded9.svg",
     "static/media/Numbers.svg": "/seedhodlerV2/static/media/Numbers.afd52fd1366b4510f94af8f3309c68e2.svg",
     "index.html": "/seedhodlerV2/index.html",
+    "static/media/ArrowDown.svg": "/seedhodlerV2/static/media/ArrowDown.3eeebac16cd8c0335a4359d64254992a.svg",
+    "static/media/Bin.svg": "/seedhodlerV2/static/media/Bin.ad250b33667508e2e1f6f6f578bfb275.svg",
     "static/media/QuestionMark.svg": "/seedhodlerV2/static/media/QuestionMark.12656eb9f093e215c1e8c2a6e88f9298.svg",
     "static/media/InfoGray.svg": "/seedhodlerV2/static/media/InfoGray.615fe25e6922405a18c98a660d65d730.svg",
+    "static/media/InfoRed.svg": "/seedhodlerV2/static/media/InfoRed.8c2c2d97d25fef45239d393c053e778c.svg",
     "static/media/Checkmark.svg": "/seedhodlerV2/static/media/Checkmark.0457b4e5b212950652bf92127dbdd023.svg",
     "static/media/Print.svg": "/seedhodlerV2/static/media/Print.9390886228df5bd4b5fadb0472b0cfe1.svg",
     "static/media/Close.svg": "/seedhodlerV2/static/media/Close.e4965db63434244bbc7187b5aaeb684c.svg",
@@ -26,15 +29,16 @@
     "static/media/Next.svg": "/seedhodlerV2/static/media/Next.0abe5eb933f5f62a1f25a914819b63a4.svg",
     "static/media/Prev.svg": "/seedhodlerV2/static/media/Prev.c208433423c4a4c89c80f23e773361b4.svg",
     "static/media/Add.svg": "/seedhodlerV2/static/media/Add.f34ebf0a3787db752824eb7ea284d7c6.svg",
+    "static/media/CheckmarkFilledLight.svg": "/seedhodlerV2/static/media/CheckmarkFilledLight.484f9b783915c13d2722e0798e58c382.svg",
     "static/media/CheckmarkFilled.svg": "/seedhodlerV2/static/media/CheckmarkFilled.3dd19f1b3d5ce72ebb57d294eaa27e6a.svg",
     "static/media/ArrowRight.svg": "/seedhodlerV2/static/media/ArrowRight.f519bbf8c810969628669d754e22c219.svg",
     "static/media/Remove.svg": "/seedhodlerV2/static/media/Remove.a4fb9d38a94c3f4fdc4ca493fa448f64.svg",
-    "main.01377e8b.css.map": "/seedhodlerV2/static/css/main.01377e8b.css.map",
-    "main.c836f173.js.map": "/seedhodlerV2/static/js/main.c836f173.js.map",
+    "main.3234aa17.css.map": "/seedhodlerV2/static/css/main.3234aa17.css.map",
+    "main.1439b809.js.map": "/seedhodlerV2/static/js/main.1439b809.js.map",
     "787.c7156b49.chunk.js.map": "/seedhodlerV2/static/js/787.c7156b49.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.01377e8b.css",
-    "static/js/main.c836f173.js"
+    "static/css/main.3234aa17.css",
+    "static/js/main.1439b809.js"
   ]
 }
