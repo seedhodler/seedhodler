@@ -8,6 +8,7 @@ import { Input } from "components/Input"
 import { Button } from "components/Button"
 import { TextPlace } from "components/TextPlace"
 import { BadgeColorsEnum, wordCountOptions } from "constants/"
+import { restoreMnemonic, validateShare } from "helpers"
 import variables from "styles/Variables.module.scss"
 
 import { Shares } from "../Shares"
@@ -17,14 +18,14 @@ const RestoreContent: React.FC = () => {
   const [selectedWordCount, setSelectedWordCount] = useState(wordCountOptions[0].value)
   const shareLength = selectedWordCount === "12" ? 20 : 33
   const [currentShare, setCurrentShare] = useState(new Array(shareLength).fill(""))
-  // TODO: change temp
-  const [enteredShares, setEnteredShares] = useState<string[][]>(
-    [new Array(shareLength).fill("aaa"), new Array(shareLength).fill("bbdsadsb")] /* [] */,
-  )
+  const currentShareAsString = currentShare.join(" ")
+  const isCurrentShareValid = validateShare(currentShareAsString)
+  const [infoMessage, setInfoMessage] = useState("")
+  const [enteredShares, setEnteredShares] = useState<string[][]>([])
   const [activeShareItemId, setActiveShareItemId] = useState(0)
-  const formattedShares = enteredShares.map(shareItem => shareItem.join(" "))
-  // TODO: change temp
-  const [mnemonic, setMnemonic] = useState(new Array(+selectedWordCount).fill("word") /* [] */)
+  const enteredSharesAsString = enteredShares.map(shareItem => shareItem.join(" "))
+  const [mnemonic, setMnemonic] = useState(new Array(+selectedWordCount).fill(""))
+  const isFullMnemonic = mnemonic.every(word => word.length > 0)
 
   const handleWordCountChange = (wordCountValue: string) => {
     setSelectedWordCount(wordCountValue)
@@ -40,18 +41,30 @@ const RestoreContent: React.FC = () => {
     setActiveShareItemId(0)
   }
 
-  console.log(enteredShares)
-
   useEffect(() => {
     setActiveShareItemId(0)
     setCurrentShare(new Array(shareLength).fill(""))
-    // TODO: change temp
-    setEnteredShares(
-      [new Array(shareLength).fill("aaa"), new Array(shareLength).fill("bbdsadsb")] /* [] */,
-    )
-    // TODO: change temp
-    setMnemonic(new Array(+selectedWordCount).fill("word") /* [] */)
+    setEnteredShares([])
+    setMnemonic(new Array(+selectedWordCount).fill(""))
   }, [shareLength, selectedWordCount])
+
+  useEffect(() => {
+    if (enteredSharesAsString.length > 0) {
+      const restoreResult = restoreMnemonic(enteredSharesAsString)
+      if (restoreResult.error) {
+        //@ts-ignore
+        const neededSplitNumber = restoreResult.error.split(" ")[5]
+        setInfoMessage(
+          `${enteredShares.length} of ${neededSplitNumber} splits added - ${
+            neededSplitNumber - enteredShares.length
+          } splits remaining`,
+        )
+      } else {
+        //@ts-ignore
+        setMnemonic(restoreResult.mnemonic.split(" "))
+      }
+    }
+  }, [enteredShares, enteredSharesAsString])
 
   return (
     <>
@@ -75,7 +88,18 @@ const RestoreContent: React.FC = () => {
       </div>
       <div className={classes.headerContainer} style={{ marginBottom: "1.2rem" }}>
         <InfoTitle title="BIP39 Seed Phrase" desc="BIP39 Seed Phrase __placeholder" />
-        <div className={classes.validation}>Valid Entry (155)</div>
+        {currentShare.every(word => word.length !== 0) && (
+          <div
+            className={classes.validation}
+            style={{
+              backgroundColor: isCurrentShareValid
+                ? variables.colorSuccessLight
+                : variables.colorErrorLight,
+            }}
+          >
+            {isCurrentShareValid ? "Valid Entry" : "Invalid entry"}
+          </div>
+        )}
       </div>
       <div
         className={classes.shareContainer}
@@ -99,7 +123,7 @@ const RestoreContent: React.FC = () => {
       </div>
       <Button
         onClick={handleAddShare}
-        disabled={currentShare.some(word => word.length === 0)}
+        disabled={currentShare.some(word => word.length === 0) || !isCurrentShareValid}
         fullWidth
         style={{ marginBottom: "3.6rem" }}
       >
@@ -112,14 +136,16 @@ const RestoreContent: React.FC = () => {
             color={BadgeColorsEnum.ErrorLight}
             style={{ marginBottom: "3.6rem" }}
           />
-          <div className={classes.sharesCountContainer}>
-            <div className={classes.validation} style={{ backgroundColor: variables.colorBg200 }}>
-              {enteredShares.length} of ? splits added - ? splits remaining
+          {infoMessage.length > 0 && (
+            <div className={classes.sharesCountContainer}>
+              <div className={classes.validation} style={{ backgroundColor: variables.colorBg200 }}>
+                {infoMessage}
+              </div>
             </div>
-          </div>
+          )}
           <Shares
             isRestore
-            shares={formattedShares}
+            shares={enteredSharesAsString}
             selectedWordCount={+selectedWordCount}
             activeShareItemId={activeShareItemId}
             setActiveShareItemId={setActiveShareItemId}
@@ -133,7 +159,7 @@ const RestoreContent: React.FC = () => {
           color={BadgeColorsEnum.SuccessLight}
           style={{ marginBottom: 0 }}
         />
-        <img src={CheckmarkIcon} alt="Checkmark" />
+        {isFullMnemonic && <img src={CheckmarkIcon} alt="Checkmark" />}
       </div>
       <div
         className={classes.shareContainer}
@@ -141,9 +167,10 @@ const RestoreContent: React.FC = () => {
       >
         {mnemonic.map((word, index) => (
           <TextPlace
+            key={index}
             text={word}
             count={index + 1}
-            isSuccess
+            isSuccess={isFullMnemonic}
             style={{
               alignSelf: index >= +selectedWordCount / 2 ? "flex-end" : "flex-start",
             }}

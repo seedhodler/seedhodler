@@ -23,3 +23,7 @@ export const mnemonicToEntropy = (mnemonic: string) => {
 export const mnemonicToSeed = (mnemonic: string) => {
   return bip39.mnemonicToSeedSync(mnemonic)
 }
+
+export const entropyToMnemonic = (entropy: Buffer) => {
+  return bip39.entropyToMnemonic(entropy)
+}
