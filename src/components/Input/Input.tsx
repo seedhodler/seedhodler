@@ -1,4 +1,4 @@
-import React, { useState, Dispatch, SetStateAction } from "react"
+import React, { Dispatch, SetStateAction } from "react"
 import CSS from "csstype"
 import * as bip39 from "bip39"
 
@@ -25,8 +25,6 @@ const Input: React.FC<Props> = ({
   className,
   containerStyle,
 }) => {
-  const [showDropdown, setShowDropdown] = useState(false)
-
   const classNames = [classes.input, className].join(" ")
   const wordlist = isRestore ? slip39wordlist : bip39.wordlists.english
 
@@ -34,9 +32,6 @@ const Input: React.FC<Props> = ({
     onChange(mnemonicArr =>
       mnemonicArr.map((word, wordIndex) => (wordIndex === index ? newValue : word)),
     )
-    if (isDropdownItemClick && showDropdown) {
-      setShowDropdown(false)
-    }
   }
 
   let variantsCounter = 0
@@ -48,23 +43,22 @@ const Input: React.FC<Props> = ({
         type="text"
         value={value}
         onChange={e => handleChange(e.target.value)}
-        onClick={() => setShowDropdown(prev => !prev)}
         className={classNames}
       />
-      {showDropdown && value.length !== 0 && (
+      {value.length !== 0 && !wordlist.some(word => word === value) && (
         <div className={classes.dropdownList}>
           {wordlist.map(variant => {
             if (variantsCounter < 5 && variant.includes(value.toLowerCase())) {
               variantsCounter++
               return (
-                <div
+                <button
                   onClick={() => handleChange(variant, true)}
                   key={variant}
                   className={classes.dropdownListItem}
                   tabIndex={0}
                 >
                   {variant}
-                </div>
+                </button>
               )
             }
             return null
