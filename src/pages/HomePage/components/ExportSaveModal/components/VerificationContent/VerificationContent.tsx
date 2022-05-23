@@ -23,6 +23,7 @@ type Props = {
     wordNumber: number
     isActive: boolean
     isFulfilled: boolean
+    isError: boolean
   }[][]
   allOptions: { word: string; wordNumber: number; selected: boolean }[][]
   setAllClosedWords: Dispatch<
@@ -33,6 +34,7 @@ type Props = {
         wordNumber: number
         isActive: boolean
         isFulfilled: boolean
+        isError: boolean
       }[][]
     >
   >
@@ -54,7 +56,6 @@ const VerificationContent: React.FC<Props> = ({
   const containerRef = useRef() as React.MutableRefObject<HTMLDivElement>
   const [currentShareId, setCurrentShareId] = useState(0)
   const splitShareItem = shares[currentShareId].split(" ")
-  console.log(splitShareItem)
   const closedWords = allClosedWords[currentShareId]
   const options = allOptions[currentShareId]
 
@@ -93,6 +94,21 @@ const VerificationContent: React.FC<Props> = ({
             })
           }
           return optionsArr
+        }),
+      )
+    } else {
+      activeClosedWord!.isError = true
+      setAllClosedWords(prev =>
+        prev.map((closedWordsArr, i) => {
+          if (i === currentShareId) {
+            closedWordsArr.map((item, index) => {
+              if (item.word === word) {
+                return activeClosedWord!
+              }
+              return item
+            })
+          }
+          return closedWordsArr
         }),
       )
     }
@@ -149,11 +165,17 @@ const VerificationContent: React.FC<Props> = ({
                   alignSelf: index <= (selectedWordCount === 12 ? 9 : 16) ? "flex-start" : "flex-end",
                   backgroundColor: currentWordObj ? variables.colorBg800 : "",
                   outline:
-                    currentWordObj?.isActive || currentWordObj?.isFulfilled
+                    currentWordObj?.isActive && currentWordObj?.isError
+                      ? `3px solid ${variables.colorError}`
+                      : currentWordObj?.isActive || currentWordObj?.isFulfilled
                       ? `3px solid ${variables.colorMain}`
                       : "",
                   color:
-                    currentWordObj?.isActive || currentWordObj?.isFulfilled ? variables.colorMain : "",
+                    currentWordObj?.isActive && currentWordObj?.isError
+                      ? variables.colorError
+                      : currentWordObj?.isActive || currentWordObj?.isFulfilled
+                      ? variables.colorMain
+                      : "",
                 }}
               />
             )

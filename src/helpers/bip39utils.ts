@@ -12,8 +12,8 @@ export const generateMnemonicFromEntropy = (language: string, binaryStr: string)
   bip39.setDefaultWordlist(language)
 
   const entropyArr = binaryStrToEntropyArray(binaryStr)
-  // TODO: get rid of any
-  return bip39.entropyToMnemonic(entropyArr as any)
+  //@ts-ignore
+  return bip39.entropyToMnemonic(entropyArr)
 }
 
 export const mnemonicToEntropy = (mnemonic: string) => {

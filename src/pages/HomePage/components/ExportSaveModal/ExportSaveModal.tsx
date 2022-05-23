@@ -44,6 +44,7 @@ const ExportSaveModal: React.FC<Props> = ({
             wordNumber: slip39wordlist.indexOf(word),
             isActive: i === 0 ? true : false,
             isFulfilled: false,
+            isError: false,
           }
         }),
     ),
@@ -129,6 +130,7 @@ const ExportSaveModal: React.FC<Props> = ({
             wordNumber: slip39wordlist.indexOf(word),
             isActive: i === 0 ? true : false,
             isFulfilled: false,
+            isError: false,
           }
         }),
     )

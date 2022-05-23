@@ -1,6 +1,3 @@
-// TODO: !!! recheck function and remove TS ignore
-// There's no built-in parsing for base 6, so:
-// @ts-ignore
 export const parseBigInt = (str: string, base = 10) => {
   if (typeof base !== "number" || isNaN(base) || base < 2 || base > 36) {
     throw new Error(`parseBigInt doesn't support base ${base}`)

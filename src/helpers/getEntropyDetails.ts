@@ -26,7 +26,6 @@ export const getEntropyDetails = (entropyValue: string, minBits: number, entropy
   const entropiesAsBinary = {
     0: entropyValue,
     1: getBinaryFromCardEntropy(entropyValue),
-    // TODO: temp condition to remove error when entering value for Number entropy
     // replace(/6/g, "0") - workaround to use 1-6 in dice, instead of 0-5
     2: entropyTypeId === 2 ? parseBigInt(entropyValue.replace(/6/g, "0") || "0", 6).toString(2) : "0",
     3: entropyTypeId === 3 ? BigInt(entropyValue).toString(2) : "0",
