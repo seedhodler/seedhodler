@@ -19,6 +19,7 @@
   &:focus:not([disabled]) {
     background-color: darken($color, 10%);
     box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+    border-color: transparent;
   }
 
   &:disabled,
@@ -36,6 +37,11 @@
 }
 .btnColorErrorLightish {
   @include btnBase($colorErrorLightish);
+}
+.btnColorNeutral {
+  @include btnBase($colorBg100);
+  color: $colorTextDark;
+  border: 2px solid $colorBg300;
 }
 
 .fullWidth {

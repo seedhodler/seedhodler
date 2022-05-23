@@ -10,6 +10,11 @@
   width: 49%;
 }
 
+.success {
+  border-color: $colorSuccess;
+  background-color: $colorSuccessLightest;
+}
+
 .count {
   position: absolute;
   left: 0;

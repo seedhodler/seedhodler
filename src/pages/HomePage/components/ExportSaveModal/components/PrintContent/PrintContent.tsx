@@ -1,7 +1,5 @@
 import React, { useState, Dispatch, SetStateAction } from "react"
 
-// import phrase12pdf from "assets/pdf/Seedhodler12.pdf"
-// import phrase24pdf from "assets/pdf/Seedhodler24.pdf"
 import LogoIcon from "assets/icons/Logo.svg"
 import PrintIcon from "assets/icons/Print.svg"
 import ArrowRightIcon from "assets/icons/ArrowRight.svg"
@@ -9,10 +7,9 @@ import { AdditionalInfo } from "components/AdditionalInfo"
 import { Button } from "components/Button"
 import { TextPlace } from "components/TextPlace"
 import { ButtonColorsEnum } from "constants/index"
-import { blobToSaveAs, generatePdf } from "helpers"
+import { generatePdf } from "helpers"
 
 import classes from "../../ExportSaveModal.module.scss"
-import { Loader } from "components/Loader"
 
 type Props = {
   selectedWordCount: number

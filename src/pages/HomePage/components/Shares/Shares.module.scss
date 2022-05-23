@@ -98,3 +98,9 @@
 .navigationItemActive {
   @extend %navigationItemBase;
 }
+
+.bottomInfoContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

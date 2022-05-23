@@ -1,0 +1,23 @@
+@import "styles/Variables.module.scss";
+
+.container {
+  font-weight: $fwNormal;
+  font-size: 16px;
+  line-height: 28px;
+  color: $colorBg700;
+}
+
+.divider {
+  @extend %divider;
+  margin-bottom: 2.4rem;
+}
+
+.list {
+  padding-left: 2.6rem;
+  margin-bottom: 2.4rem;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+}

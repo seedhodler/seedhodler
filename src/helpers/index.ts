@@ -3,9 +3,10 @@ export {
   generateMnemonicFromEntropy,
   mnemonicToEntropy,
   mnemonicToSeed,
+  entropyToMnemonic,
 } from "./bip39utils"
 export { hexStringToByteArray, getEntropyFromMouse } from "./entropyUtils"
-export { getFormattedShares } from "./slip39utils"
+export { getFormattedShares, restoreMnemonic, validateShare } from "./slip39utils"
 
 export { parseBigInt } from "./parseUtils"
 export { getEntropyDetails } from "./getEntropyDetails"

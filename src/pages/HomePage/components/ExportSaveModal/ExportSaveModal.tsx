@@ -44,6 +44,7 @@ const ExportSaveModal: React.FC<Props> = ({
             wordNumber: slip39wordlist.indexOf(word),
             isActive: i === 0 ? true : false,
             isFulfilled: false,
+            isError: false,
           }
         }),
     ),
@@ -115,6 +116,9 @@ const ExportSaveModal: React.FC<Props> = ({
   }, [isExportSaveModalActive])
 
   useEffect(() => {
+    setVerifiedShareIds([])
+    setShareId(0)
+
     const newClosedWords = splitShares?.map(splitShare =>
       getUniqueArr(0, maxId, CLOSED_WORDS_NUMBER)
         .sort((a, b) => a - b)
@@ -126,6 +130,7 @@ const ExportSaveModal: React.FC<Props> = ({
             wordNumber: slip39wordlist.indexOf(word),
             isActive: i === 0 ? true : false,
             isFulfilled: false,
+            isError: false,
           }
         }),
     )

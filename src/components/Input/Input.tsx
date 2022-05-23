@@ -2,6 +2,8 @@ import React, { useState, Dispatch, SetStateAction } from "react"
 import CSS from "csstype"
 import * as bip39 from "bip39"
 
+import { slip39wordlist } from "constants/"
+
 import classes from "./Input.module.scss"
 
 type Props = {
@@ -9,18 +11,29 @@ type Props = {
   index: number
   value: string
   onChange: Dispatch<SetStateAction<string[]>>
+  isRestore?: boolean
   className?: string
   containerStyle?: CSS.Properties
 }
 
-const Input: React.FC<Props> = ({ count, index, value, onChange, className, containerStyle }) => {
+const Input: React.FC<Props> = ({
+  count,
+  index,
+  value,
+  onChange,
+  isRestore,
+  className,
+  containerStyle,
+}) => {
   const [showDropdown, setShowDropdown] = useState(false)
 
   const classNames = [classes.input, className].join(" ")
-  const wordlist = bip39.wordlists.english
+  const wordlist = isRestore ? slip39wordlist : bip39.wordlists.english
 
   const handleChange = (newValue: string, isDropdownItemClick?: boolean) => {
-    onChange(mnemonicArr => mnemonicArr.map((word, wordIndex) => (wordIndex === index ? newValue : word)))
+    onChange(mnemonicArr =>
+      mnemonicArr.map((word, wordIndex) => (wordIndex === index ? newValue : word)),
+    )
     if (isDropdownItemClick && showDropdown) {
       setShowDropdown(false)
     }
