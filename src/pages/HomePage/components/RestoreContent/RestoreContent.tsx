@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useContext } from "react"
 
 import CheckmarkIcon from "assets/icons/CheckmarkFilledLight.svg"
 import { BadgeTitle } from "components/BadgeTitle"
@@ -8,24 +8,29 @@ import { Input } from "components/Input"
 import { Button } from "components/Button"
 import { TextPlace } from "components/TextPlace"
 import { BadgeColorsEnum, wordCountOptions } from "constants/"
-import { restoreMnemonic, validateShare } from "helpers"
 import variables from "styles/Variables.module.scss"
+import { RestoreContext } from "context/restoreContext"
 
 import { Shares } from "../Shares"
 import classes from "./RestoreContent.module.scss"
 
 const RestoreContent: React.FC = () => {
-  const [selectedWordCount, setSelectedWordCount] = useState(wordCountOptions[0].value)
-  const shareLength = selectedWordCount === "12" ? 20 : 33
-  const [currentShare, setCurrentShare] = useState(new Array(shareLength).fill(""))
-  const currentShareAsString = currentShare.join(" ")
-  const isCurrentShareValid = validateShare(currentShareAsString)
-  const [infoMessage, setInfoMessage] = useState("")
-  const [enteredShares, setEnteredShares] = useState<string[][]>([])
-  const [activeShareItemId, setActiveShareItemId] = useState(0)
-  const enteredSharesAsString = enteredShares.map(shareItem => shareItem.join(" "))
-  const [restoredMnemonic, setRestoredMnemonic] = useState(new Array(+selectedWordCount).fill(""))
-  const isFullMnemonic = restoredMnemonic.every(word => word.length > 0)
+  const {
+    selectedWordCount,
+    setSelectedWordCount,
+    shareLength,
+    currentShare,
+    setCurrentShare,
+    isCurrentShareValid,
+    infoMessage,
+    enteredShares,
+    setEnteredShares,
+    activeShareItemId,
+    setActiveShareItemId,
+    enteredSharesAsString,
+    restoredMnemonic,
+    isFullMnemonic,
+  } = useContext(RestoreContext)
 
   const handleWordCountChange = (wordCountValue: string) => {
     setSelectedWordCount(wordCountValue)
@@ -40,33 +45,6 @@ const RestoreContent: React.FC = () => {
     setEnteredShares(prev => prev.filter((_, index) => index !== activeShareItemId))
     setActiveShareItemId(0)
   }
-
-  useEffect(() => {
-    setInfoMessage("")
-    setActiveShareItemId(0)
-    setCurrentShare(new Array(shareLength).fill(""))
-    setEnteredShares([])
-    setRestoredMnemonic(new Array(+selectedWordCount).fill(""))
-  }, [shareLength, selectedWordCount])
-
-  useEffect(() => {
-    if (enteredSharesAsString.length > 0) {
-      const restoreResult = restoreMnemonic(enteredSharesAsString)
-      if (restoreResult.error) {
-        //@ts-ignore
-        const neededSplitNumber = restoreResult.error.split(" ")[5]
-        setInfoMessage(
-          `${enteredShares.length} of ${neededSplitNumber} splits added - ${
-            neededSplitNumber - enteredShares.length
-          } splits remaining`,
-        )
-      } else {
-        //@ts-ignore
-        setRestoredMnemonic(restoreResult.mnemonic.split(" "))
-        setInfoMessage(`${enteredShares.length} of ${enteredShares.length} splits added`)
-      }
-    }
-  }, [enteredShares, enteredSharesAsString])
 
   return (
     <>
