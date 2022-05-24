@@ -58,7 +58,7 @@ const Input: React.FC<Props> = ({
         } else if (e.key === "ArrowUp") {
           e.preventDefault()
           setFocusedItemId(prev => (focusedItemId <= 0 ? variants.length - 1 : prev - 1))
-        } else if (e.key === "Enter") {
+        } else if (e.key === "Enter" && variants.length > 0) {
           e.preventDefault()
           onChange(mnemonicArr =>
             mnemonicArr.map((word, wordIndex) => (wordIndex === index ? variants[focusedItemId] : word)),
