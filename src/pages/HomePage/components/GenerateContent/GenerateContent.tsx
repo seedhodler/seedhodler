@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext } from "react"
 
 import { Button } from "components/Button"
-
-import { langOptions, wordCountOptions } from "constants/index"
-import { generateMnemonic, generateMnemonicFromEntropy, getEntropyDetails } from "helpers"
+import { GenerateContext } from "context/generateContext"
 
 import { GenerateContentAdvanced } from "./GenerateContentAdvanced"
 import { GenerateContentSettings } from "./GenerateContentSettings"
@@ -11,44 +9,30 @@ import classes from "./GenerateContent.module.scss"
 import { GenerateContentShares } from "./GenerateContentShares"
 
 const GenerateContent: React.FC = () => {
-  const [selectedLang, setSelectedLang] = useState(langOptions[0].value)
-  const [selectedWordCount, setSelectedWordCount] = useState(wordCountOptions[0].value)
-  const [mnemonic, setMnemonic] = useState(new Array(12).fill(""))
-  const [isAdvanced, setIsAdvanced] = useState(false)
-  const [entropyValue, setEntropyValue] = useState("")
-  const [shares, setShares] = useState<null | string[]>(null)
-  const [activeShareItemId, setActiveShareItemId] = useState(0)
-  const [entropyTypeId, setEntropyTypeId] = useState(0)
-  const minBits = +selectedWordCount === 12 ? 128 : 256
-
-  const { selectedEntropyAsBinary } = getEntropyDetails(entropyValue, minBits, entropyTypeId)
-  const entropyToPass = selectedEntropyAsBinary.slice(0, minBits)
-
-  const handleGeneratePhase = () => {
-    setShares(null)
-    setActiveShareItemId(0)
-
-    let mnemonic
-    if (!isAdvanced) {
-      mnemonic = generateMnemonic(selectedLang, +selectedWordCount)
-    } else {
-      mnemonic = generateMnemonicFromEntropy(selectedLang, entropyToPass)
-    }
-    const mnemonicArr = mnemonic.split(" ")
-    setMnemonic(mnemonicArr)
-  }
-
-  useEffect(() => {
-    setMnemonic(new Array(+selectedWordCount).fill(""))
-  }, [selectedWordCount])
-
-  useEffect(() => {
-    if (entropyToPass.length >= minBits) {
-      const mnemonic = generateMnemonicFromEntropy(selectedLang, entropyToPass)
-      const mnemonicArr = mnemonic.split(" ")
-      setMnemonic(mnemonicArr)
-    }
-  }, [selectedLang, entropyToPass])
+  const {
+    selectedLang,
+    setSelectedLang,
+    selectedWordCount,
+    setSelectedWordCount,
+    mnemonic,
+    setMnemonic,
+    isAdvanced,
+    setIsAdvanced,
+    entropyValue,
+    setEntropyValue,
+    shares,
+    activeShareItemId,
+    setActiveShareItemId,
+    entropyTypeId,
+    setEntropyTypeId,
+    minBits,
+    thresholdNumber,
+    setThresholdNumber,
+    sharesNumber,
+    setSharesNumber,
+    handleGenerateShares,
+    handleGeneratePhase,
+  } = useContext(GenerateContext)
 
   return (
     <div className={classes.tabContent}>
@@ -80,8 +64,12 @@ const GenerateContent: React.FC = () => {
         selectedWordCount={selectedWordCount}
         activeShareItemId={activeShareItemId}
         setMnemonic={setMnemonic}
-        setShares={setShares}
         setActiveShareItemId={setActiveShareItemId}
+        thresholdNumber={thresholdNumber}
+        setThresholdNumber={setThresholdNumber}
+        sharesNumber={sharesNumber}
+        setSharesNumber={setSharesNumber}
+        handleGenerateShares={handleGenerateShares}
       />
     </div>
   )

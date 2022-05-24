@@ -1,14 +1,13 @@
-import React, { Dispatch, SetStateAction, useState, useEffect } from "react"
+import React, { Dispatch, SetStateAction, useState } from "react"
 
 import { Calc } from "components/Calc"
 import { BadgeTitle } from "components/BadgeTitle"
 import { InfoTitle } from "components/InfoTitle"
 import { Button } from "components/Button"
-import { getFormattedShares, hexStringToByteArray, mnemonicToEntropy } from "helpers"
 import { BadgeColorsEnum, ButtonColorsEnum } from "constants/index"
+
 import { Shares } from "../Shares"
 import { ExportSaveModal } from "../ExportSaveModal"
-
 import classes from "./GenerateContent.module.scss"
 import { Input } from "components/Input"
 
@@ -18,8 +17,12 @@ type GenerateContentSharesProps = {
   selectedWordCount: string
   activeShareItemId: number
   setMnemonic: Dispatch<SetStateAction<string[]>>
-  setShares: Dispatch<SetStateAction<null | string[]>>
   setActiveShareItemId: Dispatch<SetStateAction<number>>
+  thresholdNumber: number
+  setThresholdNumber: Dispatch<SetStateAction<number>>
+  sharesNumber: number
+  setSharesNumber: Dispatch<SetStateAction<number>>
+  handleGenerateShares: () => void
 }
 
 export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
@@ -28,29 +31,14 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
   selectedWordCount,
   activeShareItemId,
   setMnemonic,
-  setShares,
   setActiveShareItemId,
+  thresholdNumber,
+  setThresholdNumber,
+  sharesNumber,
+  setSharesNumber,
+  handleGenerateShares,
 }) => {
-  const [thresholdNumber, setThresholdNumber] = useState(3)
-  const [sharesNumber, setSharesNumber] = useState(5)
   const [isExportSaveModalActive, setIsExportSaveModalActive] = useState(false)
-
-  const handleGenerateShares = () => {
-    setActiveShareItemId(0)
-
-    const mnemonicStr = mnemonic.join(" ")
-    const groups = [[thresholdNumber, sharesNumber]]
-    const masterSecret = hexStringToByteArray(mnemonicToEntropy(mnemonicStr))
-
-    const shares = getFormattedShares(masterSecret, "", 1, groups)
-    setShares(shares)
-  }
-
-  useEffect(() => {
-    if (shares) {
-      handleGenerateShares()
-    }
-  }, [thresholdNumber, sharesNumber])
 
   return (
     <>

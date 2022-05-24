@@ -58,10 +58,18 @@
   padding: 1.2rem;
   color: $colorBg700;
   transition: $transColor;
+  display: block;
+  width: 100%;
+  text-align: left;
 
   &:hover,
   &:focus {
     background-color: $colorBg200;
     color: $colorTextDark;
   }
+}
+
+.focused {
+  background-color: $colorBg200;
+  color: $colorTextDark;
 }
