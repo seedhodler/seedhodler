@@ -51,14 +51,19 @@ const Input: React.FC<Props> = ({
 
   useEffect(() => {
     const onTabPress = (e: KeyboardEvent) => {
-      if (e.key === "Tab" && isOpen) {
-        e.preventDefault()
-        setFocusedItemId(prev => (focusedItemId < variants.length - 1 ? prev + 1 : 0))
-      } else if (e.key === "Enter" && isOpen) {
-        e.preventDefault()
-        onChange(mnemonicArr =>
-          mnemonicArr.map((word, wordIndex) => (wordIndex === index ? variants[focusedItemId] : word)),
-        )
+      if (isOpen) {
+        if (e.key === "Tab" || e.key === "ArrowDown") {
+          e.preventDefault()
+          setFocusedItemId(prev => (focusedItemId < variants.length - 1 ? prev + 1 : 0))
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault()
+          setFocusedItemId(prev => (focusedItemId <= 0 ? variants.length - 1 : prev - 1))
+        } else if (e.key === "Enter") {
+          e.preventDefault()
+          onChange(mnemonicArr =>
+            mnemonicArr.map((word, wordIndex) => (wordIndex === index ? variants[focusedItemId] : word)),
+          )
+        }
       }
     }
 
