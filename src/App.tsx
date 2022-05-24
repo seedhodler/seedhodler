@@ -4,6 +4,7 @@ import Routes from "Routes"
 import { Notification } from "components/Notification"
 import { HelpModal } from "components/HelpModal"
 import { RestoreContextProvider } from "context/restoreContext"
+import { GenerateContextProvider } from "context/generateContext"
 
 const App: React.FC = () => {
   const [isNotification, setIsNotification] = useState(false)
@@ -31,13 +32,15 @@ const App: React.FC = () => {
   }, [])
 
   return (
-    <RestoreContextProvider>
-      <>
-        <HelpModal isActive={isHelpModalActive} setIsActive={setIsHelpModalActive} />
-        <Notification isActive={isNotification} setIsActive={setIsNotification} />
-        <Routes isOnline={isOnline} setIsHelpModalActive={setIsHelpModalActive} />
-      </>
-    </RestoreContextProvider>
+    <GenerateContextProvider>
+      <RestoreContextProvider>
+        <>
+          <HelpModal isActive={isHelpModalActive} setIsActive={setIsHelpModalActive} />
+          <Notification isActive={isNotification} setIsActive={setIsNotification} />
+          <Routes isOnline={isOnline} setIsHelpModalActive={setIsHelpModalActive} />
+        </>
+      </RestoreContextProvider>
+    </GenerateContextProvider>
   )
 }
 

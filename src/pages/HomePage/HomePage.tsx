@@ -3,7 +3,8 @@ import React, { useState, useContext, useEffect } from "react"
 import GenerateIcon from "assets/icons/GenerateWithBg.svg"
 import RestoreIcon from "assets/icons/RestoreWithBg.svg"
 import { RestoreContext } from "context/restoreContext"
-import { restoreMnemonic } from "helpers"
+import { GenerateContext } from "context/generateContext"
+import { generateMnemonicFromEntropy, restoreMnemonic } from "helpers"
 
 import { GenerateContent } from "./components/GenerateContent"
 import { RestoreContent } from "./components/RestoreContent"
@@ -14,7 +15,7 @@ const HomePage: React.FC = () => {
   const [activeTabId, setActiveTabId] = useState(0)
   const {
     shareLength,
-    selectedWordCount,
+    selectedWordCount: selectedWordCountRestore,
     enteredSharesAsString,
     enteredShares,
     setInfoMessage,
@@ -23,6 +24,37 @@ const HomePage: React.FC = () => {
     setEnteredShares,
     setRestoredMnemonic,
   } = useContext(RestoreContext)
+  const {
+    selectedWordCount: selectedWordCountGenerate,
+    entropyToPass,
+    selectedLang,
+    minBits,
+    shares,
+    thresholdNumber,
+    sharesNumber,
+    mnemonic,
+    setMnemonic,
+    handleGenerateShares,
+  } = useContext(GenerateContext)
+
+  // Generate effects
+  useEffect(() => {
+    setMnemonic(new Array(+selectedWordCountGenerate).fill(""))
+  }, [selectedWordCountGenerate])
+
+  useEffect(() => {
+    if (entropyToPass.length >= minBits) {
+      const mnemonic = generateMnemonicFromEntropy(selectedLang, entropyToPass)
+      const mnemonicArr = mnemonic.split(" ")
+      setMnemonic(mnemonicArr)
+    }
+  }, [selectedLang, entropyToPass])
+
+  useEffect(() => {
+    if (shares) {
+      handleGenerateShares()
+    }
+  }, [thresholdNumber, sharesNumber, mnemonic])
 
   // Restore effects
   useEffect(() => {
@@ -30,8 +62,8 @@ const HomePage: React.FC = () => {
     setActiveShareItemId(0)
     setCurrentShare(new Array(shareLength).fill(""))
     setEnteredShares([])
-    setRestoredMnemonic(new Array(+selectedWordCount).fill(""))
-  }, [shareLength, selectedWordCount])
+    setRestoredMnemonic(new Array(+selectedWordCountRestore).fill(""))
+  }, [shareLength, selectedWordCountRestore])
 
   useEffect(() => {
     if (enteredSharesAsString.length > 0) {
