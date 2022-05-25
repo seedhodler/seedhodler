@@ -6,7 +6,7 @@ import { validateShare } from "helpers"
 type Context = {
   selectedWordCount: string
   setSelectedWordCount: Dispatch<SetStateAction<string>> | (() => void)
-  shareLength: number
+  shareLength: 20 | 33
   currentShare: string[]
   setCurrentShare: Dispatch<SetStateAction<string[]>> | (() => void)
   isCurrentShareValid: boolean
@@ -25,7 +25,7 @@ type Context = {
 export const RestoreContext = createContext<Context>({
   selectedWordCount: "12",
   setSelectedWordCount: () => {},
-  shareLength: 1,
+  shareLength: 20,
   currentShare: [""],
   setCurrentShare: () => {},
   isCurrentShareValid: false,
@@ -47,7 +47,7 @@ type ProviderProps = {
 
 export const RestoreContextProvider: React.FC<ProviderProps> = ({ children }) => {
   const [selectedWordCount, setSelectedWordCount] = useState(wordCountOptions[0].value)
-  const shareLength = selectedWordCount === "12" ? 20 : 33
+  const shareLength: 20 | 33 = selectedWordCount === "12" ? 20 : 33
   const [currentShare, setCurrentShare] = useState<string[]>(new Array(shareLength).fill(""))
   const isCurrentShareValid = validateShare(currentShare.join(" "))
   const [infoMessage, setInfoMessage] = useState("")

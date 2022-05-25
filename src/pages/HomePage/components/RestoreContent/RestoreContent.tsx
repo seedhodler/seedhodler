@@ -10,6 +10,7 @@ import { TextPlace } from "components/TextPlace"
 import { BadgeColorsEnum, wordCountOptions } from "constants/"
 import variables from "styles/Variables.module.scss"
 import { RestoreContext } from "context/restoreContext"
+import { useInputRefs } from "hooks"
 
 import { Shares } from "../Shares"
 import classes from "./RestoreContent.module.scss"
@@ -31,6 +32,7 @@ const RestoreContent: React.FC = () => {
     restoredMnemonic,
     isFullMnemonic,
   } = useContext(RestoreContext)
+  const inputRefs = useInputRefs(shareLength)
 
   const handleWordCountChange = (wordCountValue: string) => {
     setSelectedWordCount(wordCountValue)
@@ -44,6 +46,12 @@ const RestoreContent: React.FC = () => {
   const handleDeleteShare = () => {
     setEnteredShares(prev => prev.filter((_, index) => index !== activeShareItemId))
     setActiveShareItemId(0)
+  }
+
+  const onEnter = (index: number) => {
+    if (index < shareLength - 1) {
+      inputRefs[index + 1].current.focus()
+    }
   }
 
   return (
@@ -88,6 +96,8 @@ const RestoreContent: React.FC = () => {
         {currentShare.map((word, index) => (
           <Input
             key={index}
+            ref={inputRefs[index]}
+            onEnter={onEnter}
             isRestore={true}
             count={index + 1}
             index={index}
