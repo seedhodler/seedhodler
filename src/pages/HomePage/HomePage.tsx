@@ -14,6 +14,19 @@ import classes from "./HomePage.module.scss"
 const HomePage: React.FC = () => {
   const [activeTabId, setActiveTabId] = useState(0)
   const {
+    selectedWordCount: selectedWordCountGenerate,
+    entropyToPass,
+    selectedLang,
+    minBits,
+    shares,
+    thresholdNumber,
+    sharesNumber,
+    mnemonic,
+    setMnemonic,
+    setShares,
+    handleGenerateShares,
+  } = useContext(GenerateContext)
+  const {
     shareLength,
     selectedWordCount: selectedWordCountRestore,
     enteredSharesAsString,
@@ -24,22 +37,11 @@ const HomePage: React.FC = () => {
     setEnteredShares,
     setRestoredMnemonic,
   } = useContext(RestoreContext)
-  const {
-    selectedWordCount: selectedWordCountGenerate,
-    entropyToPass,
-    selectedLang,
-    minBits,
-    shares,
-    thresholdNumber,
-    sharesNumber,
-    mnemonic,
-    setMnemonic,
-    handleGenerateShares,
-  } = useContext(GenerateContext)
 
   // Generate effects
   useEffect(() => {
     setMnemonic(new Array(+selectedWordCountGenerate).fill(""))
+    setShares(null)
   }, [selectedWordCountGenerate])
 
   useEffect(() => {

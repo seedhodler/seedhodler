@@ -4,12 +4,13 @@ import { Calc } from "components/Calc"
 import { BadgeTitle } from "components/BadgeTitle"
 import { InfoTitle } from "components/InfoTitle"
 import { Button } from "components/Button"
+import { Input } from "components/Input"
 import { BadgeColorsEnum, ButtonColorsEnum } from "constants/index"
+import { useInputRefs } from "hooks"
 
 import { Shares } from "../Shares"
 import { ExportSaveModal } from "../ExportSaveModal"
 import classes from "./GenerateContent.module.scss"
-import { Input } from "components/Input"
 
 type GenerateContentSharesProps = {
   mnemonic: string[]
@@ -39,6 +40,13 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
   handleGenerateShares,
 }) => {
   const [isExportSaveModalActive, setIsExportSaveModalActive] = useState(false)
+  const inputRefs = useInputRefs(+selectedWordCount)
+
+  const onEnter = (index: number) => {
+    if (index < +selectedWordCount - 1) {
+      inputRefs[index + 1].current.focus()
+    }
+  }
 
   return (
     <>
@@ -50,6 +58,8 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
         {mnemonic.map((word, index) => (
           <Input
             key={index}
+            ref={inputRefs[index]}
+            onEnter={onEnter}
             count={index + 1}
             index={index}
             value={word}
