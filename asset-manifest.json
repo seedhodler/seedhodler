@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/seedhodlerV2/static/css/main.35be3e02.css",
-    "main.js": "/seedhodlerV2/static/js/main.d3f4b4ea.js",
+    "main.css": "/seedhodlerV2/static/css/main.5199832b.css",
+    "main.js": "/seedhodlerV2/static/js/main.3cc83f72.js",
     "static/js/787.c7156b49.chunk.js": "/seedhodlerV2/static/js/787.c7156b49.chunk.js",
     "static/media/Share24.pdf": "/seedhodlerV2/static/media/Share24.4eaa01f2854ad55156e8.pdf",
     "static/media/Share12.pdf": "/seedhodlerV2/static/media/Share12.3c6d586607a5914920ed.pdf",
@@ -33,12 +33,12 @@
     "static/media/CheckmarkFilled.svg": "/seedhodlerV2/static/media/CheckmarkFilled.3dd19f1b3d5ce72ebb57d294eaa27e6a.svg",
     "static/media/ArrowRight.svg": "/seedhodlerV2/static/media/ArrowRight.f519bbf8c810969628669d754e22c219.svg",
     "static/media/Remove.svg": "/seedhodlerV2/static/media/Remove.a4fb9d38a94c3f4fdc4ca493fa448f64.svg",
-    "main.35be3e02.css.map": "/seedhodlerV2/static/css/main.35be3e02.css.map",
-    "main.d3f4b4ea.js.map": "/seedhodlerV2/static/js/main.d3f4b4ea.js.map",
+    "main.5199832b.css.map": "/seedhodlerV2/static/css/main.5199832b.css.map",
+    "main.3cc83f72.js.map": "/seedhodlerV2/static/js/main.3cc83f72.js.map",
     "787.c7156b49.chunk.js.map": "/seedhodlerV2/static/js/787.c7156b49.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.35be3e02.css",
-    "static/js/main.d3f4b4ea.js"
+    "static/css/main.5199832b.css",
+    "static/js/main.3cc83f72.js"
   ]
 }
