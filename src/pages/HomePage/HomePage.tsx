@@ -4,7 +4,7 @@ import GenerateIcon from "assets/icons/GenerateWithBg.svg"
 import RestoreIcon from "assets/icons/RestoreWithBg.svg"
 import { RestoreContext } from "context/restoreContext"
 import { GenerateContext } from "context/generateContext"
-import { generateMnemonicFromEntropy, restoreMnemonic } from "helpers"
+import { generateMnemonicFromEntropy, restoreMnemonic, validateMnemonic } from "helpers"
 
 import { GenerateContent } from "./components/GenerateContent"
 import { RestoreContent } from "./components/RestoreContent"
@@ -53,7 +53,7 @@ const HomePage: React.FC = () => {
   }, [selectedLang, entropyToPass])
 
   useEffect(() => {
-    if (shares) {
+    if (shares && validateMnemonic(mnemonic.join(" "))) {
       handleGenerateShares()
     }
   }, [thresholdNumber, sharesNumber, mnemonic])
