@@ -4,6 +4,7 @@ export {
   mnemonicToEntropy,
   mnemonicToSeed,
   entropyToMnemonic,
+  validateMnemonic,
 } from "./bip39utils"
 export { hexStringToByteArray, getEntropyFromMouse } from "./entropyUtils"
 export { getFormattedShares, restoreMnemonic, validateShare } from "./slip39utils"
