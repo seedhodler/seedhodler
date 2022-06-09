@@ -2,7 +2,7 @@
   "name": "seedhodler-new",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://seedhodler.github.io/seedhodlerV2/",
+  "homepage": "https://seedhodler.io/",
   "config-overrides-path": "src/config-overrides.js",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
