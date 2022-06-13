@@ -18,12 +18,14 @@ const HomePage: React.FC = () => {
     entropyToPass,
     selectedLang,
     minBits,
-    shares,
     thresholdNumber,
     sharesNumber,
-    mnemonic,
-    setMnemonic,
-    setShares,
+    mnemonic12,
+    setMnemonic12,
+    mnemonic24,
+    setMnemonic24,
+    shares12,
+    shares24,
     handleGenerateShares,
   } = useContext(GenerateContext)
   const {
@@ -38,25 +40,29 @@ const HomePage: React.FC = () => {
     setRestoredMnemonic,
   } = useContext(RestoreContext)
 
-  // Generate effects
-  useEffect(() => {
-    setMnemonic(new Array(+selectedWordCountGenerate).fill(""))
-    setShares(null)
-  }, [selectedWordCountGenerate])
+  const is12wordsGenerate = selectedWordCountGenerate === "12"
 
+  // Generate effects
   useEffect(() => {
     if (entropyToPass.length >= minBits) {
       const mnemonic = generateMnemonicFromEntropy(selectedLang, entropyToPass)
       const mnemonicArr = mnemonic.split(" ")
-      setMnemonic(mnemonicArr)
+      if (is12wordsGenerate) {
+        setMnemonic12(mnemonicArr)
+      } else {
+        setMnemonic24(mnemonicArr)
+      }
     }
   }, [selectedLang, entropyToPass])
 
   useEffect(() => {
+    const shares = is12wordsGenerate ? shares12 : shares24
+    const mnemonic = is12wordsGenerate ? mnemonic12 : mnemonic24
+
     if (shares && validateMnemonic(mnemonic.join(" "))) {
       handleGenerateShares()
     }
-  }, [thresholdNumber, sharesNumber, mnemonic])
+  }, [thresholdNumber, sharesNumber, mnemonic12, mnemonic24])
 
   // Restore effects
   useEffect(() => {

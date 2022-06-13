@@ -71,6 +71,19 @@
   background-color: $colorBg300;
   border-radius: 50%;
   cursor: pointer;
+  transition: $transAll;
+
+  &:hover:not([disabled]),
+  &:focus:not([disabled]) {
+    background-color: darken($colorBg300, 10%);
+  }
+
+  &:disabled,
+  &[disabled] {
+    cursor: default;
+    background-color: transparent;
+    border-color: transparent;
+  }
 }
 
 .notificationContainer {
