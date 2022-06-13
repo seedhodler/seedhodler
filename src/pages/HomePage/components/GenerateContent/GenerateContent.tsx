@@ -14,13 +14,16 @@ const GenerateContent: React.FC = () => {
     setSelectedLang,
     selectedWordCount,
     setSelectedWordCount,
-    mnemonic,
-    setMnemonic,
+    mnemonic12,
+    setMnemonic12,
+    mnemonic24,
+    setMnemonic24,
     isAdvanced,
     setIsAdvanced,
     entropyValue,
     setEntropyValue,
-    shares,
+    shares12,
+    shares24,
     activeShareItemId,
     setActiveShareItemId,
     entropyTypeId,
@@ -33,6 +36,11 @@ const GenerateContent: React.FC = () => {
     handleGenerateShares,
     handleGeneratePhase,
   } = useContext(GenerateContext)
+
+  const is12words = selectedWordCount === "12"
+  const mnemonic = is12words ? mnemonic12 : mnemonic24
+  const setMnemonic = is12words ? setMnemonic12 : setMnemonic24
+  const shares = is12words ? shares12 : shares24
 
   return (
     <div className={classes.tabContent}>
