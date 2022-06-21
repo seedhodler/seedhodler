@@ -20,12 +20,12 @@ const Textarea: React.FC<Props> = ({ value, onChange, regex, minBits, entropyTyp
     if (regex) {
       newValue = e.target.value.replace(regex, "")
     }
-    const { selectedEntropyAsBinary } = getEntropyDetails(
+    const { selectedEntropyDetails } = getEntropyDetails(
       entropyTypeId === 0 ? newValue : value,
       minBits,
       entropyTypeId,
     )
-    if (selectedEntropyAsBinary.length <= minBits || newValue < value) {
+    if (selectedEntropyDetails.totalBits <= minBits || newValue < value) {
       onChange(newValue)
     }
   }
