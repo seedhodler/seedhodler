@@ -43,7 +43,7 @@ export const GenerateContentAdvanced: React.FC<GenerateContentAdvancedProps> = (
     minBits,
     entropyTypeId,
   )
-  const isEntropyTooShort = selectedEntropyAsBinary.length < minBits
+  const isEntropyTooShort = selectedEntropyDetails.totalBits < minBits
 
   const onMouseMove = useCallback(
     (e: MouseEvent) =>
@@ -82,7 +82,7 @@ export const GenerateContentAdvanced: React.FC<GenerateContentAdvancedProps> = (
           <div className={classes.entropyOptionsContainer}>
             <EntropyValueType
               title="Coin Flip"
-              subtitle="[1,2]"
+              subtitle="[0,1]"
               isActive={entropyTypeId === 0}
               onClick={() => handleEntropyChange(0)}
               icon={CoinIcon}
@@ -129,7 +129,7 @@ export const GenerateContentAdvanced: React.FC<GenerateContentAdvancedProps> = (
           }}
         >
           {isEntropyTooShort ? "Entropy is too short" : "Valid Entropy"} (
-          {selectedEntropyDetails.totalBits})
+          {`${Math.min(minBits, Math.floor(selectedEntropyDetails.totalBits))} / ${minBits}`})
         </div>
       </div>
       <Textarea
