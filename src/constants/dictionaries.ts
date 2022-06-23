@@ -50,5 +50,5 @@ export const cardDictionary = {
   ts: 48,
   js: 49,
   qs: 50,
-  ks: 51
+  ks: 51,
 }
