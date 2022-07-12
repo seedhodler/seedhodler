@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react"
-import { Outlet } from "react-router-dom"
+import { Outlet, Link } from "react-router-dom"
 
 import { ReactComponent as QuestionMarkIcon } from "assets/icons/QuestionMark.svg"
 import Logo from "assets/icons/Logo.svg"
@@ -18,7 +18,9 @@ const Layout: React.FC<Props> = ({ isOnline, setIsHelpModalActive }) => {
     <div className={classes.mainContainer}>
       <nav className={classes.nav}>
         <div className={classes.navContentTop}>
-          <img src={Logo} alt="Seedhodler" className={classes.logo} />
+          <Link to="/">
+            <img src={Logo} alt="Seedhodler" className={classes.logo} />
+          </Link>
           <p className={classes.subtitle}>
             Seedhodler is free and open source software. This project is currently a{" "}
             <b>work in progress</b> and should <b>not be used</b> by anyone for any reason whatsoever.
