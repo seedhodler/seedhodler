@@ -28,7 +28,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
 
     for (let i = 0; i < wordlist.length; i++) {
       if (variantsCounter < 5) {
-        if (wordlist[i].includes(value.toLowerCase())) {
+        if (wordlist[i].startsWith(value.toLowerCase())) {
           variantsCounter++
           variants.push(wordlist[i])
         }
@@ -87,16 +87,20 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
         />
         {isOpen && (
           <div className={classes.dropdownList}>
-            {variants.map((variant, i) => (
-              <button
-                onClick={() => handleChange(variant)}
-                key={variant}
-                className={`${classes.dropdownListItem} ${i === focusedItemId ? classes.focused : ""}`}
-                tabIndex={0}
-              >
-                {variant}
-              </button>
-            ))}
+            {variants.length === 0 ? (
+              <div className={classes.incorrectText}>Incorrect word</div>
+            ) : (
+              variants.map((variant, i) => (
+                <button
+                  onClick={() => handleChange(variant)}
+                  key={variant}
+                  className={`${classes.dropdownListItem} ${i === focusedItemId ? classes.focused : ""}`}
+                  tabIndex={0}
+                >
+                  {variant}
+                </button>
+              ))
+            )}
           </div>
         )}
       </div>
