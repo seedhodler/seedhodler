@@ -58,16 +58,18 @@ const Modal: React.FC<Props> = ({
         {!isNotification ? (
           <div
             onClick={e => e.stopPropagation()}
-            className={isActive ? classes.contentActive : classes.content}
+            className={isActive ? classes.modalActive : classes.modal}
             style={style}
           >
-            <div className={classes.modalHeader}>
-              <BadgeTitle title={title} color={badgeColor} style={{ marginBottom: 0 }} />
-              <button onClick={() => setIsActive(false)} className={classes.closeBtn}>
-                <img src={CloseIcon} alt="Close" />
-              </button>
+            <div className={classes.content}>
+              <div className={classes.modalHeader}>
+                <BadgeTitle title={title} color={badgeColor} style={{ marginBottom: 0 }} />
+                <button onClick={() => setIsActive(false)} className={classes.closeBtn}>
+                  <img src={CloseIcon} alt="Close" />
+                </button>
+              </div>
+              {children}
             </div>
-            {children}
           </div>
         ) : (
           <div className={classes.notificationContainer}>{children}</div>

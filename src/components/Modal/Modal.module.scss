@@ -28,11 +28,11 @@
   pointer-events: all;
 }
 
-%contentBase {
+%modalBase {
   display: flex;
   flex-direction: column;
   background-color: $colorBg100;
-  padding: 2.4rem;
+  padding: 2.4rem 0;
   box-shadow: 0px 0px 14px -4px rgba(0, 0, 0, 0.05), 0px 32px 48px -8px rgba(0, 0, 0, 0.1);
   border-radius: $radiiMedium;
   width: 45%;
@@ -40,19 +40,36 @@
   height: 65%;
   min-height: 650px;
   max-height: 90%;
-  overflow: auto;
 
   transform: scale(0.5);
   transition: $transModal;
 }
 
-.content {
-  @extend %contentBase;
+.modal {
+  @extend %modalBase;
 }
 
-.contentActive {
-  @extend %contentBase;
+.modalActive {
+  @extend %modalBase;
   transform: scale(1);
+}
+
+.content {
+  padding: 0 2.4rem;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 1rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: $colorBg100;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $colorBg400;
+    border-radius: $radiiSmallest;
+  }
 }
 
 .modalHeader {
