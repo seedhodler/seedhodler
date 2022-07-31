@@ -43,8 +43,6 @@ const HomePage: React.FC = () => {
     setRestoredMnemonic,
   } = useContext(RestoreContext)
 
-  console.log(isValidMnemonic)
-
   const is12wordsGenerate = selectedWordCountGenerate === "12"
   const shares = is12wordsGenerate ? shares12 : shares24
   const mnemonic = is12wordsGenerate ? mnemonic12 : mnemonic24
@@ -78,18 +76,7 @@ const HomePage: React.FC = () => {
     if (isFullMnemonic && mnemonic[mnemonic.length - 1].length >= 3) {
       setIsValidMnemonic(validateMnemonic(mnemonic.join(" ")))
     }
-  }, [mnemonic, isValidMnemonic])
-
-  // console.log(mnemonic, validateMnemonic(mnemonic.join(" ")))
-  // let minWordLength = 10
-  // let minWord = ""
-  // bip39.wordlists.english.forEach(word => {
-  //   if (word.length < minWordLength) {
-  //     minWordLength = word.length
-  //     minWord = word
-  //   }
-  // })
-  // console.log(minWordLength, minWord)
+  }, [mnemonic])
 
   // Restore effects
   useEffect(() => {

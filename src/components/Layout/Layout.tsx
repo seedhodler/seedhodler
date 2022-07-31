@@ -42,10 +42,12 @@ const Layout: React.FC<Props> = ({ isOnline, setIsHelpModalActive }) => {
           <CheckmarkInfo isCheckmark={false}>Secure when used Offline</CheckmarkInfo>
           <CheckmarkInfo isCheckmark={false}>Split phrases and share with others</CheckmarkInfo>
         </div>
-        <button onClick={() => setIsHelpModalActive(prev => !prev)} className={classes.helpButton}>
-          <QuestionMarkIcon />
-          Help & getting started
-        </button>
+        <div className={classes.helpButtonContainer}>
+          <button onClick={() => setIsHelpModalActive(prev => !prev)} className={classes.helpButton}>
+            <QuestionMarkIcon />
+            Help & getting started
+          </button>
+        </div>
       </nav>
 
       <div className={classes.mainContentContainer}>

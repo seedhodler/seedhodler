@@ -57,18 +57,33 @@
   padding: 2.4rem 2.2rem 0 3.2rem;
 }
 
+.helpButtonContainer {
+  position: relative;
+}
+
 .helpButton {
+  width: 100%;
   display: flex;
   align-items: center;
   column-gap: 1.4rem;
   padding: 2.4rem 2.2rem 5rem 3.2rem;
   font-weight: $fwSemiBold;
   font-size: 15px;
-  border-top: 2px solid $colorBg400;
   transition: $transAll;
   color: $colorBg700;
 
-  &:hover {
+  &::before {
+    content: "";
+    height: 2px;
+    background-color: $colorBg400;
+    width: calc(100% - 5.4rem);
+    position: absolute;
+    top: 0;
+    left: 3.2rem;
+  }
+
+  &:hover,
+  &:active {
     background-color: $colorMain;
     color: $colorBg100;
 
@@ -76,10 +91,6 @@
       fill: $colorBg100;
     }
   }
-}
-
-.test * {
-  fill: green;
 }
 
 .contentContainer {
