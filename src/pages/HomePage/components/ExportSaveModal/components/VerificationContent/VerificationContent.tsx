@@ -202,7 +202,7 @@ const VerificationContent: React.FC<Props> = ({
       </div>
       <div className={classes.buttonsContainer}>
         <Button onClick={() => handleNavigation(NavigationEnum.Prev)} iconLeft={ArrowLeftIcon}>
-          Prev
+          Back
         </Button>
         <Button
           disabled={closedWords.some(item => !item.isFulfilled)}

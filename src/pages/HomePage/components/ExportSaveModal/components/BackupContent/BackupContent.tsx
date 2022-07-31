@@ -81,7 +81,7 @@ const BackupContent: React.FC<Props> = ({
       </div>
       <div className={classes.buttonsContainer}>
         <Button onClick={() => handleNavigation(NavigationEnum.Prev)} iconLeft={ArrowLeftIcon}>
-          Prev
+          Back
         </Button>
         <Button onClick={() => handleNavigation(NavigationEnum.Next)} iconRight={ArrowRightIcon}>
           Next
