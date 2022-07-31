@@ -61,14 +61,16 @@
   &::-webkit-scrollbar {
     width: 1rem;
   }
-
   &::-webkit-scrollbar-track {
     background-color: $colorBg100;
   }
-
   &::-webkit-scrollbar-thumb {
     background-color: $colorBg400;
     border-radius: $radiiSmallest;
+    transition: $transAll;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: darken($colorBg400, 10%);
   }
 }
 

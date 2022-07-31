@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react"
+import * as bip39 from "bip39"
 
 import GenerateIcon from "assets/icons/GenerateWithBg.svg"
 import RestoreIcon from "assets/icons/RestoreWithBg.svg"
@@ -27,6 +28,8 @@ const HomePage: React.FC = () => {
     shares12,
     shares24,
     handleGenerateShares,
+    isValidMnemonic,
+    setIsValidMnemonic,
   } = useContext(GenerateContext)
   const {
     shareLength,
@@ -40,7 +43,11 @@ const HomePage: React.FC = () => {
     setRestoredMnemonic,
   } = useContext(RestoreContext)
 
+  console.log(isValidMnemonic)
+
   const is12wordsGenerate = selectedWordCountGenerate === "12"
+  const shares = is12wordsGenerate ? shares12 : shares24
+  const mnemonic = is12wordsGenerate ? mnemonic12 : mnemonic24
 
   // Generate effects
   useEffect(() => {
@@ -56,13 +63,33 @@ const HomePage: React.FC = () => {
   }, [selectedLang, entropyToPass])
 
   useEffect(() => {
-    const shares = is12wordsGenerate ? shares12 : shares24
-    const mnemonic = is12wordsGenerate ? mnemonic12 : mnemonic24
-
     if (shares && validateMnemonic(mnemonic.join(" "))) {
       handleGenerateShares()
     }
   }, [thresholdNumber, sharesNumber, mnemonic12, mnemonic24])
+
+  useEffect(() => {
+    const isFullMnemonic = !mnemonic.some(word => word.length === 0)
+
+    if (!isFullMnemonic) {
+      setIsValidMnemonic(true)
+    }
+
+    if (isFullMnemonic && mnemonic[mnemonic.length - 1].length >= 3) {
+      setIsValidMnemonic(validateMnemonic(mnemonic.join(" ")))
+    }
+  }, [mnemonic, isValidMnemonic])
+
+  // console.log(mnemonic, validateMnemonic(mnemonic.join(" ")))
+  // let minWordLength = 10
+  // let minWord = ""
+  // bip39.wordlists.english.forEach(word => {
+  //   if (word.length < minWordLength) {
+  //     minWordLength = word.length
+  //     minWord = word
+  //   }
+  // })
+  // console.log(minWordLength, minWord)
 
   // Restore effects
   useEffect(() => {

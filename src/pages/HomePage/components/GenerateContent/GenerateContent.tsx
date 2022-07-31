@@ -35,6 +35,7 @@ const GenerateContent: React.FC = () => {
     setSharesNumber,
     handleGenerateShares,
     handleGeneratePhase,
+    isValidMnemonic,
   } = useContext(GenerateContext)
 
   const is12words = selectedWordCount === "12"
@@ -78,6 +79,7 @@ const GenerateContent: React.FC = () => {
         sharesNumber={sharesNumber}
         setSharesNumber={setSharesNumber}
         handleGenerateShares={handleGenerateShares}
+        isValidMnemonic={isValidMnemonic}
       />
     </div>
   )

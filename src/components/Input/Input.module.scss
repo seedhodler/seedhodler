@@ -78,3 +78,7 @@
   color: $colorError;
   text-align: center;
 }
+
+.error {
+  outline: 2px solid $colorError;
+}

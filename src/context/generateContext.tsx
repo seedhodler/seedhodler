@@ -39,6 +39,8 @@ type Context = {
   setSharesNumber: Dispatch<SetStateAction<number>> | (() => void)
   handleGenerateShares: () => void
   handleGeneratePhase: () => void
+  isValidMnemonic: boolean
+  setIsValidMnemonic: Dispatch<SetStateAction<boolean>> | (() => void)
 }
 
 export const GenerateContext = createContext<Context>({
@@ -70,6 +72,8 @@ export const GenerateContext = createContext<Context>({
   setSharesNumber: () => {},
   handleGenerateShares: () => {},
   handleGeneratePhase: () => {},
+  isValidMnemonic: true,
+  setIsValidMnemonic: () => {},
 })
 
 type ProviderProps = {
@@ -91,6 +95,7 @@ export const GenerateContextProvider: React.FC<ProviderProps> = ({ children }) =
   const [thresholdNumber, setThresholdNumber] = useState(3)
   const [sharesNumber, setSharesNumber] = useState(5)
   const is12words = selectedWordCount === "12"
+  const [isValidMnemonic, setIsValidMnemonic] = useState(true)
 
   const { selectedEntropyAsBinary } = getEntropyDetails(entropyValue, minBits, entropyTypeId)
   const entropyToPass = selectedEntropyAsBinary.slice(0, minBits)
@@ -163,6 +168,8 @@ export const GenerateContextProvider: React.FC<ProviderProps> = ({ children }) =
     setSharesNumber,
     handleGenerateShares,
     handleGeneratePhase,
+    isValidMnemonic,
+    setIsValidMnemonic,
   }
 
   return <GenerateContext.Provider value={contextValue}>{children}</GenerateContext.Provider>

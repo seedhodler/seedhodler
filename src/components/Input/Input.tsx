@@ -13,13 +13,18 @@ type Props = {
   onChange: Dispatch<SetStateAction<string[]>>
   onEnter: (index: number) => void
   isRestore?: boolean
+  isError?: boolean
   className?: string
   containerStyle?: CSS.Properties
 }
 
 const Input = React.forwardRef<HTMLInputElement, Props>(
-  ({ count, index, value, onChange, onEnter, isRestore, className, containerStyle }, ref) => {
-    const classNames = [classes.input, className].join(" ")
+  ({ count, index, value, onChange, onEnter, isRestore, isError, className, containerStyle }, ref) => {
+    const classNamesArr = [classes.input, className]
+    if (isError) {
+      classNamesArr.push(classes.error)
+    }
+    const classNames = classNamesArr.join(" ")
     const wordlist = isRestore ? slip39wordlist : bip39.wordlists.english
     const [focusedItemId, setFocusedItemId] = useState(0)
     const variants: string[] = []

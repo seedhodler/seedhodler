@@ -24,6 +24,7 @@ type GenerateContentSharesProps = {
   sharesNumber: number
   setSharesNumber: Dispatch<SetStateAction<number>>
   handleGenerateShares: () => void
+  isValidMnemonic: boolean
 }
 
 export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
@@ -38,6 +39,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
   sharesNumber,
   setSharesNumber,
   handleGenerateShares,
+  isValidMnemonic,
 }) => {
   const [isExportSaveModalActive, setIsExportSaveModalActive] = useState(false)
   const inputRefs = useInputRefs(+selectedWordCount)
@@ -64,6 +66,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
             index={index}
             value={word}
             onChange={setMnemonic}
+            isError={!isValidMnemonic}
             containerStyle={{
               width: "49%",
               marginBottom: "1.2rem",
