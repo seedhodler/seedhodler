@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react"
+import React, { useEffect, useRef, Dispatch, SetStateAction } from "react"
 
 import ArrowRightIcon from "assets/icons/ArrowRight.svg"
 import ArrowLeftIcon from "assets/icons/ArrowLeft.svg"
@@ -26,6 +26,12 @@ const BackupContent: React.FC<Props> = ({
   shareId,
   setShareId,
 }) => {
+  const descRef = useRef() as React.MutableRefObject<HTMLParagraphElement>
+
+  useEffect(() => {
+    descRef.current.scrollIntoView({ behavior: "smooth" })
+  }, [shareId])
+
   const isNotLastShare = shareId + 1 < sharesNumber
 
   const handleNavigation = (type: NavigationEnum) => {
@@ -47,7 +53,7 @@ const BackupContent: React.FC<Props> = ({
   return (
     <div className={classes.modalContentContainer}>
       <div style={{ width: "100%" }}>
-        <p className={classes.description}>
+        <p className={classes.description} ref={descRef}>
           Please carefully write down this phrase. <b>Keep it in a safe place!</b>
         </p>
         <ShareHeader text={`Share - ${shareId + 1}`} style={{ marginBottom: "1.2rem" }} />

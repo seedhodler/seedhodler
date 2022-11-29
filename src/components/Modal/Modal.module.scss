@@ -65,12 +65,12 @@
     background-color: $colorBg100;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: $colorBg400;
-    border-radius: $radiiSmallest;
+    background-color: darken($colorBg400, 5%);
+    border-radius: 100px;
     transition: $transAll;
   }
   &::-webkit-scrollbar-thumb:hover {
-    background-color: darken($colorBg400, 10%);
+    background-color: darken($colorBg400, 15%);
   }
 }
 

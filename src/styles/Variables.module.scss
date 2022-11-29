@@ -14,6 +14,7 @@ $colorErrorOnlineBg: rgba(252, 71, 71, 0.15);
 $colorErrorLight: #ffbc99;
 $colorErrorLightish: #ff6a55;
 $colorError: #fc4747;
+$colorErrorTransparent: hsl(0, 97%, 85%);
 
 $colorBg100: #fcfcfc;
 $colorBg200: #f4f4f4;
@@ -114,4 +115,5 @@ $breakpoints: (
   colorBg100: $colorBg100;
   colorBg200: $colorBg200;
   colorBg800: $colorBg800;
+  colorErrorTransparent: $colorErrorTransparent;
 }

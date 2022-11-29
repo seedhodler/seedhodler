@@ -1,4 +1,4 @@
-import React, { useState, useRef, Dispatch, SetStateAction } from "react"
+import React, { useState, useRef, useEffect, Dispatch, SetStateAction } from "react"
 
 import ArrowRightIcon from "assets/icons/ArrowRight.svg"
 import ArrowLeftIcon from "assets/icons/ArrowLeft.svg"
@@ -53,11 +53,15 @@ const VerificationContent: React.FC<Props> = ({
   setAllClosedWords,
   setAllOptions,
 }) => {
-  const containerRef = useRef() as React.MutableRefObject<HTMLDivElement>
+  const descRef = useRef() as React.MutableRefObject<HTMLDivElement>
   const [currentShareId, setCurrentShareId] = useState(0)
   const splitShareItem = shares[currentShareId].split(" ")
   const closedWords = allClosedWords[currentShareId]
   const options = allOptions[currentShareId]
+
+  useEffect(() => {
+    descRef.current.scrollIntoView({ behavior: "smooth" })
+  }, [currentShareId])
 
   const handleOptionClick = (word: string) => {
     const activeClosedWord = closedWords.find(item => item.isActive)
@@ -134,10 +138,12 @@ const VerificationContent: React.FC<Props> = ({
   }
 
   return (
-    <div ref={containerRef} className={classes.modalContentContainer}>
+    <div className={classes.modalContentContainer}>
       <div style={{ width: "100%" }}>
         <div className={classes.descriptionContainer}>
-          <p className={classes.description}>Lets verify your recovery phrase.</p>
+          <p ref={descRef} className={classes.description}>
+            Lets verify your recovery phrase.
+          </p>
           <p className={classes.shareNumberInfo}>
             {currentShareId + 1} / {sharesNumber} Shares
           </p>
@@ -163,7 +169,12 @@ const VerificationContent: React.FC<Props> = ({
                   marginBottom: "1.2rem",
                   width: "49%",
                   alignSelf: index <= (selectedWordCount === 12 ? 9 : 16) ? "flex-start" : "flex-end",
-                  backgroundColor: currentWordObj ? variables.colorBg800 : "",
+                  backgroundColor:
+                    currentWordObj && currentWordObj?.isActive && currentWordObj?.isError
+                      ? variables.colorErrorTransparent
+                      : currentWordObj
+                      ? variables.colorBg800
+                      : "",
                   outline:
                     currentWordObj?.isActive && currentWordObj?.isError
                       ? `3px solid ${variables.colorError}`
