@@ -1,0 +1,14 @@
++ make incorrect text place background red in verification process popup
++ responsive modal 
++ scroll the modal
++ responsive tab buttons (with margins)
++ responsive calcs
++ scroll to the selected input with suggestions 
+improve performance (move subscription to all the state variables from the top components (GenerateContent and RestoreContent) to children)
+responsive InfoTitle
+new tooltips
+
+
+animation for the slider (swiper or react-slick or react-transition-group)
+animation for the incorrect word in the verification
+get rid of inline styles (classnames or styled-components)

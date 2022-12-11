@@ -1,6 +1,7 @@
 @import "styles/Variables.module.scss";
 
 .textarea {
+  resize: none;
   width: 100%;
   border-radius: $radii;
   outline: none;

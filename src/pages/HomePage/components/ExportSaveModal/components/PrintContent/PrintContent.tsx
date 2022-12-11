@@ -45,9 +45,9 @@ const PrintContent: React.FC<Props> = ({
       </p>
       <div className={classes.contentContainer}>
         <div className={classes.logoContainer}>
-          <div style={{ width: "60px" }}></div>
-          <img src={LogoIcon} alt="Logo" />
-          <AdditionalInfo info="BIP 39" />
+          <div style={{ width: "60px" }} className={classes.whitespace}></div>
+          <img src={LogoIcon} alt="Logo" className={classes.logo} />
+          <AdditionalInfo info="BIP 39" className={classes.additionalInfo} />
         </div>
         <p className={classes.innerDescription}>
           Use the Seedhodler Phraseholder to write down your generated phrases.

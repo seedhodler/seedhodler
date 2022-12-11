@@ -32,6 +32,12 @@
 
 .icon {
   margin-right: 1.6rem;
+
+  @include sm-d {
+    margin-right: 0.8rem;
+    width: 25px;
+    height: 25px;
+  }
 }
 
 .infoIcon {

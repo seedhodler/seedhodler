@@ -1,4 +1,4 @@
-import React, { useEffect, Dispatch, SetStateAction } from "react"
+import React, { useEffect, useRef, Dispatch, SetStateAction } from "react"
 import CSS from "csstype"
 import Confetti from "react-confetti"
 
@@ -29,6 +29,14 @@ const Modal: React.FC<Props> = ({
   children,
   style,
 }) => {
+  const modalHeaderRef = useRef() as React.MutableRefObject<HTMLDivElement>
+
+  useEffect(() => {
+    if (modalHeaderRef && isActive) {
+      modalHeaderRef?.current?.scrollIntoView({ behavior: "smooth" })
+    }
+  }, [title, isActive])
+
   useEffect(() => {
     if (isActive) {
       document.body.style.overflow = "hidden"
@@ -62,7 +70,7 @@ const Modal: React.FC<Props> = ({
             style={style}
           >
             <div className={classes.content}>
-              <div className={classes.modalHeader}>
+              <div className={classes.modalHeader} ref={modalHeaderRef} id="modal-header">
                 <BadgeTitle title={title} color={badgeColor} style={{ marginBottom: 0 }} />
                 <button onClick={() => setIsActive(false)} className={classes.closeBtn}>
                   <img src={CloseIcon} alt="Close" />

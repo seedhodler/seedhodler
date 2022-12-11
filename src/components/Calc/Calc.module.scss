@@ -15,6 +15,11 @@
   font-weight: $fwSemiBold;
   font-size: 20px;
   line-height: 32px;
+
+  @include sm-d {
+    height: 42px;
+    width: 54px;
+  }
 }
 
 %btn {
@@ -35,6 +40,11 @@
   &[disabled] {
     cursor: default;
   }
+
+  @include sm-d {
+    height: 42px;
+    width: 42px;
+  }
 }
 
 .btnPlus {
@@ -50,4 +60,11 @@
 .btnMinus {
   @extend %btn;
   border-radius: 5px 0px 0px 5px;
+}
+
+.icon {
+  @include sm-d {
+    height: 26px;
+    width: 26px;
+  }
 }

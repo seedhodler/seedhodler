@@ -8,13 +8,21 @@ import classes from "./AdditionalInfo.module.scss"
 type Props = {
   info: string
   color?: BadgeColorsEnum
+  className?: string
   style?: CSS.Properties
 }
 
-const AdditionalInfo: React.FC<Props> = ({ info, color = BadgeColorsEnum.SuccessLight, style }) => {
+const AdditionalInfo: React.FC<Props> = ({
+  info,
+  color = BadgeColorsEnum.SuccessLight,
+  className,
+  style,
+}) => {
+  const classNames = [classes.additionalInfo, className].join(" ")
+
   return (
     <span
-      className={classes.additionalInfo}
+      className={classNames}
       style={{
         ...style,
         backgroundColor: badgeColorsObj[color],
