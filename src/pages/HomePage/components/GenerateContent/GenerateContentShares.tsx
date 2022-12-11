@@ -50,6 +50,12 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
     }
   }
 
+  const onClick = (index: number) => {
+    if (window.matchMedia("(max-width: 640px)").matches) {
+      inputRefs[index].current.scrollIntoView()
+    }
+  }
+
   return (
     <>
       <InfoTitle title="BIP39 Seed Phrase" desc="BIP39 Seed Phrase __placeholder" />
@@ -62,6 +68,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
             key={index}
             ref={inputRefs[index]}
             onEnter={onEnter}
+            onClick={onClick}
             count={index + 1}
             index={index}
             value={word}

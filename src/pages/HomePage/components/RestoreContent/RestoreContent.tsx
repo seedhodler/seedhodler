@@ -54,6 +54,12 @@ const RestoreContent: React.FC = () => {
     }
   }
 
+  const onClick = (index: number) => {
+    if (window.matchMedia("(max-width: 640px)").matches) {
+      inputRefs[index].current.scrollIntoView()
+    }
+  }
+
   return (
     <>
       <div className={classes.headerContainer} style={{ marginBottom: "3.6rem" }}>
@@ -98,6 +104,7 @@ const RestoreContent: React.FC = () => {
             key={index}
             ref={inputRefs[index]}
             onEnter={onEnter}
+            onClick={onClick}
             isRestore={true}
             count={index + 1}
             index={index}

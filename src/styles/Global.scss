@@ -6,6 +6,7 @@
   box-sizing: border-box;
   font-family: $fontFamily;
   margin: 0;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 html {
@@ -26,12 +27,4 @@ button {
   background-color: transparent;
   font-weight: inherit;
   font-size: inherit;
-}
-
-input,
-textarea,
-button,
-select,
-a {
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }

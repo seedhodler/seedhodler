@@ -11,6 +11,7 @@ type Props = {
   index: number
   value: string
   onChange: Dispatch<SetStateAction<string[]>>
+  onClick?: (index: number) => void
   onEnter: (index: number) => void
   isRestore?: boolean
   isError?: boolean
@@ -19,7 +20,10 @@ type Props = {
 }
 
 const Input = React.forwardRef<HTMLInputElement, Props>(
-  ({ count, index, value, onChange, onEnter, isRestore, isError, className, containerStyle }, ref) => {
+  (
+    { count, index, value, onChange, onClick, onEnter, isRestore, isError, className, containerStyle },
+    ref,
+  ) => {
     const classNamesArr = [classes.input, className]
     if (isError) {
       classNamesArr.push(classes.error)
@@ -81,7 +85,11 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
     }, [value])
 
     return (
-      <div className={classes.container} style={containerStyle}>
+      <div
+        onClick={() => (onClick ? onClick(index) : null)}
+        className={classes.container}
+        style={containerStyle}
+      >
         {count && <span className={classes.count}>{count}.</span>}
         <input
           ref={ref}
