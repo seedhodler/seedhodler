@@ -11,4 +11,3 @@ new tooltips
 
 animation for the slider (swiper or react-slick or react-transition-group)
 animation for the incorrect word in the verification
-get rid of inline styles (classnames or styled-components)

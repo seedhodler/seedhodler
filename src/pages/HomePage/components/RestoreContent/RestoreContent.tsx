@@ -167,7 +167,7 @@ const RestoreContent: React.FC = () => {
       </div>
       <div
         className={classes.shareContainer}
-        style={{ height: selectedWordCount === "12" ? "360px" : "720px" }}
+        style={{ height: selectedWordCount === "12" ? "360px" : "710px" }}
       >
         {restoredMnemonic.map((word, index) => (
           <TextPlace

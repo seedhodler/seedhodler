@@ -62,12 +62,7 @@ splitting your seed phrase. when used incorrectly these advanced functions may l
 generating of unsafe seed phrases that can be (and will be) guessed easily. Be careful!`}
         >
           <p>
-            Advanced Toolset -{" "}
-            <span className={classes.entropyGeneration}>
-              {isAdvanced
-                ? "Careful, extremely dangerous when used incorrectly 🔥"
-                : "Entropy Generation"}
-            </span>
+            Advanced Toolset - <span className={classes.entropyGeneration}>Entropy Generation</span>
           </p>
           <img src={InfoGrayIcon} alt="Info" style={{ marginLeft: "0.5rem" }} />
         </div>

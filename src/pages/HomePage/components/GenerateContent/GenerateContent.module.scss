@@ -83,10 +83,20 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+
+  @include md-d {
+    display: block;
+  }
 }
 
 .validation {
   @extend %validation;
+
+  @include md-d {
+    width: fit-content;
+    margin-bottom: 0.6rem;
+    margin-left: auto;
+  }
 }
 
 .insightsLabel {

@@ -4,12 +4,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @include sm-d {
+    display: block;
+  }
 }
 
 .wordCountContainer {
   display: flex;
   align-items: center;
   column-gap: 1.2rem;
+
+  @include sm-d {
+    margin-top: 2.4rem;
+  }
 }
 
 .validation {

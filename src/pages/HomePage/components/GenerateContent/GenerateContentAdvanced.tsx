@@ -4,14 +4,15 @@ import CardsIcon from "assets/icons/Cards.svg"
 import DiceIcon from "assets/icons/Dice.svg"
 import NumbersIcon from "assets/icons/Numbers.svg"
 
+// import { Button } from "components/Button"
 import { BadgeTitle } from "components/BadgeTitle"
 import { InfoTitle } from "components/InfoTitle"
-import { Button } from "components/Button"
 import { Textarea } from "components/Textarea"
-import { EntropyValueType } from "../EntropyValueType"
-import classes from "./GenerateContent.module.scss"
 import variables from "styles/Variables.module.scss"
 import { getEntropyDetails, getEntropyFromMouse } from "helpers"
+
+import { EntropyValueType } from "../EntropyValueType"
+import classes from "./GenerateContent.module.scss"
 
 const entropy: number[] = []
 
@@ -110,12 +111,12 @@ export const GenerateContentAdvanced: React.FC<GenerateContentAdvancedProps> = (
             />
           </div>
         </div>
-        <div className={classes.wrapperColumn}>
+        {/* <div className={classes.wrapperColumn}>
           <InfoTitle title="Mouse" desc="Mouse __placeholder" />
           <Button onClick={handleMouseEntropy} className={classes["mouseButton" + mousePercentage]}>
-            {isMouseCapture ? "Calculating..." : "Start calculation"}
+            {isMouseCapture ? "Calculating..." : "Calculate"}
           </Button>
-        </div>
+        </div> */}
       </div>
       <div className={classes.infoAndValidation}>
         <InfoTitle
