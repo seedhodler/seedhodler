@@ -155,9 +155,9 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
             Export / Save Shares
           </Button>
         </>
-      ) : (
-        <div className={classes.whitespace} />
-      )}
+      ) : null
+      // <div className={classes.whitespace} />
+      }
       <ExportSaveModal
         isExportSaveModalActive={isExportSaveModalActive}
         setIsExportSaveModalActive={setIsExportSaveModalActive}
