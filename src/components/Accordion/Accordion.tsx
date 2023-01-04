@@ -8,7 +8,7 @@ import classes from "./Accordion.module.scss"
 type Props = {
   label: string
   style?: CSS.Properties
-  children: string
+  children: string | React.ReactNode
 }
 
 const Accordion: React.FC<Props> = ({ label, children, style }) => {

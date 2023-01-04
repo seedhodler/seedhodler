@@ -1,6 +1,6 @@
 ## Introduction
 
-Seedhodler is a tool that uses [shamir secret sharing](https://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing) to generate, split, and rejoin master seeds for cryptocurrency wallets. A master seed is a secret string of words that is used to generate the private keys for your cryptocurrency addresses. It is important to keep your master seed safe and secure, as anyone who has access to it can potentially access and steal your cryptocurrencies.
+Seedhodler is a tool that uses [Shamir's secret sharing](https://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing) to generate, split, and rejoin master seeds for cryptocurrency wallets. A master seed is a secret string of words that is used to generate the private keys for your cryptocurrency addresses. It is important to keep your master seed safe and secure, as anyone who has access to it can potentially access and steal your cryptocurrencies.
 Using Seedhodler, you can split your master seed into multiple pieces, called "shares," and store them in different locations. This way, you can ensure that your master seed is secure even if one of the shares is lost or stolen. When you want to access your cryptocurrencies, you can use Seedhodler to rejoin the shares and retrieve your master seed.
 
 ## Generating a Master Seed and Shares

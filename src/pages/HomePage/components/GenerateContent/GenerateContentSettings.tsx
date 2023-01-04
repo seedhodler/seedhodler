@@ -38,7 +38,7 @@ export const GenerateContentSettings: React.FC<GenerateContentSettingsProps> = (
       <BadgeTitle title="Phrase" additionalInfo="BIP 39" color={BadgeColorsEnum.SuccessLight} />
       <div className={classes.configContainer}>
         <div>
-          <InfoTitle title="Language" desc="Language __placeholder" />
+          <p className={classes.title}>Language</p>
           <Select
             defaultValue={selectedLang}
             onChange={(selectedLangValue: string) => setSelectedLang(selectedLangValue)}
@@ -46,7 +46,7 @@ export const GenerateContentSettings: React.FC<GenerateContentSettingsProps> = (
           />
         </div>
         <div>
-          <InfoTitle title="Word Count" desc="Word Count __placeholder" />
+          <p className={classes.title}>Word Count</p>
           <Select
             defaultValue={selectedWordCount}
             onChange={handleWordCountChange}

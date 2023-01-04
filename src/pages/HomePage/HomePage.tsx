@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react"
-import * as bip39 from "bip39"
 
 import GenerateIcon from "assets/icons/GenerateWithBg.svg"
 import RestoreIcon from "assets/icons/RestoreWithBg.svg"
@@ -111,14 +110,14 @@ const HomePage: React.FC = () => {
       <div className={classes.tabsContainer}>
         <Tab
           title="Generate"
-          desc="Generate __placeholder"
+          desc="Generate seedhodler shares by splitting an existing master seed"
           icon={GenerateIcon}
           active={activeTabId === 0}
           onClick={() => setActiveTabId(0)}
         />
         <Tab
           title="Restore"
-          desc="Restore __placeholder"
+          desc="Combine enough seedhodler shares to retrieve your master seed"
           icon={RestoreIcon}
           active={activeTabId === 1}
           onClick={() => setActiveTabId(1)}

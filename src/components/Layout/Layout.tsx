@@ -3,7 +3,6 @@ import { Outlet, Link } from "react-router-dom"
 
 import { ReactComponent as QuestionMarkIcon } from "assets/icons/QuestionMark.svg"
 import Logo from "assets/icons/Logo.svg"
-import { InfoTitle } from "components/InfoTitle"
 import { CheckmarkInfo } from "components/CheckmarkInfo"
 
 import classes from "./Layout.module.scss"
@@ -53,12 +52,7 @@ const Layout: React.FC<Props> = ({ isOnline, setIsHelpModalActive }) => {
       <div className={classes.mainContentContainer}>
         {isOnline && (
           <div className={classes.onlineNotification}>
-            <InfoTitle
-              title="Security Notice"
-              desc="Security Notice __placeholder"
-              isError
-              className={classes.securityNotice}
-            />
+            <p className={classes.title}>Security Notice</p>
             <p className={classes.onlineMessage}>
               You are currently online. This tool should only be used in an offline environment
             </p>

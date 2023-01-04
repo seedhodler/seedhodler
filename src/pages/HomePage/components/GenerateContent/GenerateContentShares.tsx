@@ -58,7 +58,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
 
   return (
     <>
-      <InfoTitle title="BIP39 Seed Phrase" desc="BIP39 Seed Phrase __placeholder" />
+      <p className={classes.title}>BIP39 Seed Phrase</p>
       <div
         className={classes.seedPhraseContainer}
         style={{ height: selectedWordCount === "12" ? "360px" : "720px" }}
@@ -93,7 +93,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
             <div className={classes.calcContainer}>
               <InfoTitle
                 title="Threshold"
-                desc="Threshold __placeholder"
+                desc="How many shares are needed to regenerate the original master seed"
                 className={classes.calcTitle}
               />
               <Calc
@@ -111,7 +111,11 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
               />
             </div>
             <div className={classes.calcContainer}>
-              <InfoTitle title="Shares" desc="Shares __placeholder" className={classes.calcTitle} />
+              <InfoTitle
+                title="Shares"
+                desc="How many of your shares to generate in total"
+                className={classes.calcTitle}
+              />
               <Calc
                 value={sharesNumber}
                 plusDisabled={sharesNumber >= 16}

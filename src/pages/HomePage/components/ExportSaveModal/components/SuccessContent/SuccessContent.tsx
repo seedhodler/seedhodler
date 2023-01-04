@@ -14,7 +14,8 @@ const SuccessContent: React.FC<Props> = ({ setIsExportSaveModalActive }) => {
     <div className={classes.modalContentContainer}>
       <div style={{ width: "100%" }}>
         <p className={classes.description}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. __placeholder
+          You have now sucessfully created your seedhodler shares. This is an important step in securing
+          your cryptocurrency assets.
         </p>
         <img
           src={CongratsIcon}
@@ -23,24 +24,28 @@ const SuccessContent: React.FC<Props> = ({ setIsExportSaveModalActive }) => {
         />
         <div className={classes.infoBlock}>
           <div className={classes.infoBlockHeader}>
-            <p>Thank you note</p>
+            <p>Destroy your original master seed</p>
             {/* <img src={CloseOutlinedIcon} alt="Close" /> */}
           </div>
           <p className={classes.infoBlockDescription}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mollis donec gravida commodo vitae,
-            id malesuada accumsan. Morbi in quisque ligula natoque faucibus. Volutpat orci, scelerisque
-            sed a nulla. Tortor __placeholder
+            In order to remove any single point of failure it is advised to destroy the original master
+            seed now. However, you may want to first double check that you have written down the seed
+            shares correctly. You can do this by using the seedhodler tool to rejoin the shares and cross
+            check that the regenerated master seed matches with the original one (which you are about to
+            destroy)
           </p>
         </div>
         <div className={classes.infoBlock}>
           <div className={classes.infoBlockHeader}>
-            <p>Clear Cache / Potential Risks, Links</p>
+            <p>Distribute your seed shares</p>
             {/* <img src={CloseOutlinedIcon} alt="Close" /> */}
           </div>
           <p className={classes.infoBlockDescription}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mollis donec gravida commodo vitae,
-            id malesuada accumsan. Morbi in quisque ligula natoque faucibus. Volutpat orci, scelerisque
-            sed a nulla. Tortor __placeholder
+            Store your seed shares in a physically safe and secure manner. Some best practices include
+            using fireproof and waterproof storage and using separate locations. This could include
+            storing them with different family members, trusted friends, or a safe deposit box and a home
+            safe. It is also a good idea to not disclose to anyone else which entities are holding your
+            seed shares.
           </p>
         </div>
       </div>

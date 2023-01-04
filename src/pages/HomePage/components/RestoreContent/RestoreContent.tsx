@@ -65,8 +65,6 @@ const RestoreContent: React.FC = () => {
       <div className={classes.headerContainer} style={{ marginBottom: "3.6rem" }}>
         <BadgeTitle
           title="Input Phrases"
-          isInfo={true}
-          desc="Input Phrases __placeholder"
           color={BadgeColorsEnum.MainLight}
           additionalInfo="BIP 39"
           style={{ marginBottom: 0 }}
@@ -81,7 +79,7 @@ const RestoreContent: React.FC = () => {
         </div>
       </div>
       <div className={classes.headerContainer} style={{ marginBottom: "1.2rem" }}>
-        <InfoTitle title="BIP39 Seed Phrase" desc="BIP39 Seed Phrase __placeholder" />
+        <p className={classes.title}>BIP39 Seed Phrase</p>
         {currentShare.every(word => word.length !== 0) && (
           <div
             className={classes.validation}

@@ -79,7 +79,10 @@ export const GenerateContentAdvanced: React.FC<GenerateContentAdvancedProps> = (
       <BadgeTitle title="Entropy Generation" style={{ marginBottom: "2.6rem" }} />
       <div className={classes.entropyContainer}>
         <div className={classes.wrapperColumn}>
-          <InfoTitle title="Entropy Value Type" desc="Entropy Value Type __placeholder" />
+          <InfoTitle
+            title="Entropy Value Type"
+            desc="Choose what type of random number generator you are using. Such as a deck of cards or flipping a coin"
+          />
           <div className={classes.entropyOptionsContainer}>
             <EntropyValueType
               title="Coin Flip"
@@ -121,7 +124,8 @@ export const GenerateContentAdvanced: React.FC<GenerateContentAdvancedProps> = (
       <div className={classes.infoAndValidation}>
         <InfoTitle
           title="Manual - Enter your own entropy"
-          desc="Manual - Enter your own entropy __placeholder"
+          // eslint-disable-next-line max-len
+          desc="Use this text input field to manually enter your entropy. seedhodler will only generate your master seed upon having entered a sufficient amount of data. this is shown in the small text field on the right side."
         />
         <div
           className={classes.validation}

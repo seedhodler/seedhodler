@@ -21,3 +21,27 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.title {
+  margin-bottom: 1rem;
+}
+
+.header {
+  font-size: 20px;
+  line-height: 32px;
+  color: $colorTextDark;
+  font-weight: $fwSemiBold;
+}
+
+.link {
+  outline: none;
+  text-decoration: none;
+  color: $colorTextDark;
+  transition: $transAll;
+  font-weight: $fwSemiBold;
+
+  &:hover,
+  &:focus {
+    color: $colorMain;
+  }
+}

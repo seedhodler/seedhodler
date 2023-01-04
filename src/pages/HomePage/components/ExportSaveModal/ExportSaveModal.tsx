@@ -101,7 +101,7 @@ const ExportSaveModal: React.FC<Props> = ({
       ),
     },
     3: {
-      title: "Successful",
+      title: "Congratulations",
       badgeColor: BadgeColorsEnum.Success,
       Component: <SuccessContent setIsExportSaveModalActive={setIsExportSaveModalActive} />,
     },
