@@ -7,13 +7,14 @@ import classes from "./Accordion.module.scss"
 
 type Props = {
   label: string
+  defaultIsActive?: boolean
   style?: CSS.Properties
   children: string | React.ReactNode
 }
 
-const Accordion: React.FC<Props> = ({ label, children, style }) => {
+const Accordion: React.FC<Props> = ({ label, defaultIsActive, children, style }) => {
   const contentRef = useRef() as React.MutableRefObject<HTMLDivElement>
-  const [isActive, setIsActive] = useState(false)
+  const [isActive, setIsActive] = useState(defaultIsActive || false)
   const [contentHeight, setContentHeight] = useState("0px")
 
   const contentClassNames = [classes.accordionContent]

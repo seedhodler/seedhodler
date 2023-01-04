@@ -21,8 +21,10 @@ const Layout: React.FC<Props> = ({ isOnline, setIsHelpModalActive }) => {
             <img src={Logo} alt="Seedhodler" className={classes.logo} />
           </Link>
           <p className={classes.subtitle}>
-            Seedhodler is free and open source software. This project is currently a{" "}
-            <b>work in progress</b> and should <b>not be used</b> by anyone for any reason whatsoever.
+            Seedhodler is a tool that uses Shamir's secret sharing to generate, split, and rejoin master
+            seeds for cryptocurrency wallets. By Splitting a master seed into shares and distributing
+            them on various safe locations we are removing a single point of failure in the crypto
+            toolchain by decentralizing it. Seedhodler is free and open source software.
           </p>
           <p className={classes.githubInfo}>
             In need of the source code?{" "}
@@ -56,7 +58,7 @@ const Layout: React.FC<Props> = ({ isOnline, setIsHelpModalActive }) => {
               Security Notice
             </p>
             <p className={classes.onlineMessage}>
-              You are currently online. This tool should only be used in an offline environment
+              You are currently online. This tool can only be considered safe in an offline environment
             </p>
           </div>
         )}
