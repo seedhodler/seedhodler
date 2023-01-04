@@ -15,6 +15,9 @@
   @include sm-d {
     font-size: 16px;
   }
+  @include lg-d {
+    font-size: 20px;
+  }
 }
 
 .tab {

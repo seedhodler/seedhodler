@@ -169,3 +169,11 @@
   font-weight: 600;
   margin-bottom: 1rem;
 }
+
+.whitespace {
+  height: 0;
+
+  @include md-d {
+    height: 300px;
+  }
+}

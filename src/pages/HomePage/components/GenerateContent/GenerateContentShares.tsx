@@ -43,6 +43,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
 }) => {
   const [isExportSaveModalActive, setIsExportSaveModalActive] = useState(false)
   const inputRefs = useInputRefs(+selectedWordCount)
+  const isSomeEmptyWord = mnemonic.some(word => word.length === 0)
 
   const onEnter = (index: number) => {
     if (index < +selectedWordCount - 1) {
@@ -82,7 +83,8 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
           />
         ))}
       </div>
-      {mnemonic.every(word => word.length !== 0) && (
+
+      {!isSomeEmptyWord ? (
         <>
           <BadgeTitle title="Split Phrase into shares" color={BadgeColorsEnum.SuccessLight} />
           <p className={classes.sharesInfo}>
@@ -153,6 +155,8 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
             Export / Save Shares
           </Button>
         </>
+      ) : (
+        <div className={classes.whitespace} />
       )}
       <ExportSaveModal
         isExportSaveModalActive={isExportSaveModalActive}

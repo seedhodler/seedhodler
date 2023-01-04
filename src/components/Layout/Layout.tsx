@@ -52,7 +52,9 @@ const Layout: React.FC<Props> = ({ isOnline, setIsHelpModalActive }) => {
       <div className={classes.mainContentContainer}>
         {isOnline && (
           <div className={classes.onlineNotification}>
-            <p className={classes.title}>Security Notice</p>
+            <p className={classes.title} style={{ marginBottom: 0, minWidth: "105px" }}>
+              Security Notice
+            </p>
             <p className={classes.onlineMessage}>
               You are currently online. This tool should only be used in an offline environment
             </p>

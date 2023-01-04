@@ -18,12 +18,19 @@
   justify-content: space-between;
 
   @include md-d {
-    display: none;
+    display: none !important;
+  }
+  @include lg-d {
+    width: 300px;
   }
 }
 
 .logo {
   margin-bottom: 3rem;
+
+  @include lg-d {
+    width: 200px;
+  }
 }
 
 .subtitle {
@@ -112,7 +119,10 @@
   margin-left: 400px;
 
   @include md-d {
-    margin-left: 0;
+    margin-left: 0 !important;
+  }
+  @include lg-d {
+    margin-left: 300px;
   }
 }
 
@@ -123,12 +133,14 @@
   border-top: 4px solid $colorError;
   background-color: $colorErrorOnlineBg;
   padding: 1rem;
+  gap: 1rem;
 }
 
 .onlineMessage {
   color: $colorError;
   font-size: 12px;
   font-weight: $fwNormal;
+  text-align: right;
 }
 
 .securityNotice {
