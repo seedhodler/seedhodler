@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.04ffbf17.css",
-    "main.js": "/static/js/main.6e995e95.js",
+    "main.css": "/static/css/main.9526bebb.css",
+    "main.js": "/static/js/main.0a61719e.js",
     "static/js/787.c7156b49.chunk.js": "/static/js/787.c7156b49.chunk.js",
     "static/media/Share24.pdf": "/static/media/Share24.4eaa01f2854ad55156e8.pdf",
     "static/media/Share12.pdf": "/static/media/Share12.3c6d586607a5914920ed.pdf",
@@ -14,7 +14,7 @@
     "static/media/Cards.svg": "/static/media/Cards.e59c21a7d024c7981dd3fbd6ecfcbf8b.svg",
     "static/media/Screenshot.svg": "/static/media/Screenshot.d82c6d9b15ae4cea8f30ab999e64ee48.svg",
     "static/media/GenerateWithBg.svg": "/static/media/GenerateWithBg.9116ad062d1e2623c499988062d5f15a.svg",
-    "static/media/Congrats.svg": "/static/media/Congrats.167f8f6fa90fbb9b4d372e642ac726f7.svg",
+    "static/media/Congrats.svg": "/static/media/Congrats.23905aed7113fac87bf8c4a1e06025e8.svg",
     "static/media/Numbers.svg": "/static/media/Numbers.e04fdb1cb63fae20b01c6dd6d674648a.svg",
     "static/media/ArrowDown.svg": "/static/media/ArrowDown.fa2b8bb9ec9f9c79b7ab80977a22df6b.svg",
     "static/media/Bin.svg": "/static/media/Bin.6ced00d4c6011a51142f993801432aa4.svg",
@@ -33,12 +33,12 @@
     "static/media/CheckmarkFilled.svg": "/static/media/CheckmarkFilled.65c1569c47f067fd63a2d32fb191f9aa.svg",
     "static/media/ArrowRight.svg": "/static/media/ArrowRight.615399309f7333075f9b3ac66fa0b66e.svg",
     "static/media/Remove.svg": "/static/media/Remove.d19b2eebb38b31bb2040daa1dc8fe65b.svg",
-    "main.04ffbf17.css.map": "/static/css/main.04ffbf17.css.map",
-    "main.6e995e95.js.map": "/static/js/main.6e995e95.js.map",
+    "main.9526bebb.css.map": "/static/css/main.9526bebb.css.map",
+    "main.0a61719e.js.map": "/static/js/main.0a61719e.js.map",
     "787.c7156b49.chunk.js.map": "/static/js/787.c7156b49.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.04ffbf17.css",
-    "static/js/main.6e995e95.js"
+    "static/css/main.9526bebb.css",
+    "static/js/main.0a61719e.js"
   ]
 }
