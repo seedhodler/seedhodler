@@ -55,8 +55,9 @@ $transAll: all 0.1s ease-in-out;
 $transColor: color 0.1s ease-in-out;
 $transModal: all 0.3s ease-in-out;
 
-/* breakpoint */
+/* breakpoints */
 $breakpoints: (
+  xs: 400px,
   sm: 640px,
   md: 768px,
   lg: 1024px,
@@ -80,6 +81,11 @@ $breakpoints: (
 }
 @mixin sm-d {
   @media (max-width: (map-get($breakpoints, sm) - 0.2px)) {
+    @content;
+  }
+}
+@mixin xs-d {
+  @media (max-width: (map-get($breakpoints, xs) - 0.2px)) {
     @content;
   }
 }
