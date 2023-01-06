@@ -20,7 +20,7 @@ const getBinaryFromCardEntropy = (entropyValue: string) => {
 export const getEntropyDetails = (entropyValue: string, minBits: number, entropyTypeId: number = 0) => {
   const regexVariants = {
     0: /[^0-1]/,
-    1: /[^aA2-9tTjJqQkKcCdDhHsS]|(?<=[cCdDhHsS])[cCdDhHsS]|(?<=[aA2-9tTjJqQkK])[aA2-9tTjJqQkK]/,
+    // 1: /[^aA2-9tTjJqQkKcCdDhHsS]|(?<=[cCdDhHsS])[cCdDhHsS]|(?<=[aA2-9tTjJqQkK])[aA2-9tTjJqQkK]/,
     2: /[^1-6]/,
     3: /[^0-9]/,
   }
