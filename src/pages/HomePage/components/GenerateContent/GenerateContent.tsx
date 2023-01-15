@@ -64,7 +64,7 @@ const GenerateContent: React.FC = () => {
         />
       ) : (
         <Button fullWidth style={{ marginBottom: "3.4rem" }} onClick={handleGeneratePhase}>
-          Generate Phrase
+          Generate Seed
         </Button>
       )}
       <GenerateContentShares
