@@ -31,8 +31,36 @@ export const GenerateContentAdvanced: React.FC<GenerateContentAdvancedProps> = (
   entropyTypeId,
   setEntropyTypeId,
 }) => {
-  const [mousePercentage, setMousePercentage] = useState(0)
-  const [isMouseCapture, setIsMouseCapture] = useState(false)
+  // const [mousePercentage, setMousePercentage] = useState(0)
+  // const [isMouseCapture, setIsMouseCapture] = useState(false)
+
+  // const onMouseMove = useCallback(
+  //   (e: MouseEvent) =>
+  //     getEntropyFromMouse(e, minBits, entropy, setIsMouseCapture, setEntropyValue, setMousePercentage),
+  //   [minBits, setEntropyValue],
+  // )
+  // useEffect(() => {
+  //   if (!isMouseCapture) {
+  //     document.removeEventListener("mousemove", onMouseMove)
+  //   }
+  // }, [isMouseCapture, onMouseMove])
+
+  // const handleMouseEntropy = () => {
+  //   setEntropyTypeId(0)
+  //   setMousePercentage(0)
+
+  //   if (!isMouseCapture) {
+  //     setIsMouseCapture(true)
+  //     document.addEventListener("mousemove", onMouseMove)
+  //     if (entropy.length >= minBits) {
+  //       entropy.length = 0
+  //       setEntropyValue("")
+  //     }
+  //   } else {
+  //     setIsMouseCapture(false)
+  //     document.removeEventListener("mousemove", onMouseMove)
+  //   }
+  // }
 
   const handleEntropyChange = (id: number) => {
     setEntropyValue("")
@@ -46,34 +74,6 @@ export const GenerateContentAdvanced: React.FC<GenerateContentAdvancedProps> = (
   )
   const isEntropyTooShort = selectedEntropyDetails.totalBits < minBits
 
-  const onMouseMove = useCallback(
-    (e: MouseEvent) =>
-      getEntropyFromMouse(e, minBits, entropy, setIsMouseCapture, setEntropyValue, setMousePercentage),
-    [minBits, setEntropyValue],
-  )
-  useEffect(() => {
-    if (!isMouseCapture) {
-      document.removeEventListener("mousemove", onMouseMove)
-    }
-  }, [isMouseCapture, onMouseMove])
-
-  const handleMouseEntropy = () => {
-    setEntropyTypeId(0)
-    setMousePercentage(0)
-
-    if (!isMouseCapture) {
-      setIsMouseCapture(true)
-      document.addEventListener("mousemove", onMouseMove)
-      if (entropy.length >= minBits) {
-        entropy.length = 0
-        setEntropyValue("")
-      }
-    } else {
-      setIsMouseCapture(false)
-      document.removeEventListener("mousemove", onMouseMove)
-    }
-  }
-
   return (
     <>
       <BadgeTitle title="Entropy Generation" style={{ marginBottom: "2.6rem" }} />
@@ -85,18 +85,18 @@ export const GenerateContentAdvanced: React.FC<GenerateContentAdvancedProps> = (
           />
           <div className={classes.entropyOptionsContainer}>
             <EntropyValueType
-              title="Coin Flip"
-              subtitle="[0,1]"
+              title="HEX"
+              subtitle="[0-9A-F]"
               isActive={entropyTypeId === 0}
               onClick={() => handleEntropyChange(0)}
-              icon={CoinIcon}
+              icon={CardsIcon}
             />
             <EntropyValueType
-              title="Card"
-              subtitle="[A2-9TJQK][CDHS]"
+              title="Coin Flip"
+              subtitle="[0,1]"
               isActive={entropyTypeId === 1}
               onClick={() => handleEntropyChange(1)}
-              icon={CardsIcon}
+              icon={CoinIcon}
             />
             <EntropyValueType
               title="Dice"
@@ -125,7 +125,7 @@ export const GenerateContentAdvanced: React.FC<GenerateContentAdvancedProps> = (
         <InfoTitle
           title="Manual - Enter your own entropy"
           // eslint-disable-next-line max-len
-          desc="Use this text input field to manually enter your entropy. seedhodler will only generate your master seed upon having entered a sufficient amount of data. this is shown in the small text field on the right side."
+          desc="Use this text input field to manually enter your entropy. Seedhodler will only generate your master seed upon having entered a sufficient amount of data. This is shown in the small text field on the right side."
         />
         <div
           className={classes.validation}
