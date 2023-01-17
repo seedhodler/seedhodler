@@ -3,7 +3,6 @@ import React, { useContext } from "react"
 import CheckmarkIcon from "assets/icons/CheckmarkFilledLight.svg"
 import { BadgeTitle } from "components/BadgeTitle"
 import { Select } from "components/Select"
-import { InfoTitle } from "components/InfoTitle"
 import { Input } from "components/Input"
 import { Button } from "components/Button"
 import { TextPlace } from "components/TextPlace"
@@ -157,7 +156,7 @@ const RestoreContent: React.FC = () => {
       )}
       <div className={classes.headerContainer} style={{ marginBottom: "3.6rem" }}>
         <BadgeTitle
-          title="Recovered Phrase"
+          title="Recovered Seed"
           color={BadgeColorsEnum.SuccessLight}
           style={{ marginBottom: 0 }}
         />

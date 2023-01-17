@@ -37,7 +37,7 @@ const Accordion: React.FC<Props> = ({ label, defaultIsActive, children, style })
         className={contentClassNames.join(" ")}
         style={{ height: isActive ? contentHeight : "0px" }}
       >
-        <p>{children}</p>
+        <div>{children}</div>
       </div>
     </div>
   )
