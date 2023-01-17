@@ -35,7 +35,7 @@ export const GenerateContentSettings: React.FC<GenerateContentSettingsProps> = (
 
   return (
     <>
-      <BadgeTitle title="Phrase" additionalInfo="BIP 39" color={BadgeColorsEnum.SuccessLight} />
+      <BadgeTitle title="Seed Type" additionalInfo="BIP 39" color={BadgeColorsEnum.SuccessLight} />
       <div className={classes.configContainer}>
         <div>
           <p className={classes.title}>Language</p>
