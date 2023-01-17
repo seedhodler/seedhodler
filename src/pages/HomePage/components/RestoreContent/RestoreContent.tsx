@@ -63,7 +63,7 @@ const RestoreContent: React.FC = () => {
     <>
       <div className={classes.headerContainer} style={{ marginBottom: "3.6rem" }}>
         <BadgeTitle
-          title="Input Phrases"
+          title="Enter Shamir Splits"
           color={BadgeColorsEnum.MainLight}
           additionalInfo="BIP 39"
           style={{ marginBottom: 0 }}
