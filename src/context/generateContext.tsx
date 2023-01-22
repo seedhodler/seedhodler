@@ -98,7 +98,7 @@ export const GenerateContextProvider: React.FC<ProviderProps> = ({ children }) =
   const [isValidMnemonic, setIsValidMnemonic] = useState(true)
 
   const { selectedEntropyAsBinary } = getEntropyDetails(entropyValue, minBits, entropyTypeId)
-  const entropyToPass = selectedEntropyAsBinary.slice(0, minBits)
+  const entropyToPass = selectedEntropyAsBinary.slice(-minBits)
 
   const handleGeneratePhase = () => {
     if (is12words) {
