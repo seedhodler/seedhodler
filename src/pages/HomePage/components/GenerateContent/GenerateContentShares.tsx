@@ -152,7 +152,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
             fullWidth
             color={ButtonColorsEnum.Success}
           >
-            Export / Save Shares
+            Print and verify
           </Button>
         </>
       ) : null

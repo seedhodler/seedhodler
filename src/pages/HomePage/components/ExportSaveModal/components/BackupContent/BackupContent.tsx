@@ -54,7 +54,7 @@ const BackupContent: React.FC<Props> = ({
     <div className={classes.modalContentContainer}>
       <div style={{ width: "100%" }}>
         <p className={classes.description} ref={descRef}>
-          Please carefully write down this phrase. <b>Keep it in a safe place!</b>
+          Time to write down the seed splits. We will verify them later.
         </p>
         <ShareHeader text={`Share - ${shareId + 1}`} style={{ marginBottom: "1.2rem" }} />
         <div className={classes.blockDivider}></div>
