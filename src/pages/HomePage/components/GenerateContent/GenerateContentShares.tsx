@@ -86,7 +86,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
 
       {!isSomeEmptyWord ? (
         <>
-          <BadgeTitle title="Split Master Seed into shares" color={BadgeColorsEnum.SuccessLight} />
+          <BadgeTitle title="Split Seed into shares" color={BadgeColorsEnum.SuccessLight} />
           <p className={classes.sharesInfo}>
             The generated Master Seed can now be split into up to 16 different Split Shares. These can then be
             combined to restore your Master Seed
