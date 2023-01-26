@@ -86,16 +86,16 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
 
       {!isSomeEmptyWord ? (
         <>
-          <BadgeTitle title="Split Phrase into shares" color={BadgeColorsEnum.SuccessLight} />
+          <BadgeTitle title="Split Master Seed into shares" color={BadgeColorsEnum.SuccessLight} />
           <p className={classes.sharesInfo}>
-            The generated Phrase can now be split into up to 6 different shares. These can then be
-            combined to restore your Phrase
+            The generated Master Seed can now be split into up to 16 different Split Shares. These can then be
+            combined to restore your Master Seed
           </p>
           <div className={classes.thresholdSharesContainer}>
             <div className={classes.calcContainer}>
               <InfoTitle
                 title="Threshold"
-                desc="How many shares are needed to regenerate the original master seed"
+                desc="How many of the split shares should be required the original Master Seed"
                 className={classes.calcTitle}
               />
               <Calc
@@ -115,7 +115,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
             <div className={classes.calcContainer}>
               <InfoTitle
                 title="Shares"
-                desc="How many of your shares to generate in total"
+                desc="How many of your split shares to generate in total"
                 className={classes.calcTitle}
               />
               <Calc
