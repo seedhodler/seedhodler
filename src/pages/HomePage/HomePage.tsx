@@ -110,14 +110,14 @@ const HomePage: React.FC = () => {
       <div className={classes.tabsContainer}>
         <Tab
           title="Generate"
-          desc="Generate Seedhodler shares by splitting an existing master seed"
+          desc="Generate a BIP39 Master Seed and split it into shares"
           icon={GenerateIcon}
           active={activeTabId === 0}
           onClick={() => setActiveTabId(0)}
         />
         <Tab
           title="Restore"
-          desc="Combine enough Seedhodler shares to retrieve your master seed"
+          desc="Combine enough shares to retrieve your Master Seed"
           icon={RestoreIcon}
           active={activeTabId === 1}
           onClick={() => setActiveTabId(1)}
