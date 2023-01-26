@@ -57,9 +57,7 @@ export const GenerateContentSettings: React.FC<GenerateContentSettingsProps> = (
       <div className={classes.configContainer}>
         <div
           className={classes.configLabelContainer}
-          title={`None of these advanced functions are necessary for successful generating and
-splitting your seed phrase. when used incorrectly these advanced functions may lead to
-generating of unsafe seeds that can be (and will be) guessed easily. Be careful!`}
+          title={`Don't trust the randsomness of a computer? You can enter your own entropy here.`}
         >
           <p>
             Advanced Toolset - <span className={classes.entropyGeneration}>Entropy Generation</span>

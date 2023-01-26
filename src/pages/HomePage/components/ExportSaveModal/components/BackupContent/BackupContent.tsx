@@ -80,7 +80,7 @@ const BackupContent: React.FC<Props> = ({
         </p>
         {!isNotLastShare && (
           <p className={classes.additionalInfo} style={{ marginBottom: "2.4rem" }}>
-            We will confirm your written recovery phrase on the next screen.
+            We will confirm your written recovery seed splits on the next screen.
           </p>
         )}
         <div className={classes.blockDivider} style={{ marginBottom: "2.4rem" }}></div>

@@ -78,7 +78,7 @@ const RestoreContent: React.FC = () => {
         </div>
       </div>
       <div className={classes.headerContainer} style={{ marginBottom: "1.2rem" }}>
-        <p className={classes.title}>BIP39 Seed Phrase</p>
+        <p className={classes.title}>BIP39 Master Seed</p>
         {currentShare.every(word => word.length !== 0) && (
           <div
             className={classes.validation}
@@ -156,7 +156,7 @@ const RestoreContent: React.FC = () => {
       )}
       <div className={classes.headerContainer} style={{ marginBottom: "3.6rem" }}>
         <BadgeTitle
-          title="Recovered Seed"
+          title="Recovered Master Seed"
           color={BadgeColorsEnum.SuccessLight}
           style={{ marginBottom: 0 }}
         />

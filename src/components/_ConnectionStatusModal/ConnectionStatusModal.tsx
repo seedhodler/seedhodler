@@ -53,8 +53,8 @@ const ConnectionStatusModal: React.FC<Props> = ({
           {isFirstStep ? (
             <>
               <p className={classes.description}>
-                Now we are going to take you through the process of generating your Seed recovery
-                phrases. Your Seedhodler recovery phrase is either a 12 or 24-word phrase that will be
+                Now we are going to take you through the process of generating your Master Seed.
+                Your Master Seed is either a 12 or 24-word phrase that will be
                 used to restore your assets whenever necessary.
               </p>
               <p className={classes.checkmarksTitle}>You will need:</p>

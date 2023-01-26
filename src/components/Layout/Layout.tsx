@@ -37,11 +37,11 @@ const Layout: React.FC<Props> = ({ isOnline, setIsHelpModalActive }) => {
               GitHub
             </a>
           </p>
-          <CheckmarkInfo isCheckmark={false}>Easily Generate your seed recovery phrase</CheckmarkInfo>
-          <CheckmarkInfo isCheckmark={false}>Restore your recovery phrase</CheckmarkInfo>
-          <CheckmarkInfo isCheckmark={false}>Edit your key Entropy</CheckmarkInfo>
-          <CheckmarkInfo isCheckmark={false}>Secure when used Offline</CheckmarkInfo>
-          <CheckmarkInfo isCheckmark={false}>Split phrases and share with others</CheckmarkInfo>
+          <CheckmarkInfo isCheckmark={false}>Generate your own BIP39 Master Seed</CheckmarkInfo>
+          <CheckmarkInfo isCheckmark={false}>Manually enter your own entropy</CheckmarkInfo>
+          <CheckmarkInfo isCheckmark={false}>Split your master seed using SSS</CheckmarkInfo>
+          <CheckmarkInfo isCheckmark={false}>Print templates and fill split words</CheckmarkInfo>
+          <CheckmarkInfo isCheckmark={false}>Restore your master seed</CheckmarkInfo>
         </div>
         <div className={classes.helpButtonContainer}>
           <button onClick={() => setIsHelpModalActive(prev => !prev)} className={classes.helpButton}>

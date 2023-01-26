@@ -142,7 +142,7 @@ const VerificationContent: React.FC<Props> = ({
       <div style={{ width: "100%" }}>
         <div className={classes.descriptionContainer}>
           <p ref={descRef} className={classes.description}>
-            Lets verify your recovery phrase.
+            Lets verify your recovery seed splits.
           </p>
           <p className={classes.shareNumberInfo}>
             {currentShareId + 1} / {sharesNumber} Shares

@@ -59,7 +59,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
 
   return (
     <>
-      <p className={classes.title}>BIP39 Seed Phrase</p>
+      <p className={classes.title}>BIP39 Master Seed</p>
       <div
         className={classes.seedPhraseContainer}
         style={{ height: selectedWordCount === "12" ? "360px" : "720px" }}
