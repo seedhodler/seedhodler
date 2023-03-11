@@ -1,6 +1,14 @@
+import React, { Dispatch, SetStateAction } from "react"
+
 import classes from "./NavFeaturedCard.module.scss"
+
 import closeIcon from "assets/icons/CloseIcon.svg"
-const NavFeaturedCard: React.FC = () => {
+
+type Props = {
+  setIsActive: Dispatch<SetStateAction<boolean>>
+}
+
+const NavFeaturedCard: React.FC<Props> = ({ setIsActive }) => {
   const handleHelpButton = () => {}
   const handleMoreInfoButton = () => {}
 
@@ -12,7 +20,12 @@ const NavFeaturedCard: React.FC = () => {
 
           <div className={classes.buttonClose}>
             <div className={classes.xClose}>
-              <img src={closeIcon} className={classes.closeIcon} alt="closeIcon" />
+              <img
+                src={closeIcon}
+                className={classes.closeIcon}
+                alt="closeIcon"
+                onClick={() => setIsActive(false)}
+              />
             </div>
           </div>
         </div>

@@ -10,6 +10,7 @@ const App: React.FC = () => {
   const [isNotification, setIsNotification] = useState(false)
   const [isOnline, setIsOnline] = useState(window.navigator.onLine)
   const [isHelpModalActive, setIsHelpModalActive] = useState(false)
+  const [isNavFeaturedCardOpen, setIsNavFeaturedCardOpen] = useState(true)
 
   useEffect(() => {
     const onOnline = () => setIsOnline(true)
@@ -37,7 +38,12 @@ const App: React.FC = () => {
         <>
           <HelpModal isActive={isHelpModalActive} setIsActive={setIsHelpModalActive} />
           <Notification isActive={isNotification} setIsActive={setIsNotification} />
-          <Routes isOnline={isOnline} setIsHelpModalActive={setIsHelpModalActive} />
+          <Routes
+            isOnline={isOnline}
+            setIsHelpModalActive={setIsHelpModalActive}
+            isActive={isNavFeaturedCardOpen}
+            setIsActive={setIsNavFeaturedCardOpen}
+          />{" "}
         </>
       </RestoreContextProvider>
     </GenerateContextProvider>
