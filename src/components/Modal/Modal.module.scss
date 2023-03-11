@@ -28,6 +28,18 @@
   pointer-events: all;
 }
 
+.backdropSuccesActive {
+  @extend %backdropBase;
+  background-color: #78bb5857;
+  opacity: 1;
+  pointer-events: all;
+}
+
+.backdropSucces {
+  @extend %backdropBase;
+  background-color: #78bb5857;
+}
+
 %modalBase {
   display: flex;
   flex-direction: column;
