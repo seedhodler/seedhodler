@@ -6,6 +6,7 @@
   line-height: 28px;
   color: $colorBg700;
   height: 100%;
+  overflow: hidden;
 }
 
 .divider {
@@ -71,7 +72,7 @@
 
 .horizontalTabs {
   width: 100%;
-  height: 44px;
+  height: 60px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -90,6 +91,9 @@
   flex-grow: 0;
 
   margin-bottom: 20px;
+
+  overflow-x: visible;
+  overflow-y: hidden;
 }
 
 .tab {
@@ -175,4 +179,15 @@
   order: 0;
   align-self: stretch;
   flex-grow: 0;
+}
+
+/* width */
+::-webkit-scrollbar {
+  height: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #d4d4d4;
+  border-radius: 10px;
 }
