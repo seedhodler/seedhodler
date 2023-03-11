@@ -6,6 +6,7 @@ import Logo from "assets/icons/Logo.svg"
 import { CheckmarkInfo } from "components/CheckmarkInfo"
 
 import classes from "./Layout.module.scss"
+import { NavFeaturedCard } from "components/_NavFeaturedCard"
 
 type Props = {
   isOnline: boolean
@@ -43,11 +44,14 @@ const Layout: React.FC<Props> = ({ isOnline, setIsHelpModalActive }) => {
           <CheckmarkInfo isCheckmark={false}>Print templates and fill split words</CheckmarkInfo>
           <CheckmarkInfo isCheckmark={false}>Restore your master seed</CheckmarkInfo>
         </div>
-        <div className={classes.helpButtonContainer}>
-          <button onClick={() => setIsHelpModalActive(prev => !prev)} className={classes.helpButton}>
-            <QuestionMarkIcon />
-            Help & getting started
-          </button>
+        <div className={classes.navContentBottom}>
+          <NavFeaturedCard />
+          <div className={classes.helpButtonContainer}>
+            <button onClick={() => setIsHelpModalActive(prev => !prev)} className={classes.helpButton}>
+              <QuestionMarkIcon />
+              Help & getting started
+            </button>
+          </div>
         </div>
       </nav>
 

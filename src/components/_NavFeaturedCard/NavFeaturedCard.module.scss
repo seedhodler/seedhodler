@@ -1,0 +1,300 @@
+@import "styles/Variables.module.scss";
+
+.mainContainer {
+  /* _Nav featured card */
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px 16px;
+  gap: 16px;
+  margin: 0 0 1rem 0;
+  width: 95%;
+
+  /* Primary/600 */
+  background: #7f56d9;
+  border-radius: 8px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 4;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.mainContentContainer {
+  /* Text and supporting text */
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 4px;
+  position: relative;
+
+  width: 95%;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.titleWrap {
+  /* Text wrap */
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px 24px 0px 0px;
+  gap: 4px;
+  isolation: isolate;
+
+  width: 100%;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.title {
+  /* Text */
+
+  width: auto;
+  height: 20px;
+
+  /* Text sm/Semibold */
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  /* identical to box height, or 143% */
+
+  /* Base/White */
+  color: #ffffff;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 1;
+  z-index: 0;
+}
+
+.buttonClose {
+  /* Button close X */
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  right: -8px;
+  top: -12px;
+
+  border-radius: 8px;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  z-index: 1;
+}
+.xClose {
+  /* x-close */
+
+  width: 36px;
+  height: 36px;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.closeIcon {
+  /* Icon */
+  width: 100%;
+  /* Base/White */
+  // border: 1.66667px solid #ffffff;
+}
+
+.supportingText {
+  /* Supporting text */
+  width: 100%;
+
+  /* Text sm/Regular */
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  /* or 143% */
+
+  /* Primary/200 */
+  color: #e9d7fe;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.helpProgressBar {
+  /* Help - Progress bar */
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 12px;
+
+  width: 100%;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+}
+.progressBar {
+  /* Progress bar */
+
+  width: 100%;
+  height: 8px;
+
+  border-radius: 8px;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 1;
+}
+.progress {
+  /* Progress */
+
+  position: relative;
+  height: 8px;
+  width: 83.37%;
+
+  /* Primary/100 */
+
+  background: #f4ebff;
+  border-radius: 4px;
+}
+.progressBackground {
+  /* Background */
+
+  position: relative;
+  height: 8px;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+
+  /* Primary/500 */
+
+  background: #9e77ed;
+  border-radius: 4px;
+}
+
+.actions {
+  /* Actions */
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 12px;
+
+  width: 108px;
+  height: 20px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 2;
+  flex-grow: 0;
+}
+.buttonContainer {
+  /* _Nav featured card button */
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 8px;
+
+  width: 32px;
+  height: 20px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.helpButton {
+  /* Text */
+
+  width: 32px;
+  height: 20px;
+
+  /* Text sm/Semibold */
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  /* identical to box height, or 143% */
+
+  /* Primary/200 */
+  color: #e9d7fe;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+.moreInfoButton {
+  /* Text */
+
+  width: 64px;
+  height: 20px;
+
+  /* Text sm/Semibold */
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  /* identical to box height, or 143% */
+
+  /* Base/White */
+  color: #ffffff;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
