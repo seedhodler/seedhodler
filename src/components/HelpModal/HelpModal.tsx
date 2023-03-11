@@ -1,7 +1,6 @@
 import React, { useState, Dispatch, SetStateAction } from "react"
 
 import { Modal } from "components/Modal"
-import { Accordion } from "components/Accordion"
 import { Button } from "components/Button"
 import { BadgeColorsEnum } from "constants/"
 
@@ -32,37 +31,37 @@ const HelpModal: React.FC<Props> = ({ isActive, setIsActive }) => {
 
         <div className={classes.horizontalTabs}>
           <div
-            className={toggleTab === 1 ? `${classes.tab} ${classes.activeTab}` : `${classes.tab}`}
+            className={toggleTab === 1 ? `${classes.tab} ${classes.activeTab}` : classes.tab}
             onClick={() => activateTab(1)}
           >
             Introduction
           </div>
           <div
-            className={toggleTab === 2 ? `${classes.tab} ${classes.activeTab}` : `${classes.tab}`}
+            className={toggleTab === 2 ? `${classes.tab} ${classes.activeTab}` : classes.tab}
             onClick={() => activateTab(2)}
           >
             Generating
           </div>
           <div
-            className={toggleTab === 3 ? `${classes.tab} ${classes.activeTab}` : `${classes.tab}`}
+            className={toggleTab === 3 ? `${classes.tab} ${classes.activeTab}` : classes.tab}
             onClick={() => activateTab(3)}
           >
             Reconstructing
           </div>
           <div
-            className={toggleTab === 4 ? `${classes.tab} ${classes.activeTab}` : `${classes.tab}`}
+            className={toggleTab === 4 ? `${classes.tab} ${classes.activeTab}` : classes.tab}
             onClick={() => activateTab(4)}
           >
             Tips and Best Practices
           </div>
           <div
-            className={toggleTab === 5 ? `${classes.tab} ${classes.activeTab}` : `${classes.tab}`}
+            className={toggleTab === 5 ? `${classes.tab} ${classes.activeTab}` : classes.tab}
             onClick={() => activateTab(5)}
           >
             About
           </div>
           <div
-            className={toggleTab === 6 ? `${classes.tab} ${classes.activeTab}` : `${classes.tab}`}
+            className={toggleTab === 6 ? `${classes.tab} ${classes.activeTab}` : classes.tab}
             onClick={() => activateTab(6)}
           >
             Legal
