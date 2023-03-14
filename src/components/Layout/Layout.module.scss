@@ -72,6 +72,10 @@
   padding: 2.4rem 2.2rem 0 3.2rem;
 }
 
+.navContentBottom {
+  padding: 2.4rem 2.2rem 0 3.2rem;
+}
+
 .helpButtonContainer {
   position: relative;
 }
@@ -126,7 +130,7 @@
   }
 }
 
-.onlineNotification {
+%notification {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -136,11 +140,30 @@
   gap: 1rem;
 }
 
-.onlineMessage {
+%message {
   color: $colorError;
   font-size: 12px;
   font-weight: $fwNormal;
   text-align: right;
+}
+
+.onlineNotification {
+  @extend %notification;
+}
+
+.onlineMassage {
+  @extend %message;
+}
+.offlineNotification {
+  @extend %notification;
+  border-top: 4px solid $colorSuccess;
+  background-color: $colorSuccessLight;
+  justify-content: flex-end;
+}
+
+.offlineMassage {
+  @extend %message;
+  color: $colorSuccess;
 }
 
 .securityNotice {

@@ -13,7 +13,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const onOnline = () => setIsOnline(true)
-    const onOffline = () => setIsOnline(true)
+    const onOffline = () => setIsOnline(false)
     const handlePrintScreenClick = (e: KeyboardEvent) => {
       if (e.code === "PrintScreen") {
         setIsNotification(true)

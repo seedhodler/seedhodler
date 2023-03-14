@@ -56,10 +56,10 @@ const PrintContent: React.FC<Props> = ({
           className={classes.textPlacesContainer}
           style={{ height: selectedWordCount === 12 ? "360px" : "680px" }}
         >
-          {mnemonic.map((_, index) => (
+          {mnemonic.map((word, index) => (
             <TextPlace
               key={index}
-              text=""
+              text={word}
               count={index + 1}
               style={{
                 width: "48%",
