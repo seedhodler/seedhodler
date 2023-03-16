@@ -16,21 +16,16 @@ type Props = {
   selectedWordCount: number
   mnemonic: string[]
   setCurrentStep: Dispatch<SetStateAction<number>>
-  sharesNumber: number
+  shares: string[]
 }
 
-const PrintContent: React.FC<Props> = ({
-  selectedWordCount,
-  mnemonic,
-  setCurrentStep,
-  sharesNumber,
-}) => {
+const PrintContent: React.FC<Props> = ({ selectedWordCount, mnemonic, setCurrentStep, shares }) => {
   const [isCreatingPdf, setIsCreatingPdf] = useState(false)
 
   const handlePrint = async () => {
     setIsCreatingPdf(true)
     const blob = await pdf(
-      <PDFTemplate selectedWordCount={selectedWordCount} mnemonic={mnemonic} />,
+      <PDFTemplate selectedWordCount={selectedWordCount} mnemonic={mnemonic} shares={shares} />,
     ).toBlob()
 
     const fileUrl = URL.createObjectURL(blob)
