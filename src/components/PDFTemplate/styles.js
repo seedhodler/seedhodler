@@ -1,0 +1,148 @@
+import { StyleSheet } from "@react-pdf/renderer"
+
+export const headStyles = StyleSheet.create({
+  pdfPage: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  contentContainer: {
+    padding: "25px 40px",
+    margin: "6px 10px",
+    paddingBottom: "24px",
+    border: "2px dashed #2d3748",
+    borderRadius: "10px",
+  },
+  contentHead: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "28px",
+    flexDirection: "row",
+  },
+  empty: {
+    width: "60px",
+  },
+  logo: {
+    width: "200px",
+    margin: "0 auto",
+  },
+  additionalInfo: {
+    fontSize: "14px",
+    padding: "3.2px 12.8px",
+    backgroundColor: "#b5e4ca",
+    borderRadius: "6px",
+  },
+  innerDescription: {
+    fontWeight: 400,
+    fontSize: "20px",
+    textAlign: "center",
+    color: "#1a1d1f",
+    marginBottom: "88px",
+  },
+  textPlacesContainer: {
+    display: "flex",
+    flexDirection: "column",
+    flexWrap: "wrap",
+    marginBottom: "10px",
+  },
+  textContent: {
+    position: "relative",
+    display: "flex",
+    justifyContent: "flex-start",
+    flexDirection: "row",
+    backgroundColor: "#f4f4f4",
+    border: "1px dashed #cdcdcd",
+    borderRadius: "12px",
+    padding: "7.2px 7.2px 7.2px 3px",
+    margin: "0 10px",
+    marginBottom: "19.2px",
+    width: "46%",
+  },
+  idexContent: {
+    width: "30px",
+    display: "flex",
+    alignItems: "center",
+    color: "#6f767e",
+    marginRight: "5px",
+  },
+  finalInnerDescription: {
+    fontWeight: 400,
+    fontSize: "20px",
+    textAlign: "center",
+    color: "#1a1d1f",
+    marginBottom: "15px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+})
+
+export const shareStyles = StyleSheet.create({
+  body: {
+    padding: "40px",
+    margin: "10px",
+    paddingBottom: "24px",
+    borderRadius: "10px",
+    marginBottom: "8px",
+  },
+  container: {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  box: {
+    width: "100%",
+  },
+  header: {
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: "15px",
+    gap: "15px",
+  },
+  numberContainer: {
+    width: "18px",
+    height: "18px",
+    borderRadius: "50%",
+    backgroundColor: "#5c58bb",
+  },
+  numberHeader: {
+    fontWeight: 600,
+    fontSize: "20px",
+    color: "#1a1d1f",
+  },
+  blockDivider: {
+    height: "1px",
+    backgroundColor: "#efefef",
+    marginBottom: "15px",
+  },
+  itemsContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    marginBottom: "15px",
+  },
+  itemsColumn: {
+    position: "relative",
+    display: "flex",
+    justifyContent: "flex-start",
+    flexDirection: "row",
+    backgroundColor: "#f4f4f4",
+    border: "1px dashed #cdcdcd",
+    borderRadius: "12px",
+    padding: "7.2px 7.2px 7.2px 3px",
+    margin: "0 10px",
+    marginBottom: "25px",
+    width: "46%",
+  },
+  itemsInfo: {
+    width: "30px",
+    display: "flex",
+    alignItems: "center",
+    color: "#6f767e",
+    marginRight: "5px",
+  },
+})
