@@ -16,9 +16,9 @@ const CompleteScreen: React.FC<Props> = ({ setIsExportSaveModalActive }) => {
       <div className={classes.iconBox}>
         <img src={CompleteIcon} alt="Seedhodler Icon" className={classes.icon} />
       </div>
-      <div style={{ width: "100%" }}>
+      <div className={classes.contentBox}>
         <div className={classes.contentContainer}>
-          <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+          <div className={classes.headImage}>
             <img src={CompleteImage} alt="Congratulations" className={classes.imageBox} />
           </div>
           <div className={classes.title}>
@@ -28,7 +28,7 @@ const CompleteScreen: React.FC<Props> = ({ setIsExportSaveModalActive }) => {
               scelerisque sed a nulla. Tortor consequat.
             </p>
           </div>
-          <div className={classes.info}>
+          {/* <div className={classes.info}>
             <div className={classes.infoBox}>
               <div className={classes.links}>
                 <p className={classes.link}>Clear Cache / Potential Risks, Links</p>
@@ -40,8 +40,21 @@ const CompleteScreen: React.FC<Props> = ({ setIsExportSaveModalActive }) => {
               vitae, id malesuada accumsan. Morbi in quisque ligula natoque faucibus. Volutpat orci,
               scelerisque sed a nulla. Tortor consequat.
             </p>
+          </div> */}
+          <div className={classes.infoContainer}>
+            <div className={classes.infoBox}>
+              <div className={classes.textContainer}>
+                <p className={classes.titleText}>Clear Cache / Potential Risks, Links</p>
+              </div>
+              <hr className={classes.dividerLine} />
+            </div>
+            <p className={classes.description}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mollis donec gravida commodo
+              vitae, id malesuada accumsan. Morbi in quisque ligula natoque faucibus. Volutpat orci,
+              scelerisque sed a nulla. Tortor consequat.
+            </p>
           </div>
-          <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+          <div className={classes.buttonBox}>
             <Button
               style={{ background: "#73b355", order: 3 }}
               onClick={() => setIsExportSaveModalActive(false)}

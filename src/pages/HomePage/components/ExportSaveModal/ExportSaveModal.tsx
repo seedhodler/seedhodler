@@ -7,6 +7,7 @@ import { getOptions, getUniqueArr } from "helpers"
 import { PrintContent } from "./components/PrintContent"
 import { VerificationContent } from "./components/VerificationContent"
 import { BackupContent } from "./components/BackupContent"
+//TODO remove component in future if its not nessesary
 // import { SuccessContent } from "./components/SuccessContent"
 import { CompleteScreen } from "./components/CompleteScreen"
 
@@ -108,6 +109,8 @@ const ExportSaveModal: React.FC<Props> = ({
       title: "Congratulations",
       isSuccess: true,
       badgeColor: BadgeColorsEnum.Success,
+      // TODO uncomment if SuccessContent component used
+      // Component: <SuccessContent setIsExportSaveModalActive={setIsExportSaveModalActive} />,
       Component: <CompleteScreen setIsExportSaveModalActive={setIsExportSaveModalActive} />,
     },
   }

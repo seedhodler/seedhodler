@@ -1,23 +1,13 @@
 @import "styles/Variables.module.scss";
 
 .icon {
-  /* Group 17 */
-
   width: 56.69px;
   height: 98.25px;
-
   transform: matrix(-1, 0, 0, 1, 0, 0);
-
-  /* Inside auto layout */
 }
 
 .iconBox {
-  /* Frame 3574 */
-
   box-sizing: border-box;
-
-  /* Auto layout */
-
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -34,12 +24,7 @@
   background: linear-gradient(146.78deg, rgba(255, 255, 255, 0) 15.38%, rgba(255, 255, 255, 0.4) 92.12%);
   filter: drop-shadow(0px 72px 110px rgba(2, 2, 33, 0.12));
   backdrop-filter: blur(16.2063px);
-  /* Note: backdrop-filter has minimal browser support */
-
   border-radius: 44.27px;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 2;
   flex-grow: 0;
@@ -54,15 +39,10 @@
 }
 
 .contentContainer {
-  /* Frame 429 */
-
-  /* Auto layout */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 24px;
-
-  /* Inside auto layout */
 }
 
 .imageBox {
@@ -73,10 +53,6 @@
 }
 
 .title {
-  /* faq toggle */
-
-  /* Auto layout */
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -88,30 +64,16 @@
 
 .description {
   width: 100%;
-
-  /* Body 1 (Medium) */
-
   font-family: "Inter";
   font-style: normal;
   font-weight: 500;
   font-size: 15px;
   line-height: 24px;
-  /* or 160% */
-
   letter-spacing: -0.015em;
-
-  /* Neutral/04 */
-
   color: #6f767e;
-
-  /* Inside auto layout */
 }
 
-.info {
-  /* faq toggle */
-
-  /* Auto layout */
-
+.infoContainer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -122,10 +84,6 @@
 }
 
 .infoBox {
-  /* Frame 461 */
-
-  /* Auto layout */
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -135,11 +93,7 @@
   width: 100%;
 }
 
-.links {
-  /* Frame 460 */
-
-  /* Auto layout */
-
+.textContainer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -150,44 +104,50 @@
   max-width: 600px;
 }
 
-.link {
+.titleText {
   width: 100%;
-
-  /* Base 1 (Semibold) */
-
   font-family: "Inter";
   font-style: normal;
   font-weight: 600;
   font-size: 15px;
   line-height: 24px;
-  /* identical to box height, or 160% */
-
   letter-spacing: -0.01em;
-
-  /* Gray/700 */
-
   color: #344054;
 }
 
-.divider {
-  /* Divider */
-
+.dividerLine {
   width: 100%;
   height: 1px;
-
-  /* Gray/500 */
-
   background: #667085;
   border-radius: 1px;
 }
 
-/* width */
+.buttonBox {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.button {
+  background: "#73b355";
+  order: 3;
+}
+
+.contentBox {
+  width: 100%;
+}
+
+.headImage {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 ::-webkit-scrollbar {
   height: 10px;
   width: 1rem;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #d4d4d4;
   border-radius: 10px;
