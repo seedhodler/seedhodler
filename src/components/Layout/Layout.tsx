@@ -58,7 +58,7 @@ const Layout: React.FC<Props> = ({ isOnline, setIsHelpModalActive, isActive, set
       </nav>
 
       <div className={classes.mainContentContainer}>
-        {isOnline && (
+        {isOnline ? (
           <div className={classes.onlineNotification}>
             <p className={classes.title} style={{ marginBottom: 0, minWidth: "105px" }}>
               Security Notice
@@ -66,6 +66,10 @@ const Layout: React.FC<Props> = ({ isOnline, setIsHelpModalActive, isActive, set
             <p className={classes.onlineMessage}>
               You are currently online. This tool can only be considered safe in an offline environment
             </p>
+          </div>
+        ) : (
+          <div className={classes.offlineNotification}>
+            <p className={classes.offlineMessage}>You are currently offline.</p>
           </div>
         )}
         <main className={classes.contentContainer}>

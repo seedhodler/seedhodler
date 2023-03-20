@@ -130,7 +130,7 @@
   }
 }
 
-.onlineNotification {
+%notification {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -140,11 +140,30 @@
   gap: 1rem;
 }
 
-.onlineMessage {
+%message {
   color: $colorError;
   font-size: 12px;
   font-weight: $fwNormal;
   text-align: right;
+}
+
+.onlineNotification {
+  @extend %notification;
+}
+
+.onlineMassage {
+  @extend %message;
+}
+.offlineNotification {
+  @extend %notification;
+  border-top: 4px solid $colorSuccess;
+  background-color: $colorSuccessLight;
+  justify-content: flex-end;
+}
+
+.offlineMassage {
+  @extend %message;
+  color: $colorSuccess;
 }
 
 .securityNotice {
