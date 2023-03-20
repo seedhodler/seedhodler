@@ -7,6 +7,15 @@ export const TAB_TITLES = [
   { title: "Legal", index: 6 },
 ]
 
+export enum Tabs {
+  Introduction = 1,
+  Generating = 2,
+  Reconstructing = 3,
+  Tips_and_best_practices = 4,
+  About = 5,
+  Legal = 6,
+}
+
 export const INTRODUCTION = {
   title: "Introduction",
   link: "Shamir's secret sharing",
@@ -25,8 +34,8 @@ export const INTRODUCTION = {
   `,
 }
 
-export const GENERATION = {
-  title: "Generation",
+export const GENERATING = {
+  title: "Generating a Master Seed and Shares",
   firstPrgrph: `                
   To generate a new master seed, click on the "Generate New Seed" button. The seed will be
   generated from scratch by your computer. If you prefer to manually enter a master seed

@@ -1,21 +1,22 @@
 import React, { useState, Dispatch, SetStateAction } from "react"
 
+import TabContent from "./components/TabContent"
+
 import { Modal } from "components/Modal"
 import { Button } from "components/Button"
 import { BadgeColorsEnum } from "constants/"
-
-import classes from "./HelpModal.module.scss"
-
 import {
   TAB_TITLES,
-  GENERATION,
+  GENERATING,
   INTRODUCTION,
   RECONSTRUCTING,
   TIPS_AND_BEST_PRACTICES,
   ABOUT,
   LEGAL,
+  Tabs,
 } from "./constants"
-import TabContent from "./TabContent"
+
+import classes from "./HelpModal.module.scss"
 
 type Props = {
   isActive: boolean
@@ -23,7 +24,7 @@ type Props = {
 }
 
 const HelpModal: React.FC<Props> = ({ isActive, setIsActive }) => {
-  const [activeTab, setActiveTab] = useState(1)
+  const [activeTab, setActiveTab] = useState(Tabs.Introduction)
 
   return (
     <Modal
@@ -35,7 +36,6 @@ const HelpModal: React.FC<Props> = ({ isActive, setIsActive }) => {
     >
       <div className={classes.container}>
         <div className={classes.divider}></div>
-
         <div className={classes.horizontalTabs}>
           {TAB_TITLES.map(({ title, index }) => (
             <div
@@ -46,9 +46,8 @@ const HelpModal: React.FC<Props> = ({ isActive, setIsActive }) => {
             </div>
           ))}
         </div>
-
         <div className={classes.contentBlock}>
-          <TabContent title={INTRODUCTION.title} isActive={activeTab === 1}>
+          <TabContent title={INTRODUCTION.title} isActive={activeTab === Tabs.Introduction}>
             {INTRODUCTION.toolDescription}{" "}
             <a
               href="https://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing"
@@ -63,18 +62,18 @@ const HelpModal: React.FC<Props> = ({ isActive, setIsActive }) => {
             {INTRODUCTION.usageDescription}
           </TabContent>
 
-          <TabContent title={GENERATION.title} isActive={activeTab === 2}>
+          <TabContent title={GENERATING.title} isActive={activeTab === Tabs.Generating}>
             <ul className={classes.list}>
-              <li>{GENERATION.firstPrgrph}</li>
-              <li>{GENERATION.secondPrgrph}</li>
-              <li>{GENERATION.thirdPrgrph}</li>
-              <li>{GENERATION.fourthPrgrph}</li>
-              <li>{GENERATION.fifthPrgrph}</li>
-              <li>{GENERATION.sixthPrgrph}</li>
+              <li>{GENERATING.firstPrgrph}</li>
+              <li>{GENERATING.secondPrgrph}</li>
+              <li>{GENERATING.thirdPrgrph}</li>
+              <li>{GENERATING.fourthPrgrph}</li>
+              <li>{GENERATING.fifthPrgrph}</li>
+              <li>{GENERATING.sixthPrgrph}</li>
             </ul>
           </TabContent>
 
-          <TabContent title={RECONSTRUCTING.title} isActive={activeTab === 3}>
+          <TabContent title={RECONSTRUCTING.title} isActive={activeTab === Tabs.Reconstructing}>
             <ul className={classes.list}>
               <li>{RECONSTRUCTING.firstPrgrph}</li>
               <li>{RECONSTRUCTING.secondPrgrph}</li>
@@ -82,7 +81,10 @@ const HelpModal: React.FC<Props> = ({ isActive, setIsActive }) => {
             </ul>
           </TabContent>
 
-          <TabContent title={TIPS_AND_BEST_PRACTICES.title} isActive={activeTab === 4}>
+          <TabContent
+            title={TIPS_AND_BEST_PRACTICES.title}
+            isActive={activeTab === Tabs.Tips_and_best_practices}
+          >
             <ul className={classes.list}>
               <li>{TIPS_AND_BEST_PRACTICES.firstPrgrph}</li>
               <li>{TIPS_AND_BEST_PRACTICES.secondPrgrph}</li>
@@ -91,11 +93,11 @@ const HelpModal: React.FC<Props> = ({ isActive, setIsActive }) => {
             </ul>
           </TabContent>
 
-          <TabContent title={ABOUT.title} isActive={activeTab === 5}>
+          <TabContent title={ABOUT.title} isActive={activeTab === Tabs.About}>
             {ABOUT.desc}
           </TabContent>
 
-          <TabContent title={LEGAL.title} isActive={activeTab === 6}>
+          <TabContent title={LEGAL.title} isActive={activeTab === Tabs.Legal}>
             {LEGAL.desc}
           </TabContent>
         </div>

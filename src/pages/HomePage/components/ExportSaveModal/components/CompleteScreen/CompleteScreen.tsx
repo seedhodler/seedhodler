@@ -28,19 +28,6 @@ const CompleteScreen: React.FC<Props> = ({ setIsExportSaveModalActive }) => {
               scelerisque sed a nulla. Tortor consequat.
             </p>
           </div>
-          {/* <div className={classes.info}>
-            <div className={classes.infoBox}>
-              <div className={classes.links}>
-                <p className={classes.link}>Clear Cache / Potential Risks, Links</p>
-              </div>
-              <hr className={classes.divider} />
-            </div>
-            <p className={classes.description}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mollis donec gravida commodo
-              vitae, id malesuada accumsan. Morbi in quisque ligula natoque faucibus. Volutpat orci,
-              scelerisque sed a nulla. Tortor consequat.
-            </p>
-          </div> */}
           <div className={classes.infoContainer}>
             <div className={classes.infoBox}>
               <div className={classes.textContainer}>

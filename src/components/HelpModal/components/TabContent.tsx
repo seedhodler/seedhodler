@@ -1,6 +1,6 @@
 import React from "react"
 
-import classes from "./HelpModal.module.scss"
+import classes from "../HelpModal.module.scss"
 
 type Props = {
   children: React.ReactNode
