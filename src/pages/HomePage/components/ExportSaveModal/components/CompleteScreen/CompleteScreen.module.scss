@@ -1,0 +1,154 @@
+@import "styles/Variables.module.scss";
+
+.icon {
+  width: 56.69px;
+  height: 98.25px;
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+
+.iconBox {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 45.3775px;
+  gap: 9.26px;
+
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  left: calc(50% - 140px / 2 + 8.5px);
+  top: -70px;
+
+  background: linear-gradient(146.78deg, rgba(255, 255, 255, 0) 15.38%, rgba(255, 255, 255, 0.4) 92.12%);
+  filter: drop-shadow(0px 72px 110px rgba(2, 2, 33, 0.12));
+  backdrop-filter: blur(16.2063px);
+  border-radius: 44.27px;
+  flex: none;
+  order: 2;
+  flex-grow: 0;
+  z-index: 2;
+}
+
+.contentBody {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.imageBox {
+  max-height: 100%;
+  max-width: 100%;
+  height: auto;
+  width: auto;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 16px;
+
+  width: 100%;
+}
+
+.description {
+  width: 100%;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 24px;
+  letter-spacing: -0.015em;
+  color: #6f767e;
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 16px;
+
+  width: 100%;
+}
+
+.infoBox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 8px;
+
+  width: 100%;
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 8px;
+
+  width: 100%;
+  max-width: 600px;
+}
+
+.titleText {
+  width: 100%;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  color: #344054;
+}
+
+.dividerLine {
+  width: 100%;
+  height: 1px;
+  background: #667085;
+  border-radius: 1px;
+}
+
+.buttonBox {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.button {
+  background: "#73b355";
+  order: 3;
+}
+
+.contentBox {
+  width: 100%;
+}
+
+.headImage {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+::-webkit-scrollbar {
+  height: 10px;
+  width: 1rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4d4d4;
+  border-radius: 10px;
+}

@@ -11,6 +11,7 @@ import classes from "./Modal.module.scss"
 type PropsBase = {
   badgeColor?: BadgeColorsEnum
   isActive: boolean
+  isSuccess?: boolean
   isConfetti?: boolean
   setIsActive: Dispatch<SetStateAction<boolean>>
   children: JSX.Element
@@ -23,6 +24,7 @@ const Modal: React.FC<Props> = ({
   title,
   badgeColor = BadgeColorsEnum.SuccessLight,
   isActive,
+  isSuccess,
   isConfetti,
   setIsActive,
   isNotification,
@@ -30,6 +32,7 @@ const Modal: React.FC<Props> = ({
   style,
 }) => {
   const modalHeaderRef = useRef() as React.MutableRefObject<HTMLDivElement>
+  const backdropSwitch = isSuccess ? classes.backdropSuccesActive : classes.backdropActive
 
   useEffect(() => {
     if (modalHeaderRef && isActive) {
@@ -49,7 +52,7 @@ const Modal: React.FC<Props> = ({
 
   return (
     <>
-      {isActive && isConfetti && (
+      {/* {isActive && isConfetti && (
         <Confetti
           style={{
             position: "fixed",
@@ -57,10 +60,11 @@ const Modal: React.FC<Props> = ({
             left: 0,
           }}
         />
-      )}
+      )} */}
+
       <div
         onClick={() => setIsActive(false)}
-        className={isActive ? classes.backdropActive : classes.backdrop}
+        className={isActive ? backdropSwitch : classes.backdrop}
         style={{ zIndex: isNotification ? 100 : "" }}
       >
         {!isNotification ? (
@@ -70,12 +74,14 @@ const Modal: React.FC<Props> = ({
             style={style}
           >
             <div className={classes.content}>
-              <div className={classes.modalHeader} ref={modalHeaderRef} id="modal-header">
-                <BadgeTitle title={title} color={badgeColor} style={{ marginBottom: 0 }} />
-                <button onClick={() => setIsActive(false)} className={classes.closeBtn}>
-                  <img src={CloseIcon} alt="Close" />
-                </button>
-              </div>
+              {!isSuccess && (
+                <div className={classes.modalHeader} ref={modalHeaderRef} id="modal-header">
+                  <BadgeTitle title={title} color={badgeColor} style={{ marginBottom: 0 }} />
+                  <button onClick={() => setIsActive(false)} className={classes.closeBtn}>
+                    <img src={CloseIcon} alt="Close" />
+                  </button>
+                </div>
+              )}
               {children}
             </div>
           </div>

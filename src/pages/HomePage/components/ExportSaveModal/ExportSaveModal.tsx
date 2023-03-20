@@ -7,7 +7,9 @@ import { getOptions, getUniqueArr } from "helpers"
 import { PrintContent } from "./components/PrintContent"
 import { VerificationContent } from "./components/VerificationContent"
 import { BackupContent } from "./components/BackupContent"
-import { SuccessContent } from "./components/SuccessContent"
+//TODO remove component in future if its not nessesary
+// import { SuccessContent } from "./components/SuccessContent"
+import { CompleteScreen } from "./components/CompleteScreen"
 
 type Props = {
   isExportSaveModalActive: boolean
@@ -58,6 +60,7 @@ const ExportSaveModal: React.FC<Props> = ({
   const componentsInfo = {
     0: {
       title: "Print - Seedhodler Phraseholder",
+      isSuccess: false,
       badgeColor: BadgeColorsEnum.SuccessLight,
       Component: (
         <PrintContent
@@ -70,6 +73,7 @@ const ExportSaveModal: React.FC<Props> = ({
     },
     1: {
       title: "Backup",
+      isSuccess: false,
       badgeColor: BadgeColorsEnum.Main,
       Component: (
         <BackupContent
@@ -84,6 +88,7 @@ const ExportSaveModal: React.FC<Props> = ({
     },
     2: {
       title: "Verification",
+      isSuccess: false,
       badgeColor: BadgeColorsEnum.Main,
       Component: (
         <VerificationContent
@@ -102,8 +107,11 @@ const ExportSaveModal: React.FC<Props> = ({
     },
     3: {
       title: "Congratulations",
+      isSuccess: true,
       badgeColor: BadgeColorsEnum.Success,
-      Component: <SuccessContent setIsExportSaveModalActive={setIsExportSaveModalActive} />,
+      // TODO uncomment if SuccessContent component used
+      // Component: <SuccessContent setIsExportSaveModalActive={setIsExportSaveModalActive} />,
+      Component: <CompleteScreen setIsExportSaveModalActive={setIsExportSaveModalActive} />,
     },
   }
   const currentComponentInfo = componentsInfo[currentStep as keyof typeof componentsInfo]
@@ -146,6 +154,7 @@ const ExportSaveModal: React.FC<Props> = ({
     <Modal
       title={currentComponentInfo.title}
       isActive={isExportSaveModalActive}
+      isSuccess={currentComponentInfo.isSuccess}
       isConfetti={currentStep === 3}
       setIsActive={setIsExportSaveModalActive}
       badgeColor={currentComponentInfo.badgeColor}

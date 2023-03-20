@@ -4,15 +4,18 @@ import { Outlet, Link } from "react-router-dom"
 import { ReactComponent as QuestionMarkIcon } from "assets/icons/QuestionMark.svg"
 import Logo from "assets/icons/Logo.svg"
 import { CheckmarkInfo } from "components/CheckmarkInfo"
+import { NavFeaturedCard } from "components/_NavFeaturedCard"
 
 import classes from "./Layout.module.scss"
 
 type Props = {
   isOnline: boolean
   setIsHelpModalActive: Dispatch<SetStateAction<boolean>>
+  isActive: boolean
+  setIsActive: Dispatch<SetStateAction<boolean>>
 }
 
-const Layout: React.FC<Props> = ({ isOnline, setIsHelpModalActive }) => {
+const Layout: React.FC<Props> = ({ isOnline, setIsHelpModalActive, isActive, setIsActive }) => {
   return (
     <div className={classes.mainContainer}>
       <nav className={classes.nav}>
@@ -43,11 +46,14 @@ const Layout: React.FC<Props> = ({ isOnline, setIsHelpModalActive }) => {
           <CheckmarkInfo isCheckmark={false}>Print templates and fill split words</CheckmarkInfo>
           <CheckmarkInfo isCheckmark={false}>Restore your master seed</CheckmarkInfo>
         </div>
-        <div className={classes.helpButtonContainer}>
-          <button onClick={() => setIsHelpModalActive(prev => !prev)} className={classes.helpButton}>
-            <QuestionMarkIcon />
-            Help & getting started
-          </button>
+        <div className={classes.navContentBottom}>
+          {isActive ? <NavFeaturedCard setIsActive={setIsActive} /> : null}
+          <div className={classes.helpButtonContainer}>
+            <button onClick={() => setIsHelpModalActive(prev => !prev)} className={classes.helpButton}>
+              <QuestionMarkIcon />
+              Help & getting started
+            </button>
+          </div>
         </div>
       </nav>
 

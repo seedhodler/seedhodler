@@ -28,6 +28,18 @@
   pointer-events: all;
 }
 
+.backdropSuccesActive {
+  @extend %backdropBase;
+  background-color: #78bb5857;
+  opacity: 1;
+  pointer-events: all;
+}
+
+.backdropSucces {
+  @extend %backdropBase;
+  background-color: #78bb5857;
+}
+
 %modalBase {
   display: flex;
   flex-direction: column;
@@ -35,7 +47,7 @@
   padding: 2.4rem 0;
   box-shadow: 0px 0px 14px -4px rgba(0, 0, 0, 0.05), 0px 32px 48px -8px rgba(0, 0, 0, 0.1);
   border-radius: $radiiMedium;
-  width: 45%;
+  width: 47%;
   min-width: 350px;
   height: 65%;
   min-height: 650px;

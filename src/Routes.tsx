@@ -8,14 +8,23 @@ import { PrintPage } from "pages/PrintPage"
 type Props = {
   isOnline: boolean
   setIsHelpModalActive: Dispatch<SetStateAction<boolean>>
+  isActive: boolean
+  setIsActive: Dispatch<SetStateAction<boolean>>
 }
 
-const Routes: React.FC<Props> = ({ isOnline, setIsHelpModalActive }) => {
+const Routes: React.FC<Props> = ({ isOnline, setIsHelpModalActive, isActive, setIsActive }) => {
   return (
     <RouterDomRoutes>
       <Route
         path="/"
-        element={<Layout isOnline={isOnline} setIsHelpModalActive={setIsHelpModalActive} />}
+        element={
+          <Layout
+            isOnline={isOnline}
+            setIsHelpModalActive={setIsHelpModalActive}
+            isActive={isActive}
+            setIsActive={setIsActive}
+          />
+        }
       >
         <Route index element={<HomePage />} />
         <Route path="print" element={<PrintPage />} />
