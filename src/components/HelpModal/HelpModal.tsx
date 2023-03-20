@@ -39,6 +39,7 @@ const HelpModal: React.FC<Props> = ({ isActive, setIsActive }) => {
         <div className={classes.horizontalTabs}>
           {TAB_TITLES.map(({ title, index }) => (
             <div
+              key={index}
               className={activeTab === index ? `${classes.tab} ${classes.activeTab}` : classes.tab}
               onClick={() => setActiveTab(index)}
             >
