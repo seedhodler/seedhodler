@@ -7,29 +7,27 @@ import { AdditionalInfo } from "components/AdditionalInfo"
 import { Button } from "components/Button"
 import { TextPlace } from "components/TextPlace"
 import { ButtonColorsEnum } from "constants/index"
-import { generatePdf } from "helpers"
 
 import classes from "../../ExportSaveModal.module.scss"
+import { PDFTemplate } from "components/PDFTemplate"
+import { pdf } from "@react-pdf/renderer"
 
 type Props = {
   selectedWordCount: number
   mnemonic: string[]
   setCurrentStep: Dispatch<SetStateAction<number>>
-  sharesNumber: number
+  shares: string[]
 }
 
-const PrintContent: React.FC<Props> = ({
-  selectedWordCount,
-  mnemonic,
-  setCurrentStep,
-  sharesNumber,
-}) => {
+const PrintContent: React.FC<Props> = ({ selectedWordCount, mnemonic, setCurrentStep, shares }) => {
   const [isCreatingPdf, setIsCreatingPdf] = useState(false)
 
   const handlePrint = async () => {
     setIsCreatingPdf(true)
-    const pdfBytes = await generatePdf(+selectedWordCount, sharesNumber)
-    const blob = new Blob([pdfBytes], { type: "application/pdf" })
+    const blob = await pdf(
+      <PDFTemplate selectedWordCount={selectedWordCount} mnemonic={mnemonic} shares={shares} />,
+    ).toBlob()
+
     const fileUrl = URL.createObjectURL(blob)
     const docWindow = window.open(fileUrl, "PRINT", "height=720,width=1280")
     docWindow?.focus()

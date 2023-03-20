@@ -19,7 +19,7 @@ export enum Tabs {
 export const INTRODUCTION = {
   title: "Introduction",
   link: "Shamir's secret sharing",
-  toolDescription: `Seedhodler is a tool that uses`,
+  toolDescription: "Seedhodler is a tool that uses",
   masterSeedDescription: `
     to generate, split, and rejoin master seeds for cryptocurrency wallets. A master seed is a
     secret string of words that is used to generate the private keys for your cryptocurrency
