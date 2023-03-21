@@ -101,7 +101,7 @@ const VerificationContent: React.FC<Props> = ({
         }),
       )
     } else {
-      activeClosedWord!.isError = true
+      if (activeClosedWord) activeClosedWord.isError = true
       setAllClosedWords(prev =>
         prev.map((closedWordsArr, i) => {
           if (i === currentShareId) {
@@ -216,7 +216,8 @@ const VerificationContent: React.FC<Props> = ({
           Back
         </Button>
         <Button
-          disabled={closedWords.some(item => !item.isFulfilled)}
+          //TODO uncomment if validation is needed
+          // disabled={closedWords.some(item => !item.isFulfilled)}
           onClick={() => handleNavigation(NavigationEnum.Next)}
           iconRight={ArrowRightIcon}
         >

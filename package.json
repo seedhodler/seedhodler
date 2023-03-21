@@ -20,6 +20,7 @@
     "process": "^0.11.10",
     "react": "^18.0.0",
     "react-confetti": "^6.0.1",
+    "react-detect-offline": "^2.4.5",
     "react-dom": "^18.0.0",
     "react-pdf": "^6.2.2",
     "react-router-dom": "^6.3.0",
@@ -52,6 +53,7 @@
   },
   "devDependencies": {
     "@types/node-sass": "^4.11.2",
+    "@types/react-detect-offline": "^2.4.1",
     "@types/react-pdf": "^6.2.0",
     "gh-pages": "^4.0.0",
     "node-sass": "^7.0.1",
