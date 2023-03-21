@@ -16,7 +16,7 @@
 .contentContainer {
   padding: 5rem;
   padding-bottom: 3.6rem;
-  border: 2px dashed $colorBg700;
+  background: #ffffff;
   border-radius: $radiiSmall;
   margin-bottom: 1.8rem;
 
@@ -56,15 +56,14 @@
   font-size: 20px;
   text-align: center;
   color: $colorTextDark;
-  margin-bottom: 5.6rem;
+  margin-bottom: 3.6rem;
 }
 
 .textPlacesContainer {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  // justify-content: space-between;
-  margin-bottom: 1rem;
+  align-content: space-between;
 }
 
 .buttonsContainer {
@@ -141,4 +140,51 @@
   font-size: 15px;
   color: $colorBg700;
   line-height: 24px;
+}
+
+.titleBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1rem;
+}
+
+.titleInfo {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+  color: #33383f;
+}
+
+.textPlace {
+  padding: 2.2rem 2.2rem 2.2rem 4.2rem;
+  border: none;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.backupSharesBody {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.backupSharesBox {
+  background-color: $colorBg200;
+  padding: 1.2rem;
+  margin-bottom: 1.2rem;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 30%;
+}
+
+.backupShares {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
