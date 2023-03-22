@@ -2,12 +2,16 @@ import React, { useEffect, useRef, Dispatch, SetStateAction } from "react"
 
 import ArrowRightIcon from "assets/icons/ArrowRight.svg"
 import ArrowLeftIcon from "assets/icons/ArrowLeft.svg"
+import LogoIcon from "assets/icons/Logo.svg"
+
 import { Button } from "components/Button"
 import { ShareHeader } from "components/ShareHeader"
 import { TextPlace } from "components/TextPlace"
 import { NavigationEnum } from "constants/"
 
 import classes from "../../ExportSaveModal.module.scss"
+import { InputWrapper } from "components/InputWrapper"
+import { AdditionalInfo } from "components/AdditionalInfo"
 
 type Props = {
   shares: string[]
@@ -27,6 +31,8 @@ const BackupContent: React.FC<Props> = ({
   setShareId,
 }) => {
   const descRef = useRef() as React.MutableRefObject<HTMLParagraphElement>
+
+  const mediaWidthWindow = window.matchMedia("(max-width: 840px)").matches
 
   useEffect(() => {
     descRef.current.scrollIntoView({ behavior: "smooth" })
@@ -58,23 +64,56 @@ const BackupContent: React.FC<Props> = ({
         </p>
         <ShareHeader text={`Share - ${shareId + 1}`} style={{ marginBottom: "1.2rem" }} />
         <div className={classes.blockDivider}></div>
-        <div
-          className={classes.textPlacesContainer}
-          style={{ height: selectedWordCount === 12 ? "560px" : "960px", marginBottom: "1.6rem" }}
-        >
-          {shares[shareId].split(" ").map((word, index) => (
-            <TextPlace
-              key={index}
-              count={index + 1}
-              text={word}
-              style={{
-                marginBottom: "1.2rem",
-                width: "49%",
-                alignSelf: index <= (selectedWordCount === 12 ? 9 : 16) ? "flex-start" : "flex-end",
-              }}
-            />
-          ))}
+        <div className={classes.logoContainer}>
+          <div style={{ width: "60px" }} className={classes.whitespace}></div>
+          <img src={LogoIcon} alt="Logo" className={classes.logo} />
+          <div style={{ width: "60px" }} className={classes.whitespace}></div>
         </div>
+        <p className={classes.innerDescription}>
+          Use the Seedhodler Phraseholder to write down your generated phrases.
+        </p>
+        <InputWrapper
+          style={{
+            marginBottom: "1.2rem",
+            width: selectedWordCount === 12 ? "49%" : "48%",
+          }}
+        >
+          <>
+            <div className={classes.titleBox}>
+              <p className={classes.titleInfo}>Seed Phrase</p>
+              <AdditionalInfo info="BIP 39" className={classes.additionalInfo} />
+            </div>
+            <div
+              className={classes.textPlacesContainer}
+              style={{
+                height: selectedWordCount === 12 ? "730px" : mediaWidthWindow ? "1250px" : "805px",
+              }}
+            >
+              {shares[shareId].split(" ").map((word, index) => (
+                <TextPlace
+                  key={index}
+                  count={index + 1}
+                  text={word}
+                  className={classes.textPlace}
+                  style={{
+                    marginBottom: "1.2rem",
+                    width: selectedWordCount === 12 || mediaWidthWindow ? "49%" : "32%",
+                  }}
+                />
+              ))}
+            </div>
+            <div className={classes.backupSharesBody}>
+              <div className={classes.backupSharesBox}>
+                <p>Share:</p>
+                <div className={classes.backupShares}>
+                  <p>
+                    {shareId + 1}x{sharesNumber}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </>
+        </InputWrapper>
         <p className={classes.shareNumberInfo}>
           {shareId + 1} / {sharesNumber} Shares
         </p>

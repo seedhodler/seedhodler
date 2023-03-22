@@ -1,0 +1,105 @@
+@import "styles/Variables.module.scss";
+
+%input {
+  background-color: $colorBg200;
+  padding: 1.2rem;
+  margin-bottom: 1.2rem;
+  border-radius: 12px;
+  width: 49%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.inputItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 6px;
+}
+
+.inputImg {
+  height: 26.666667938232422px;
+  width: 33.333335876464844px;
+}
+
+.linkImg {
+  height: 16.555931091308594px;
+  width: 16.572599411010742px;
+}
+
+.inputInfo {
+  font-family: $fontFamily;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #9a9fa5;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.inputWallet {
+  @extend %input;
+}
+.inputPassword {
+  @extend %input;
+}
+
+.inputLink {
+  @extend %input;
+  background: #f6fef9;
+  border: 1px solid #6ce9a6;
+  align-items: flex-start;
+}
+
+.inputContacts {
+  @extend %input;
+  align-items: flex-start;
+}
+
+.inputContactsInfo {
+  font-family: $fontFamily;
+  font-size: 12px;
+  letter-spacing: -0.01em;
+  color: #9a9fa5;
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.inputBox {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.inputInfoBox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 80%;
+}
+
+.inputLinkInfo {
+  font-family: $fontFamily;
+  font-weight: 400;
+  color: #027a48;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  word-break: break-all;
+}
+
+.inputLinkTitle {
+  font-size: 12px;
+  font-family: $fontFamily;
+  font-weight: 600;
+  color: #027a48;
+  letter-spacing: -0.01em;
+}
