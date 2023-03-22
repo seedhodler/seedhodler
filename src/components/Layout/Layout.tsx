@@ -1,6 +1,8 @@
 import React, { Dispatch, SetStateAction } from "react"
 import { Outlet, Link } from "react-router-dom"
 
+import InfoRed from "assets/icons/InfoRed.svg"
+
 import { ReactComponent as QuestionMarkIcon } from "assets/icons/QuestionMark.svg"
 import Logo from "assets/icons/Logo.svg"
 import { CheckmarkInfo } from "components/CheckmarkInfo"
@@ -60,9 +62,12 @@ const Layout: React.FC<Props> = ({ isOnline, setIsHelpModalActive, isActive, set
       <div className={classes.mainContentContainer}>
         {isOnline ? (
           <div className={classes.onlineNotification}>
-            <p className={classes.title} style={{ marginBottom: 0, minWidth: "105px" }}>
-              Security Notice
-            </p>
+            <div className={classes.notificationBox}>
+              <p className={classes.title} style={{ marginBottom: 0, minWidth: "105px" }}>
+                Security Notice
+              </p>
+              <img src={InfoRed} alt="InfoRed" />
+            </div>
             <p className={classes.onlineMessage}>
               You are currently online. This tool can only be considered safe in an offline environment
             </p>

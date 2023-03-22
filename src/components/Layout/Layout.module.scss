@@ -46,6 +46,7 @@
   color: $colorTextDarkish;
   font-weight: 600;
   margin-bottom: 1rem;
+  margin-right: 0.5rem;
 }
 
 .githubInfo {
@@ -151,7 +152,7 @@
   @extend %notification;
 }
 
-.onlineMassage {
+.onlineMessage {
   @extend %message;
 }
 .offlineNotification {
@@ -161,9 +162,15 @@
   justify-content: flex-end;
 }
 
-.offlineMassage {
+.offlineMessage {
   @extend %message;
-  color: $colorSuccess;
+  color: $colorSuccessDark;
+}
+
+.notificationBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .securityNotice {

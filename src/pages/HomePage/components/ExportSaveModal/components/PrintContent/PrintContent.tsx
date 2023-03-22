@@ -82,7 +82,6 @@ const PrintContent: React.FC<Props> = ({
             </div>
           </>
         </InputWrapper>
-
         <p className={classes.innerDescription} style={{ marginBottom: 0 }}>
           etc.
           <br /> In seedhodler we trust.
