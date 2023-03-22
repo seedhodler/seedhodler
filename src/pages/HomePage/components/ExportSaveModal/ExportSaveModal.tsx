@@ -66,8 +66,8 @@ const ExportSaveModal: React.FC<Props> = ({
         <PrintContent
           selectedWordCount={selectedWordCount}
           mnemonic={mnemonic}
+          sharesNumber={sharesNumber}
           setCurrentStep={setCurrentStep}
-          shares={shares}
         />
       ),
     },

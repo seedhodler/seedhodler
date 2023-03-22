@@ -32,6 +32,8 @@ const BackupContent: React.FC<Props> = ({
 }) => {
   const descRef = useRef() as React.MutableRefObject<HTMLParagraphElement>
 
+  const mediaWidthWindow = window.matchMedia("(max-width: 840px)").matches
+
   useEffect(() => {
     descRef.current.scrollIntoView({ behavior: "smooth" })
   }, [shareId])
@@ -83,7 +85,9 @@ const BackupContent: React.FC<Props> = ({
             </div>
             <div
               className={classes.textPlacesContainer}
-              style={{ height: selectedWordCount === 12 ? "730px" : "805px" }}
+              style={{
+                height: selectedWordCount === 12 ? "730px" : mediaWidthWindow ? "1250px" : "805px",
+              }}
             >
               {shares[shareId].split(" ").map((word, index) => (
                 <TextPlace
@@ -93,8 +97,7 @@ const BackupContent: React.FC<Props> = ({
                   className={classes.textPlace}
                   style={{
                     marginBottom: "1.2rem",
-                    width: selectedWordCount === 12 ? "49%" : "32%",
-                    alignSelf: index <= (selectedWordCount === 12 ? 9 : 16) ? "flex-start" : "flex-end",
+                    width: selectedWordCount === 12 || mediaWidthWindow ? "49%" : "32%",
                   }}
                 />
               ))}
@@ -104,7 +107,7 @@ const BackupContent: React.FC<Props> = ({
                 <p>Share:</p>
                 <div className={classes.backupShares}>
                   <p>
-                    {shareId + 1} x {sharesNumber}
+                    {shareId + 1}x{sharesNumber}
                   </p>
                 </div>
               </div>
