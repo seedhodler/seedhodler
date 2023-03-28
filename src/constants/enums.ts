@@ -29,3 +29,13 @@ export enum NavigationEnum {
   Prev,
   Next,
 }
+
+export enum HelpModalTabs {
+  Introduction = 1,
+  Generating = 2,
+  Reconstructing = 3,
+  Warning = 4,
+  Tips_and_best_practices = 5,
+  About = 6,
+  Legal = 7,
+}

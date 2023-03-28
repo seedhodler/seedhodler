@@ -13,11 +13,18 @@ import classes from "./Layout.module.scss"
 type Props = {
   isOnline: boolean
   setIsHelpModalActive: Dispatch<SetStateAction<boolean>>
+  setHelpModalStartTab: Dispatch<SetStateAction<number | null>>
   isActive: boolean
   setIsActive: Dispatch<SetStateAction<boolean>>
 }
 
-const Layout: React.FC<Props> = ({ isOnline, setIsHelpModalActive, isActive, setIsActive }) => {
+const Layout: React.FC<Props> = ({
+  isOnline,
+  setIsHelpModalActive,
+  isActive,
+  setIsActive,
+  setHelpModalStartTab,
+}) => {
   return (
     <div className={classes.mainContainer}>
       <nav className={classes.nav}>
@@ -49,7 +56,13 @@ const Layout: React.FC<Props> = ({ isOnline, setIsHelpModalActive, isActive, set
           <CheckmarkInfo isCheckmark={false}>Restore your master seed</CheckmarkInfo>
         </div>
         <div className={classes.navContentBottom}>
-          {isActive ? <NavFeaturedCard setIsActive={setIsActive} /> : null}
+          {isActive ? (
+            <NavFeaturedCard
+              setIsActive={setIsActive}
+              setIsHelpModalActive={setIsHelpModalActive}
+              setHelpModalStartTab={setHelpModalStartTab}
+            />
+          ) : null}
           <div className={classes.helpButtonContainer}>
             <button onClick={() => setIsHelpModalActive(prev => !prev)} className={classes.helpButton}>
               <QuestionMarkIcon />

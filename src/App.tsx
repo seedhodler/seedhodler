@@ -11,6 +11,7 @@ const App: React.FC = () => {
   const [isNotification, setIsNotification] = useState(false)
   const [isHelpModalActive, setIsHelpModalActive] = useState(false)
   const [isNavFeaturedCardOpen, setIsNavFeaturedCardOpen] = useState(true)
+  const [helpModalStartTab, setHelpModalStartTab] = useState<number | null>(null)
 
   useEffect(() => {
     const handlePrintScreenClick = (e: KeyboardEvent) => {
@@ -26,13 +27,18 @@ const App: React.FC = () => {
     <GenerateContextProvider>
       <RestoreContextProvider>
         <>
-          <HelpModal isActive={isHelpModalActive} setIsActive={setIsHelpModalActive} />
+          <HelpModal
+            isActive={isHelpModalActive}
+            setIsActive={setIsHelpModalActive}
+            startTab={helpModalStartTab}
+          />
           <Notification isActive={isNotification} setIsActive={setIsNotification} />
           <Detector
             render={({ online }) => (
               <Routes
                 isOnline={online}
                 setIsHelpModalActive={setIsHelpModalActive}
+                setHelpModalStartTab={setHelpModalStartTab}
                 isActive={isNavFeaturedCardOpen}
                 setIsActive={setIsNavFeaturedCardOpen}
               />
