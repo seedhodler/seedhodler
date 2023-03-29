@@ -57,7 +57,7 @@ export const GenerateContentSettings: React.FC<GenerateContentSettingsProps> = (
       <div className={classes.configContainer}>
         <div
           className={classes.configLabelContainer}
-          title={`Don't trust the randsomness of a computer? You can enter your own entropy here.`}
+          title={"Don't trust the randsomness of a computer? You can enter your own entropy here."}
         >
           <p>
             Advanced Toolset - <span className={classes.entropyGeneration}>Entropy Generation</span>

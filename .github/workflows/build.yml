@@ -1,0 +1,22 @@
+name: "Build seedhodler"
+on:
+  pull_request:
+  push:
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3  # v3.5.0
+    - uses: cachix/install-nix-action@29bd9290ef037a3ecbdafe83cbd2185e9dd0fa0a # v20
+      with:
+        extra_nix_config: |
+          access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+          max-jobs = 10
+    - uses: cachix/cachix-action@6a9a34cdd93d0ae4b4b59fd678660efb08109f2f  # v12
+      with:
+        name: seedhodler-cache
+        authToken: '${{ secrets.CACHIX_KEY }}'
+
+    - run: nix flake check -L
