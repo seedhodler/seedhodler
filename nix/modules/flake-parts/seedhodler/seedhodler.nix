@@ -10,7 +10,8 @@
   ];
 
   name = "seedhodler";
-  version = (builtins.fromJSON (builtins.readFile ./package.json)).version;
+  version =
+    (builtins.fromJSON (builtins.readFile ../../../../package.json)).version;
 
   dream2nix-legacy = {
     subsystem = "nodejs";
@@ -19,6 +20,13 @@
     subsystemInfo = {
       nodejs = "18";
       noDev = false;
+    };
+    packageOverrides.seedhodler.${config.version} = {
+      postFixup = ''
+        cp -r $out/lib/node_modules/seedhodler/build $TMPDIR/artifacts
+        rm -rf $out
+        cp -r $TMPDIR/artifacts $out
+      '';
     };
   };
 }
