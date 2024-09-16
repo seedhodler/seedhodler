@@ -1,5 +1,5 @@
 {
-  description = "";
+  description = "Development environment for Seedhodler";
 
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -15,7 +15,7 @@
   outputs = inputs @ {flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
       systems = [
-        "x86_64-linux"
+        "x86_64-linux" # 64-bit Intel/AMD Linux
       ];
 
       imports = [
