@@ -24,3 +24,28 @@ Using Seedhodler, you can split your master seed into multiple pieces, called "s
 - Use an offline computer to generate or split your master seed and ensure that it is not connected to the internet during the setup process or afterwards when there is a storage medium connected. Consider using an offline version of Seedhodler and run on a live USB OS.
 - Consider destroying the original master seed after generating its shares, as this reduces the risk of a single point of failure in securing your assets. However, make sure to verify that all of your Shamir shares are working and stored in a safe location before doing so.
 - Store your seed shares in multiple secure locations, such as a physical safe, secure storage device, or safe deposit box. You may also choose to share copies with trusted friends or family members, but make sure that these individuals do not know each other in a way that would allow them to collaborate and restore the master seed without your knowledge.
+
+## Development and releases
+
+| Branch | Meaning |
+|---|---|
+| `dev` | Where work happens. Every push and pull request is built by CI, nothing is published. |
+| `main` | The release branch. A push here builds and publishes to [seedhodler.io](https://seedhodler.io/). |
+
+To release, fast-forward `main` to the reviewed state of `dev`:
+
+```sh
+git push origin origin/dev:main
+```
+
+There is deliberately no public preview of `dev`. An unreviewed build of a
+tool that handles seed phrases should not be reachable by anyone who might
+mistake it for the real one. To look at `dev`, run it locally:
+
+```sh
+npm ci
+npm start
+```
+
+Releases install from `package-lock.json` with `npm ci`, so the published
+bundle depends on the pinned dependency tree and not on the day it was built.
