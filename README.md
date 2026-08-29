@@ -49,3 +49,15 @@ npm start
 
 Releases install from `package-lock.json` with `npm ci`, so the published
 bundle depends on the pinned dependency tree and not on the day it was built.
+
+## The share format
+
+[`SPECIFICATION.md`](./SPECIFICATION.md) describes how a BIP-39 mnemonic
+becomes a set of Shamir shares and how it comes back. It exists so that a
+holder of the shares can recover the mnemonic without Seedhodler, from the
+referenced standards alone.
+
+`npm test` checks this app against that document and against the frozen
+vectors in [`seedhodler-test-vectors.json`](./seedhodler-test-vectors.json).
+CI additionally recovers freshly generated shares using third-party BIP-39 and
+SLIP-0039 implementations, so the promise above is tested rather than claimed.

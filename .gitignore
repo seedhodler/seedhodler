@@ -22,3 +22,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 result
+
+# Emitted by tools/check-app-conformance.mjs during CI
+fresh-shares.json
