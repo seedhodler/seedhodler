@@ -1,0 +1,29 @@
+name: CI
+
+# Runs on dev and on every pull request. Builds, but deploys nothing:
+# a publicly reachable build of a seed splitting tool that nobody has
+# reviewed is a liability, not a preview.
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - name: Install pinned dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
