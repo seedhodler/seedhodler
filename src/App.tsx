@@ -30,7 +30,18 @@ const App: React.FC = () => {
           <>
             <HelpModal />
             <Notification isActive={isNotification} setIsActive={setIsNotification} />
+            {/* polling={false} is deliberate. react-detect-offline polls
+                https://httpbin.org/get every five seconds on Windows Chrome,
+                Windows Firefox and Linux Chrome, which is most desktop users.
+                A tool that tells people to disconnect must not itself report
+                to a third party that they are on this page.
+
+                Without polling the status comes from navigator.onLine, which
+                errs towards "online" when a machine is on a network without
+                internet. That is the safe direction: it shows the warning when
+                in doubt, rather than hiding it. */}
             <Detector
+              polling={false}
               render={({ online }) => (
                 <Routes
                   isOnline={online}
