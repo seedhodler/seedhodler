@@ -1,0 +1,104 @@
+name: Container
+
+# Builds the self-contained image and proves it serves the app.
+#
+# Pushes to GHCR only from dev, and the package stays private: an unreviewed
+# build of a seed splitting tool should not be something a stranger can pull
+# and mistake for a release.
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+  workflow_dispatch:
+
+env:
+  IMAGE: ghcr.io/${{ github.repository }}
+
+jobs:
+  build:
+    name: Build and smoke test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          tags: seedhodler:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Serve it
+        run: |
+          docker run --detach --name seedhodler-ci --publish 8080:80 seedhodler:ci
+          for _ in $(seq 30); do
+            curl --silent --fail http://localhost:8080/ > /dev/null && break
+            sleep 1
+          done
+
+      - name: The page is served
+        run: |
+          curl --silent --fail http://localhost:8080/ -o page.html
+          grep -q "<title>Seedhodler</title>" page.html
+
+      - name: Client side routing survives a reload
+        run: curl --silent --fail http://localhost:8080/print > /dev/null
+
+      - name: Security headers are present
+        run: |
+          headers=$(curl --silent --head http://localhost:8080/)
+          echo "$headers"
+          echo "$headers" | grep -qi "content-security-policy"
+          echo "$headers" | grep -qi "x-frame-options: DENY"
+          echo "$headers" | grep -qi "referrer-policy: no-referrer"
+          echo "$headers" | grep -qi "cache-control: no-store"
+
+      # The app is meant to run with no network. Every external origin in the
+      # served document is a promise broken on a machine that has none, and a
+      # third party told that somebody opened this page. Google Fonts is the
+      # one exception left; it is expected to disappear, and until it does it
+      # is pinned here so that nothing else joins it unnoticed.
+      - name: No unexpected third-party origins
+        run: |
+          found=$(grep -oE 'https?://[a-zA-Z0-9.-]+' page.html | sort -u || true)
+          echo "origins in index.html:"
+          echo "$found"
+          unexpected=$(echo "$found" | grep -v -E '^https://fonts\.(googleapis|gstatic)\.com$' || true)
+          if [ -n "$unexpected" ]; then
+            echo "Unexpected third-party origins:"
+            echo "$unexpected"
+            exit 1
+          fi
+
+      - name: Stop
+        if: always()
+        run: docker rm --force seedhodler-ci || true
+
+      - name: Log in to GHCR
+        if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push dev image
+        if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.IMAGE }}:dev
+            ${{ env.IMAGE }}:dev-${{ github.sha }}
+          cache-from: type=gha

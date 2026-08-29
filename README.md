@@ -47,6 +47,22 @@ npm ci
 npm start
 ```
 
+Or run the container, which is what CI builds from `dev` and what you want on
+a machine with no route to the internet:
+
+```sh
+docker build -t seedhodler .
+docker run --rm -p 8080:80 seedhodler
+```
+
+CI publishes the same image to `ghcr.io/seedhodler/seedhodler:dev`. The package
+is private on purpose, so pulling it needs a token with `read:packages`:
+
+```sh
+echo "$GITHUB_TOKEN" | docker login ghcr.io -u <your-user> --password-stdin
+docker pull ghcr.io/seedhodler/seedhodler:dev
+```
+
 Releases install from `package-lock.json` with `npm ci`, so the published
 bundle depends on the pinned dependency tree and not on the day it was built.
 
