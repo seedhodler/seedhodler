@@ -46,6 +46,20 @@ jobs:
             sleep 1
           done
 
+      # The healthcheck is part of the image, so it has to be checked too.
+      # Reaching the app through the published port does not prove that the
+      # container can reach itself.
+      - name: The container reports itself healthy
+        run: |
+          for _ in $(seq 40); do
+            status=$(docker inspect --format '{{.State.Health.Status}}' seedhodler-ci)
+            [ "$status" = "healthy" ] && break
+            [ "$status" = "unhealthy" ] && break
+            sleep 2
+          done
+          docker inspect --format '{{json .State.Health}}' seedhodler-ci
+          [ "$(docker inspect --format '{{.State.Health.Status}}' seedhodler-ci)" = "healthy" ]
+
       - name: The page is served
         run: |
           curl --silent --fail http://localhost:8080/ -o page.html
