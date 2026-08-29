@@ -1,0 +1,41 @@
+{
+  "format": "seedhodler-share-format",
+  "version": 1,
+  "note": "Master secret equals BIP-39 entropy. See specification section 5.",
+  "vectors": [
+    {
+      "id": "A",
+      "wordCount": 12,
+      "scheme": "3-of-5",
+      "language": "english",
+      "entropy": "00112233445566778899aabbccddeeff",
+      "mnemonic": "abandon math mimic master filter design carbon crystal rookie group knife young",
+      "shares": [
+        "sidewalk crunch academic acne drift piece false grief market purple advocate military testify cylinder typical payment sister order diploma unusual",
+        "sidewalk crunch academic agree aluminum ivory standard echo laser club wrap blanket march mandate permit fancy index dance crystal floral",
+        "sidewalk crunch academic amazing aluminum dictate expect capacity fact smell formal golden vanish sugar umbrella answer triumph walnut voting failure",
+        "sidewalk crunch academic arcade drift trend short discuss patrol founder pencil teacher olympic laser pecan window filter evening ugly tracks",
+        "sidewalk crunch academic axle dough exhaust fitness nuclear single hearing unhappy sidewalk plot laser script describe reward crunch hearing steady"
+      ],
+      "bip32RootKey": "1d2037d1adbd40ccf99d44e7073a9d8e32e5675ee053a2fd1c078ef9e05a807d",
+      "allTripletsVerified": true
+    },
+    {
+      "id": "B",
+      "wordCount": 24,
+      "scheme": "3-of-5",
+      "language": "english",
+      "entropy": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+      "mnemonic": "abandon amount liar amount expire adjust cage candy arch gather drum bullet absurd math era live bid rhythm alien crouch range attend journey unaware",
+      "shares": [
+        "square surprise academic acne amount repair episode chest teaspoon dramatic society sympathy aluminum antenna research bishop multiple space envelope bedroom boring nervous quantity usher knife package voice amuse formal junction presence brother airline",
+        "square surprise academic agree agree earth coal elbow exercise lift human blanket should visitor pencil ancient calcium senior ivory capture antenna width losing salary promise sugar lend glimpse forecast blanket traveler obesity grasp",
+        "square surprise academic amazing artist birthday ajar alive vocal unwrap regret have method paid work regular march dominant dwarf amazing ting minister bucket stadium slush numerous game python saver failure venture public piece",
+        "square surprise academic arcade academic military have grumpy focus extra album patrol fancy gesture terminal photo alarm charity aunt alive wildlife upstairs crunch thorn buyer sweater cricket stay satisfy dwarf realize depart screw",
+        "square surprise academic axle anxiety wildlife promise year memory duckling dominant estimate require luxury skunk script maiden upstairs wisdom explain bulge damage software briefing venture garden process humidity crisis counter response sunlight maiden"
+      ],
+      "bip32RootKey": "5d58ac2af7f098cc241dacd929d464ed2faa37b754a1216d0afc39340fb1d0bf",
+      "allTripletsVerified": true
+    }
+  ]
+}

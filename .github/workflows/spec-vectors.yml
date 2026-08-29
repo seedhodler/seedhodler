@@ -1,0 +1,50 @@
+name: Specification
+
+# A specification nobody checks is decoration. This job proves three things
+# on every change:
+#
+#   1. the frozen test vectors are cryptographically correct,
+#   2. this app still implements what SPECIFICATION.md describes,
+#   3. shares the app produces today can be recovered without the app.
+#
+# Point 3 is the one that matters to somebody holding paper in a safe.
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: Verify the share format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install reference implementations
+        # Deliberately third-party: the point is that these shares are
+        # recoverable without any Seedhodler code.
+        run: pip install --quiet shamir-mnemonic==0.3.0 mnemonic==0.21
+
+      - name: Install pinned dependencies
+        run: npm ci
+
+      - name: Check the vectors against the specification
+        run: python3 tools/check-spec-vectors.py
+
+      - name: Check the app against the specification
+        run: npm run --silent emit-vectors > fresh-shares.json
+
+      - name: Recover the app's shares without the app
+        run: python3 tools/check-external-recovery.py fresh-shares.json
