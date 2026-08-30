@@ -27,8 +27,7 @@
     "slip39": "^0.1.9",
     "stream-browserify": "^3.0.0",
     "typescript": "^5.6.2",
-    "vite-plugin-svgr": "^4.2.0",
-    "web-vitals": "^4.2.3"
+    "vite-plugin-svgr": "^4.2.0"
   },
   "scripts": {
     "start": "vite",
@@ -36,7 +35,8 @@
     "test": "vite-node tools/check-app-conformance.mjs",
     "deploy": "gh-pages -d build",
     "predeploy": "npm run build",
-    "emit-vectors": "vite-node tools/check-app-conformance.mjs --emit"
+    "emit-vectors": "vite-node tools/check-app-conformance.mjs --emit",
+    "typecheck": "tsc --noEmit"
   },
   "browserslist": {
     "production": [

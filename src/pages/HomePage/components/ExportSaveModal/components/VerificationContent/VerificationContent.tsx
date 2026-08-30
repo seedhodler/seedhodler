@@ -6,7 +6,7 @@ import { Button } from "src/components/Button"
 import { ShareHeader } from "src/components/ShareHeader"
 import { TextPlace } from "src/components/TextPlace"
 import { NavigationEnum } from "src/constants"
-import variables from "src/styles/Variables.module.scss/"
+import variables from "src/styles/Variables.module.scss"
 
 import classes from "../../ExportSaveModal.module.scss"
 

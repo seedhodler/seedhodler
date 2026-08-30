@@ -7,8 +7,6 @@ const PrintPage = lazy(() => import("src/pages/PrintPage"))
 
 type Props = {
   isOnline: boolean
-  setIsHelpModalActive: Dispatch<SetStateAction<boolean>>
-  setHelpModalStartTab: Dispatch<SetStateAction<number | null>>
   showWarning: boolean
   setShowWarning: Dispatch<SetStateAction<boolean>>
 }

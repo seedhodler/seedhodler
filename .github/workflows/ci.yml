@@ -25,5 +25,11 @@ jobs:
       - name: Install pinned dependencies
         run: npm ci
 
+      # tsc was silently broken for the whole life of the Vite migration, so
+      # this gate is the point of the cleanup that added it. vite build does
+      # not typecheck; without this step nothing does.
+      - name: Typecheck
+        run: npm run typecheck
+
       - name: Build
         run: npm run build

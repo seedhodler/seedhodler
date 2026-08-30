@@ -2,7 +2,7 @@ import React, { useContext } from "react"
 
 import { HelpModalTabs } from "src/constants"
 import { HelpModalContext } from "src/context/HelpModalContext"
-import classes from "./NavFeaturedCard.module.scss/"
+import classes from "./NavFeaturedCard.module.scss"
 
 type Props = {}
 
