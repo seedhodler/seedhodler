@@ -5,7 +5,7 @@ import CheckmarkFilledIcon from "src/assets/icons/CheckmarkFilled.svg"
 import InternetGrayIcon from "src/assets/icons/InternetGray.svg"
 import InternetRedIcon from "src/assets/icons/InternetRed.svg"
 import { Button } from "src/components/Button"
-import { CheckmarkInfo } from "src/components/CheckmarkInfo"
+import CheckmarkInfo from "src/components/CheckmarkInfo"
 import { Modal } from "src/components/Modal"
 import { BadgeColorsEnum } from "src/constants/index"
 
