@@ -33,5 +33,8 @@ COPY --from=build /app/build /usr/share/nginx/html
 
 EXPOSE 80
 
+# 127.0.0.1, not localhost. nginx listens on 0.0.0.0:80 only, and busybox wget
+# resolves localhost to ::1 first and does not fall back, so the check would
+# report the container unhealthy while it was serving perfectly.
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s \
-  CMD wget --quiet --tries=1 --spider http://localhost/ || exit 1
+  CMD wget --quiet --tries=1 --spider http://127.0.0.1/ || exit 1

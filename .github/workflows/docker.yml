@@ -46,6 +46,20 @@ jobs:
             sleep 1
           done
 
+      # The healthcheck is part of the image, so it has to be checked too.
+      # Reaching the app through the published port does not prove that the
+      # container can reach itself.
+      - name: The container reports itself healthy
+        run: |
+          for _ in $(seq 40); do
+            status=$(docker inspect --format '{{.State.Health.Status}}' seedhodler-ci)
+            [ "$status" = "healthy" ] && break
+            [ "$status" = "unhealthy" ] && break
+            sleep 2
+          done
+          docker inspect --format '{{json .State.Health}}' seedhodler-ci
+          [ "$(docker inspect --format '{{.State.Health.Status}}' seedhodler-ci)" = "healthy" ]
+
       - name: The page is served
         run: |
           curl --silent --fail http://localhost:8080/ -o page.html
@@ -63,22 +77,31 @@ jobs:
           echo "$headers" | grep -qi "referrer-policy: no-referrer"
           echo "$headers" | grep -qi "cache-control: no-store"
 
-      # The app is meant to run with no network. Every external origin in the
-      # served document is a promise broken on a machine that has none, and a
-      # third party told that somebody opened this page. Google Fonts is the
-      # one exception left; it is expected to disappear, and until it does it
-      # is pinned here so that nothing else joins it unnoticed.
-      - name: No unexpected third-party origins
+      # The app is meant to run with no network. Every external origin the page
+      # pulls in is a promise broken on a machine that has none, and a third
+      # party told that somebody opened this page. There are none left, and
+      # this is what keeps it that way.
+      - name: No third-party origins
         run: |
           found=$(grep -oE 'https?://[a-zA-Z0-9.-]+' page.html | sort -u || true)
-          echo "origins in index.html:"
-          echo "$found"
-          unexpected=$(echo "$found" | grep -v -E '^https://fonts\.(googleapis|gstatic)\.com$' || true)
-          if [ -n "$unexpected" ]; then
-            echo "Unexpected third-party origins:"
-            echo "$unexpected"
+          if [ -n "$found" ]; then
+            echo "index.html reaches out to:"
+            echo "$found"
             exit 1
           fi
+          echo "index.html: no external origins"
+
+      # Stylesheets are where a font or an icon set creeps back in.
+      - name: No third-party origins in the stylesheets
+        run: |
+          docker cp seedhodler-ci:/usr/share/nginx/html/assets ./served-assets
+          found=$(cat ./served-assets/*.css | grep -oE 'https?://[a-zA-Z0-9.-]+' | sort -u || true)
+          if [ -n "$found" ]; then
+            echo "stylesheets reach out to:"
+            echo "$found"
+            exit 1
+          fi
+          echo "stylesheets: no external origins"
 
       - name: Stop
         if: always()

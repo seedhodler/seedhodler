@@ -1,0 +1,36 @@
+// Inter, served from this repository instead of from Google.
+//
+// index.html used to pull the font from fonts.googleapis.com on every page
+// load. That told Google the IP address of everyone who opened a tool whose
+// central advice is to disconnect from the internet, and it left the app
+// rendering in a fallback font on exactly the offline machine it is meant to
+// run on. The files below make the app self-contained.
+//
+// Inter is a variable font: one file covers every weight from 100 to 900, so
+// the four weights the design uses cost two files, one per subset. The
+// unicode-range declarations are Google's own, so the browser still fetches
+// latin-ext only when a page actually needs it. Latin and latin-ext together
+// cover every BIP-39 wordlist written in Latin script; Chinese, Japanese and
+// Korean fall back to a system font, exactly as they did before, because Inter
+// has no glyphs for them.
+//
+// Licensed under the SIL Open Font License 1.1, see ./LICENSE.txt in
+// src/assets/fonts.
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../assets/fonts/inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../assets/fonts/inter-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
