@@ -36,6 +36,159 @@
       ],
       "bip32RootKey": "5d58ac2af7f098cc241dacd929d464ed2faa37b754a1216d0afc39340fb1d0bf",
       "allTripletsVerified": true
+    },
+    {
+      "id": "C",
+      "wordCount": 12,
+      "scheme": "3-of-5",
+      "language": "czech",
+      "entropy": "303132333435363738393a3b3c3d3e3f",
+      "mnemonic": "hadr omladina oslepit metr krajina deflace varovat emoce hudba veletrh kongres obohatit",
+      "shares": [
+        "erode surprise academic acne again tendency unhappy emerald hanger spend document omit watch midst memory strike extend subject actress lecture",
+        "erode surprise academic agree course manual ultimate memory gesture dragon true airline brave branch saver extra order security galaxy lecture",
+        "erode surprise academic amazing curly pharmacy grin universe eclipse mortgage garden unwrap ceiling club traffic nuclear dress advocate much senior",
+        "erode surprise academic arcade activity simple grasp closet estimate jury pumps intimate romp profile pecan beam vampire capture silent senior",
+        "erode surprise academic axle actress custody hour victim smith intend stick makeup husky credit suitable decrease sweater echo rumor envelope"
+      ],
+      "bip32RootKey": "0a76c718cd856c92dc14933070cfef3d8f3dd26a2da5dc7cd8b0ed1dc68b847a",
+      "allTripletsVerified": true
+    },
+    {
+      "id": "D",
+      "wordCount": 24,
+      "scheme": "3-of-5",
+      "language": "chinese_simplified",
+      "entropy": "808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9f",
+      "mnemonic": "\u58e4 \u70b9 \u969c \u7535 \u6d4b \u5e08 \u9886 \u9645 \u8c46 \u9644 \u6025 \u505a \u7535 \u9192 \u6c49 \u8d5e \u7eba \u7968 \u8f6c \u5f80 \u8d6b \u8ddf \u6cbf \u8461",
+      "shares": [
+        "acquire single academic acne angry traffic herald aunt frequent system lizard edge born aviation ecology rapids problem holiday cage admit holiday remind ceramic payroll upgrade walnut payroll clogs payroll move infant damage hour",
+        "acquire single academic agree amount analysis include else finance slavery depend rescue scatter away tracks famous unusual jump swimming already hesitate privacy airport cover petition glasses solution typical oasis grill orange extra lecture",
+        "acquire single academic amazing acrobat prayer random airline marathon prisoner founder regular sympathy darkness peasant bracelet adapt hazard bulb merit diploma costume greatest imply replace exotic isolate slavery coding payroll seafood safari unhappy",
+        "acquire single academic arcade adorn estate playoff explain literary reunion umbrella elegant auction debris aide verdict eclipse kitchen sugar mouse diminish earth edge warmth unknown spray amount agree capital eyebrow damage retreat actress",
+        "acquire single academic axle aunt victim industry sister payment guard provide chew gross railroad index domestic greatest shaped family necklace devote training numerous hand liberty axis tricycle jerky visual greatest judicial nail humidity"
+      ],
+      "bip32RootKey": "34502941c009e9fd5b995e61a47db65ef2a6dd3b7632d356dd2789cc12588b4d",
+      "allTripletsVerified": true
+    },
+    {
+      "id": "E",
+      "wordCount": 12,
+      "scheme": "3-of-5",
+      "language": "chinese_traditional",
+      "entropy": "505152535455565758595a5b5c5d5e5f",
+      "mnemonic": "\u6297 \u504f \u7063 \u6cf0 \u627e \u99ac \u690d \u79d1 \u7d42 \u642d \u8881 \u67d4",
+      "shares": [
+        "deliver fragment academic acne airline leaves together escape guest welfare epidemic jump promise unknown safari losing lamp receiver tricycle tension",
+        "deliver fragment academic agree deliver silver coal float mixture anatomy game oral simple pipeline lobe debut traveler silent easel practice",
+        "deliver fragment academic amazing crowd display company dwarf receiver glimpse born promise enlarge careful grumpy national method human pajamas dragon",
+        "deliver fragment academic arcade calcium impulse tracks crystal exceed merchant actress epidemic crunch flea class change alive beyond inmate impulse",
+        "deliver fragment academic axle again findings arena extend traffic float epidemic deliver medical voter favorite software pajamas talent holy presence"
+      ],
+      "bip32RootKey": "8f270ddbdb2fcc8d5597311f3e2554b18c7ca4a9df52a033faf0214978716802",
+      "allTripletsVerified": true
+    },
+    {
+      "id": "F",
+      "wordCount": 24,
+      "scheme": "3-of-5",
+      "language": "korean",
+      "entropy": "c0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedf",
+      "mnemonic": "\u110c\u1166\u110e\u116e\u11af \u1100\u1169\u1100\u116e\u11bc \u110c\u1161\u1111\u1161\u11ab \u110b\u1165\u110d\u1165\u11ab\u110c\u1175 \u1107\u1175\u11ba\u1107\u1161\u11bc\u110b\u116e\u11af \u1109\u1161\u11bc\u1112\u116a\u11bc \u1101\u1162\u1103\u1161\u11af\u110b\u1173\u11b7 \u1106\u1161\u11bc\u110b\u116f\u11ab\u1100\u1167\u11bc \u110c\u1175\u11a8\u1109\u1165\u11ab \u1109\u1165\u110c\u1165\u11a8 \u1109\u116e\u1112\u1165\u11b7\u1109\u1162\u11bc \u110b\u116f\u11af\u1109\u1166 \u1100\u1168\u1109\u1161\u11ab \u1111\u1169\u1112\u1161\u11b7 \u1107\u1165\u11b8\u110e\u1175\u11a8 \u110b\u116c\u110e\u116e\u11af \u110e\u1169\u11ba\u1107\u116e\u11af \u110c\u1165\u11bc\u110b\u116f\u11ab \u1106\u1161\u110b\u1173\u11b7 \u110c\u1162\u1108\u1161\u11af\u1105\u1175 \u110c\u1165\u11bc\u1106\u116e\u11ab \u1109\u1169\u11ab\u1102\u1167 \u1109\u1175\u11a8\u1100\u1175 \u1112\u116d\u110b\u1172\u11af\u110c\u1165\u11a8",
+      "shares": [
+        "counter pecan academic acne afraid skin clogs render guitar oral solution cricket typical nuclear prevent focus demand scatter already midst exact crazy aviation spelling year priority smear lunar pistol kidney obtain ajar flip",
+        "counter pecan academic agree agency spew lawsuit should pipeline railroad mobile grief aluminum wrap blessing primary race gross making cause traveler briefing counter stilt prize necklace bumpy traffic pupal modify nylon sled black",
+        "counter pecan academic amazing aviation hawk flip preach prisoner payroll dish junction carpet standard review diet civil pharmacy relate merchant watch priority glad ultimate scared watch survive teacher license jacket ocean photo salt",
+        "counter pecan academic arcade ambition impact adorn surface hour manager judicial device wireless quiet ajar salt phantom agency desert champion friendly paces emphasis timely moment slap always member numerous music object home meaning",
+        "counter pecan academic axle airport careful square leaf flea express photo husky gray length junction moisture diminish anatomy plunge away dominant juice focus pleasure ruler holiday fused species merchant scatter drove glance lawsuit"
+      ],
+      "bip32RootKey": "e29dd3d2d7bb45c8f07b5806320b6879c35c14a7f389d1cd6c6265ce6170a97a",
+      "allTripletsVerified": true
+    },
+    {
+      "id": "G",
+      "wordCount": 12,
+      "scheme": "3-of-5",
+      "language": "french",
+      "entropy": "707172737475767778797a7b7c7d7e7f",
+      "mnemonic": "ge\u0301latine lanterne minute taxer e\u0301paule crotale sphe\u0300re chercher honteux sucre exe\u0301cuter zoologie",
+      "shares": [
+        "frozen pregnant academic acne blanket mixture evil pipeline garlic soldier earth hamster prevent infant valid behavior thunder argue reaction check",
+        "frozen pregnant academic agree detailed smoking bumpy blind screw usher gesture alcohol divorce upgrade twice multiple clock impact texture webcam",
+        "frozen pregnant academic amazing curious saver unkind phantom scene away lend excuse library juice repair armed veteran perfect speak lizard",
+        "frozen pregnant academic arcade argue legal recover brave glad decision taste check biology wrote pancake lyrics desert style loud frozen",
+        "frozen pregnant academic axle away episode criminal unhappy floral impact march shame diploma cage literary geology segment device screw grocery"
+      ],
+      "bip32RootKey": "5615364533c79b8fd175f592e9bf28ff4c7192d2e0ae42c29baa6ce181e3e2b2",
+      "allTripletsVerified": true
+    },
+    {
+      "id": "H",
+      "wordCount": 24,
+      "scheme": "3-of-5",
+      "language": "italian",
+      "entropy": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+      "mnemonic": "abaco alogeno mitigare alogeno fenomeno affetto bravura bronzina ampio gonfio elaborato bisonte accadere nessuno europa monile autunno risibile alce criceto renna apparire mana trincea",
+      "shares": [
+        "chemical wisdom academic acne adapt emphasis anxiety center ecology obesity together analysis retailer birthday endorse prize friendly remember daisy helpful closet deploy apart liberty diagnose arcade pulse bulb entrance timber fitness forbid aviation",
+        "chemical wisdom academic agree aspect military speak august party climate program stadium involve capital educate forbid staff sunlight founder eclipse emperor expect clothes wolf response desktop crazy garlic volume vocal lily describe scramble",
+        "chemical wisdom academic amazing animal radar activity season scramble describe glance tolerate deadline smear manager ultimate scene priority review welfare beaver spend revenue hesitate resident shadow source huge erode client curly bracelet duckling",
+        "chemical wisdom academic arcade aide garlic strike treat coastal main crowd discuss therapy science marathon burden exhaust smith shadow squeeze idle pistol mustang benefit decorate upgrade equation blind vintage dining year juice victim",
+        "chemical wisdom academic axle alcohol segment priest capital traveler mortgage priority describe problem froth tofu dismiss expect avoid type script treat frequent skunk gross organize scared fiber finance ambition diploma grill prevent raisin"
+      ],
+      "bip32RootKey": "976714c3085a147980ceea56e558e02221def7acacaf3225d9a9679efcd44e6f",
+      "allTripletsVerified": true
+    },
+    {
+      "id": "I",
+      "wordCount": 12,
+      "scheme": "3-of-5",
+      "language": "spanish",
+      "entropy": "909192939495969798999a9b9c9d9e9f",
+      "mnemonic": "mismo menor o\u0301rbita canela fijo empen\u0303o gemelo clamor no\u0301mina tenso grumo dedo",
+      "shares": [
+        "junior manual academic acne armed frequent lair together magazine testify fishing cover flip western density surface pleasure laden leaves born",
+        "junior manual academic agree capacity sugar energy frost emperor shelter pickup living behavior prepare divorce season nuclear mama ambition tension",
+        "junior manual academic amazing dragon imply diminish withdraw raspy speak repeat species crush elbow valuable answer ladybug sled diagnose sidewalk",
+        "junior manual academic arcade critical video aspect energy junior warmth evaluate large gross biology wavy boundary exceed dominant rhythm easel",
+        "junior manual academic axle duke therapy rocky station club alpha aluminum spit drove ruin emerald hearing ocean aluminum laundry edge"
+      ],
+      "bip32RootKey": "6037c327e453e66eb81af041c3cb61317500f6b6131fab98f1fb76b3ec3d7df8",
+      "allTripletsVerified": true
+    },
+    {
+      "id": "J",
+      "wordCount": 24,
+      "scheme": "3-of-5",
+      "language": "japanese",
+      "entropy": "404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f",
+      "mnemonic": "\u3051\u3044\u3051\u3093\u3000\u3044\u305b\u304b\u3044\u3000\u305f\u3093\u3068\u3046\u3000\u305f\u304a\u308b\u3000\u3053\u3082\u3057\u3099\u3000\u304a\u305f\u304b\u3099\u3044\u3000\u304a\u304d\u3099\u306a\u3046\u3000\u304b\u3044\u307b\u3046\u3000\u3053\u3046\u304a\u3093\u3000\u3057\u304b\u3044\u3000\u3053\u307b\u3099\u308c\u308b\u3000\u3066\u304d\u3068\u3046\u3000\u3042\u3089\u3057\u3000\u3068\u3068\u3099\u3051\u308b\u3000\u3053\u3046\u306f\u3044\u3000\u305f\u305f\u307f\u3000\u3053\u3093\u3044\u3093\u3000\u306d\u3093\u304d\u3093\u3000\u3046\u3064\u308b\u3000\u306b\u3093\u3066\u3044\u3000\u306c\u304f\u3099\u3044\u3068\u308b\u3000\u304b\u3093\u3061\u3000\u305b\u3093\u3055\u3044\u3000\u308a\u3087\u3046\u308a",
+      "shares": [
+        "inform race academic acne angel glasses install makeup edge deny trust railroad beyond leader manager merit wolf grasp clogs weapon humidity likely dramatic blue type rumor genuine pecan response galaxy promise steady ounce",
+        "inform race academic agree acne advance timber promise mild scatter response together year priority package flip reunion graduate lair tolerate analysis impact canyon again losing loan flea camera numerous blimp preach punish species",
+        "inform race academic amazing aquatic profile slice ancient antenna profile drink item makeup extra submit beard facility drift fantasy evaluate much leaves story desktop idle bumpy robin lunch device axis presence biology destroy",
+        "inform race academic arcade album smear fumes darkness surface floral have credit guard laden slow strike beard dream amazing finger very idea watch coal bundle freshman location decision away forget pistol ladle ivory",
+        "inform race academic axle angry species detect process daughter frost pile critical regret spider stadium artist dive inside threaten ancestor theater mild enjoy magazine mobile cleanup ecology dream station curly spark rumor island"
+      ],
+      "bip32RootKey": "5de94606fa55195956a973d2e0e66f9271762fbd6029c20612186c42982ffa60",
+      "allTripletsVerified": true
+    },
+    {
+      "id": "K",
+      "wordCount": 12,
+      "scheme": "3-of-5",
+      "language": "portuguese",
+      "entropy": "b0b1b2b3b4b5b6b7b8b9babbbcbdbebf",
+      "mnemonic": "orvalho lavanda ofuscado fita errata esbanjar sucata chocalho pilhado tabuada gado imersivo",
+      "shares": [
+        "kind clay academic acne admit income alcohol moment pipeline adjust tendency season bedroom grill process lawsuit bulb pumps invasion carve",
+        "kind clay academic agree adorn bucket fortune favorite ladle window unfold body victim champion obtain rebound early submit payment jewelry",
+        "kind clay academic amazing decrease document fantasy living survive source destroy best plains theater acid preach memory decision decorate grasp",
+        "kind clay academic arcade decorate facility aunt employer anatomy crowd domestic safari evoke percent describe glen pleasure formal thorn adjust",
+        "kind clay academic axle cluster peasant profile metric dream friendly paper racism zero founder manager voting standard percent news stick"
+      ],
+      "bip32RootKey": "637f0a9e5202e9a714c05ae73bb4a8b8288252ec29d0d6d231e6708097064c63",
+      "allTripletsVerified": true
     }
   ]
 }

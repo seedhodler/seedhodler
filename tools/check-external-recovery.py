@@ -31,7 +31,6 @@ def check(condition: bool, message: str) -> None:
 def main(path: str) -> int:
     global checks
     payload = json.loads(open(path, encoding="utf-8").read())
-    english = Mnemonic("english")
 
     for vector in payload["vectors"]:
         threshold, count = (int(part) for part in vector["scheme"].split("-of-"))
@@ -53,8 +52,12 @@ def main(path: str) -> int:
                 secret.hex() == vector["entropy"],
                 f"{label}: recovered master secret is not the recorded entropy",
             )
+            # Compare under NFKD so the Japanese U+3000 separator matches a
+            # normal space on either side, whichever this library emits.
+            mnemo = Mnemonic(vector["language"])
             check(
-                english.to_mnemonic(secret) == vector["mnemonic"],
+                mnemo.normalize_string(mnemo.to_mnemonic(secret))
+                == mnemo.normalize_string(vector["mnemonic"]),
                 f"{label}: recovered entropy does not encode the recorded mnemonic",
             )
 
