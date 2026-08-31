@@ -81,6 +81,15 @@
   }
 }
 
+// A caution, not a hard error: the quality heuristic warns but never blocks, so
+// it gets its own amber line rather than the red "too short" treatment.
+.entropyWarning {
+  margin: 0.4rem 0 1.2rem;
+  font-weight: 600;
+  font-size: 14px;
+  color: #b26b00;
+}
+
 .insightsLabel {
   font-weight: 500;
   font-size: 15px;

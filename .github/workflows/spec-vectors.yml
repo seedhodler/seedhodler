@@ -46,6 +46,9 @@ jobs:
       - name: Check the entropy input conversions
         run: npx vite-node tools/check-entropy-inputs.mjs
 
+      - name: Check the entropy quality assessment
+        run: npx vite-node tools/check-entropy-quality.mjs
+
       - name: Check the app against the specification
         run: npm run --silent emit-vectors > fresh-shares.json
 
