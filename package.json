@@ -37,7 +37,8 @@
     "predeploy": "npm run build",
     "emit-vectors": "vite-node tools/check-app-conformance.mjs --emit",
     "typecheck": "tsc --noEmit",
-    "check:selfcontained": "node tools/check-no-external-refs.mjs build/index.html"
+    "check:selfcontained": "node tools/check-no-external-refs.mjs build/index.html",
+    "test:entropy": "vite-node tools/check-entropy-inputs.mjs"
   },
   "browserslist": {
     "production": [
