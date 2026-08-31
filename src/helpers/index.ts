@@ -7,7 +7,7 @@ export {
   validateMnemonic,
   mnemonicToWords,
 } from "./bip39utils"
-export { hexStringToByteArray, getEntropyFromMouse } from "./entropyUtils"
+export { hexStringToByteArray } from "./entropyUtils"
 export { getFormattedShares, restoreMnemonic, validateShare } from "./slip39utils"
 
 export { parseBigInt } from "./parseUtils"

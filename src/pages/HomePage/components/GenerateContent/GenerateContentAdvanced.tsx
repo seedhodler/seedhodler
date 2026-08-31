@@ -4,7 +4,6 @@ import CoinIcon from "src/assets/icons/Coin.svg"
 import DiceIcon from "src/assets/icons/Dice.svg"
 import NumbersIcon from "src/assets/icons/Numbers.svg"
 
-// import { Button } from "src/components/Button"
 import { BadgeTitle } from "src/components/BadgeTitle"
 import { InfoTitle } from "src/components/InfoTitle"
 import { Textarea } from "src/components/Textarea"
@@ -13,8 +12,6 @@ import variables from "src/styles/Variables.module.scss"
 
 import { EntropyValueType } from "../EntropyValueType"
 import classes from "./GenerateContent.module.scss"
-
-const entropy: number[] = []
 
 type GenerateContentAdvancedProps = {
   minBits: 128 | 256
@@ -31,37 +28,6 @@ export const GenerateContentAdvanced: React.FC<GenerateContentAdvancedProps> = (
   entropyTypeId,
   setEntropyTypeId,
 }) => {
-  // const [mousePercentage, setMousePercentage] = useState(0)
-  // const [isMouseCapture, setIsMouseCapture] = useState(false)
-
-  // const onMouseMove = useCallback(
-  //   (e: MouseEvent) =>
-  //     getEntropyFromMouse(e, minBits, entropy, setIsMouseCapture, setEntropyValue, setMousePercentage),
-  //   [minBits, setEntropyValue],
-  // )
-  // useEffect(() => {
-  //   if (!isMouseCapture) {
-  //     document.removeEventListener("mousemove", onMouseMove)
-  //   }
-  // }, [isMouseCapture, onMouseMove])
-
-  // const handleMouseEntropy = () => {
-  //   setEntropyTypeId(0)
-  //   setMousePercentage(0)
-
-  //   if (!isMouseCapture) {
-  //     setIsMouseCapture(true)
-  //     document.addEventListener("mousemove", onMouseMove)
-  //     if (entropy.length >= minBits) {
-  //       entropy.length = 0
-  //       setEntropyValue("")
-  //     }
-  //   } else {
-  //     setIsMouseCapture(false)
-  //     document.removeEventListener("mousemove", onMouseMove)
-  //   }
-  // }
-
   const handleEntropyChange = (id: number) => {
     setEntropyValue("")
     setEntropyTypeId(id)
@@ -114,12 +80,6 @@ export const GenerateContentAdvanced: React.FC<GenerateContentAdvancedProps> = (
             />
           </div>
         </div>
-        {/* <div className={classes.wrapperColumn}>
-          <InfoTitle title="Mouse" desc="Mouse __placeholder" />
-          <Button onClick={handleMouseEntropy} className={classes["mouseButton" + mousePercentage]}>
-            {isMouseCapture ? "Calculating..." : "Calculate"}
-          </Button>
-        </div> */}
       </div>
       <div className={classes.infoAndValidation}>
         <InfoTitle
