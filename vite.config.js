@@ -28,10 +28,33 @@ function buildInfo() {
   return { commit, date }
 }
 
+// The build stamp reaches the app through a virtual module instead of a define.
+// A define is a plain text substitution that vite-plugin-node-polyfills quietly
+// skips in the dev server, so the identifier stayed unreplaced there and the
+// footer could not show the commit. A virtual module is a real module the
+// bundler resolves the same way in dev and in the production build, so both
+// modes carry the real commit.
+function buildInfoPlugin() {
+  const virtualId = "virtual:build-info"
+  const resolvedId = "\0" + virtualId
+  return {
+    name: "seedhodler-build-info",
+    resolveId(id) {
+      if (id === virtualId) return resolvedId
+    },
+    load(id) {
+      if (id === resolvedId) {
+        const info = buildInfo()
+        return (
+          `export const commit = ${JSON.stringify(info.commit)}\n` +
+          `export const date = ${JSON.stringify(info.date)}\n`
+        )
+      }
+    },
+  }
+}
+
 export default defineConfig(() => ({
-  define: {
-    __BUILD_INFO__: JSON.stringify(buildInfo()),
-  },
   base: "./",
   build: {
     outDir: "build",
@@ -40,6 +63,7 @@ export default defineConfig(() => ({
     cssCodeSplit: false,
   },
   plugins: [
+    buildInfoPlugin(),
     react(),
     svgr(),
     nodePolyfills(),
