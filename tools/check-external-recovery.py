@@ -31,7 +31,6 @@ def check(condition: bool, message: str) -> None:
 def main(path: str) -> int:
     global checks
     payload = json.loads(open(path, encoding="utf-8").read())
-    english = Mnemonic("english")
 
     for vector in payload["vectors"]:
         threshold, count = (int(part) for part in vector["scheme"].split("-of-"))
@@ -54,7 +53,7 @@ def main(path: str) -> int:
                 f"{label}: recovered master secret is not the recorded entropy",
             )
             check(
-                english.to_mnemonic(secret) == vector["mnemonic"],
+                Mnemonic(vector["language"]).to_mnemonic(secret) == vector["mnemonic"],
                 f"{label}: recovered entropy does not encode the recorded mnemonic",
             )
 

@@ -19,6 +19,8 @@
 // stdout rather than to a file.
 import vectorFile from "../seedhodler-test-vectors.json"
 
+import * as bip39 from "bip39"
+
 import { mnemonicToEntropy } from "../src/helpers/bip39utils.ts"
 import { getFormattedShares, restoreMnemonic, validateShare } from "../src/helpers/slip39utils.ts"
 
@@ -45,7 +47,12 @@ const emitted = []
 
 for (const v of vectors) {
   const [threshold, count] = v.scheme.split("-of-").map(Number)
-  const label = `set ${v.id} (${v.scheme}, ${v.wordCount} words)`
+  const label = `set ${v.id} (${v.scheme}, ${v.wordCount} words, ${v.language})`
+
+  // The app's mnemonic helpers read the wordlist from bip39's global default,
+  // set during generation. The checker mirrors that: pick the vector's
+  // language before decoding or re-encoding, exactly as the app does.
+  bip39.setDefaultWordlist(v.language)
 
   // Section 4 step 1: the mnemonic must yield exactly the recorded entropy.
   check(
@@ -100,7 +107,7 @@ for (const v of vectors) {
     )
   }
 
-  emitted.push({ id: v.id, scheme: v.scheme, entropy: v.entropy, mnemonic: v.mnemonic, shares: fresh })
+  emitted.push({ id: v.id, scheme: v.scheme, language: v.language, entropy: v.entropy, mnemonic: v.mnemonic, shares: fresh })
 }
 
 if (failures.length) {
