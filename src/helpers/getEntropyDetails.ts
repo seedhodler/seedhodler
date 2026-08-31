@@ -1,4 +1,4 @@
-import { parseBigInt } from "src/helpers/index"
+import { diceToBigInt } from "src/helpers/index"
 
 export const getEntropyDetails = (entropyValue: string, minBits: number, entropyTypeId: number = 0) => {
   const regexVariants = {
@@ -13,7 +13,7 @@ export const getEntropyDetails = (entropyValue: string, minBits: number, entropy
     0: entropyTypeId === 0 ? BigInt(`0x${entropyValue || "0"}`).toString(2) : "0",
     1: entropyValue,
     // replace(/6/g, "0") - workaround to use 1-6 in dice, instead of 0-5
-    2: entropyTypeId === 2 ? parseBigInt(entropyValue.replace(/6/g, "0") || "0", 6).toString(2) : "0",
+    2: entropyTypeId === 2 ? diceToBigInt(entropyValue.replace(/6/g, "0") || "0").toString(2) : "0",
     3: entropyTypeId === 3 ? BigInt(entropyValue).toString(2) : "0",
   }
   const rawEntropyBinaryString = entropiesAsBinary[entropyTypeId as keyof typeof entropiesAsBinary]
