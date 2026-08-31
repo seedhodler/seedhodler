@@ -43,6 +43,9 @@ jobs:
       - name: Check the vectors against the specification
         run: python3 tools/check-spec-vectors.py
 
+      - name: Check the entropy input conversions
+        run: npx vite-node tools/check-entropy-inputs.mjs
+
       - name: Check the app against the specification
         run: npm run --silent emit-vectors > fresh-shares.json
 
