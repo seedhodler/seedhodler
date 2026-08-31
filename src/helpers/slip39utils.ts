@@ -1,4 +1,4 @@
-import slip39 from "slip39/src/slip39"
+import slip39 from "slip39"
 
 import { entropyToMnemonic } from "./bip39utils"
 

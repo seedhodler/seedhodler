@@ -1,4 +1,4 @@
-declare module "slip39/src/slip39"
+declare module "slip39"
 declare module "*.pdf" {
   const src: string
   export default src
