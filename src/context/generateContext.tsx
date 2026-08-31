@@ -9,18 +9,14 @@ type Context = {
   setSelectedLang: Dispatch<SetStateAction<string>> | (() => void)
   selectedWordCount: string
   setSelectedWordCount: Dispatch<SetStateAction<string>> | (() => void)
-  mnemonic12: string[]
-  setMnemonic12: Dispatch<SetStateAction<string[]>> | (() => void)
-  mnemonic24: string[]
-  setMnemonic24: Dispatch<SetStateAction<string[]>> | (() => void)
+  mnemonic: string[]
+  setMnemonic: Dispatch<SetStateAction<string[]>> | (() => void)
   isAdvanced: boolean
   setIsAdvanced: Dispatch<SetStateAction<boolean>> | (() => void)
   entropyValue: string
   setEntropyValue: Dispatch<SetStateAction<string>> | (() => void)
-  shares12: null | string[]
-  setShares12: Dispatch<SetStateAction<null | string[]>> | (() => void)
-  shares24: null | string[]
-  setShares24: Dispatch<SetStateAction<null | string[]>> | (() => void)
+  shares: null | string[]
+  setShares: Dispatch<SetStateAction<null | string[]>> | (() => void)
   activeShareItemId: number
   setActiveShareItemId: Dispatch<SetStateAction<number>> | (() => void)
   entropyTypeId: number
@@ -42,18 +38,14 @@ export const GenerateContext = createContext<Context>({
   setSelectedLang: () => { },
   selectedWordCount: "12",
   setSelectedWordCount: () => { },
-  mnemonic12: [""],
-  setMnemonic12: () => { },
-  mnemonic24: [""],
-  setMnemonic24: () => { },
+  mnemonic: [""],
+  setMnemonic: () => { },
   isAdvanced: false,
   setIsAdvanced: () => { },
   entropyValue: "",
   setEntropyValue: () => { },
-  shares12: null,
-  setShares12: () => { },
-  shares24: null,
-  setShares24: () => { },
+  shares: null,
+  setShares: () => { },
   activeShareItemId: 0,
   setActiveShareItemId: () => { },
   entropyTypeId: 0,
@@ -77,75 +69,53 @@ type ProviderProps = {
 export const GenerateContextProvider: React.FC<ProviderProps> = ({ children }) => {
   const [selectedLang, setSelectedLang] = useState(langOptions[0].value)
   const [selectedWordCount, setSelectedWordCount] = useState(wordCountOptions[0].value)
-  const [mnemonic12, setMnemonic12] = useState(new Array(12).fill(""))
-  const [mnemonic24, setMnemonic24] = useState(new Array(24).fill(""))
+  // One mnemonic and one share set. The word count lives in selectedWordCount,
+  // not in two parallel 12/24 pairs; the array is resized to match it (see the
+  // reset effect below).
+  const [mnemonic, setMnemonic] = useState<string[]>(new Array(+wordCountOptions[0].value).fill(""))
   const [isAdvanced, setIsAdvanced] = useState(false)
   const [entropyValue, setEntropyValue] = useState("")
-  const [shares12, setShares12] = useState<null | string[]>(null)
-  const [shares24, setShares24] = useState<null | string[]>(null)
+  const [shares, setShares] = useState<null | string[]>(null)
   const [activeShareItemId, setActiveShareItemId] = useState(0)
   const [entropyTypeId, setEntropyTypeId] = useState(0)
   const minBits: 128 | 256 = +selectedWordCount === 12 ? 128 : 256
   const [thresholdNumber, setThresholdNumber] = useState(3)
   const [sharesNumber, setSharesNumber] = useState(5)
-  const is12words = selectedWordCount === "12"
   const [isValidMnemonic, setIsValidMnemonic] = useState(true)
 
   const { selectedEntropyAsBinary } = getEntropyDetails(entropyValue, minBits, entropyTypeId)
   const entropyToPass = selectedEntropyAsBinary.slice(-minBits)
 
   const handleGeneratePhase = () => {
-    if (is12words) {
-      setShares12(null)
-    } else {
-      setShares24(null)
-    }
+    setShares(null)
     setActiveShareItemId(0)
 
-    const mnemonic = isAdvanced
+    const generated = isAdvanced
       ? seedFromEntropy(selectedLang, entropyToPass)
       : generateSeed(selectedLang, +selectedWordCount)
 
-    const mnemonicArr = mnemonicToWords(mnemonic)
-
-    if (is12words) {
-      setMnemonic12(mnemonicArr)
-    } else {
-      setMnemonic24(mnemonicArr)
-    }
+    setMnemonic(mnemonicToWords(generated))
   }
 
   const handleGenerateShares = () => {
     setActiveShareItemId(0)
-    const mnemonic = is12words ? mnemonic12 : mnemonic24
-
-    const mnemonicStr = mnemonic.join(" ")
-    const shares = splitSeed(mnemonicStr, { threshold: thresholdNumber, shares: sharesNumber })
-    if (is12words) {
-      setShares12(shares)
-    } else {
-      setShares24(shares)
-    }
+    const newShares = splitSeed(mnemonic.join(" "), { threshold: thresholdNumber, shares: sharesNumber })
+    setShares(newShares)
   }
 
-  // reset the mnemonic if the language changes
+  // Reset the mnemonic (and any shares derived from it) whenever the language or
+  // the word count changes: the array must match the new word count, and stale
+  // shares no longer belong to it. Declared before the advanced effect so that in
+  // advanced mode the live regeneration below runs after this and wins.
   useEffect(() => {
-    setMnemonic12(new Array(12).fill(""))
-    setMnemonic24(new Array(24).fill(""))
-  }, [selectedLang])
+    setMnemonic(new Array(+selectedWordCount).fill(""))
+    setShares(null)
+  }, [selectedLang, selectedWordCount])
 
-  // In advanced mode the mnemonic reflects the entered entropy live. This used
-  // to be a copy in HomePage that split only on U+0020, so a Japanese mnemonic
-  // came back as a single word. It belongs here with the rest of generation,
-  // and now shares the U+3000-aware split.
+  // In advanced mode the mnemonic reflects the entered entropy live.
   useEffect(() => {
     if (entropyToPass.length >= minBits) {
-      const mnemonicArr = mnemonicToWords(seedFromEntropy(selectedLang, entropyToPass))
-      if (is12words) {
-        setMnemonic12(mnemonicArr)
-      } else {
-        setMnemonic24(mnemonicArr)
-      }
+      setMnemonic(mnemonicToWords(seedFromEntropy(selectedLang, entropyToPass)))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLang, entropyToPass])
@@ -155,18 +125,14 @@ export const GenerateContextProvider: React.FC<ProviderProps> = ({ children }) =
     setSelectedLang,
     selectedWordCount,
     setSelectedWordCount,
-    mnemonic12,
-    setMnemonic12,
-    mnemonic24,
-    setMnemonic24,
+    mnemonic,
+    setMnemonic,
     isAdvanced,
     setIsAdvanced,
     entropyValue,
     setEntropyValue,
-    shares12,
-    setShares12,
-    shares24,
-    setShares24,
+    shares,
+    setShares,
     activeShareItemId,
     setActiveShareItemId,
     entropyTypeId,
