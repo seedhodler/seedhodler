@@ -10,7 +10,7 @@ export {
 export { hexStringToByteArray, getEntropyFromMouse } from "./entropyUtils"
 export { getFormattedShares, restoreMnemonic, validateShare } from "./slip39utils"
 
-export { parseBigInt } from "./parseUtils"
+export { diceToBigInt } from "./parseUtils"
 export { getEntropyDetails } from "./getEntropyDetails"
 
 export { getRandomInt, getUniqueArr } from "./randomnessUtils"
