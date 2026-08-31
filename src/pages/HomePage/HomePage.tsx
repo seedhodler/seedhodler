@@ -1,85 +1,17 @@
-import React, { lazy, Suspense, useContext, useEffect, useState } from "react"
+import React, { lazy, Suspense, useState } from "react"
 
 import GenerateIcon from "src/assets/icons/GenerateWithBg.svg"
 import RestoreIcon from "src/assets/icons/RestoreWithBg.svg"
-import { GenerateContext } from "src/context/generateContext"
-import { RestoreContext } from "src/context/restoreContext"
-import { recoverSeed, validateSeed } from "src/core"
-import { mnemonicToWords } from "src/helpers"
 
 import { Tab } from "./components/Tab"
 import classes from "./HomePage.module.scss"
 const GenerateContent = lazy(() => import("./components/GenerateContent"))
 const RestoreContent = lazy(() => import("./components/RestoreContent"))
 
+// HomePage is just the two tabs now. The generate and restore flow logic lives
+// in generateContext / restoreContext, where the state it drives already is.
 const HomePage: React.FC = () => {
   const [activeTabId, setActiveTabId] = useState(0)
-  const {
-    thresholdNumber,
-    sharesNumber,
-    mnemonic,
-    shares,
-    handleGenerateShares,
-    isValidMnemonic,
-    setIsValidMnemonic,
-  } = useContext(GenerateContext)
-  const {
-    shareLength,
-    selectedWordCount: selectedWordCountRestore,
-    enteredSharesAsString,
-    enteredShares,
-    setInfoMessage,
-    setActiveShareItemId,
-    setCurrentShare,
-    setEnteredShares,
-    setRestoredMnemonic,
-  } = useContext(RestoreContext)
-
-  // Generate effects
-  useEffect(() => {
-    if (shares && validateSeed(mnemonic.join(" "))) {
-      handleGenerateShares()
-    }
-  }, [thresholdNumber, sharesNumber, mnemonic])
-
-  useEffect(() => {
-    const isFullMnemonic = !mnemonic.some(word => word.length === 0)
-
-    if (!isFullMnemonic) {
-      setIsValidMnemonic(true)
-    }
-
-    if (isFullMnemonic && mnemonic[mnemonic.length - 1].length >= 3) {
-      setIsValidMnemonic(validateSeed(mnemonic.join(" ")))
-    }
-  }, [mnemonic])
-
-  // Restore effects
-  useEffect(() => {
-    setInfoMessage("")
-    setActiveShareItemId(0)
-    setCurrentShare(new Array(shareLength).fill(""))
-    setEnteredShares([])
-    setRestoredMnemonic(new Array(+selectedWordCountRestore).fill(""))
-  }, [shareLength, selectedWordCountRestore])
-
-  useEffect(() => {
-    if (enteredSharesAsString.length > 0) {
-      const restoreResult = recoverSeed(enteredSharesAsString)
-      if (restoreResult.error) {
-        const neededSplitNumber = Number(restoreResult.error.split(" ")[5])
-        setInfoMessage(
-          `${enteredShares.length} of ${neededSplitNumber} splits added - ${
-            neededSplitNumber - enteredShares.length
-          } splits remaining`,
-        )
-      } else {
-        //@ts-ignore
-        setRestoredMnemonic(mnemonicToWords(restoreResult.mnemonic))
-        setInfoMessage(`${enteredShares.length} of ${enteredShares.length} splits added`)
-      }
-    }
-  }, [enteredShares, enteredSharesAsString])
 
   return (
     <>
@@ -100,9 +32,15 @@ const HomePage: React.FC = () => {
         />
       </div>
       <div className={classes.tabContent}>
-        {activeTabId === 0 ? 
-        <Suspense><GenerateContent /></Suspense> :
-        <Suspense><RestoreContent /></Suspense>}
+        {activeTabId === 0 ? (
+          <Suspense>
+            <GenerateContent />
+          </Suspense>
+        ) : (
+          <Suspense>
+            <RestoreContent />
+          </Suspense>
+        )}
       </div>
     </>
   )

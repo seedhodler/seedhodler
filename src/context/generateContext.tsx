@@ -1,7 +1,7 @@
 import React, { createContext, Dispatch, SetStateAction, useEffect, useState } from "react"
 
 import { langOptions, wordCountOptions } from "src/constants/"
-import { generateSeed, seedFromEntropy, splitSeed } from "src/core"
+import { generateSeed, seedFromEntropy, splitSeed, validateSeed } from "src/core"
 import { getEntropyDetails, mnemonicToWords } from "src/helpers"
 
 type Context = {
@@ -119,6 +119,29 @@ export const GenerateContextProvider: React.FC<ProviderProps> = ({ children }) =
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLang, entropyToPass])
+
+  // When the scheme (threshold / share count) or the seed itself changes and a
+  // share set already exists, re-split so the shares stay in sync with the seed.
+  useEffect(() => {
+    if (shares && validateSeed(mnemonic.join(" "))) {
+      handleGenerateShares()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [thresholdNumber, sharesNumber, mnemonic])
+
+  // Track whether the fully entered seed is a valid BIP-39 mnemonic, for the
+  // inline validation the UI shows while a seed is being typed.
+  useEffect(() => {
+    const isFullMnemonic = !mnemonic.some(word => word.length === 0)
+
+    if (!isFullMnemonic) {
+      setIsValidMnemonic(true)
+    }
+
+    if (isFullMnemonic && mnemonic[mnemonic.length - 1].length >= 3) {
+      setIsValidMnemonic(validateSeed(mnemonic.join(" ")))
+    }
+  }, [mnemonic])
 
   const contextValue = {
     selectedLang,

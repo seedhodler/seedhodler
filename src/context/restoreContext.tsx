@@ -1,7 +1,8 @@
-import React, { createContext, Dispatch, SetStateAction, useState } from "react"
+import React, { createContext, Dispatch, SetStateAction, useEffect, useState } from "react"
 
 import { wordCountOptions } from "src/constants/"
-import { validateShare } from "src/core"
+import { recoverSeed, validateShare } from "src/core"
+import { mnemonicToWords } from "src/helpers"
 
 type Context = {
   selectedWordCount: string
@@ -58,6 +59,37 @@ export const RestoreContextProvider: React.FC<ProviderProps> = ({ children }) =>
     new Array(+selectedWordCount).fill(""),
   )
   const isFullMnemonic = restoredMnemonic.every(word => word.length > 0)
+
+  // Reset the restore workspace whenever the expected share length or word count
+  // changes: the in-progress share, the collected set, and the recovered seed no
+  // longer fit.
+  useEffect(() => {
+    setInfoMessage("")
+    setActiveShareItemId(0)
+    setCurrentShare(new Array(shareLength).fill(""))
+    setEnteredShares([])
+    setRestoredMnemonic(new Array(+selectedWordCount).fill(""))
+  }, [shareLength, selectedWordCount])
+
+  // Recover the seed from the shares entered so far. Below the threshold the
+  // SLIP-39 library reports how many more are needed; that count is parsed out
+  // of its error message for the progress line.
+  useEffect(() => {
+    if (enteredSharesAsString.length > 0) {
+      const restoreResult = recoverSeed(enteredSharesAsString)
+      if ("mnemonic" in restoreResult) {
+        setRestoredMnemonic(mnemonicToWords(restoreResult.mnemonic))
+        setInfoMessage(`${enteredShares.length} of ${enteredShares.length} splits added`)
+      } else {
+        const neededSplitNumber = Number(restoreResult.error.split(" ")[5])
+        setInfoMessage(
+          `${enteredShares.length} of ${neededSplitNumber} splits added - ${
+            neededSplitNumber - enteredShares.length
+          } splits remaining`,
+        )
+      }
+    }
+  }, [enteredShares, enteredSharesAsString])
 
   const contextValue = {
     selectedWordCount,
