@@ -8,6 +8,7 @@ import {
   getFormattedShares,
   hexStringToByteArray,
   mnemonicToEntropy,
+  mnemonicToWords,
 } from "src/helpers"
 
 type Context = {
@@ -108,16 +109,11 @@ export const GenerateContextProvider: React.FC<ProviderProps> = ({ children }) =
     }
     setActiveShareItemId(0)
 
-    let mnemonic
-    if (!isAdvanced) {
-      mnemonic = generateMnemonic(selectedLang, +selectedWordCount)
-    } else {
-      mnemonic = generateMnemonicFromEntropy(selectedLang, entropyToPass)
-    }
-    // some languages use U+0020 (space) and some use U+3000 (ideographic space)
-    const blankspaces = [" ", "　"];
-    // split the mnemonic by either blankspace
-    const mnemonicArr = mnemonic.split(new RegExp(blankspaces.join("|"), "g"))
+    const mnemonic = isAdvanced
+      ? generateMnemonicFromEntropy(selectedLang, entropyToPass)
+      : generateMnemonic(selectedLang, +selectedWordCount)
+
+    const mnemonicArr = mnemonicToWords(mnemonic)
 
     if (is12words) {
       setMnemonic12(mnemonicArr)
@@ -147,6 +143,22 @@ export const GenerateContextProvider: React.FC<ProviderProps> = ({ children }) =
     setMnemonic12(new Array(12).fill(""))
     setMnemonic24(new Array(24).fill(""))
   }, [selectedLang])
+
+  // In advanced mode the mnemonic reflects the entered entropy live. This used
+  // to be a copy in HomePage that split only on U+0020, so a Japanese mnemonic
+  // came back as a single word. It belongs here with the rest of generation,
+  // and now shares the U+3000-aware split.
+  useEffect(() => {
+    if (entropyToPass.length >= minBits) {
+      const mnemonicArr = mnemonicToWords(generateMnemonicFromEntropy(selectedLang, entropyToPass))
+      if (is12words) {
+        setMnemonic12(mnemonicArr)
+      } else {
+        setMnemonic24(mnemonicArr)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedLang, entropyToPass])
 
   const contextValue = {
     selectedLang,
