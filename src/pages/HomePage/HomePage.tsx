@@ -4,7 +4,7 @@ import GenerateIcon from "src/assets/icons/GenerateWithBg.svg"
 import RestoreIcon from "src/assets/icons/RestoreWithBg.svg"
 import { GenerateContext } from "src/context/generateContext"
 import { RestoreContext } from "src/context/restoreContext"
-import { generateMnemonicFromEntropy, restoreMnemonic, validateMnemonic } from "src/helpers"
+import { mnemonicToWords, restoreMnemonic, validateMnemonic } from "src/helpers"
 
 import { Tab } from "./components/Tab"
 import classes from "./HomePage.module.scss"
@@ -15,15 +15,10 @@ const HomePage: React.FC = () => {
   const [activeTabId, setActiveTabId] = useState(0)
   const {
     selectedWordCount: selectedWordCountGenerate,
-    entropyToPass,
-    selectedLang,
-    minBits,
     thresholdNumber,
     sharesNumber,
     mnemonic12,
-    setMnemonic12,
     mnemonic24,
-    setMnemonic24,
     shares12,
     shares24,
     handleGenerateShares,
@@ -47,18 +42,6 @@ const HomePage: React.FC = () => {
   const mnemonic = is12wordsGenerate ? mnemonic12 : mnemonic24
 
   // Generate effects
-  useEffect(() => {
-    if (entropyToPass.length >= minBits) {
-      const mnemonic = generateMnemonicFromEntropy(selectedLang, entropyToPass)
-      const mnemonicArr = mnemonic.split(" ")
-      if (is12wordsGenerate) {
-        setMnemonic12(mnemonicArr)
-      } else {
-        setMnemonic24(mnemonicArr)
-      }
-    }
-  }, [selectedLang, entropyToPass])
-
   useEffect(() => {
     if (shares && validateMnemonic(mnemonic.join(" "))) {
       handleGenerateShares()
@@ -99,7 +82,7 @@ const HomePage: React.FC = () => {
         )
       } else {
         //@ts-ignore
-        setRestoredMnemonic(restoreResult.mnemonic.split(" "))
+        setRestoredMnemonic(mnemonicToWords(restoreResult.mnemonic))
         setInfoMessage(`${enteredShares.length} of ${enteredShares.length} splits added`)
       }
     }

@@ -31,3 +31,8 @@ export const entropyToMnemonic = (entropy: Buffer) => {
 export const validateMnemonic = (mnemonic: string) => {
   return bip39.validateMnemonic(mnemonic)
 }
+
+// Most BIP-39 wordlists join words with a normal space; Japanese uses U+3000,
+// the ideographic space. Split on either so every language yields the right
+// word array. Kept in one place so no caller reinvents it and forgets U+3000.
+export const mnemonicToWords = (mnemonic: string): string[] => mnemonic.split(/[ 　]/)
