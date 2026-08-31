@@ -47,8 +47,23 @@ npm ci
 npm start
 ```
 
-Or run the container, which is what CI builds from `dev` and what you want on
-a machine with no route to the internet:
+### One file
+
+`npm run build` produces a single `build/index.html` with everything inlined:
+the JavaScript, the stylesheet, the fonts and every image. Nothing is fetched
+after the page has loaded, so it works on a machine with no route to the
+internet, and it can be opened by double-clicking it.
+
+`npm run check:selfcontained` proves that, by reading the attributes a browser
+loads from rather than grepping for URLs. CI runs it on every build.
+
+Routing goes through the location hash for the same reason. With a path-based
+router the app navigates to `/` on start, which from a file is the root of the
+filesystem, and the page is gone before anyone sees it.
+
+### Container
+
+Or run the container, which is what CI builds from `dev`:
 
 ```sh
 docker build -t seedhodler .

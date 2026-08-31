@@ -3,6 +3,5 @@ build
 .git
 .github
 _deployment
-tools
 *.md
 !README.md

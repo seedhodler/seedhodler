@@ -24,11 +24,17 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
+# Die Policy haengt am Inhalt: das Bundle ist ein inline <script>, und erlaubt
+# wird es per sha256, nicht per 'unsafe-inline'. Der Hash aendert sich mit
+# jedem Build, die Header-Datei entsteht deshalb hier und nicht im Repo.
+RUN node tools/make-csp.mjs build/index.html build/security-headers.conf \
+ && node tools/check-no-external-refs.mjs build/index.html
+
 
 FROM nginx:1.27-alpine
 
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
-COPY docker/security-headers.conf /etc/nginx/security-headers.conf
+COPY --from=build /app/build/security-headers.conf /etc/nginx/security-headers.conf
 COPY --from=build /app/build /usr/share/nginx/html
 
 EXPOSE 80
