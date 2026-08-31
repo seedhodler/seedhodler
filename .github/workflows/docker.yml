@@ -65,8 +65,14 @@ jobs:
           curl --silent --fail http://localhost:8080/ -o page.html
           grep -q "<title>Seedhodler</title>" page.html
 
-      - name: Client side routing survives a reload
-        run: curl --silent --fail http://localhost:8080/print > /dev/null
+      # Routing laeuft seit dem Single-File-Build ueber den Hash (#/print), damit
+      # die App auch aus einer Datei heraus funktioniert. Ein Pfad wie /print
+      # sagt darueber nichts mehr aus; geprueft wird stattdessen, dass nginx
+      # jeden Pfad auf das eine Dokument zurueckfallen laesst.
+      - name: Any path falls back to the one document
+        run: |
+          curl --silent --fail http://localhost:8080/print -o fallback.html
+          grep -q "<title>Seedhodler</title>" fallback.html
 
       - name: Security headers are present
         run: |
@@ -77,31 +83,21 @@ jobs:
           echo "$headers" | grep -qi "referrer-policy: no-referrer"
           echo "$headers" | grep -qi "cache-control: no-store"
 
-      # The app is meant to run with no network. Every external origin the page
-      # pulls in is a promise broken on a machine that has none, and a third
-      # party told that somebody opened this page. There are none left, and
-      # this is what keeps it that way.
-      - name: No third-party origins
-        run: |
-          found=$(grep -oE 'https?://[a-zA-Z0-9.-]+' page.html | sort -u || true)
-          if [ -n "$found" ]; then
-            echo "index.html reaches out to:"
-            echo "$found"
-            exit 1
-          fi
-          echo "index.html: no external origins"
+      # The app is meant to run with no network. This used to grep the document
+      # for "https://", which stops meaning anything once the whole bundle is
+      # inlined into it: React names reactjs.org in its error messages, a
+      # library names its licence page, the help text links to Wikipedia. None
+      # of those are fetched. The check now reads the attributes a browser
+      # actually loads from, and it also fails on a second file, which is what
+      # broke the offline promise in the first place.
+      - name: The document loads nothing, from anywhere
+        run: node tools/check-no-external-refs.mjs page.html
 
-      # Stylesheets are where a font or an icon set creeps back in.
-      - name: No third-party origins in the stylesheets
+      - name: The image really is one file
         run: |
-          docker cp seedhodler-ci:/usr/share/nginx/html/assets ./served-assets
-          found=$(cat ./served-assets/*.css | grep -oE 'https?://[a-zA-Z0-9.-]+' | sort -u || true)
-          if [ -n "$found" ]; then
-            echo "stylesheets reach out to:"
-            echo "$found"
-            exit 1
-          fi
-          echo "stylesheets: no external origins"
+          count=$(docker exec seedhodler-ci sh -c 'ls /usr/share/nginx/html/*.js /usr/share/nginx/html/assets 2>/dev/null | wc -l')
+          echo "zusaetzliche JS-Dateien oder assets/: $count"
+          [ "$count" = "0" ]
 
       - name: Stop
         if: always()
