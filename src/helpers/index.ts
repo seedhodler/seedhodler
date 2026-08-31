@@ -17,3 +17,6 @@ export type { EntropyAssessment } from "./entropyQuality"
 
 export { getRandomInt, getUniqueArr } from "./randomnessUtils"
 export { getOptions } from "./getOptions"
+
+export { buildPhraseholder } from "./phraseholder"
+export { mergePhraseholder } from "./mergePhraseholder"
