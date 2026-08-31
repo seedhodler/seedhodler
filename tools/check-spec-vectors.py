@@ -80,12 +80,17 @@ def main() -> int:
 
         # --- the vectors must be internally correct -----------------------
         mnemo = Mnemonic(lang)
+        # Japanese mnemonics are separated by U+3000, and this library's
+        # to_entropy splits on U+0020 only, seeing the whole phrase as one
+        # word. NFKD folds U+3000 to a normal space, which is exactly what
+        # BIP-39 seed derivation does anyway, so normalise before decoding.
+        phrase = mnemo.normalize_string(vec["mnemonic"])
         check(
-            mnemo.check(vec["mnemonic"]),
+            mnemo.check(phrase),
             f"{tag}: mnemonic fails its own BIP-39 checksum",
         )
         check(
-            mnemo.to_entropy(vec["mnemonic"]).hex() == vec["entropy"],
+            mnemo.to_entropy(phrase).hex() == vec["entropy"],
             f"{tag}: mnemonic does not encode the stated entropy",
         )
         check(

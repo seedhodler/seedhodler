@@ -52,8 +52,12 @@ def main(path: str) -> int:
                 secret.hex() == vector["entropy"],
                 f"{label}: recovered master secret is not the recorded entropy",
             )
+            # Compare under NFKD so the Japanese U+3000 separator matches a
+            # normal space on either side, whichever this library emits.
+            mnemo = Mnemonic(vector["language"])
             check(
-                Mnemonic(vector["language"]).to_mnemonic(secret) == vector["mnemonic"],
+                mnemo.normalize_string(mnemo.to_mnemonic(secret))
+                == mnemo.normalize_string(vector["mnemonic"]),
                 f"{label}: recovered entropy does not encode the recorded mnemonic",
             )
 
