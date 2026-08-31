@@ -1,7 +1,7 @@
 import React, { createContext, Dispatch, SetStateAction, useState } from "react"
 
 import { wordCountOptions } from "src/constants/"
-import { validateShare } from "src/helpers"
+import { validateShare } from "src/core"
 
 type Context = {
   selectedWordCount: string

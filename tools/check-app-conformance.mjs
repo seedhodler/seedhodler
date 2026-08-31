@@ -21,8 +21,8 @@ import vectorFile from "../seedhodler-test-vectors.json"
 
 import * as bip39 from "bip39"
 
-import { mnemonicToEntropy } from "../src/helpers/bip39utils.ts"
-import { getFormattedShares, restoreMnemonic, validateShare } from "../src/helpers/slip39utils.ts"
+import { mnemonicToEntropy } from "../src/core/bip39.ts"
+import { recoverSeed, splitSeed, validateShare } from "../src/core/index.ts"
 
 const { vectors } = vectorFile
 const emit = process.argv.includes("--emit")
@@ -69,7 +69,7 @@ for (const v of vectors) {
   // the entropy, these frozen shares stop producing the frozen mnemonic, and
   // every share set ever written on paper becomes unreadable by this app.
   for (const subset of subsets(v.shares, threshold)) {
-    const { mnemonic, error } = restoreMnemonic(subset)
+    const { mnemonic, error } = recoverSeed(subset)
     check(!error, `${label}: recovery from recorded shares failed: ${error}`)
     check(mnemonic === v.mnemonic, `${label}: recorded shares recovered a different mnemonic`)
   }
@@ -78,8 +78,7 @@ for (const v of vectors) {
   // fresh split cannot be compared against the recorded shares word for word.
   // What must hold is that it round-trips and that the shares have the shape
   // section 7 requires.
-  const masterSecret = Array.from(Buffer.from(v.entropy, "hex"))
-  const fresh = getFormattedShares(masterSecret, "", 1, [[threshold, count]])
+  const fresh = splitSeed(v.mnemonic, { threshold, shares: count })
 
   check(fresh.length === count, `${label}: a fresh split produced ${fresh.length} shares`)
   const expectedWords = v.wordCount === 12 ? 20 : 33
@@ -93,14 +92,14 @@ for (const v of vectors) {
   check(prefixes.size === 1, `${label}: shares of one set must share their first two words`)
 
   for (const subset of subsets(fresh, threshold)) {
-    const { mnemonic, error } = restoreMnemonic(subset)
+    const { mnemonic, error } = recoverSeed(subset)
     check(!error, `${label}: recovery from a fresh split failed: ${error}`)
     check(mnemonic === v.mnemonic, `${label}: a fresh split does not round-trip`)
   }
 
   // Below the threshold nothing may come out.
   if (threshold > 1) {
-    const { mnemonic, error } = restoreMnemonic(fresh.slice(0, threshold - 1))
+    const { mnemonic, error } = recoverSeed(fresh.slice(0, threshold - 1))
     check(
       !!error && !mnemonic,
       `${label}: ${threshold - 1} shares recovered something, threshold is ${threshold}`,
