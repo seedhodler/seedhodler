@@ -7,7 +7,7 @@ import NumbersIcon from "src/assets/icons/Numbers.svg"
 import { BadgeTitle } from "src/components/BadgeTitle"
 import { InfoTitle } from "src/components/InfoTitle"
 import { Textarea } from "src/components/Textarea"
-import { getEntropyDetails } from "src/helpers"
+import { assessEntropy, getEntropyDetails } from "src/helpers"
 import variables from "src/styles/Variables.module.scss"
 
 import { EntropyValueType } from "../EntropyValueType"
@@ -33,12 +33,10 @@ export const GenerateContentAdvanced: React.FC<GenerateContentAdvancedProps> = (
     setEntropyTypeId(id)
   }
 
-  const { selectedEntropyDetails, regex, selectedEntropyAsBinary } = getEntropyDetails(
-    entropyValue,
-    minBits,
-    entropyTypeId,
-  )
-  const isEntropyTooShort = selectedEntropyDetails.totalBits < minBits
+  // getEntropyDetails still drives the input filter (regex) and the generation
+  // path; assessEntropy owns the human-facing readout and the quality warning.
+  const { regex } = getEntropyDetails(entropyValue, minBits, entropyTypeId)
+  const quality = assessEntropy(entropyValue, entropyTypeId, minBits)
 
   return (
     <>
@@ -90,13 +88,24 @@ export const GenerateContentAdvanced: React.FC<GenerateContentAdvancedProps> = (
         <div
           className={classes.validation}
           style={{
-            backgroundColor: isEntropyTooShort ? variables.colorErrorLight : variables.colorSuccessLight,
+            backgroundColor: quality.enough ? variables.colorSuccessLight : variables.colorErrorLight,
           }}
         >
-          {isEntropyTooShort ? "Entropy is too short" : "Valid Entropy"} (
-          {`${Math.min(minBits, Math.floor(selectedEntropyDetails.totalBits))} / ${minBits}`})
+          {quality.enough
+            ? `Enough entropy: ${quality.count} ${quality.unit} (${Math.min(
+                minBits,
+                Math.floor(quality.bits),
+              )} of ${minBits} bits)`
+            : `${quality.count} ${quality.unit}: ${Math.floor(
+                quality.bits,
+              )} of ${minBits} bits, ${quality.needMore} more ${quality.unit}`}
         </div>
       </div>
+      {quality.weak && (
+        <div className={classes.entropyWarning}>
+          Weak entropy: {quality.reason}. Enter genuinely random values, not a pattern.
+        </div>
+      )}
       <Textarea
         value={entropyValue}
         onChange={setEntropyValue}
