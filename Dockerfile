@@ -22,6 +22,15 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . .
+
+# Der Build-Kontext enthaelt kein .git (siehe .dockerignore), deshalb bekommt
+# der Versionsstempel den Commit ueber Build-Argumente statt aus git. Der
+# Workflow fuellt sie; ohne sie steht "unknown" auf der Seite.
+ARG SEEDHODLER_COMMIT=
+ARG SEEDHODLER_COMMIT_DATE=
+ENV SEEDHODLER_COMMIT=$SEEDHODLER_COMMIT
+ENV SEEDHODLER_COMMIT_DATE=$SEEDHODLER_COMMIT_DATE
+
 RUN npm run build
 
 # Die Policy haengt am Inhalt: das Bundle ist ein inline <script>, und erlaubt

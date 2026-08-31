@@ -35,6 +35,9 @@ jobs:
           context: .
           load: true
           tags: seedhodler:ci
+          build-args: |
+            SEEDHODLER_COMMIT=${{ github.sha }}
+            SEEDHODLER_COMMIT_DATE=${{ github.event.head_commit.timestamp }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -120,4 +123,7 @@ jobs:
           tags: |
             ${{ env.IMAGE }}:dev
             ${{ env.IMAGE }}:dev-${{ github.sha }}
+          build-args: |
+            SEEDHODLER_COMMIT=${{ github.sha }}
+            SEEDHODLER_COMMIT_DATE=${{ github.event.head_commit.timestamp }}
           cache-from: type=gha

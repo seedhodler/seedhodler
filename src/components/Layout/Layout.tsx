@@ -11,6 +11,7 @@ import { NavFeaturedCard } from "src/components/_NavFeaturedCard"
 import { HelpModalTabs } from "src/constants"
 import { HelpModalContext } from "src/context/HelpModalContext"
 import classes from "./Layout.module.scss"
+import BuildStamp from "src/components/BuildStamp"
 
 type Props = {
   isOnline: boolean
@@ -92,6 +93,7 @@ const Layout: React.FC<Props> = ({
         <main className={classes.contentContainer}>
           <Outlet />
         </main>
+        <BuildStamp />
       </div>
     </div>
   )
