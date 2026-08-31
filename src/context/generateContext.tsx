@@ -1,15 +1,8 @@
 import React, { createContext, Dispatch, SetStateAction, useEffect, useState } from "react"
 
 import { langOptions, wordCountOptions } from "src/constants/"
-import {
-  generateMnemonic,
-  generateMnemonicFromEntropy,
-  getEntropyDetails,
-  getFormattedShares,
-  hexStringToByteArray,
-  mnemonicToEntropy,
-  mnemonicToWords,
-} from "src/helpers"
+import { generateSeed, seedFromEntropy, splitSeed } from "src/core"
+import { getEntropyDetails, mnemonicToWords } from "src/helpers"
 
 type Context = {
   selectedLang: string
@@ -110,8 +103,8 @@ export const GenerateContextProvider: React.FC<ProviderProps> = ({ children }) =
     setActiveShareItemId(0)
 
     const mnemonic = isAdvanced
-      ? generateMnemonicFromEntropy(selectedLang, entropyToPass)
-      : generateMnemonic(selectedLang, +selectedWordCount)
+      ? seedFromEntropy(selectedLang, entropyToPass)
+      : generateSeed(selectedLang, +selectedWordCount)
 
     const mnemonicArr = mnemonicToWords(mnemonic)
 
@@ -127,10 +120,7 @@ export const GenerateContextProvider: React.FC<ProviderProps> = ({ children }) =
     const mnemonic = is12words ? mnemonic12 : mnemonic24
 
     const mnemonicStr = mnemonic.join(" ")
-    const groups = [[thresholdNumber, sharesNumber]]
-    const masterSecret = hexStringToByteArray(mnemonicToEntropy(mnemonicStr))
-
-    const shares = getFormattedShares(masterSecret, "", 1, groups)
+    const shares = splitSeed(mnemonicStr, { threshold: thresholdNumber, shares: sharesNumber })
     if (is12words) {
       setShares12(shares)
     } else {
@@ -150,7 +140,7 @@ export const GenerateContextProvider: React.FC<ProviderProps> = ({ children }) =
   // and now shares the U+3000-aware split.
   useEffect(() => {
     if (entropyToPass.length >= minBits) {
-      const mnemonicArr = mnemonicToWords(generateMnemonicFromEntropy(selectedLang, entropyToPass))
+      const mnemonicArr = mnemonicToWords(seedFromEntropy(selectedLang, entropyToPass))
       if (is12words) {
         setMnemonic12(mnemonicArr)
       } else {

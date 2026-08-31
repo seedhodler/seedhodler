@@ -1,14 +1,4 @@
-export {
-  generateMnemonic,
-  generateMnemonicFromEntropy,
-  mnemonicToEntropy,
-  mnemonicToSeed,
-  entropyToMnemonic,
-  validateMnemonic,
-  mnemonicToWords,
-} from "./bip39utils"
-export { hexStringToByteArray } from "./entropyUtils"
-export { getFormattedShares, restoreMnemonic, validateShare } from "./slip39utils"
+export { mnemonicToWords } from "./mnemonicWords"
 
 export { diceToBigInt } from "./parseUtils"
 export { getEntropyDetails } from "./getEntropyDetails"

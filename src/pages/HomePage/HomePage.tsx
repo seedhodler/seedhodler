@@ -4,7 +4,8 @@ import GenerateIcon from "src/assets/icons/GenerateWithBg.svg"
 import RestoreIcon from "src/assets/icons/RestoreWithBg.svg"
 import { GenerateContext } from "src/context/generateContext"
 import { RestoreContext } from "src/context/restoreContext"
-import { mnemonicToWords, restoreMnemonic, validateMnemonic } from "src/helpers"
+import { recoverSeed, validateSeed } from "src/core"
+import { mnemonicToWords } from "src/helpers"
 
 import { Tab } from "./components/Tab"
 import classes from "./HomePage.module.scss"
@@ -43,7 +44,7 @@ const HomePage: React.FC = () => {
 
   // Generate effects
   useEffect(() => {
-    if (shares && validateMnemonic(mnemonic.join(" "))) {
+    if (shares && validateSeed(mnemonic.join(" "))) {
       handleGenerateShares()
     }
   }, [thresholdNumber, sharesNumber, mnemonic12, mnemonic24])
@@ -56,7 +57,7 @@ const HomePage: React.FC = () => {
     }
 
     if (isFullMnemonic && mnemonic[mnemonic.length - 1].length >= 3) {
-      setIsValidMnemonic(validateMnemonic(mnemonic.join(" ")))
+      setIsValidMnemonic(validateSeed(mnemonic.join(" ")))
     }
   }, [mnemonic])
 
@@ -71,10 +72,9 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     if (enteredSharesAsString.length > 0) {
-      const restoreResult = restoreMnemonic(enteredSharesAsString)
+      const restoreResult = recoverSeed(enteredSharesAsString)
       if (restoreResult.error) {
-        //@ts-ignore
-        const neededSplitNumber = restoreResult.error.split(" ")[5]
+        const neededSplitNumber = Number(restoreResult.error.split(" ")[5])
         setInfoMessage(
           `${enteredShares.length} of ${neededSplitNumber} splits added - ${
             neededSplitNumber - enteredShares.length
