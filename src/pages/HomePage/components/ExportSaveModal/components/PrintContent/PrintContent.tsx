@@ -8,8 +8,7 @@ import { Button } from "src/components/Button"
 import { TextPlace } from "src/components/TextPlace"
 import { ButtonColorsEnum } from "src/constants/index"
 
-import { pdf } from "@react-pdf/renderer"
-import { PDFTemplate } from "src/components/PDFTemplate"
+import { buildPhraseholder } from "src/helpers"
 import classes from "../../ExportSaveModal.module.scss"
 
 import { InputWrapper } from "src/components/InputWrapper"
@@ -31,9 +30,7 @@ const PrintContent: React.FC<Props> = ({
 
   const handlePrint = async () => {
     setIsCreatingPdf(true)
-    const blob = await pdf(
-      <PDFTemplate selectedWordCount={selectedWordCount} sharesNumber={sharesNumber} />,
-    ).toBlob()
+    const blob = await buildPhraseholder(selectedWordCount, sharesNumber)
 
     const fileUrl = URL.createObjectURL(blob)
     const docWindow = window.open(fileUrl, "PRINT", "height=720,width=1280")

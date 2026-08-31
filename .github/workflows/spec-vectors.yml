@@ -49,6 +49,9 @@ jobs:
       - name: Check the entropy quality assessment
         run: npx vite-node tools/check-entropy-quality.mjs
 
+      - name: Check the printable Phraseholder assembly
+        run: npx vite-node tools/check-phraseholder.mjs
+
       - name: Check the app against the specification
         run: npm run --silent emit-vectors > fresh-shares.json
 
