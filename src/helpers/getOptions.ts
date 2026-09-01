@@ -1,8 +1,12 @@
 import { OPTIONS_NUMBER, slip39wordlist } from "src/constants/index"
 import { getRandomInt, getUniqueArr } from "src/helpers"
 
-export const getOptions = (idsToPaste: number[]) => {
-  const ids = getUniqueArr(0, slip39wordlist.length - 1, OPTIONS_NUMBER)
+// Build the multiple-choice options for one verification field: OPTIONS_NUMBER
+// distractors drawn from the wordlist, with the correct words spliced in. The
+// wordlist is scheme-specific (SLIP-39 words or SSKR bytewords) and defaults to
+// SLIP-39 for existing callers.
+export const getOptions = (idsToPaste: number[], wordlist: string[] = slip39wordlist) => {
+  const ids = getUniqueArr(0, wordlist.length - 1, OPTIONS_NUMBER)
 
   const usedIndexes: number[] = []
   idsToPaste.forEach(idToPaste => {
@@ -19,5 +23,5 @@ export const getOptions = (idsToPaste: number[]) => {
     }
   })
 
-  return ids.map(id => ({ word: slip39wordlist[id], wordNumber: id, selected: false }))
+  return ids.map(id => ({ word: wordlist[id], wordNumber: id, selected: false }))
 }

@@ -164,16 +164,13 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
             </Button>
             <Button
               onClick={() => setIsExportSaveModalActive(true)}
-              disabled={!Boolean(shares) || selectedScheme === "sskr"}
+              disabled={!Boolean(shares)}
               fullWidth
               color={ButtonColorsEnum.Neutral}
             >
               Verify
             </Button>
           </div>
-          {shares && selectedScheme === "sskr" && (
-            <p className={classes.verifyNote}>Verification is available for SLIP-39 shares for now.</p>
-          )}
         </>
       ) : null
       // <div className={classes.whitespace} />
@@ -189,6 +186,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
         isExportSaveModalActive={isExportSaveModalActive}
         setIsExportSaveModalActive={setIsExportSaveModalActive}
         selectedWordCount={+selectedWordCount}
+        selectedScheme={selectedScheme}
         shares={shares!}
         sharesNumber={sharesNumber}
       />
