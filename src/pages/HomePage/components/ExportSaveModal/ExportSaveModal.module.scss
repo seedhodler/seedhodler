@@ -59,11 +59,19 @@
   margin-bottom: 3.6rem;
 }
 
+// Balanced multi-column word grid (same approach as the Shares display). The
+// column count is set inline per step (backup packs the longer 24-word shares
+// into three columns), and break-inside keeps each word box whole. Replaces a
+// fixed-height flex-wrap tuned to SLIP-39 word counts, which clipped SSKR's
+// longer bytewords shares into an overflowing, partly hidden column.
 .textPlacesContainer {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-content: space-between;
+  column-gap: 1.2rem;
+
+  > div {
+    width: 100%;
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+  }
 }
 
 .buttonsContainer {

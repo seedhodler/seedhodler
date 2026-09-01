@@ -85,9 +85,7 @@ const BackupContent: React.FC<Props> = ({
             </div>
             <div
               className={classes.textPlacesContainer}
-              style={{
-                height: selectedWordCount === 12 ? "730px" : mediaWidthWindow ? "1250px" : "805px",
-              }}
+              style={{ columnCount: selectedWordCount === 12 || mediaWidthWindow ? 2 : 3 }}
             >
               {shares[shareId].split(" ").map((word, index) => (
                 <TextPlace
@@ -95,10 +93,7 @@ const BackupContent: React.FC<Props> = ({
                   count={index + 1}
                   text={word}
                   className={classes.textPlace}
-                  style={{
-                    marginBottom: "1.2rem",
-                    width: selectedWordCount === 12 || mediaWidthWindow ? "49%" : "32%",
-                  }}
+                  style={{ marginBottom: "1.2rem" }}
                 />
               ))}
             </div>

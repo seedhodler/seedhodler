@@ -14,6 +14,8 @@ const GenerateContent: React.FC = () => {
     setSelectedLang,
     selectedWordCount,
     setSelectedWordCount,
+    selectedScheme,
+    setSelectedScheme,
     mnemonic,
     setMnemonic,
     isAdvanced,
@@ -42,6 +44,8 @@ const GenerateContent: React.FC = () => {
         setSelectedLang={setSelectedLang}
         selectedWordCount={selectedWordCount}
         setSelectedWordCount={setSelectedWordCount}
+        selectedScheme={selectedScheme}
+        setSelectedScheme={setSelectedScheme}
         isAdvanced={isAdvanced}
         setIsAdvanced={setIsAdvanced}
         setEntropyValue={setEntropyValue}

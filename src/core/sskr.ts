@@ -44,3 +44,13 @@ export const isShare = (share: string): boolean => {
     return false
   }
 }
+
+// How many shares recover the group this share belongs to (its member
+// threshold). SSKR's 5-byte header packs it into the low nibble of byte 3 as
+// threshold - 1 (the app uses a single group, so this is the whole recovery
+// count). Every share carries it, so one is enough to tell the restore UI the
+// target. Caller must pass a decodable share (see isShare).
+export const memberThreshold = (share: string): number => {
+  const bytes = fromHex(bytewords.decode(share, STANDARD))
+  return (bytes[3] & 0x0f) + 1
+}

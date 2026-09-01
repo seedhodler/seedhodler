@@ -59,11 +59,21 @@
   }
 }
 
+// Balance the words into two equal columns for any share length. SLIP-39 shares
+// are 20 or 33 words, SSKR shares 25 or 41; a fixed-height flex-wrap tuned to one
+// scheme spilled the others into a clipped third column, so let the browser
+// balance instead. The read-only display needs no DOM tab order, so column flow
+// is fine here (the restore input grid still uses an explicit two-column layout).
 .shareItemsContainer {
   margin-bottom: 2.4rem;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+  column-count: 2;
+  column-gap: 1.2rem;
+
+  .shareItem {
+    width: 100%;
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+  }
 }
 
 .shareNumberText {

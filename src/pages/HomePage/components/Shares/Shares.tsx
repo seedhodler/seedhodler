@@ -13,7 +13,6 @@ type Props = {
   shares: string[]
   activeShareItemId: number
   setActiveShareItemId: Dispatch<SetStateAction<number>>
-  selectedWordCount: number
   isRestore?: boolean
   onDelete?: () => void
 }
@@ -22,7 +21,6 @@ const Shares: React.FC<Props> = ({
   shares,
   activeShareItemId,
   setActiveShareItemId,
-  selectedWordCount,
   isRestore,
   onDelete = () => {},
 }) => {
@@ -62,18 +60,13 @@ const Shares: React.FC<Props> = ({
           </button>
         </div>
         <div className={classes.blockDivider} style={{ marginBottom: "2.4rem" }}></div>
-        <div
-          className={classes.shareItemsContainer}
-          style={{ height: selectedWordCount === 12 ? "560px" : "960px" }}
-        >
+        <div className={classes.shareItemsContainer}>
           {shares[activeShareItemId].split(" ").map((shareItem, index) => (
             <TextPlace
               key={index}
               text={shareItem}
               count={index + 1}
-              style={{
-                alignSelf: index <= (selectedWordCount === 12 ? 9 : 16) ? "flex-start" : "flex-end",
-              }}
+              className={classes.shareItem}
             />
           ))}
         </div>

@@ -93,7 +93,6 @@ const ExportSaveModal: React.FC<Props> = ({
         <VerificationContent
           shares={shares}
           sharesNumber={sharesNumber}
-          selectedWordCount={selectedWordCount}
           setCurrentStep={setCurrentStep}
           verifiedShareIds={verifiedShareIds}
           setVerifiedShareIds={setVerifiedShareIds}

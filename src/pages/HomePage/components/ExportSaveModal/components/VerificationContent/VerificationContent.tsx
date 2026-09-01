@@ -13,7 +13,6 @@ import classes from "../../ExportSaveModal.module.scss"
 type Props = {
   shares: string[]
   sharesNumber: number
-  selectedWordCount: number
   setCurrentStep: Dispatch<SetStateAction<number>>
   verifiedShareIds: number[]
   setVerifiedShareIds: Dispatch<SetStateAction<number[]>>
@@ -44,7 +43,6 @@ type Props = {
 const VerificationContent: React.FC<Props> = ({
   shares,
   sharesNumber,
-  selectedWordCount,
   setCurrentStep,
   verifiedShareIds,
   setVerifiedShareIds,
@@ -150,10 +148,7 @@ const VerificationContent: React.FC<Props> = ({
         </div>
         <ShareHeader text={`Share - ${currentShareId + 1}`} style={{ marginBottom: "1.2rem" }} />
         <div className={classes.blockDivider}></div>
-        <div
-          className={classes.textPlacesContainer}
-          style={{ height: selectedWordCount === 12 ? "560px" : "960px", marginBottom: "1.6rem" }}
-        >
+        <div className={classes.textPlacesContainer} style={{ columnCount: 2, marginBottom: "1.6rem" }}>
           {splitShareItem.map((word, index) => {
             let text = word
             const currentWordObj = closedWords.find(item => item.index === index)
@@ -167,8 +162,6 @@ const VerificationContent: React.FC<Props> = ({
                 text={text}
                 style={{
                   marginBottom: "1.2rem",
-                  width: "49%",
-                  alignSelf: index <= (selectedWordCount === 12 ? 9 : 16) ? "flex-start" : "flex-end",
                   backgroundColor:
                     currentWordObj && currentWordObj?.isActive && currentWordObj?.isError
                       ? variables.colorErrorTransparent

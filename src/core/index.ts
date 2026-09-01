@@ -71,8 +71,24 @@ export const recoverSeed = (shares: string[], passphrase = ""): RecoverResult =>
   }
 }
 
+// How many shares a set still needs to recover, or null when it can't be told
+// yet (e.g. an empty or ambiguous set). This keeps the restore UI's progress
+// line scheme-agnostic: SSKR carries the member threshold in every share header,
+// while SLIP-39 surfaces the target only through its library's own
+// below-threshold recovery error ("Expected N mnemonics ...").
+export const sharesNeeded = (shares: string[]): number | null => {
+  const scheme = detectScheme(shares)
+  if (scheme === "sskr") return sskr.memberThreshold(shares[0])
+  if (scheme !== "slip39") return null
+  const result = recoverSeed(shares)
+  if ("mnemonic" in result) return shares.length
+  const parsed = Number(result.error.split(" ")[5])
+  return Number.isFinite(parsed) ? parsed : null
+}
+
 export const validateSeed = (mnemonic: string): boolean => bip39.validateMnemonic(mnemonic)
 
-// Per-share validity for the restore UI. SLIP-39 only for now; the restore input
-// is SLIP-39-shaped until the UI grows a scheme selector (Post-v1).
-export const validateShare = (share: string): boolean => slip39.validateShare(share)
+// Per-share validity for the restore UI, per scheme: a SLIP-39 share validates
+// against the SLIP-39 library, an SSKR share must decode as valid bytewords.
+export const validateShare = (share: string, scheme: Scheme = "slip39"): boolean =>
+  scheme === "sskr" ? sskr.isShare(share) : slip39.validateShare(share)
