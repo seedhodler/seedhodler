@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react"
+import React, { Dispatch, SetStateAction, useContext, useState } from "react"
 
 import ArrowRightIcon from "src/assets/icons/ArrowRight.svg"
 import LogoIcon from "src/assets/icons/Logo.svg"
@@ -7,6 +7,7 @@ import { AdditionalInfo } from "src/components/AdditionalInfo"
 import { Button } from "src/components/Button"
 import { TextPlace } from "src/components/TextPlace"
 import { ButtonColorsEnum } from "src/constants/index"
+import { GenerateContext } from "src/context/generateContext"
 
 import { buildPhraseholder } from "src/helpers"
 import classes from "../../ExportSaveModal.module.scss"
@@ -26,11 +27,14 @@ const PrintContent: React.FC<Props> = ({
   setCurrentStep,
   sharesNumber,
 }) => {
+  const { selectedScheme } = useContext(GenerateContext)
   const [isCreatingPdf, setIsCreatingPdf] = useState(false)
 
   const handlePrint = async () => {
     setIsCreatingPdf(true)
-    const blob = await buildPhraseholder(selectedWordCount, sharesNumber)
+    // The phraseholder's share pages must match the scheme actually split, so a
+    // SSKR split prints 25/41-byteword forms, not the SLIP-39 20/33-word ones.
+    const blob = await buildPhraseholder(selectedWordCount, sharesNumber, selectedScheme)
 
     const fileUrl = URL.createObjectURL(blob)
     const docWindow = window.open(fileUrl, "PRINT", "height=720,width=1280")
