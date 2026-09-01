@@ -6,6 +6,8 @@
   "config-overrides-path": "src/config-overrides.js",
   "type": "module",
   "dependencies": {
+    "@bcts/sskr": "1.0.0-beta.6",
+    "@ngraveio/bc-ur": "1.1.13",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^13.5.0",
