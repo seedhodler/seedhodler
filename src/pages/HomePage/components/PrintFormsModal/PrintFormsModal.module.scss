@@ -7,9 +7,14 @@
 
 .intro {
   font-size: 14px;
-  color: $colorTextLight;
+  color: $colorBg700;
   margin-bottom: 2rem;
   line-height: 1.5;
+}
+
+.introLead {
+  color: $colorTextDark;
+  font-weight: $fwSemiBold;
 }
 
 .groupTitle {
@@ -94,7 +99,7 @@
 
 .rowDetail {
   font-size: 12px;
-  color: $colorTextLight;
+  color: $colorBg700;
 }
 
 .copies {
@@ -106,7 +111,7 @@
 
 .copiesLabel {
   font-size: 12px;
-  color: $colorTextLight;
+  color: $colorBg700;
 }
 
 .copiesInput {

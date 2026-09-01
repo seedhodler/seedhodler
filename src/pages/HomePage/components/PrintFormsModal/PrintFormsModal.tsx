@@ -114,8 +114,11 @@ const PrintFormsModal: React.FC<Props> = ({
     >
       <div className={classes.body}>
         <p className={classes.intro}>
-          Print the blank forms and write the words on them by hand. The forms that match your
-          current split are pre-selected; the others stay available but do not fit what you generated.
+          <strong className={classes.introLead}>Blank forms only.</strong> Your words are
+          deliberately never written into the PDF or sent to the printer. You print the empty forms
+          and fill in the words by hand, so the seed and shares never touch a file or a print job.
+          The forms matching your current split are pre-selected; the others stay available but do
+          not fit what you generated.
         </p>
 
         <p className={classes.groupTitle}>For your current split</p>
