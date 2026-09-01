@@ -86,17 +86,18 @@ jobs:
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
           path: seedtool-image.tar
-          key: bc-seedtool-${{ env.SEEDTOOL_COMMIT }}
+          key: bc-seedtool-${{ env.SEEDTOOL_COMMIT }}-${{ hashFiles('tools/seedtool.Dockerfile') }}
 
       - name: Build bc-seedtool from source (cache miss)
         if: steps.seedtool.outputs.cache-hit != 'true'
+        # Upstream's own Dockerfile is bit-rotted (focal + llvm.sh), so build with
+        # our own Dockerfile against a checkout with submodules already fetched.
         run: |
           git clone https://github.com/BlockchainCommons/seedtool-cli.git st
-          cd st
-          git checkout "$SEEDTOOL_COMMIT"
-          git submodule update --init --recursive
-          docker build -t seedtool-cli .
-          docker save seedtool-cli -o ../seedtool-image.tar
+          git -C st checkout "$SEEDTOOL_COMMIT"
+          git -C st submodule update --init --recursive
+          docker build -f tools/seedtool.Dockerfile -t seedtool-cli st
+          docker save seedtool-cli -o seedtool-image.tar
 
       - name: Load the cached bc-seedtool image
         if: steps.seedtool.outputs.cache-hit == 'true'
