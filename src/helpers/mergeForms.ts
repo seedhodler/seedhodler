@@ -14,9 +14,10 @@ export const mergeForms = async (items: FormItem[]): Promise<Uint8Array> => {
   for (const item of items) {
     if (item.copies < 1) continue
     const doc = await PDFDocument.load(item.bytes)
+    const indices = doc.getPageIndices() // copy every page, e.g. the 2-page guide
     for (let i = 0; i < item.copies; i++) {
-      const [page] = await out.copyPages(doc, [0])
-      out.addPage(page)
+      const pages = await out.copyPages(doc, indices)
+      pages.forEach(page => out.addPage(page))
     }
   }
 

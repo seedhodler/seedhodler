@@ -94,6 +94,13 @@ for (const scheme of schemes) {
     round(last.width) === round(insertSize.width) && round(last.height) === round(insertSize.height),
     `mixed selection: last page ${round(last.width)}x${round(last.height)}, want the A5 insert`,
   )
+
+  // The emergency guide is two pages, so mergeForms must copy every page of a
+  // source, not just the first; otherwise the heir gets half the guide.
+  const guideBytes = await readFile(asset("EmergencyGuide.pdf"))
+  check((await PDFDocument.load(guideBytes)).getPageCount() === 2, "emergency guide is not 2 pages")
+  const guideOut = await PDFDocument.load(await mergeForms([{ bytes: guideBytes, copies: 2 }]))
+  check(guideOut.getPageCount() === 4, `two copies of the 2-page guide: ${guideOut.getPageCount()} pages, want 4`) // prettier-ignore
 }
 
 if (failures.length) {

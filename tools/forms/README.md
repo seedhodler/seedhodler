@@ -18,6 +18,10 @@ the airgapped workflow, so keep it that way.
 | `make_shard_forms_en.py` | `ShareForm20.pdf`, `ShareForm33.pdf` | SLIP-0039 shares (20/33 words) |
 | `make_sskr_forms.py` | `ShareForm25.pdf`, `ShareForm41.pdf` | SSKR shares (25/41 bytewords) |
 | `make_beileger_en.py` | `CustodyInsert.pdf` | custody insert, A5, English only |
+| `make_steckbrief_en.py` | `WalletProfile.pdf` | wallet profile, English only |
+| `make_pruefprotokoll_en.py` | `VerificationLog.pdf` | verification log, English only |
+| `make_uebersicht_en.py` | `CustodyOverview.pdf` | custody overview, A4 landscape, English only |
+| `make_notfallanleitung_en.py` | `EmergencyGuide.pdf` | emergency and inheritance guide, 2 pages, English only |
 
 The seed form is the same for both schemes (a 12/24-word BIP-39 seed). Only the
 share form is scheme-specific: SLIP-39 word shares vs SSKR bytewords, with the
@@ -25,11 +29,15 @@ matching badge, cross-use warning and recovery notes. `make_sskr_forms.py`
 reuses the layout of `make_shard_forms_en.py` and only overrides that text, so
 the two schemes' forms stay visually identical apart from the labelling.
 
-The custody insert is the slip that goes outside each sealed envelope. It is
-deliberately neutral: no logo, no domain, no hint at the asset class, so a
-finder knows what to do but not what is worth taking. `make_beileger_en.py`
-renders the English page of the bilingual original (the German master keeps a
-German page too); the app is English, so only the English slip ships here.
+The custody documents fill out the airgapped setup: a neutral envelope insert,
+a wallet profile, a verification log, a custody overview, and an emergency and
+inheritance guide. They share `sh_brand.py` (colors, header, boxes) so the whole
+set looks like the forms. All are the English builds of German originals from
+the forms host; the app is English, so only the English versions ship here (the
+custody insert renders just the English page of a bilingual original, the rest
+are straight translations). The insert is deliberately neutral: no logo, no
+domain, no hint at the asset class, so a finder knows what to do but not what is
+worth taking.
 
 ## Regenerate
 
@@ -44,6 +52,10 @@ python3 -m venv venv
 ./venv/bin/python make_shard_forms_en.py
 ./venv/bin/python make_sskr_forms.py
 ./venv/bin/python make_beileger_en.py
+./venv/bin/python make_steckbrief_en.py
+./venv/bin/python make_pruefprotokoll_en.py
+./venv/bin/python make_uebersicht_en.py
+./venv/bin/python make_notfallanleitung_en.py
 # then copy the produced *.pdf into ../../src/assets/pdf/
 ```
 

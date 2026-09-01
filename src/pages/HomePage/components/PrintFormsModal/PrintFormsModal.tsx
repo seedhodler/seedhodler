@@ -40,7 +40,10 @@ const PrintFormsModal: React.FC<Props> = ({
     setSelected(Object.fromEntries(FORMS.map(f => [f.key, isMatch(f.key)])))
     setCopies(
       Object.fromEntries(
-        FORMS.filter(f => f.kind === "share" || f.kind === "insert").map(f => [f.key, sharesNumber]),
+        FORMS.filter(f => f.kind === "share" || f.kind === "insert").map(f => [
+          f.key,
+          f.kind === "share" || f.perEnvelope ? sharesNumber : 1,
+        ]),
       ),
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
