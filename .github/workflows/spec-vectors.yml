@@ -52,6 +52,9 @@ jobs:
       - name: Check the printable Phraseholder assembly
         run: npx vite-node tools/check-phraseholder.mjs
 
+      - name: Check the SSKR path against the specification
+        run: npx vite-node tools/check-sskr.mjs
+
       - name: Check the app against the specification
         run: npm run --silent emit-vectors > fresh-shares.json
 
