@@ -30,8 +30,10 @@ const check = (ok, message) => {
 const round = n => Math.round(n * 100) / 100
 
 const schemes = [
-  { wordCount: 12, seed: "SeedForm12.pdf", share: "ShareForm20.pdf" },
-  { wordCount: 24, seed: "SeedForm24.pdf", share: "ShareForm33.pdf" },
+  { label: "12-word SLIP-39", seed: "SeedForm12.pdf", share: "ShareForm20.pdf" },
+  { label: "24-word SLIP-39", seed: "SeedForm24.pdf", share: "ShareForm33.pdf" },
+  { label: "12-word SSKR", seed: "SeedForm12.pdf", share: "ShareForm25.pdf" },
+  { label: "24-word SSKR", seed: "SeedForm24.pdf", share: "ShareForm41.pdf" },
 ]
 
 for (const scheme of schemes) {
@@ -48,19 +50,19 @@ for (const scheme of schemes) {
 
     check(
       out.getPageCount() === 1 + sharesNumber,
-      `${scheme.wordCount}-word, ${sharesNumber} shares: page count ${out.getPageCount()}, want ${1 + sharesNumber}`,
+      `${scheme.label}, ${sharesNumber} shares: page count ${out.getPageCount()}, want ${1 + sharesNumber}`,
     )
 
     const p0 = out.getPage(0).getSize()
     check(
       round(p0.width) === round(seedSize.width) && round(p0.height) === round(seedSize.height),
-      `${scheme.wordCount}-word: page 1 size ${round(p0.width)}x${round(p0.height)}, want seed ${round(seedSize.width)}x${round(seedSize.height)}`,
+      `${scheme.label}: page 1 size ${round(p0.width)}x${round(p0.height)}, want seed ${round(seedSize.width)}x${round(seedSize.height)}`,
     )
 
     const pLast = out.getPage(out.getPageCount() - 1).getSize()
     check(
       round(pLast.width) === round(shareSize.width) && round(pLast.height) === round(shareSize.height),
-      `${scheme.wordCount}-word: share page size ${round(pLast.width)}x${round(pLast.height)}, want share ${round(shareSize.width)}x${round(shareSize.height)}`,
+      `${scheme.label}: share page size ${round(pLast.width)}x${round(pLast.height)}, want share ${round(shareSize.width)}x${round(shareSize.height)}`,
     )
   }
 }

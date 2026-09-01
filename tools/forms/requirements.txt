@@ -1,0 +1,4 @@
+# Genau die Fassungen, mit denen die beiliegenden PDFs erzeugt wurden.
+reportlab==5.0.1
+svglib==2.2.0
+pillow==12.3.0
