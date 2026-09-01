@@ -1,7 +1,7 @@
 import CSS from "csstype"
 import React, { ChangeEvent, Dispatch, SetStateAction } from "react"
 
-import { getEntropyDetails } from "src/helpers"
+import { symbolsForMinBits } from "src/helpers"
 
 import classes from "./Textarea.module.scss"
 
@@ -18,23 +18,16 @@ const Textarea: React.FC<Props> = ({ value, onChange, regex, minBits, entropyTyp
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     // Drop characters the current entropy type does not allow (each type carries
     // its own regex: hex, binary, dice, decimal) before anything measures it.
-    const newValue = regex ? e.target.value.replace(regex, "") : e.target.value
+    const filtered = regex ? e.target.value.replace(regex, "") : e.target.value
 
-    // Measure what the user just typed, for every type. The old code only used
-    // newValue for hex and fell back to the stale previous `value` for the other
-    // three, so the length cap was computed against the wrong string.
-    const { selectedEntropyDetails } = getEntropyDetails(newValue, minBits, entropyTypeId)
-
-    // Accept while the input stays within the entropy budget, and always accept a
-    // deletion so the field can be shortened even when it is already at (or over)
-    // the cap, e.g. after a word-count switch lowered minBits. The old check was
-    // `newValue < value`, a lexicographic compare that only approximated "shorter"
-    // for a backspace at the end and inverted for deletions in the middle.
-    const withinBudget = selectedEntropyDetails.totalBits <= minBits
-    const isDeletion = newValue.length < value.length
-    if (withinBudget || isDeletion) {
-      onChange(newValue)
-    }
+    // Cap by symbol count, not by a bits <= minBits budget. Dice and decimal
+    // symbols do not divide minBits evenly, so the old bit budget rejected the
+    // very symbol that would have reached enough: the field stalled one throw
+    // short of minBits forever and the seed could never be generated. Capping to
+    // the fewest symbols that carry minBits fills to just past the target and
+    // stops (a paste is truncated the same way); the entropy is trimmed to
+    // exactly minBits downstream.
+    onChange(filtered.slice(0, symbolsForMinBits(entropyTypeId, minBits)))
   }
 
   return (

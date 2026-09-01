@@ -14,7 +14,7 @@
  * inputs whose character everyone can see: all-same and short repeats must trip,
  * pseudo-random input must not.
  */
-import { assessEntropy } from "../src/helpers/entropyQuality.ts"
+import { assessEntropy, symbolsForMinBits } from "../src/helpers/entropyQuality.ts"
 
 const failures = []
 let checks = 0
@@ -79,6 +79,22 @@ for (const c of qualityCases) {
   const q = assessEntropy(c.value, c.typeId, 128)
   check(q.weak === c.weak, `weak for "${c.note}": got ${q.weak} (reason=${q.reason}), want ${c.weak}`)
   if (c.weak) check(typeof q.reason === "string" && q.reason.length > 0, `weak "${c.note}" must carry a reason`)
+}
+
+// The input caps the field at symbolsForMinBits symbols and stops there. That
+// count must be exactly the "enough" threshold: at it the assessment reports
+// enough with nothing more needed, one symbol below it does not. If they drift,
+// the field stalls short of minBits (the dice/decimal "1 more throw" bug) or
+// overshoots. Hex/binary divide evenly; dice/decimal round up by one.
+const FILLER = { 0: "a", 1: "1", 2: "3", 3: "7" }
+for (const minBits of [128, 256]) {
+  for (const typeId of [0, 1, 2, 3]) {
+    const n = symbolsForMinBits(typeId, minBits)
+    const at = assessEntropy(FILLER[typeId].repeat(n), typeId, minBits)
+    const below = assessEntropy(FILLER[typeId].repeat(n - 1), typeId, minBits)
+    check(at.enough && at.needMore === 0, `type ${typeId} @ ${minBits}: ${n} symbols should be enough`)
+    check(!below.enough, `type ${typeId} @ ${minBits}: ${n - 1} symbols should not be enough`)
+  }
 }
 
 if (failures.length) {
