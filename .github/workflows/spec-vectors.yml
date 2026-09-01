@@ -60,3 +60,51 @@ jobs:
 
       - name: Recover the app's shares without the app
         run: python3 tools/check-external-recovery.py fresh-shares.json
+
+  sskr-recovery:
+    # The SSKR counterpart to "recover without the app" (point 3). No SSKR
+    # reference is pip- or apt-installable, so we build Blockchain Commons'
+    # canonical bc-seedtool from source and recover the app's shares with it.
+    # The build is slow, so the image is cached on the pinned seedtool commit and
+    # this is its own job rather than gating the fast checks above.
+    name: Recover SSKR shares without the app
+    runs-on: ubuntu-latest
+    env:
+      SEEDTOOL_COMMIT: b79d02fb6d936921dd36c08c3994bfd155ee7288
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "20.x"
+
+      - name: Install pinned dependencies
+        run: npm ci
+
+      - name: Cache the bc-seedtool image
+        id: seedtool
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: seedtool-image.tar
+          key: bc-seedtool-${{ env.SEEDTOOL_COMMIT }}-${{ hashFiles('tools/seedtool.Dockerfile') }}
+
+      - name: Build bc-seedtool from source (cache miss)
+        if: steps.seedtool.outputs.cache-hit != 'true'
+        # Upstream's own Dockerfile is bit-rotted (focal + llvm.sh), so build with
+        # our own Dockerfile against a checkout with submodules already fetched.
+        run: |
+          git clone https://github.com/BlockchainCommons/seedtool-cli.git st
+          git -C st checkout "$SEEDTOOL_COMMIT"
+          git -C st submodule update --init --recursive
+          docker build -f tools/seedtool.Dockerfile -t seedtool-cli st
+          docker save seedtool-cli -o seedtool-image.tar
+
+      - name: Load the cached bc-seedtool image
+        if: steps.seedtool.outputs.cache-hit == 'true'
+        run: docker load -i seedtool-image.tar
+
+      - name: Emit the app's SSKR shares
+        run: npm run --silent emit-sskr > sskr-shares.json
+
+      - name: Recover them with bc-seedtool
+        run: SEEDTOOL="docker run --rm seedtool-cli" node tools/check-external-sskr-recovery.mjs sskr-shares.json
