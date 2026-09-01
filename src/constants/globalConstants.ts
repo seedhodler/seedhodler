@@ -1,2 +1,2 @@
-export const OPTIONS_NUMBER = 14
+export const OPTIONS_NUMBER = 8
 export const CLOSED_WORDS_NUMBER = 5
