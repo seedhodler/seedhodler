@@ -1,13 +1,15 @@
 import React, { createContext, Dispatch, SetStateAction, useEffect, useState } from "react"
 
 import { wordCountOptions } from "src/constants/"
-import { recoverSeed, validateShare } from "src/core"
+import { recoverSeed, type Scheme, validateShare } from "src/core"
 import { mnemonicToWords } from "src/helpers"
 
 type Context = {
   selectedWordCount: string
   setSelectedWordCount: Dispatch<SetStateAction<string>> | (() => void)
-  shareLength: 20 | 33
+  selectedScheme: Scheme
+  setSelectedScheme: Dispatch<SetStateAction<Scheme>> | (() => void)
+  shareLength: number
   currentShare: string[]
   setCurrentShare: Dispatch<SetStateAction<string[]>> | (() => void)
   isCurrentShareValid: boolean
@@ -26,7 +28,9 @@ type Context = {
 export const RestoreContext = createContext<Context>({
   selectedWordCount: "12",
   setSelectedWordCount: () => {},
-  shareLength: 20,
+  selectedScheme: "sskr",
+  setSelectedScheme: () => {},
+  shareLength: 25,
   currentShare: [""],
   setCurrentShare: () => {},
   isCurrentShareValid: false,
@@ -48,9 +52,12 @@ type ProviderProps = {
 
 export const RestoreContextProvider: React.FC<ProviderProps> = ({ children }) => {
   const [selectedWordCount, setSelectedWordCount] = useState(wordCountOptions[0].value)
-  const shareLength: 20 | 33 = selectedWordCount === "12" ? 20 : 33
+  const [selectedScheme, setSelectedScheme] = useState<Scheme>("sskr")
+  // SLIP-39: 20 words for a 12-word seed, 33 for 24. SSKR bytewords: 25 and 41.
+  const is12 = selectedWordCount === "12"
+  const shareLength = selectedScheme === "sskr" ? (is12 ? 25 : 41) : is12 ? 20 : 33
   const [currentShare, setCurrentShare] = useState<string[]>(new Array(shareLength).fill(""))
-  const isCurrentShareValid = validateShare(currentShare.join(" "))
+  const isCurrentShareValid = validateShare(currentShare.join(" "), selectedScheme)
   const [infoMessage, setInfoMessage] = useState("")
   const [enteredShares, setEnteredShares] = useState<string[][]>([])
   const [activeShareItemId, setActiveShareItemId] = useState(0)
@@ -94,6 +101,8 @@ export const RestoreContextProvider: React.FC<ProviderProps> = ({ children }) =>
   const contextValue = {
     selectedWordCount,
     setSelectedWordCount,
+    selectedScheme,
+    setSelectedScheme,
     shareLength,
     currentShare,
     setCurrentShare,

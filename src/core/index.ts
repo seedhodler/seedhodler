@@ -73,6 +73,7 @@ export const recoverSeed = (shares: string[], passphrase = ""): RecoverResult =>
 
 export const validateSeed = (mnemonic: string): boolean => bip39.validateMnemonic(mnemonic)
 
-// Per-share validity for the restore UI. SLIP-39 only for now; the restore input
-// is SLIP-39-shaped until the UI grows a scheme selector (Post-v1).
-export const validateShare = (share: string): boolean => slip39.validateShare(share)
+// Per-share validity for the restore UI, per scheme: a SLIP-39 share validates
+// against the SLIP-39 library, an SSKR share must decode as valid bytewords.
+export const validateShare = (share: string, scheme: Scheme = "slip39"): boolean =>
+  scheme === "sskr" ? sskr.isShare(share) : slip39.validateShare(share)

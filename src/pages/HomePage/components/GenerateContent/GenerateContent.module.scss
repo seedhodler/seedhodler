@@ -90,6 +90,15 @@
   color: #b26b00;
 }
 
+// The cross-use caution beneath the share-scheme selector. Amber: it is a
+// standing safety note about the chosen scheme, not an error.
+.schemeWarning {
+  margin: 0 0 2rem;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #b26b00;
+}
+
 .insightsLabel {
   font-weight: 500;
   font-size: 15px;

@@ -6,12 +6,13 @@ import { Button } from "src/components/Button"
 import { Input } from "src/components/Input"
 import { Select } from "src/components/Select"
 import { TextPlace } from "src/components/TextPlace"
-import { BadgeColorsEnum, wordCountOptions } from "src/constants"
+import { BadgeColorsEnum, schemeOptions, wordCountOptions } from "src/constants"
+import type { Scheme } from "src/core"
 import { RestoreContext } from "src/context/restoreContext"
 import { useInputRefs } from "src/hooks"
 import variables from "src/styles/Variables.module.scss"
 
-import { slip39wordlist } from "src/constants/"
+import { bytewordsList, slip39wordlist } from "src/constants/"
 import { Shares } from "../Shares"
 import classes from "./RestoreContent.module.scss"
 
@@ -19,6 +20,8 @@ const RestoreContent: React.FC = () => {
   const {
     selectedWordCount,
     setSelectedWordCount,
+    selectedScheme,
+    setSelectedScheme,
     shareLength,
     currentShare,
     setCurrentShare,
@@ -62,11 +65,11 @@ const RestoreContent: React.FC = () => {
 
   return (
     <>
-      <div className={classes.headerContainer} style={{ marginBottom: "3.6rem" }}>
+      <div className={classes.headerContainer} style={{ marginBottom: "1.2rem" }}>
         <BadgeTitle
           title="Enter Splits"
           color={BadgeColorsEnum.MainLight}
-          additionalInfo="BIP 39"
+          additionalInfo={selectedScheme === "sskr" ? "SSKR" : "SLIP-39"}
           style={{ marginBottom: 0 }}
         />
         <div className={classes.wordCountContainer}>
@@ -75,6 +78,16 @@ const RestoreContent: React.FC = () => {
             defaultValue={selectedWordCount}
             onChange={handleWordCountChange}
             options={wordCountOptions}
+          />
+        </div>
+      </div>
+      <div className={classes.headerContainer} style={{ marginBottom: "3.6rem" }}>
+        <div className={classes.wordCountContainer}>
+          <p>Share scheme:</p>
+          <Select
+            defaultValue={selectedScheme}
+            onChange={value => setSelectedScheme(value as Scheme)}
+            options={schemeOptions}
           />
         </div>
       </div>
@@ -95,7 +108,7 @@ const RestoreContent: React.FC = () => {
       </div>
       <div
         className={classes.shareContainer}
-        style={{ height: selectedWordCount === "12" ? "600px" : "1020px" }}
+        style={{ height: `${Math.ceil(shareLength / 2) * 60}px` }}
       >
         {currentShare.map((word, index) => (
           <Input
@@ -103,7 +116,7 @@ const RestoreContent: React.FC = () => {
             ref={inputRefs[index]}
             onEnter={onEnter}
             onClick={onClick}
-            wordlist={slip39wordlist}
+            wordlist={selectedScheme === "sskr" ? bytewordsList : slip39wordlist}
             count={index + 1}
             index={index}
             value={word}

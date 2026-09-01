@@ -1,7 +1,7 @@
 import React, { createContext, Dispatch, SetStateAction, useEffect, useState } from "react"
 
 import { langOptions, wordCountOptions } from "src/constants/"
-import { generateSeed, seedFromEntropy, splitSeed, validateSeed } from "src/core"
+import { generateSeed, type Scheme, seedFromEntropy, splitSeed, validateSeed } from "src/core"
 import { getEntropyDetails, mnemonicToWords } from "src/helpers"
 
 type Context = {
@@ -9,6 +9,8 @@ type Context = {
   setSelectedLang: Dispatch<SetStateAction<string>> | (() => void)
   selectedWordCount: string
   setSelectedWordCount: Dispatch<SetStateAction<string>> | (() => void)
+  selectedScheme: Scheme
+  setSelectedScheme: Dispatch<SetStateAction<Scheme>> | (() => void)
   mnemonic: string[]
   setMnemonic: Dispatch<SetStateAction<string[]>> | (() => void)
   isAdvanced: boolean
@@ -38,6 +40,8 @@ export const GenerateContext = createContext<Context>({
   setSelectedLang: () => { },
   selectedWordCount: "12",
   setSelectedWordCount: () => { },
+  selectedScheme: "sskr",
+  setSelectedScheme: () => { },
   mnemonic: [""],
   setMnemonic: () => { },
   isAdvanced: false,
@@ -69,6 +73,7 @@ type ProviderProps = {
 export const GenerateContextProvider: React.FC<ProviderProps> = ({ children }) => {
   const [selectedLang, setSelectedLang] = useState(langOptions[0].value)
   const [selectedWordCount, setSelectedWordCount] = useState(wordCountOptions[0].value)
+  const [selectedScheme, setSelectedScheme] = useState<Scheme>("sskr")
   // One mnemonic and one share set. The word count lives in selectedWordCount,
   // not in two parallel 12/24 pairs; the array is resized to match it (see the
   // reset effect below).
@@ -99,7 +104,11 @@ export const GenerateContextProvider: React.FC<ProviderProps> = ({ children }) =
 
   const handleGenerateShares = () => {
     setActiveShareItemId(0)
-    const newShares = splitSeed(mnemonic.join(" "), { threshold: thresholdNumber, shares: sharesNumber })
+    const newShares = splitSeed(mnemonic.join(" "), {
+      scheme: selectedScheme,
+      threshold: thresholdNumber,
+      shares: sharesNumber,
+    })
     setShares(newShares)
   }
 
@@ -148,6 +157,8 @@ export const GenerateContextProvider: React.FC<ProviderProps> = ({ children }) =
     setSelectedLang,
     selectedWordCount,
     setSelectedWordCount,
+    selectedScheme,
+    setSelectedScheme,
     mnemonic,
     setMnemonic,
     isAdvanced,
