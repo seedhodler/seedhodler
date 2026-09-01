@@ -15,8 +15,8 @@
 import * as bip39 from "bip39"
 
 import vectorFile from "../seedhodler-test-vectors.json"
-import { detectScheme, recoverSeed, splitSeed, validateShare } from "../src/core/index.ts"
-import { isShare } from "../src/core/sskr.ts"
+import { detectScheme, recoverSeed, sharesNeeded, splitSeed, validateShare } from "../src/core/index.ts"
+import { isShare, memberThreshold } from "../src/core/sskr.ts"
 
 const { vectors } = vectorFile
 const emit = process.argv.includes("--emit")
@@ -83,6 +83,24 @@ for (const v of vectors) {
     check(
       !!result.error,
       `${label}: ${threshold - 1} SSKR shares recovered something, threshold is ${threshold}`,
+    )
+  }
+
+  // The recovery target is readable from a share header (member threshold) so
+  // the restore UI can show accurate progress below the threshold, not NaN.
+  // Every share must carry it, and sharesNeeded must agree for any subset.
+  for (const [i, share] of shares.entries()) {
+    check(
+      memberThreshold(share) === threshold,
+      `${label}: SSKR share ${i + 1} header threshold ${memberThreshold(share)} != ${threshold}`,
+    )
+  }
+  for (let take = 1; take <= threshold; take++) {
+    check(
+      sharesNeeded(shares.slice(0, take)) === threshold,
+      `${label}: sharesNeeded of ${take} SSKR shares is ${sharesNeeded(
+        shares.slice(0, take),
+      )}, expected ${threshold}`,
     )
   }
 

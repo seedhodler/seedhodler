@@ -1,7 +1,7 @@
 import React, { createContext, Dispatch, SetStateAction, useEffect, useState } from "react"
 
 import { wordCountOptions } from "src/constants/"
-import { recoverSeed, type Scheme, validateShare } from "src/core"
+import { recoverSeed, type Scheme, sharesNeeded, validateShare } from "src/core"
 import { mnemonicToWords } from "src/helpers"
 
 type Context = {
@@ -79,8 +79,9 @@ export const RestoreContextProvider: React.FC<ProviderProps> = ({ children }) =>
   }, [shareLength, selectedWordCount])
 
   // Recover the seed from the shares entered so far. Below the threshold the
-  // SLIP-39 library reports how many more are needed; that count is parsed out
-  // of its error message for the progress line.
+  // core reports how many more are needed (per scheme) for the progress line;
+  // when that count can't be told yet, fall back to a plain count so the line
+  // never shows a bogus number.
   useEffect(() => {
     if (enteredSharesAsString.length > 0) {
       const restoreResult = recoverSeed(enteredSharesAsString)
@@ -88,11 +89,13 @@ export const RestoreContextProvider: React.FC<ProviderProps> = ({ children }) =>
         setRestoredMnemonic(mnemonicToWords(restoreResult.mnemonic))
         setInfoMessage(`${enteredShares.length} of ${enteredShares.length} splits added`)
       } else {
-        const neededSplitNumber = Number(restoreResult.error.split(" ")[5])
+        const neededSplitNumber = sharesNeeded(enteredSharesAsString)
         setInfoMessage(
-          `${enteredShares.length} of ${neededSplitNumber} splits added - ${
-            neededSplitNumber - enteredShares.length
-          } splits remaining`,
+          neededSplitNumber
+            ? `${enteredShares.length} of ${neededSplitNumber} splits added - ${
+                neededSplitNumber - enteredShares.length
+              } splits remaining`
+            : `${enteredShares.length} splits added`,
         )
       }
     }
