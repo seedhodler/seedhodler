@@ -60,20 +60,13 @@ const PrintContent: React.FC<Props> = ({
               <p className={classes.titleInfo}>Seed Phrase</p>
               <AdditionalInfo info="BIP 39" className={classes.additionalInfo} />
             </div>
-            <div
-              className={classes.textPlacesContainer}
-              style={{ height: selectedWordCount === 12 ? "430px" : "860px" }}
-            >
+            <div className={classes.textPlacesContainer} style={{ columnCount: 2 }}>
               {mnemonic.map((word, index) => (
                 <TextPlace
                   key={index}
                   text={word}
                   count={index + 1}
                   className={classes.textPlace}
-                  style={{
-                    width: "49%",
-                    alignSelf: index <= (selectedWordCount === 12 ? 5 : 11) ? "flex-start" : "flex-end",
-                  }}
                 />
               ))}
             </div>
