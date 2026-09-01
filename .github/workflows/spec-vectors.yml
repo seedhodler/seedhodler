@@ -49,8 +49,8 @@ jobs:
       - name: Check the entropy quality assessment
         run: npx vite-node tools/check-entropy-quality.mjs
 
-      - name: Check the printable Phraseholder assembly
-        run: npx vite-node tools/check-phraseholder.mjs
+      - name: Check the printable forms assembly
+        run: npx vite-node tools/check-forms.mjs
 
       - name: Check the SSKR path against the specification
         run: npx vite-node tools/check-sskr.mjs

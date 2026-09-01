@@ -1,9 +1,9 @@
-# Phraseholder forms
+# Print forms
 
-The printable Phraseholder is assembled at runtime from blank form PDFs bundled
-in `src/assets/pdf/` (see `src/helpers/phraseholder.ts`). This directory holds
-the generator that produces those PDFs, so the assets are reproducible rather
-than opaque binaries.
+The printable backup forms are assembled at runtime from blank form PDFs bundled
+in `src/assets/pdf/` (see `src/helpers/forms.ts`). This directory holds the
+generator that produces those PDFs, so the assets are reproducible rather than
+opaque binaries.
 
 The forms are vector PDFs drawn with [reportlab]; the Seedhodler logo is embedded
 from `Logo.svg` via svglib. No secret is ever drawn into a form: they are blank

@@ -1,5 +1,5 @@
 import * as bip39 from "bip39"
-import React, { Dispatch, SetStateAction, useState } from "react"
+import React, { Dispatch, SetStateAction, useContext, useState } from "react"
 
 import { BadgeTitle } from "src/components/BadgeTitle"
 import { Button } from "src/components/Button"
@@ -7,9 +7,11 @@ import { Calc } from "src/components/Calc"
 import { InfoTitle } from "src/components/InfoTitle"
 import { Input } from "src/components/Input"
 import { BadgeColorsEnum, ButtonColorsEnum } from "src/constants/index"
+import { GenerateContext } from "src/context/generateContext"
 import { useInputRefs } from "src/hooks"
 
 import { ExportSaveModal } from "../ExportSaveModal"
+import { PrintFormsModal } from "../PrintFormsModal"
 import { Shares } from "../Shares"
 import classes from "./GenerateContent.module.scss"
 
@@ -44,7 +46,9 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
   handleGenerateShares,
   isValidMnemonic,
 }) => {
+  const { selectedScheme } = useContext(GenerateContext)
   const [isExportSaveModalActive, setIsExportSaveModalActive] = useState(false)
+  const [isPrintModalActive, setIsPrintModalActive] = useState(false)
   const inputRefs = useInputRefs(+selectedWordCount)
   const isSomeEmptyWord = mnemonic.some(word => word.length === 0)
 
@@ -149,23 +153,42 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
               setActiveShareItemId={setActiveShareItemId}
             />
           )}
-          <Button
-            onClick={() => setIsExportSaveModalActive(true)}
-            disabled={!Boolean(shares)}
-            fullWidth
-            color={ButtonColorsEnum.Success}
-          >
-            Print and verify
-          </Button>
+          <div className={classes.actionRow}>
+            <Button
+              onClick={() => setIsPrintModalActive(true)}
+              disabled={!Boolean(shares)}
+              fullWidth
+              color={ButtonColorsEnum.Success}
+            >
+              Print
+            </Button>
+            <Button
+              onClick={() => setIsExportSaveModalActive(true)}
+              disabled={!Boolean(shares) || selectedScheme === "sskr"}
+              fullWidth
+              color={ButtonColorsEnum.Neutral}
+            >
+              Verify
+            </Button>
+          </div>
+          {shares && selectedScheme === "sskr" && (
+            <p className={classes.verifyNote}>Verification is available for SLIP-39 shares for now.</p>
+          )}
         </>
       ) : null
       // <div className={classes.whitespace} />
       }
+      <PrintFormsModal
+        isActive={isPrintModalActive}
+        setIsActive={setIsPrintModalActive}
+        selectedWordCount={+selectedWordCount}
+        selectedScheme={selectedScheme}
+        sharesNumber={sharesNumber}
+      />
       <ExportSaveModal
         isExportSaveModalActive={isExportSaveModalActive}
         setIsExportSaveModalActive={setIsExportSaveModalActive}
         selectedWordCount={+selectedWordCount}
-        mnemonic={mnemonic}
         shares={shares!}
         sharesNumber={sharesNumber}
       />

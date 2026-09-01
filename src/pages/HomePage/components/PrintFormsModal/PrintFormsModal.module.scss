@@ -1,0 +1,121 @@
+@import "src/styles/Variables.module.scss";
+
+.body {
+  display: flex;
+  flex-direction: column;
+}
+
+.intro {
+  font-size: 14px;
+  color: $colorTextLight;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.groupTitle {
+  font-size: 13px;
+  font-weight: $fwSemiBold;
+  color: $colorTextDark;
+  margin-bottom: 1rem;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2.4rem;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  padding: 1.4rem 1.6rem;
+  border-radius: $radii;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: $transAll;
+}
+
+// The forms that fit the current split: accent border and tint, drawn forward.
+.rowMatch {
+  background-color: $colorSuccessLightest;
+  border-color: $colorSuccess;
+
+  .rowDetail {
+    color: $colorSuccessDark;
+  }
+}
+
+// Valid but not matching the current split: muted, still selectable.
+.rowOther {
+  background-color: $colorBg200;
+
+  .rowLabel,
+  .rowDetail {
+    color: $colorBg700;
+  }
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  accent-color: $colorSuccess;
+  cursor: pointer;
+}
+
+.rowText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1 1 auto;
+}
+
+.rowLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 14px;
+  font-weight: $fwSemiBold;
+  color: $colorTextDark;
+}
+
+.matchBadge {
+  font-size: 10px;
+  font-weight: $fwSemiBold;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: $colorSuccessDark;
+  background-color: $colorSuccessLight;
+  padding: 0.2rem 0.6rem;
+  border-radius: $radiiSmallest;
+}
+
+.rowDetail {
+  font-size: 12px;
+  color: $colorTextLight;
+}
+
+.copies {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex: 0 0 auto;
+}
+
+.copiesLabel {
+  font-size: 12px;
+  color: $colorTextLight;
+}
+
+.copiesInput {
+  width: 48px;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid $colorBg670;
+  border-radius: $radiiSmall;
+  background-color: $colorBg100;
+  font-size: 13px;
+  color: $colorTextDark;
+  text-align: center;
+}
