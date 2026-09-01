@@ -40,6 +40,19 @@ python3 -m venv venv
 ```
 
 `pdftotext` (poppler) is used only for a post-build sanity print (word count, and
-a guard that no em/en dashes crept in).
+a guard that no em/en dashes crept in). It must be installed (`poppler-utils`);
+without it the scripts still write the PDF but report an error instead of the
+"Dashes: keine" line.
+
+## Reproducibility
+
+`make_sskr_forms.py` builds with reportlab's `invariant=1`, so it pins the date
+and document id and two runs produce byte-identical PDFs: the committed
+`ShareForm25.pdf` / `ShareForm41.pdf` are reproducible from this script (verify
+with `sha256sum`). The upstream `make_seed_forms.py` and `make_shard_forms_en.py`
+do not set `invariant` yet, so their committed PDFs carry the build timestamp
+they were generated with; regenerating them deterministically is a small pending
+cleanup. Reportlab otherwise draws deterministically, so apart from `/CreationDate`,
+`/ModDate` and `/ID` two runs are identical.
 
 [reportlab]: https://pypi.org/project/reportlab/

@@ -1,0 +1,5 @@
+# generator build artifacts
+__pycache__/
+venv/
+# forms are generated here, then copied into ../../src/assets/pdf/
+*.pdf

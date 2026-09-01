@@ -137,7 +137,9 @@ def main():
     import subprocess
     logo = svg2rlg(LOGO)
     for woerter, datei in DATEIEN.items():
-        c = canvas.Canvas(datei, pagesize=A4)
+        # invariant: fixed date and document id, so two runs are byte-identical
+        # and the committed PDF is reproducible from this script.
+        c = canvas.Canvas(datei, pagesize=A4, invariant=1)
         seed_len = 24 if woerter == 41 else 12
         c.setTitle("Seedhodler SSKR Share Form (%d bytewords, %d-word seed)" % (woerter, seed_len))
         blatt(c, woerter, logo)
