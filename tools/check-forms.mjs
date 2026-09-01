@@ -71,6 +71,31 @@ for (const scheme of schemes) {
   }
 }
 
+// The custody insert is an optional A5 add-on the picker appends after the
+// forms, one per envelope. Prove it is a single A5 page and that a mixed
+// selection assembles in order with the right per-page sizes.
+{
+  const insertBytes = await readFile(asset("CustodyInsert.pdf"))
+  const insertSize = (await PDFDocument.load(insertBytes)).getPage(0).getSize()
+  // A5 portrait is ~420x595 pts, and smaller than the A4 forms (595x842).
+  check(Math.round(insertSize.width) === 420 && Math.round(insertSize.height) === 595, `custody insert is not A5: ${round(insertSize.width)}x${round(insertSize.height)}`) // prettier-ignore
+
+  const seedBytes = await readFile(asset("SeedForm12.pdf"))
+  const shareBytes = await readFile(asset("ShareForm25.pdf"))
+  const merged = await mergeForms([
+    { bytes: seedBytes, copies: 1 },
+    { bytes: shareBytes, copies: 3 },
+    { bytes: insertBytes, copies: 3 },
+  ])
+  const out = await PDFDocument.load(merged)
+  check(out.getPageCount() === 7, `mixed selection: ${out.getPageCount()} pages, want 7`)
+  const last = out.getPage(6).getSize()
+  check(
+    round(last.width) === round(insertSize.width) && round(last.height) === round(insertSize.height),
+    `mixed selection: last page ${round(last.width)}x${round(last.height)}, want the A5 insert`,
+  )
+}
+
 if (failures.length) {
   console.error(`FAIL: ${failures.length} of ${checks} checks failed:`)
   for (const f of failures) console.error("  - " + f)

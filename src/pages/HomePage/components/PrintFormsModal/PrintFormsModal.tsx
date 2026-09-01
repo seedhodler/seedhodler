@@ -38,7 +38,11 @@ const PrintFormsModal: React.FC<Props> = ({
   useEffect(() => {
     if (!isActive) return
     setSelected(Object.fromEntries(FORMS.map(f => [f.key, isMatch(f.key)])))
-    setCopies(Object.fromEntries(FORMS.filter(f => f.kind === "share").map(f => [f.key, sharesNumber])))
+    setCopies(
+      Object.fromEntries(
+        FORMS.filter(f => f.kind === "share" || f.kind === "insert").map(f => [f.key, sharesNumber]),
+      ),
+    )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isActive, matching, sharesNumber])
 
@@ -53,7 +57,7 @@ const PrintFormsModal: React.FC<Props> = ({
     // Seed pages first, then share pages: FORMS is ordered that way, so keep it.
     const selection: FormSelection[] = FORMS.filter(f => selected[f.key]).map(f => ({
       key: f.key,
-      copies: f.kind === "share" ? copies[f.key] ?? 1 : 1,
+      copies: f.kind === "share" || f.kind === "insert" ? copies[f.key] ?? 1 : 1,
     }))
     const blob = await buildForms(selection)
     const fileUrl = URL.createObjectURL(blob)
@@ -84,7 +88,7 @@ const PrintFormsModal: React.FC<Props> = ({
           </span>
           <span className={classes.rowDetail}>{form.detail}</span>
         </span>
-        {form.kind === "share" && selected[key] && (
+        {(form.kind === "share" || form.kind === "insert") && selected[key] && (
           <span className={classes.copies}>
             <span className={classes.copiesLabel}>copies</span>
             <input
@@ -102,7 +106,8 @@ const PrintFormsModal: React.FC<Props> = ({
   }
 
   const matchKeys = FORMS.filter(f => isMatch(f.key)).map(f => f.key)
-  const otherKeys = FORMS.filter(f => !isMatch(f.key)).map(f => f.key)
+  const otherFormKeys = FORMS.filter(f => f.kind !== "insert" && !isMatch(f.key)).map(f => f.key)
+  const insertKeys = FORMS.filter(f => f.kind === "insert").map(f => f.key)
 
   return (
     <Modal
@@ -125,7 +130,10 @@ const PrintFormsModal: React.FC<Props> = ({
         <div className={classes.group}>{matchKeys.map(row)}</div>
 
         <p className={classes.groupTitle}>Other forms</p>
-        <div className={classes.group}>{otherKeys.map(row)}</div>
+        <div className={classes.group}>{otherFormKeys.map(row)}</div>
+
+        <p className={classes.groupTitle}>Custody inserts</p>
+        <div className={classes.group}>{insertKeys.map(row)}</div>
 
         <Button onClick={handlePrint} disabled={!anySelected || isBuilding} fullWidth>
           {isBuilding ? "Preparing..." : "Print selected"}
