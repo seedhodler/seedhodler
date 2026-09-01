@@ -1,10 +1,11 @@
 /**
- * Pin down the printable Phraseholder assembly.
+ * Pin down the printable forms assembly.
  *
- *   npx vite-node tools/check-phraseholder.mjs
+ *   npx vite-node tools/check-forms.mjs
  *
- * mergePhraseholder copies the v3.0 form PDFs into one document: the seed form,
- * then one share form per share, each on its own page. The user prints this and
+ * mergeForms copies the v3.0 form PDFs into one document: here the seed form,
+ * then one share form per share, each on its own page (the same shape the print
+ * dialog produces when both matching forms are selected). The user prints this and
  * writes the words by hand, so the one thing that must never regress is the page
  * count and that the right forms are used for the scheme. A silent bug (all
  * shares on one page, a missing sheet) means a backup that cannot be written.
@@ -16,7 +17,7 @@ import { readFile } from "node:fs/promises"
 import { fileURLToPath } from "node:url"
 import { PDFDocument } from "pdf-lib"
 
-import { mergePhraseholder } from "../src/helpers/mergePhraseholder.ts"
+import { mergeForms } from "../src/helpers/mergeForms.ts"
 
 const asset = name => fileURLToPath(new URL(`../src/assets/pdf/${name}`, import.meta.url))
 
@@ -45,7 +46,10 @@ for (const scheme of schemes) {
   const shareSize = (await PDFDocument.load(shareBytes)).getPage(0).getSize()
 
   for (const sharesNumber of [1, 2, 3, 5, 8]) {
-    const merged = await mergePhraseholder(seedBytes, shareBytes, sharesNumber)
+    const merged = await mergeForms([
+      { bytes: seedBytes, copies: 1 },
+      { bytes: shareBytes, copies: sharesNumber },
+    ])
     const out = await PDFDocument.load(merged)
 
     check(
@@ -72,4 +76,4 @@ if (failures.length) {
   for (const f of failures) console.error("  - " + f)
   process.exit(1)
 }
-console.log(`OK: ${checks} checks passed, Phraseholder assembles the right pages`)
+console.log(`OK: ${checks} checks passed, forms assemble into the right pages`)

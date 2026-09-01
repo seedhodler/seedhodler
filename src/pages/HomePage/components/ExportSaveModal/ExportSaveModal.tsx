@@ -4,17 +4,20 @@ import { Modal } from "src/components/Modal"
 import { BadgeColorsEnum, CLOSED_WORDS_NUMBER, slip39wordlist } from "src/constants"
 import { getOptions, getUniqueArr } from "src/helpers/index"
 
-import { BackupContent } from "./components/BackupContent"
-import { PrintContent } from "./components/PrintContent"
-import { VerificationContent } from "./components/VerificationContent"; //TODO remove component in future if its not nessesary
-// import { SuccessContent } from "./components/SuccessContent"
+import { VerificationContent } from "./components/VerificationContent"
 import { CompleteScreen } from "./components/CompleteScreen"
+
+// The verification modal (reached from the "Verify" button). Printing blank forms
+// is a separate flow now (PrintFormsModal); this modal only walks the user through
+// checking, share by share, that the words were written down correctly, then the
+// completion screen. Verification is SLIP-39 only for now: it builds its
+// multiple-choice options from the SLIP-39 wordlist, so the Verify button is
+// disabled for SSKR splits upstream.
 
 type Props = {
   isExportSaveModalActive: boolean
   setIsExportSaveModalActive: Dispatch<SetStateAction<boolean>>
   selectedWordCount: number
-  mnemonic: string[]
   shares: string[]
   sharesNumber: number
 }
@@ -23,12 +26,10 @@ const ExportSaveModal: React.FC<Props> = ({
   isExportSaveModalActive,
   setIsExportSaveModalActive,
   selectedWordCount,
-  mnemonic,
   shares,
   sharesNumber,
 }) => {
   const [currentStep, setCurrentStep] = useState(0)
-  const [shareId, setShareId] = useState(0)
   const [verifiedShareIds, setVerifiedShareIds] = useState<number[]>([])
 
   const splitShares = shares?.map(share => share.split(" "))
@@ -56,36 +57,21 @@ const ExportSaveModal: React.FC<Props> = ({
     ),
   )
 
+  // Step 0 is the verification itself, step 1 the completion screen. Back from
+  // the first share would step below 0; there is no earlier step now, so close.
+  const guardedSetStep: Dispatch<SetStateAction<number>> = updater => {
+    setCurrentStep(prev => {
+      const next = typeof updater === "function" ? (updater as (p: number) => number)(prev) : updater
+      if (next < 0) {
+        setIsExportSaveModalActive(false)
+        return prev
+      }
+      return next
+    })
+  }
+
   const componentsInfo = {
     0: {
-      title: "Print - Seedhodler Phraseholder",
-      isSuccess: false,
-      badgeColor: BadgeColorsEnum.SuccessLight,
-      Component: (
-        <PrintContent
-          selectedWordCount={selectedWordCount}
-          mnemonic={mnemonic}
-          sharesNumber={sharesNumber}
-          setCurrentStep={setCurrentStep}
-        />
-      ),
-    },
-    1: {
-      title: "Backup",
-      isSuccess: false,
-      badgeColor: BadgeColorsEnum.Main,
-      Component: (
-        <BackupContent
-          shares={shares}
-          setCurrentStep={setCurrentStep}
-          selectedWordCount={selectedWordCount}
-          sharesNumber={sharesNumber}
-          shareId={shareId}
-          setShareId={setShareId}
-        />
-      ),
-    },
-    2: {
       title: "Verification",
       isSuccess: false,
       badgeColor: BadgeColorsEnum.Main,
@@ -93,7 +79,7 @@ const ExportSaveModal: React.FC<Props> = ({
         <VerificationContent
           shares={shares}
           sharesNumber={sharesNumber}
-          setCurrentStep={setCurrentStep}
+          setCurrentStep={guardedSetStep}
           verifiedShareIds={verifiedShareIds}
           setVerifiedShareIds={setVerifiedShareIds}
           allClosedWords={allClosedWords}
@@ -103,12 +89,10 @@ const ExportSaveModal: React.FC<Props> = ({
         />
       ),
     },
-    3: {
+    1: {
       title: "Congratulations",
       isSuccess: true,
       badgeColor: BadgeColorsEnum.Success,
-      // TODO uncomment if SuccessContent component used
-      // Component: <SuccessContent setIsExportSaveModalActive={setIsExportSaveModalActive} />,
       Component: <CompleteScreen setIsExportSaveModalActive={setIsExportSaveModalActive} />,
     },
   }
@@ -117,13 +101,12 @@ const ExportSaveModal: React.FC<Props> = ({
   useEffect(() => {
     if (isExportSaveModalActive) {
       setCurrentStep(0)
-      setShareId(0)
+      setVerifiedShareIds([])
     }
   }, [isExportSaveModalActive])
 
   useEffect(() => {
     setVerifiedShareIds([])
-    setShareId(0)
 
     const newClosedWords = splitShares?.map(splitShare =>
       getUniqueArr(0, maxId, CLOSED_WORDS_NUMBER)
@@ -153,12 +136,14 @@ const ExportSaveModal: React.FC<Props> = ({
       title={currentComponentInfo.title}
       isActive={isExportSaveModalActive}
       isSuccess={currentComponentInfo.isSuccess}
-      isConfetti={currentStep === 3}
+      isConfetti={currentStep === 1}
       setIsActive={setIsExportSaveModalActive}
       badgeColor={currentComponentInfo.badgeColor}
       style={{ height: "auto" }}
     >
-      {currentComponentInfo.Component}
+      {/* Verification does real work over the shares on mount, so only build it
+          once the modal is actually opened on an existing split. */}
+      {isExportSaveModalActive && shares ? currentComponentInfo.Component : <></>}
     </Modal>
   )
 }
