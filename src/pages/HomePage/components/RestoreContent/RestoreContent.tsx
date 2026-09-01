@@ -161,7 +161,6 @@ const RestoreContent: React.FC = () => {
           <Shares
             isRestore
             shares={enteredSharesAsString}
-            selectedWordCount={+selectedWordCount}
             activeShareItemId={activeShareItemId}
             setActiveShareItemId={setActiveShareItemId}
             onDelete={handleDeleteShare}

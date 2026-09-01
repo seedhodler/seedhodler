@@ -147,7 +147,6 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
               shares={shares}
               activeShareItemId={activeShareItemId}
               setActiveShareItemId={setActiveShareItemId}
-              selectedWordCount={+selectedWordCount}
             />
           )}
           <Button
