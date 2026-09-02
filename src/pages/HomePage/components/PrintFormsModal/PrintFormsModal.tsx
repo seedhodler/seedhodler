@@ -15,6 +15,10 @@ type Props = {
   selectedScheme: Scheme
   sharesNumber: number
   onPrinted?: () => void
+  // When given, open with exactly these forms pre-selected instead of the full
+  // set matching the split (used by the seed print icon to pre-select just the
+  // seed form). The others stay available, only the initial ticks differ.
+  initialSelection?: FormKey[]
 }
 
 const PrintFormsModal: React.FC<Props> = ({
@@ -24,6 +28,7 @@ const PrintFormsModal: React.FC<Props> = ({
   selectedScheme,
   sharesNumber,
   onPrinted,
+  initialSelection,
 }) => {
   const matching = useMemo(
     () => matchingFormKeys(selectedWordCount, selectedScheme),
@@ -39,7 +44,8 @@ const PrintFormsModal: React.FC<Props> = ({
   // each share form to one sheet per share.
   useEffect(() => {
     if (!isActive) return
-    setSelected(Object.fromEntries(FORMS.map(f => [f.key, isMatch(f.key)])))
+    const preselect = initialSelection ?? matching
+    setSelected(Object.fromEntries(FORMS.map(f => [f.key, preselect.includes(f.key)])))
     setCopies(
       Object.fromEntries(
         FORMS.filter(f => f.kind === "share" || f.kind === "insert").map(f => [
@@ -49,7 +55,7 @@ const PrintFormsModal: React.FC<Props> = ({
       ),
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isActive, matching, sharesNumber])
+  }, [isActive, matching, sharesNumber, initialSelection])
 
   const toggle = (key: FormKey) => setSelected(prev => ({ ...prev, [key]: !prev[key] }))
   const setCopy = (key: FormKey, n: number) =>
