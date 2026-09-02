@@ -137,14 +137,17 @@ export const GenerateContextProvider: React.FC<ProviderProps> = ({ children }) =
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLang, entropyToPass])
 
-  // When the scheme (threshold / share count) or the seed itself changes and a
-  // share set already exists, re-split so the shares stay in sync with the seed.
+  // When the scheme, threshold, share count, or the seed itself changes and a
+  // share set already exists, re-split so the shares stay in sync. The scheme
+  // must be here too: without it, switching SLIP-39/SSKR left the old shares on
+  // screen while the selector and Print/Verify moved to the new scheme. The
+  // change is gated behind the same confirmation as threshold/count in the UI.
   useEffect(() => {
     if (shares && validateSeed(mnemonic.join(" "))) {
       handleGenerateShares()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [thresholdNumber, sharesNumber, mnemonic])
+  }, [thresholdNumber, sharesNumber, mnemonic, selectedScheme])
 
   // Track whether the fully entered seed is a valid BIP-39 mnemonic, for the
   // inline validation the UI shows while a seed is being typed.

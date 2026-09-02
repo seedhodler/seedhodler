@@ -151,7 +151,8 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
               </div>
               <Select
                 defaultValue={selectedScheme}
-                onChange={value => setSelectedScheme(value as Scheme)}
+                value={selectedScheme}
+                onChange={value => guard(() => setSelectedScheme(value as Scheme))}
                 options={schemeOptions}
               />
             </div>
