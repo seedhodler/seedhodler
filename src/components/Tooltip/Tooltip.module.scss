@@ -1,0 +1,92 @@
+@import "src/styles/Variables.module.scss";
+
+.tooltip {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+// The trigger is a real button so it is keyboard-focusable and announced, but it
+// carries no button chrome: it is just the icon.
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: help;
+  line-height: 0;
+  color: inherit;
+
+  img {
+    display: block;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $colorMain;
+    outline-offset: 2px;
+    border-radius: $radiiSmallest;
+  }
+}
+
+.bubble {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+
+  width: max-content;
+  max-width: 260px;
+  padding: 0.8rem 1rem;
+
+  font-size: 13px;
+  font-weight: $fwNormal;
+  line-height: 1.45;
+  text-align: left;
+  color: $colorBg100;
+  background-color: $colorTextDark;
+  border-radius: $radiiSmall;
+  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.35);
+
+  // Hidden until hover/focus, with no delay. A short fade in only, so it feels
+  // instant rather than snapping.
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.1s ease-in-out, visibility 0.1s ease-in-out;
+  pointer-events: none;
+
+  // Little arrow pointing down at the trigger.
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: $colorTextDark;
+  }
+}
+
+.tooltip:hover .bubble,
+.tooltip:focus-within .bubble {
+  opacity: 1;
+  visibility: visible;
+}
+
+// Keep the bubble on screen on narrow panels: pin its right edge near the trigger
+// instead of centering, so it does not push past the viewport.
+@include sm-d {
+  .bubble {
+    left: auto;
+    right: 0;
+    transform: none;
+    max-width: 220px;
+
+    &::after {
+      left: auto;
+      right: 6px;
+      transform: none;
+    }
+  }
+}

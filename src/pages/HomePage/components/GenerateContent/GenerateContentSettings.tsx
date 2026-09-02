@@ -1,9 +1,9 @@
 import React, { Dispatch, SetStateAction } from "react"
 
-import InfoGrayIcon from "src/assets/icons/InfoGray.svg"
 import { BadgeTitle } from "src/components/BadgeTitle"
 import { Select } from "src/components/Select"
 import { Switch } from "src/components/Switch"
+import { Tooltip } from "src/components/Tooltip"
 import { BadgeColorsEnum, schemeOptions, wordCountOptions } from "src/constants/index"
 import type { Scheme } from "src/core"
 
@@ -37,6 +37,14 @@ export const GenerateContentSettings: React.FC<GenerateContentSettingsProps> = (
     setSelectedWordCount(wordCountValue)
   }
 
+  // The standing note for the chosen scheme, now shown on demand in the info
+  // tooltip beside the selector rather than as a permanent line. SLIP-39 carries
+  // a real safety caution (device seed vs. entropy), SSKR an encoding note.
+  const schemeNote =
+    selectedScheme === "slip39"
+      ? "SLIP-39 shares here encode your BIP-39 entropy, not a device seed. Never enter them into a Trezor or any hardware wallet: it opens a different, empty wallet."
+      : "SSKR shares are bytewords (four-letter words). A hardware wallet does not accept them; restore them here or with any Blockchain Commons tool."
+
   return (
     <>
       <div className={classes.headerContainer} style={{ marginBottom: "3.6rem" }}>
@@ -55,9 +63,12 @@ export const GenerateContentSettings: React.FC<GenerateContentSettingsProps> = (
           />
         </div>
       </div>
-      <div className={classes.headerContainer} style={{ marginBottom: "1rem" }}>
+      <div className={classes.headerContainer} style={{ marginBottom: "2rem" }}>
         <div className={classes.wordCountContainer}>
-          <p>Share scheme:</p>
+          <div className={classes.labelWithInfo}>
+            <p>Share scheme:</p>
+            <Tooltip content={schemeNote} label="About this share scheme" />
+          </div>
           <Select
             defaultValue={selectedScheme}
             onChange={value => setSelectedScheme(value as Scheme)}
@@ -65,20 +76,15 @@ export const GenerateContentSettings: React.FC<GenerateContentSettingsProps> = (
           />
         </div>
       </div>
-      <div className={classes.schemeWarning}>
-        {selectedScheme === "slip39"
-          ? "SLIP-39 shares here encode your BIP-39 entropy, not a device seed. Never enter them into a Trezor or any hardware wallet — it opens a different, empty wallet."
-          : "SSKR shares are bytewords (four-letter words). A hardware wallet does not accept them; restore them here or with any Blockchain Commons tool."}
-      </div>
       <div className={classes.configContainer}>
-        <div
-          className={classes.configLabelContainer}
-          title={"Don't trust the randsomness of a computer? You can enter your own entropy here."}
-        >
+        <div className={classes.configLabelContainer}>
           <p>
             Advanced Toolset - <span className={classes.entropyGeneration}>Entropy Generation</span>
           </p>
-          <img src={InfoGrayIcon} alt="Info" style={{ marginLeft: "0.5rem" }} />
+          <Tooltip
+            content="Don't trust the randomness of a computer? You can enter your own entropy here."
+            label="About the advanced entropy toolset"
+          />
         </div>
         <Switch checked={isAdvanced} onChange={setIsAdvanced} />
       </div>
