@@ -2,7 +2,7 @@ export { mnemonicToWords } from "./mnemonicWords"
 
 export { diceToBigInt } from "./parseUtils"
 export { getEntropyDetails } from "./getEntropyDetails"
-export { assessEntropy } from "./entropyQuality"
+export { assessEntropy, symbolsForMinBits } from "./entropyQuality"
 export type { EntropyAssessment } from "./entropyQuality"
 
 export { getRandomInt, getUniqueArr } from "./randomnessUtils"

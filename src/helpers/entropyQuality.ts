@@ -24,6 +24,15 @@ const TYPE_META: Record<number, TypeMeta> = {
   3: { bitsPerSymbol: Math.log2(10), unit: "digits", alphabet: 10 },
 }
 
+// The fewest symbols of a type that carry at least minBits: the point the input
+// should fill to and then stop. For hex and binary the symbols divide minBits
+// evenly; for dice and decimal they do not, so this rounds up to the symbol that
+// first reaches enough (e.g. 50 dice throws for 128 bits, which is ~129 bits).
+export const symbolsForMinBits = (entropyTypeId: number, minBits: number): number => {
+  const meta = TYPE_META[entropyTypeId] ?? TYPE_META[0]
+  return Math.ceil(minBits / meta.bitsPerSymbol)
+}
+
 export type EntropyAssessment = {
   bits: number // true bit count (not yet floored, so the UI decides how to show it)
   unit: string // "throws", "flips", "hex chars", "digits"
