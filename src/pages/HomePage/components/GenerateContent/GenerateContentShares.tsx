@@ -259,7 +259,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
         isActive={pendingChange !== null}
         setIsActive={() => setPendingChange(null)}
         badgeColor={BadgeColorsEnum.ErrorLight}
-        style={{ height: "auto" }}
+        style={{ height: "auto", maxWidth: "520px" }}
       >
         <div className={classes.confirmBody}>
           <p className={classes.confirmText}>
