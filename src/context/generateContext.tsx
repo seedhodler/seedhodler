@@ -121,10 +121,18 @@ export const GenerateContextProvider: React.FC<ProviderProps> = ({ children }) =
     setShares(null)
   }, [selectedLang, selectedWordCount])
 
-  // In advanced mode the mnemonic reflects the entered entropy live.
+  // In advanced mode the mnemonic reflects the entered entropy live. Once the
+  // entropy is long enough a seed is derived; if the user then deletes back below
+  // the threshold, clear the seed and any shares split from it so the display
+  // does not keep showing a stale seed while the readout says "too short". Guard
+  // on isAdvanced: in simple mode the seed comes from the Generate button, not
+  // from entropy, and must not be wiped here.
   useEffect(() => {
     if (entropyToPass.length >= minBits) {
       setMnemonic(mnemonicToWords(seedFromEntropy(selectedLang, entropyToPass)))
+    } else if (isAdvanced) {
+      setMnemonic(new Array(+selectedWordCount).fill(""))
+      setShares(null)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLang, entropyToPass])
