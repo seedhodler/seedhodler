@@ -99,6 +99,27 @@
   gap: 0.6rem;
 }
 
+// The "replace the whole set?" confirmation body.
+.confirmBody {
+  padding-top: 1.2rem;
+}
+
+.confirmText {
+  font-size: 15px;
+  line-height: 1.55;
+  color: $colorTextDarkish;
+  margin-bottom: 2.4rem;
+}
+
+.confirmActions {
+  display: flex;
+  gap: 1.2rem;
+
+  @include sm-d {
+    flex-direction: column;
+  }
+}
+
 // The loud escalation: a secret is on screen while online. Reserved red, more
 // prominent than the scheme caution, because this is an active-danger moment the
 // calm status pill deliberately stays quiet about.
