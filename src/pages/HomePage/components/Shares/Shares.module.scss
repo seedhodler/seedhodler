@@ -91,9 +91,18 @@
 
 %navigationItemBase {
   @extend %dot;
+  position: relative;
   margin-right: 1rem;
   transition: $transAll;
   margin-bottom: 0.6rem;
+
+  // The visible dot is 18px; extend an invisible hit area to ~26px for touch
+  // (audit 15) without changing how the dot looks.
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+  }
 
   &:last-child() {
     margin-right: 0;

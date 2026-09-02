@@ -119,6 +119,7 @@ const RestoreContent: React.FC = () => {
             onClick={onClick}
             wordlist={selectedScheme === "sskr" ? bytewordsList : slip39wordlist}
             count={index + 1}
+            total={shareLength}
             index={index}
             value={word}
             onChange={setCurrentShare}

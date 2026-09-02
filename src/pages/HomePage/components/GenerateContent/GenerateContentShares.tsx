@@ -158,6 +158,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
             onEnter={onEnter}
             onClick={onClick}
             count={index + 1}
+            total={+selectedWordCount}
             index={index}
             value={word}
             onChange={setMnemonic}
