@@ -263,9 +263,10 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
       >
         <div className={classes.confirmBody}>
           <p className={classes.confirmText}>
-            Changing the threshold or the number of shares rebuilds the whole set. Every share you
-            have already written down or printed becomes worthless, and Seedhodler cannot add to an
-            existing set. Only continue if no sheets have been distributed yet.
+            Changing the threshold or the number of shares rebuilds the whole set. The new shares
+            will not combine with any you have already written down or printed: shares from before
+            and after this change cannot rebuild your seed together. Seedhodler cannot add a single
+            share to an existing set. Only continue if you have not distributed any sheets yet.
           </p>
           <div className={classes.confirmActions}>
             <Button color={ButtonColorsEnum.Neutral} onClick={() => setPendingChange(null)}>
