@@ -20,7 +20,9 @@
 }
 
 .input {
-  border: none;
+  // Dashed border to match the share fields (TextPlace), so the seed and share
+  // fields share one "form" look.
+  border: 1px dashed $colorBg670;
   outline: none;
   font-weight: inherit;
   font-size: inherit;
