@@ -14,6 +14,7 @@ type Props = {
   selectedWordCount: number
   selectedScheme: Scheme
   sharesNumber: number
+  onPrinted?: () => void
 }
 
 const PrintFormsModal: React.FC<Props> = ({
@@ -22,6 +23,7 @@ const PrintFormsModal: React.FC<Props> = ({
   selectedWordCount,
   selectedScheme,
   sharesNumber,
+  onPrinted,
 }) => {
   const matching = useMemo(
     () => matchingFormKeys(selectedWordCount, selectedScheme),
@@ -68,6 +70,7 @@ const PrintFormsModal: React.FC<Props> = ({
     docWindow?.focus()
     docWindow?.print()
     setIsBuilding(false)
+    onPrinted?.()
   }
 
   const row = (key: FormKey) => {

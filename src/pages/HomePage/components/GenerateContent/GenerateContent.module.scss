@@ -106,6 +106,60 @@
   scroll-margin-top: 2rem;
 }
 
+// Master seed header with the hide/reveal toggle (audit 06).
+.seedHeaderRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  margin-bottom: 2.4rem;
+}
+
+.hideToggle {
+  flex: none;
+  padding: 0.4rem 1.2rem;
+  border: 1px solid $colorBg400;
+  border-radius: $radiiSmall;
+  background: $colorBg100;
+  font-size: 13px;
+  font-weight: $fwSemiBold;
+  color: $colorTextDarkish;
+  cursor: pointer;
+  transition: $transAll;
+
+  &:hover {
+    background: $colorBg200;
+  }
+}
+
+.seedWrap {
+  position: relative;
+}
+
+// Blur the seed so a screenshot or a glance does not catch it; block selection
+// and interaction while hidden.
+.seedBlurred {
+  filter: blur(9px);
+  user-select: none;
+  pointer-events: none;
+}
+
+.seedReveal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: $radiiSmall;
+  background: $colorMain;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: $fwSemiBold;
+  cursor: pointer;
+  box-shadow: 0 6px 20px -6px rgba(0, 0, 0, 0.35);
+}
+
 // The "replace the whole set?" confirmation body.
 .confirmBody {
   padding-top: 1.2rem;

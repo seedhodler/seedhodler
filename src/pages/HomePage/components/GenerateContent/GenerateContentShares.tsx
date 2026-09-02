@@ -79,6 +79,18 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
     else apply()
   }
 
+  // The seed stays on screen through the whole share flow; a screenshot or a
+  // glance catches it. Offer a blur toggle (audit 06), and blur it by default
+  // once a share set exists, since from there the seed has been written down.
+  const [seedHidden, setSeedHidden] = useState(false)
+  useEffect(() => {
+    if (shares) setSeedHidden(true)
+  }, [shares])
+
+  // Print is the filled button and Verify only outlined, so Verify reads as
+  // optional (audit 09). Once printing has happened, flip the emphasis to Verify.
+  const [hasPrinted, setHasPrinted] = useState(false)
+
   // The seed and its shares are the secret. When they are on screen while the
   // machine is online, the calm status pill is not enough: escalate to a loud,
   // red warning right where the secret is. This is the danger moment the pill
@@ -122,12 +134,24 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
           </p>
         </div>
       )}
-      <h2 className={classes.title}>BIP39 Master Seed</h2>
-      <div
-        className={classes.seedPhraseContainer}
-        style={{ height: selectedWordCount === "12" ? "360px" : "720px" }}
-      >
-        {mnemonic.map((word, index) => (
+      <div className={classes.seedHeaderRow}>
+        <h2 className={classes.title} style={{ marginBottom: 0 }}>BIP39 Master Seed</h2>
+        {!isSomeEmptyWord && (
+          <button
+            type="button"
+            className={classes.hideToggle}
+            onClick={() => setSeedHidden(hidden => !hidden)}
+          >
+            {seedHidden ? "Reveal seed" : "Hide seed"}
+          </button>
+        )}
+      </div>
+      <div className={classes.seedWrap}>
+        <div
+          className={`${classes.seedPhraseContainer} ${seedHidden ? classes.seedBlurred : ""}`}
+          style={{ height: selectedWordCount === "12" ? "360px" : "720px" }}
+        >
+          {mnemonic.map((word, index) => (
           <Input
             key={index}
             ref={inputRefs[index]}
@@ -146,6 +170,16 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
             }}
           />
         ))}
+        </div>
+        {seedHidden && (
+          <button
+            type="button"
+            className={classes.seedReveal}
+            onClick={() => setSeedHidden(false)}
+          >
+            Reveal seed
+          </button>
+        )}
       </div>
 
       {!isSomeEmptyWord ? (
@@ -237,7 +271,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
               onClick={() => setIsPrintModalActive(true)}
               disabled={!Boolean(shares)}
               fullWidth
-              color={ButtonColorsEnum.Success}
+              color={hasPrinted ? ButtonColorsEnum.Neutral : ButtonColorsEnum.Success}
             >
               Print
             </Button>
@@ -245,7 +279,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
               onClick={() => setIsExportSaveModalActive(true)}
               disabled={!Boolean(shares)}
               fullWidth
-              color={ButtonColorsEnum.Neutral}
+              color={hasPrinted ? ButtonColorsEnum.Success : ButtonColorsEnum.Neutral}
             >
               Verify
             </Button>
@@ -260,6 +294,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
         selectedWordCount={+selectedWordCount}
         selectedScheme={selectedScheme}
         sharesNumber={sharesNumber}
+        onPrinted={() => setHasPrinted(true)}
       />
       <ExportSaveModal
         isExportSaveModalActive={isExportSaveModalActive}
