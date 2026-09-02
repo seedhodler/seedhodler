@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react"
 
 import { BadgeTitle } from "src/components/BadgeTitle"
+import { SchemeNotice } from "src/components/SchemeNotice"
 import { Select } from "src/components/Select"
 import { Switch } from "src/components/Switch"
 import { Tooltip } from "src/components/Tooltip"
@@ -37,13 +38,14 @@ export const GenerateContentSettings: React.FC<GenerateContentSettingsProps> = (
     setSelectedWordCount(wordCountValue)
   }
 
-  // The standing note for the chosen scheme, now shown on demand in the info
-  // tooltip beside the selector rather than as a permanent line. SLIP-39 carries
-  // a real safety caution (device seed vs. entropy), SSKR an encoding note.
+  // The tooltip beside the selector explains what the scheme IS (education). The
+  // safety warning lives in SchemeNotice below, inline and scheme-aware. Keeping
+  // the two apart is deliberate: the tooltip is optional extra reading, the
+  // warning must always be visible.
   const schemeNote =
     selectedScheme === "slip39"
-      ? "SLIP-39 shares here encode your BIP-39 entropy, not a device seed. Never enter them into a Trezor or any hardware wallet: it opens a different, empty wallet."
-      : "SSKR shares are bytewords (four-letter words). A hardware wallet does not accept them; restore them here or with any Blockchain Commons tool."
+      ? "SLIP-39 splits your seed into recovery shares with Shamir's Secret Sharing; any chosen threshold of the shares rebuilds it. The shares are SLIP-39 words."
+      : "SSKR is Blockchain Commons' sharding standard. Shares are encoded as bytewords: four-letter words with a built-in checksum."
 
   return (
     <>
@@ -63,7 +65,7 @@ export const GenerateContentSettings: React.FC<GenerateContentSettingsProps> = (
           />
         </div>
       </div>
-      <div className={classes.headerContainer} style={{ marginBottom: "2rem" }}>
+      <div className={classes.headerContainer} style={{ marginBottom: "1rem" }}>
         <div className={classes.wordCountContainer}>
           <div className={classes.labelWithInfo}>
             <p>Share scheme:</p>
@@ -76,6 +78,7 @@ export const GenerateContentSettings: React.FC<GenerateContentSettingsProps> = (
           />
         </div>
       </div>
+      <SchemeNotice selectedScheme={selectedScheme} />
       <div className={classes.configContainer}>
         <div className={classes.configLabelContainer}>
           <p>

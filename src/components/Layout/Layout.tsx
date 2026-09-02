@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useContext } from "react"
+import React, { useContext } from "react"
 import { Link, Outlet } from "react-router-dom"
 
 import InfoRed from "src/assets/icons/InfoRed.svg"
@@ -6,7 +6,6 @@ import InfoRed from "src/assets/icons/InfoRed.svg"
 import Logo from "src/assets/icons/Logo.svg"
 import QuestionMarkIcon from "src/assets/icons/QuestionMark.svg?react"
 import CheckmarkInfo from "src/components/CheckmarkInfo"
-import { NavFeaturedCard } from "src/components/_NavFeaturedCard"
 
 import { HelpModalTabs } from "src/constants"
 import { HelpModalContext } from "src/context/HelpModalContext"
@@ -15,14 +14,10 @@ import BuildStamp from "src/components/BuildStamp"
 
 type Props = {
   isOnline: boolean
-  showWarning: boolean
-  setShowWarning: Dispatch<SetStateAction<boolean>>
 }
 
 const Layout: React.FC<Props> = ({
   isOnline,
-  showWarning,
-  setShowWarning,
 }) => {
   const { setIsOpen: setHelpModalOpen, setTab } = useContext(HelpModalContext)
 
@@ -57,9 +52,6 @@ const Layout: React.FC<Props> = ({
           <CheckmarkInfo isCheckmark={false}>Restore your master seed</CheckmarkInfo>
         </div>
         <div className={classes.navContentBottom}>
-          {showWarning ? (
-            <NavFeaturedCard />
-          ) : null}
           <div className={classes.helpButtonContainer}>
             <button onClick={() => {
               setHelpModalOpen(true)

@@ -1,4 +1,4 @@
-import React, { Dispatch, lazy, SetStateAction, Suspense } from "react"
+import React, { lazy, Suspense } from "react"
 import { Navigate, Route, Routes as RouterDomRoutes } from "react-router-dom"
 
 import { Layout } from "src/components/Layout"
@@ -7,14 +7,10 @@ const PrintPage = lazy(() => import("src/pages/PrintPage"))
 
 type Props = {
   isOnline: boolean
-  showWarning: boolean
-  setShowWarning: Dispatch<SetStateAction<boolean>>
 }
 
 const Routes: React.FC<Props> = ({
   isOnline,
-  showWarning,
-  setShowWarning,
 }) => {
   return (
     <RouterDomRoutes>
@@ -23,8 +19,6 @@ const Routes: React.FC<Props> = ({
         element={
           <Layout
             isOnline={isOnline}
-            showWarning={showWarning}
-            setShowWarning={setShowWarning}
           />
         }
       >

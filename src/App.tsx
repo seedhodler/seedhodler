@@ -10,8 +10,6 @@ import Routes from "src/Routes"
 
 const App: React.FC = () => {
   const [isNotification, setIsNotification] = useState(false)
-  const [showWarningCard, setShowWarningCard] = useState(true)
-
 
   useEffect(() => {
     const handlePrintScreenClick = (e: KeyboardEvent) => {
@@ -45,8 +43,6 @@ const App: React.FC = () => {
               render={({ online }) => (
                 <Routes
                   isOnline={online}
-                  showWarning={showWarningCard}
-                  setShowWarning={setShowWarningCard}
                 />
               )}
             />

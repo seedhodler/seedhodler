@@ -1,0 +1,61 @@
+@import "src/styles/Variables.module.scss";
+
+.notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: $radiiSmall;
+  border-left: 4px solid;
+  margin-bottom: 2.4rem;
+}
+
+.icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+}
+
+.text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: inherit;
+}
+
+.text b {
+  font-weight: $fwSemiBold;
+}
+
+// Danger: SLIP-39, the irreversible cross-use mistake. Reserved red, never the
+// brand violet, so danger and brand no longer share a colour.
+.danger {
+  background: $colorErrorOnlineBg;
+  border-left-color: $colorError;
+  color: #7f1d1d;
+}
+
+// Caution: SSKR, where the device refuses the shares. Calmer amber, not red.
+.note {
+  background: rgba(255, 216, 141, 0.28);
+  border-left-color: #e0a63a;
+  color: #6a4d12;
+}
+
+.moreLink {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-weight: $fwSemiBold;
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
