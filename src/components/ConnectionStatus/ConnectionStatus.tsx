@@ -18,12 +18,12 @@ const ConnectionStatus: React.FC<Props> = ({ isOnline }) => {
         className={`${classes.pill} ${isOnline ? classes.online : classes.offline}`}
         title={
           isOnline
-            ? "You are online. Seedhodler is only safe offline: disconnect before a seed or shares are on screen."
+            ? "A seed handled on an online computer is not safe, now or later. Only a machine that stays offline the whole time is safe, such as the Seedhodler live ISO."
             : "You are offline. This is the safe state for handling a seed and shares."
         }
       >
         <span className={classes.dot} aria-hidden="true" />
-        {isOnline ? "Online" : "Offline"}
+        {isOnline ? "Online · only safe offline" : "Offline"}
       </span>
     </div>
   )

@@ -92,8 +92,9 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
         <div className={classes.onlineSecretWarning} role="alert">
           <img src={InfoRed} alt="" aria-hidden="true" />
           <p>
-            <b>You are online while your master seed is on screen.</b> Disconnect from the internet
-            before you write down, print, or split it.
+            <b>A seed shown on an online computer is not safe.</b> Disconnecting now is too late: the
+            machine may already have leaked it, or leak it later. For real funds, generate and split
+            on a machine that stays offline the whole time, such as the Seedhodler live ISO.
           </p>
         </div>
       )}
