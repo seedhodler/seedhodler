@@ -7,6 +7,7 @@ import { Button } from "src/components/Button"
 import { Calc } from "src/components/Calc"
 import { InfoTitle } from "src/components/InfoTitle"
 import { Input } from "src/components/Input"
+import { Modal } from "src/components/Modal"
 import { SchemeNotice } from "src/components/SchemeNotice"
 import { Select } from "src/components/Select"
 import { Tooltip } from "src/components/Tooltip"
@@ -66,6 +67,17 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
   const [isPrintModalActive, setIsPrintModalActive] = useState(false)
   const inputRefs = useInputRefs(+selectedWordCount)
   const isSomeEmptyWord = mnemonic.some(word => word.length === 0)
+
+  // Changing the threshold or the share count re-splits the seed into a brand new
+  // set (the effect in generateContext runs on those). Once a set exists, sheets
+  // may already be written or in a safe, so that must not happen silently. Hold
+  // the change behind a confirmation: guard() applies it at once while no set
+  // exists, and otherwise parks it until the user confirms in the dialog.
+  const [pendingChange, setPendingChange] = useState<null | (() => void)>(null)
+  const guard = (apply: () => void) => {
+    if (shares) setPendingChange(() => apply)
+    else apply()
+  }
 
   // The seed and its shares are the secret. When they are on screen while the
   // machine is online, the calm status pill is not enough: escalate to a loud,
@@ -157,14 +169,16 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
                 itemLabel="threshold"
                 plusDisabled={thresholdNumber >= sharesNumber}
                 minusDisabled={thresholdNumber <= 1}
-                onPlus={() => setThresholdNumber(prev => ++prev)}
-                onMinus={() => {
-                  // only 1-of-1 member sharing allowed when threshold is 1
-                  if (thresholdNumber === 2) {
-                    setSharesNumber(1)
-                  }
-                  setThresholdNumber(prev => (prev <= 1 ? prev : --prev))
-                }}
+                onPlus={() => guard(() => setThresholdNumber(prev => ++prev))}
+                onMinus={() =>
+                  guard(() => {
+                    // only 1-of-1 member sharing allowed when threshold is 1
+                    if (thresholdNumber === 2) {
+                      setSharesNumber(1)
+                    }
+                    setThresholdNumber(prev => (prev <= 1 ? prev : --prev))
+                  })
+                }
               />
             </div>
             <div className={classes.calcContainer}>
@@ -178,14 +192,16 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
                 itemLabel="number of shares"
                 plusDisabled={sharesNumber >= 16}
                 minusDisabled={sharesNumber <= 1 || sharesNumber <= thresholdNumber}
-                onPlus={() => {
-                  // only 1-of-1 member sharing allowed when threshold is 1
-                  if (sharesNumber === 1) {
-                    setThresholdNumber(2)
-                  }
-                  setSharesNumber(prev => (prev >= 16 ? prev : ++prev))
-                }}
-                onMinus={() => setSharesNumber(prev => (prev <= 1 ? prev : --prev))}
+                onPlus={() =>
+                  guard(() => {
+                    // only 1-of-1 member sharing allowed when threshold is 1
+                    if (sharesNumber === 1) {
+                      setThresholdNumber(2)
+                    }
+                    setSharesNumber(prev => (prev >= 16 ? prev : ++prev))
+                  })
+                }
+                onMinus={() => guard(() => setSharesNumber(prev => (prev <= 1 ? prev : --prev)))}
               />
             </div>
           </div>
@@ -238,6 +254,35 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
         shares={shares!}
         sharesNumber={sharesNumber}
       />
+      <Modal
+        title="Create a new set?"
+        isActive={pendingChange !== null}
+        setIsActive={() => setPendingChange(null)}
+        badgeColor={BadgeColorsEnum.ErrorLight}
+        style={{ height: "auto" }}
+      >
+        <div className={classes.confirmBody}>
+          <p className={classes.confirmText}>
+            Changing the threshold or the number of shares rebuilds the whole set. Every share you
+            have already written down or printed becomes worthless, and Seedhodler cannot add to an
+            existing set. Only continue if no sheets have been distributed yet.
+          </p>
+          <div className={classes.confirmActions}>
+            <Button color={ButtonColorsEnum.Neutral} onClick={() => setPendingChange(null)}>
+              Keep current set
+            </Button>
+            <Button
+              color={ButtonColorsEnum.ErrorLightish}
+              onClick={() => {
+                pendingChange?.()
+                setPendingChange(null)
+              }}
+            >
+              Create a new set
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </>
   )
 }
