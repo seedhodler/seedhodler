@@ -138,9 +138,11 @@ const PrintFormsModal: React.FC<Props> = ({
         <p className={classes.groupTitle}>Custody inserts</p>
         <div className={classes.group}>{insertKeys.map(row)}</div>
 
-        <Button onClick={handlePrint} disabled={!anySelected || isBuilding} fullWidth>
-          {isBuilding ? "Preparing..." : "Print selected"}
-        </Button>
+        <div className={classes.printAction}>
+          <Button onClick={handlePrint} disabled={!anySelected || isBuilding} fullWidth>
+            {isBuilding ? "Preparing..." : "Print selected"}
+          </Button>
+        </div>
       </div>
     </Modal>
   )

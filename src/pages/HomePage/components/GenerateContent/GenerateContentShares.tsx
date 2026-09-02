@@ -1,5 +1,5 @@
 import * as bip39 from "bip39"
-import React, { Dispatch, SetStateAction, useContext, useState } from "react"
+import React, { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from "react"
 
 import InfoRed from "src/assets/icons/InfoRed.svg"
 import { BadgeTitle } from "src/components/BadgeTitle"
@@ -86,6 +86,18 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
   const isOnline = useContext(OnlineStatusContext)
   const secretOnScreen = !isSomeEmptyWord
 
+  // The app is one long page; each new step appears below the fold and the view
+  // stays put, so people get stuck (audit 04). After the seed appears, scroll to
+  // the split controls; after the split, scroll to the resulting shares.
+  const splitAnchorRef = useRef<HTMLDivElement>(null)
+  const sharesAnchorRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (secretOnScreen) splitAnchorRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }, [secretOnScreen])
+  useEffect(() => {
+    if (shares) sharesAnchorRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }, [shares])
+
   const onEnter = (index: number) => {
     if (index < +selectedWordCount - 1) {
       inputRefs[index + 1].current.focus()
@@ -138,6 +150,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
 
       {!isSomeEmptyWord ? (
         <>
+          <div ref={splitAnchorRef} className={classes.scrollAnchor} />
           <BadgeTitle title="Split Seed into Shares" color={BadgeColorsEnum.SuccessLight} headingLevel={2} />
           <p className={classes.sharesInfo}>
             The generated Master Seed can now be split into up to 16 different Shares. These can then be
@@ -211,6 +224,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
               Split
             </Button>
           )}
+          <div ref={sharesAnchorRef} className={classes.scrollAnchor} />
           {shares && (
             <Shares
               shares={shares}

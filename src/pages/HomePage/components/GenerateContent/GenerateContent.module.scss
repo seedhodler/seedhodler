@@ -99,6 +99,13 @@
   gap: 0.6rem;
 }
 
+// Zero-height marker the flow scrolls to after each step (audit 04). The margin
+// leaves a little breathing room above the section it precedes.
+.scrollAnchor {
+  height: 0;
+  scroll-margin-top: 2rem;
+}
+
 // The "replace the whole set?" confirmation body.
 .confirmBody {
   padding-top: 1.2rem;

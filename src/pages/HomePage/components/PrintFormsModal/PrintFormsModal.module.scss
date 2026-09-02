@@ -5,6 +5,18 @@
   flex-direction: column;
 }
 
+// Keep the print action in view at the bottom of the scrolling dialog. Before,
+// it sat below the fold under a rounded edge that read as the end of the dialog
+// (audit 07). Sticky at the bottom, on the modal background, with a hairline and
+// soft shadow so the form list clearly scrolls underneath it.
+.printAction {
+  position: sticky;
+  bottom: 0;
+  background: $colorBg100;
+  padding: 1.4rem 0 0.4rem;
+  box-shadow: 0 -1px 0 $colorBg400, 0 -12px 16px -12px rgba(0, 0, 0, 0.12);
+}
+
 .intro {
   font-size: 14px;
   color: $colorBg700;
