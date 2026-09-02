@@ -117,18 +117,28 @@
 
 .hideToggle {
   flex: none;
-  padding: 0.4rem 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
   border: 1px solid $colorBg400;
   border-radius: $radiiSmall;
   background: $colorBg100;
-  font-size: 13px;
-  font-weight: $fwSemiBold;
-  color: $colorTextDarkish;
+  color: $colorBg700;
   cursor: pointer;
   transition: $transAll;
 
+  svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+  }
+
   &:hover {
     background: $colorBg200;
+    color: $colorTextDarkish;
   }
 }
 
