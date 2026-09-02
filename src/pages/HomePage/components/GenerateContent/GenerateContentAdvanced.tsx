@@ -40,7 +40,7 @@ export const GenerateContentAdvanced: React.FC<GenerateContentAdvancedProps> = (
 
   return (
     <>
-      <BadgeTitle title="Entropy Generation" style={{ marginBottom: "2.6rem" }} />
+      <BadgeTitle title="Entropy Generation" headingLevel={2} style={{ marginBottom: "2.6rem" }} />
       <div className={classes.entropyContainer}>
         <div className={classes.wrapperColumn}>
           <InfoTitle

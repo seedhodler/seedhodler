@@ -98,7 +98,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
           </p>
         </div>
       )}
-      <p className={classes.title}>BIP39 Master Seed</p>
+      <h2 className={classes.title}>BIP39 Master Seed</h2>
       <div
         className={classes.seedPhraseContainer}
         style={{ height: selectedWordCount === "12" ? "360px" : "720px" }}
@@ -126,7 +126,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
 
       {!isSomeEmptyWord ? (
         <>
-          <BadgeTitle title="Split Seed into Shares" color={BadgeColorsEnum.SuccessLight} />
+          <BadgeTitle title="Split Seed into Shares" color={BadgeColorsEnum.SuccessLight} headingLevel={2} />
           <p className={classes.sharesInfo}>
             The generated Master Seed can now be split into up to 16 different Shares. These can then be
             combined to restore your Master Seed
@@ -154,6 +154,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
               />
               <Calc
                 value={thresholdNumber}
+                itemLabel="threshold"
                 plusDisabled={thresholdNumber >= sharesNumber}
                 minusDisabled={thresholdNumber <= 1}
                 onPlus={() => setThresholdNumber(prev => ++prev)}
@@ -174,6 +175,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
               />
               <Calc
                 value={sharesNumber}
+                itemLabel="number of shares"
                 plusDisabled={sharesNumber >= 16}
                 minusDisabled={sharesNumber <= 1 || sharesNumber <= thresholdNumber}
                 onPlus={() => {

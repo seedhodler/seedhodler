@@ -75,9 +75,13 @@ const Modal: React.FC<Props> = ({
             <div className={classes.content}>
               {!isSuccess && (
                 <div className={classes.modalHeader} ref={modalHeaderRef} id="modal-header">
-                  <BadgeTitle title={title} color={badgeColor} style={{ marginBottom: 0 }} />
-                  <button onClick={() => setIsActive(false)} className={classes.closeBtn}>
-                    <img src={CloseIcon} alt="Close" />
+                  <BadgeTitle title={title} color={badgeColor} headingLevel={2} style={{ marginBottom: 0 }} />
+                  <button
+                    onClick={() => setIsActive(false)}
+                    className={classes.closeBtn}
+                    aria-label="Close dialog"
+                  >
+                    <img src={CloseIcon} alt="" aria-hidden="true" />
                   </button>
                 </div>
               )}

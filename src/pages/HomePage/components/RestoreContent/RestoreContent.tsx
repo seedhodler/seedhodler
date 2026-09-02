@@ -70,6 +70,7 @@ const RestoreContent: React.FC = () => {
           title="Enter Splits"
           color={BadgeColorsEnum.MainLight}
           additionalInfo={selectedScheme === "sskr" ? "SSKR" : "SLIP-39"}
+          headingLevel={2}
           style={{ marginBottom: 0 }}
         />
         <div className={classes.wordCountContainer}>
@@ -92,7 +93,7 @@ const RestoreContent: React.FC = () => {
         </div>
       </div>
       <div className={classes.headerContainer} style={{ marginBottom: "1.2rem" }}>
-        <p className={classes.title}>BIP39 Master Seed</p>
+        <h2 className={classes.title}>BIP39 Master Seed</h2>
         {currentShare.every(word => word.length !== 0) && (
           <div
             className={classes.validation}
@@ -142,6 +143,7 @@ const RestoreContent: React.FC = () => {
           <BadgeTitle
             title="Split Shares"
             color={BadgeColorsEnum.ErrorLight}
+            headingLevel={2}
             style={{ marginBottom: "3.6rem" }}
           />
           {infoMessage.length > 0 && (
@@ -171,6 +173,7 @@ const RestoreContent: React.FC = () => {
         <BadgeTitle
           title="Recovered Master Seed"
           color={BadgeColorsEnum.SuccessLight}
+          headingLevel={2}
           style={{ marginBottom: 0 }}
         />
         {isFullMnemonic && <img src={CheckmarkIcon} alt="Checkmark" />}
