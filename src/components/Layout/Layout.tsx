@@ -22,6 +22,10 @@ const Layout: React.FC<Props> = ({
 
   return (
     <div className={classes.mainContainer}>
+      <a href="#main-content" className={classes.skipLink}>
+        Skip to main content
+      </a>
+      <h1 className={classes.visuallyHidden}>Seedhodler</h1>
       <nav className={classes.nav}>
         <div className={classes.navContentTop}>
           <Link to="/">
@@ -65,7 +69,7 @@ const Layout: React.FC<Props> = ({
 
       <div className={classes.mainContentContainer}>
         <ConnectionStatus isOnline={isOnline} />
-        <main className={classes.contentContainer}>
+        <main id="main-content" tabIndex={-1} className={classes.contentContainer}>
           <Outlet />
         </main>
         <BuildStamp />

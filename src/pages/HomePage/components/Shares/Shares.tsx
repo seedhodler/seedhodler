@@ -32,6 +32,8 @@ const Shares: React.FC<Props> = ({
         key={i}
         onClick={() => setActiveShareItemId(i)}
         className={i === activeShareItemId ? classes.navigationItemActive : classes.navigationItem}
+        aria-label={`Go to share ${i + 1}`}
+        aria-current={i === activeShareItemId ? "true" : undefined}
       />,
     )
   }
@@ -44,19 +46,21 @@ const Shares: React.FC<Props> = ({
             disabled={activeShareItemId <= 0}
             onClick={() => setActiveShareItemId(prev => (prev <= 0 ? prev : --prev))}
             className={classes.navigationBtn}
+            aria-label="Previous share"
           >
-            <img src={PrevIcon} alt="Arrow left" />
+            <img src={PrevIcon} alt="" aria-hidden="true" />
           </button>
           <div className={classes.shareNumberContainer}>
             <div className={classes.dot}></div>
-            <span className={classes.shareNumberHeader}>Share - {activeShareItemId + 1}</span>
+            <h3 className={classes.shareNumberHeader}>Share - {activeShareItemId + 1}</h3>
           </div>
           <button
             disabled={activeShareItemId >= shares.length - 1}
             onClick={() => setActiveShareItemId(prev => (prev >= shares.length - 1 ? prev : ++prev))}
             className={classes.navigationBtn}
+            aria-label="Next share"
           >
-            <img src={NextIcon} alt="Arrow right" />
+            <img src={NextIcon} alt="" aria-hidden="true" />
           </button>
         </div>
         <div className={classes.blockDivider} style={{ marginBottom: "2.4rem" }}></div>

@@ -128,6 +128,41 @@
   }
 }
 
+// Hidden from sight but present for screen readers: the app h1 gives the page a
+// top-level heading without changing the visual design.
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Keyboard-only shortcut past the sidebar text and GitHub link straight to the
+// main content. Off-screen until focused, then it slides into view.
+.skipLink {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 200;
+  padding: 0.8rem 1.4rem;
+  border-radius: $radiiSmall;
+  background: $colorMain;
+  color: #ffffff;
+  font-weight: $fwSemiBold;
+  font-size: 14px;
+  text-decoration: none;
+  transition: top 0.15s ease-in-out;
+
+  &:focus {
+    top: 1rem;
+  }
+}
+
 .securityNotice {
   font-weight: $fwSemiBold;
   margin-bottom: 0;

@@ -22,10 +22,22 @@ body {
 }
 
 button {
-  outline: none;
   border: none;
   cursor: pointer;
   background-color: transparent;
   font-weight: inherit;
   font-size: inherit;
+}
+
+// Keyboard focus was invisible everywhere because buttons had outline:none. Show
+// a clear ring for keyboard users (:focus-visible) while staying quiet for mouse
+// clicks (:focus). Applies to every focusable element, not just buttons.
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid $colorMain;
+  outline-offset: 2px;
+  border-radius: 2px;
 }

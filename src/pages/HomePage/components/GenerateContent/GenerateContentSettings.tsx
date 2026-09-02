@@ -39,6 +39,7 @@ export const GenerateContentSettings: React.FC<GenerateContentSettingsProps> = (
           title="Seed Type"
           additionalInfo="BIP 39"
           color={BadgeColorsEnum.SuccessLight}
+          headingLevel={2}
           style={{ marginBottom: 0 }}
         />
         <div className={classes.wordCountContainer}>
