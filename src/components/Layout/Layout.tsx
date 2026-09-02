@@ -1,11 +1,10 @@
 import React, { useContext } from "react"
 import { Link, Outlet } from "react-router-dom"
 
-import InfoRed from "src/assets/icons/InfoRed.svg"
-
 import Logo from "src/assets/icons/Logo.svg"
 import QuestionMarkIcon from "src/assets/icons/QuestionMark.svg?react"
 import CheckmarkInfo from "src/components/CheckmarkInfo"
+import { ConnectionStatus } from "src/components/ConnectionStatus"
 
 import { HelpModalTabs } from "src/constants"
 import { HelpModalContext } from "src/context/HelpModalContext"
@@ -65,23 +64,7 @@ const Layout: React.FC<Props> = ({
       </nav>
 
       <div className={classes.mainContentContainer}>
-        {isOnline ? (
-          <div className={classes.onlineNotification}>
-            <div className={classes.notificationBox}>
-              <p className={classes.title} style={{ marginBottom: 0, minWidth: "105px" }}>
-                Security Notice
-              </p>
-              <img src={InfoRed} alt="InfoRed" />
-            </div>
-            <p className={classes.onlineMessage}>
-              You are currently online. This tool can only be considered safe in an offline environment
-            </p>
-          </div>
-        ) : (
-          <div className={classes.offlineNotification}>
-            <p className={classes.offlineMessage}>You are currently offline.</p>
-          </div>
-        )}
+        <ConnectionStatus isOnline={isOnline} />
         <main className={classes.contentContainer}>
           <Outlet />
         </main>

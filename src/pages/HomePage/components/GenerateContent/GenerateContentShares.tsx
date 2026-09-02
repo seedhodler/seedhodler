@@ -1,6 +1,7 @@
 import * as bip39 from "bip39"
-import React, { Dispatch, SetStateAction, useState } from "react"
+import React, { Dispatch, SetStateAction, useContext, useState } from "react"
 
+import InfoRed from "src/assets/icons/InfoRed.svg"
 import { BadgeTitle } from "src/components/BadgeTitle"
 import { Button } from "src/components/Button"
 import { Calc } from "src/components/Calc"
@@ -10,6 +11,7 @@ import { SchemeNotice } from "src/components/SchemeNotice"
 import { Select } from "src/components/Select"
 import { Tooltip } from "src/components/Tooltip"
 import { BadgeColorsEnum, ButtonColorsEnum, schemeOptions } from "src/constants/index"
+import { OnlineStatusContext } from "src/context/onlineStatusContext"
 import type { Scheme } from "src/core"
 import { useInputRefs } from "src/hooks"
 
@@ -65,6 +67,13 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
   const inputRefs = useInputRefs(+selectedWordCount)
   const isSomeEmptyWord = mnemonic.some(word => word.length === 0)
 
+  // The seed and its shares are the secret. When they are on screen while the
+  // machine is online, the calm status pill is not enough: escalate to a loud,
+  // red warning right where the secret is. This is the danger moment the pill
+  // deliberately stays quiet for.
+  const isOnline = useContext(OnlineStatusContext)
+  const secretOnScreen = !isSomeEmptyWord
+
   const onEnter = (index: number) => {
     if (index < +selectedWordCount - 1) {
       inputRefs[index + 1].current.focus()
@@ -79,6 +88,15 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
 
   return (
     <>
+      {secretOnScreen && isOnline && (
+        <div className={classes.onlineSecretWarning} role="alert">
+          <img src={InfoRed} alt="" aria-hidden="true" />
+          <p>
+            <b>You are online while your master seed is on screen.</b> Disconnect from the internet
+            before you write down, print, or split it.
+          </p>
+        </div>
+      )}
       <p className={classes.title}>BIP39 Master Seed</p>
       <div
         className={classes.seedPhraseContainer}

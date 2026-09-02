@@ -99,6 +99,38 @@
   gap: 0.6rem;
 }
 
+// The loud escalation: a secret is on screen while online. Reserved red, more
+// prominent than the scheme caution, because this is an active-danger moment the
+// calm status pill deliberately stays quiet about.
+.onlineSecretWarning {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  margin-bottom: 2rem;
+  border: 1px solid $colorError;
+  border-radius: $radiiSmall;
+  background: $colorErrorOnlineBg;
+
+  img {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #7f1d1d;
+  }
+
+  b {
+    font-weight: $fwSemiBold;
+  }
+}
+
 .insightsLabel {
   font-weight: 500;
   font-size: 15px;
