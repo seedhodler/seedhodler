@@ -29,7 +29,10 @@
   line-height: inherit;
 
   width: 100%;
-  padding: 1.2rem 1.2rem 1.2rem 4.2rem;
+  // The 1px dashed border must not change the field height: the seed grid wraps
+  // into columns at a fixed container height, so an extra 2px would push a word
+  // into a third column. Take the border's 1px back out of the vertical padding.
+  padding: calc(1.2rem - 1px) 1.2rem calc(1.2rem - 1px) 4.2rem;
   background-color: $colorBg200;
   border-radius: $radii;
   color: $colorTextDarkish;
