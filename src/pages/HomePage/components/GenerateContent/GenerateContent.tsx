@@ -44,8 +44,6 @@ const GenerateContent: React.FC = () => {
         setSelectedLang={setSelectedLang}
         selectedWordCount={selectedWordCount}
         setSelectedWordCount={setSelectedWordCount}
-        selectedScheme={selectedScheme}
-        setSelectedScheme={setSelectedScheme}
         isAdvanced={isAdvanced}
         setIsAdvanced={setIsAdvanced}
         setEntropyValue={setEntropyValue}
@@ -68,6 +66,8 @@ const GenerateContent: React.FC = () => {
         mnemonic={mnemonic}
         shares={shares}
         selectedWordCount={selectedWordCount}
+        selectedScheme={selectedScheme}
+        setSelectedScheme={setSelectedScheme}
         activeShareItemId={activeShareItemId}
         setMnemonic={setMnemonic}
         setActiveShareItemId={setActiveShareItemId}

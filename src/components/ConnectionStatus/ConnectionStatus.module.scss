@@ -1,0 +1,49 @@
+@import "src/styles/Variables.module.scss";
+
+.container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.8rem 1rem 0;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 11px 4px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: $fwSemiBold;
+  letter-spacing: 0.01em;
+  cursor: default;
+  border: 1px solid transparent;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: none;
+}
+
+// Online: recoverable caution. Amber, not red.
+.online {
+  color: #7a5300;
+  background: rgba(255, 216, 141, 0.35);
+  border-color: #e6b955;
+
+  .dot {
+    background: #d38a00;
+  }
+}
+
+// Offline: the safe state. Green and reassuring.
+.offline {
+  color: $colorSuccessDark;
+  background: $colorSuccessLight;
+  border-color: $colorSuccess;
+
+  .dot {
+    background: $colorSuccess;
+  }
+}

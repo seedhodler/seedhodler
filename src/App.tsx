@@ -5,13 +5,12 @@ import { HelpModal } from "src/components/HelpModal"
 import { Notification } from "src/components/Notification"
 import { GenerateContextProvider } from "src/context/generateContext"
 import { HelpModalContextProvider } from "src/context/HelpModalContext"
+import { OnlineStatusContext } from "src/context/onlineStatusContext"
 import { RestoreContextProvider } from "src/context/restoreContext"
 import Routes from "src/Routes"
 
 const App: React.FC = () => {
   const [isNotification, setIsNotification] = useState(false)
-  const [showWarningCard, setShowWarningCard] = useState(true)
-
 
   useEffect(() => {
     const handlePrintScreenClick = (e: KeyboardEvent) => {
@@ -43,11 +42,11 @@ const App: React.FC = () => {
             <Detector
               polling={false}
               render={({ online }) => (
-                <Routes
-                  isOnline={online}
-                  showWarning={showWarningCard}
-                  setShowWarning={setShowWarningCard}
-                />
+                <OnlineStatusContext.Provider value={online}>
+                  <Routes
+                    isOnline={online}
+                  />
+                </OnlineStatusContext.Provider>
               )}
             />
           </>

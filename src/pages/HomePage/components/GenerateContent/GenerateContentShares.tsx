@@ -1,13 +1,18 @@
 import * as bip39 from "bip39"
 import React, { Dispatch, SetStateAction, useContext, useState } from "react"
 
+import InfoRed from "src/assets/icons/InfoRed.svg"
 import { BadgeTitle } from "src/components/BadgeTitle"
 import { Button } from "src/components/Button"
 import { Calc } from "src/components/Calc"
 import { InfoTitle } from "src/components/InfoTitle"
 import { Input } from "src/components/Input"
-import { BadgeColorsEnum, ButtonColorsEnum } from "src/constants/index"
-import { GenerateContext } from "src/context/generateContext"
+import { SchemeNotice } from "src/components/SchemeNotice"
+import { Select } from "src/components/Select"
+import { Tooltip } from "src/components/Tooltip"
+import { BadgeColorsEnum, ButtonColorsEnum, schemeOptions } from "src/constants/index"
+import { OnlineStatusContext } from "src/context/onlineStatusContext"
+import type { Scheme } from "src/core"
 import { useInputRefs } from "src/hooks"
 
 import { ExportSaveModal } from "../ExportSaveModal"
@@ -20,6 +25,8 @@ type GenerateContentSharesProps = {
   mnemonic: string[]
   shares: null | string[]
   selectedWordCount: string
+  selectedScheme: Scheme
+  setSelectedScheme: Dispatch<SetStateAction<Scheme>>
   activeShareItemId: number
   setMnemonic: Dispatch<SetStateAction<string[]>>
   setActiveShareItemId: Dispatch<SetStateAction<number>>
@@ -36,6 +43,8 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
   mnemonic,
   shares,
   selectedWordCount,
+  selectedScheme,
+  setSelectedScheme,
   activeShareItemId,
   setMnemonic,
   setActiveShareItemId,
@@ -46,11 +55,24 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
   handleGenerateShares,
   isValidMnemonic,
 }) => {
-  const { selectedScheme } = useContext(GenerateContext)
+  // The tooltip beside the selector explains what the scheme IS (education); the
+  // SchemeNotice below it carries the safety warning. Kept apart on purpose.
+  const schemeNote =
+    selectedScheme === "slip39"
+      ? "SLIP-39 splits your seed into recovery shares with Shamir's Secret Sharing; any chosen threshold of the shares rebuilds it. The shares are SLIP-39 words."
+      : "SSKR is Blockchain Commons' sharding standard. Shares are encoded as bytewords: four-letter words with a built-in checksum."
+
   const [isExportSaveModalActive, setIsExportSaveModalActive] = useState(false)
   const [isPrintModalActive, setIsPrintModalActive] = useState(false)
   const inputRefs = useInputRefs(+selectedWordCount)
   const isSomeEmptyWord = mnemonic.some(word => word.length === 0)
+
+  // The seed and its shares are the secret. When they are on screen while the
+  // machine is online, the calm status pill is not enough: escalate to a loud,
+  // red warning right where the secret is. This is the danger moment the pill
+  // deliberately stays quiet for.
+  const isOnline = useContext(OnlineStatusContext)
+  const secretOnScreen = !isSomeEmptyWord
 
   const onEnter = (index: number) => {
     if (index < +selectedWordCount - 1) {
@@ -66,6 +88,16 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
 
   return (
     <>
+      {secretOnScreen && isOnline && (
+        <div className={classes.onlineSecretWarning} role="alert">
+          <img src={InfoRed} alt="" aria-hidden="true" />
+          <p>
+            <b>A seed shown on an online computer is not safe.</b> Disconnecting now is too late: the
+            machine may already have leaked it, or leak it later. For real funds, generate and split
+            on a machine that stays offline the whole time, such as the Seedhodler live ISO.
+          </p>
+        </div>
+      )}
       <p className={classes.title}>BIP39 Master Seed</p>
       <div
         className={classes.seedPhraseContainer}
@@ -99,6 +131,20 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
             The generated Master Seed can now be split into up to 16 different Shares. These can then be
             combined to restore your Master Seed
           </p>
+          <div className={classes.headerContainer} style={{ marginBottom: "1rem" }}>
+            <div className={classes.wordCountContainer}>
+              <div className={classes.labelWithInfo}>
+                <p>Share scheme:</p>
+                <Tooltip content={schemeNote} label="About this share scheme" />
+              </div>
+              <Select
+                defaultValue={selectedScheme}
+                onChange={value => setSelectedScheme(value as Scheme)}
+                options={schemeOptions}
+              />
+            </div>
+          </div>
+          <SchemeNotice selectedScheme={selectedScheme} />
           <div className={classes.thresholdSharesContainer}>
             <div className={classes.calcContainer}>
               <InfoTitle

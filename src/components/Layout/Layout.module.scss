@@ -44,14 +44,6 @@
   margin-bottom: 1.6rem;
 }
 
-.title {
-  font-size: 14px;
-  line-height: 24px;
-  color: $colorTextDarkish;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  margin-right: 0.5rem;
-}
 
 .githubInfo {
   font-size: 13px;
@@ -134,49 +126,6 @@
   @include lg-d {
     margin-left: 300px;
   }
-}
-
-%notification {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 4px solid $colorError;
-  background-color: $colorErrorOnlineBg;
-  padding: 1rem;
-  gap: 1rem;
-}
-
-%message {
-  color: $colorError;
-  font-size: 12px;
-  font-weight: $fwNormal;
-  text-align: right;
-}
-
-.onlineNotification {
-  @extend %notification;
-}
-
-.onlineMessage {
-  @extend %message;
-}
-
-.offlineNotification {
-  @extend %notification;
-  border-top: 4px solid $colorSuccess;
-  background-color: $colorSuccessLight;
-  justify-content: flex-end;
-}
-
-.offlineMessage {
-  @extend %message;
-  color: $colorSuccessDark;
-}
-
-.notificationBox {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .securityNotice {
