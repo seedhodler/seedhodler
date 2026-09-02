@@ -36,7 +36,7 @@
 .configLabelContainer {
   display: flex;
   align-items: center;
-  cursor: help;
+  gap: 0.5rem;
 }
 
 .entropyGeneration {
@@ -90,13 +90,13 @@
   color: #b26b00;
 }
 
-// The cross-use caution beneath the share-scheme selector. Amber: it is a
-// standing safety note about the chosen scheme, not an error.
-.schemeWarning {
-  margin: 0 0 2rem;
-  font-size: 13px;
-  line-height: 1.5;
-  color: #b26b00;
+// Label paired with an info tooltip trigger, e.g. "Share scheme: (i)". The
+// scheme caution used to sit as a standing amber line here; it now lives in the
+// tooltip so the panel stays compact.
+.labelWithInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
 }
 
 .insightsLabel {
