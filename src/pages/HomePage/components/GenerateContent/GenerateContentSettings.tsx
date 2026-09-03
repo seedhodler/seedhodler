@@ -37,7 +37,6 @@ export const GenerateContentSettings: React.FC<GenerateContentSettingsProps> = (
       <div className={classes.headerContainer} style={{ marginBottom: "3.6rem" }}>
         <BadgeTitle
           title="Master Seed"
-          additionalInfo="BIP-39"
           color={BadgeColorsEnum.SuccessLight}
           headingLevel={2}
           style={{ marginBottom: 0 }}
