@@ -10,6 +10,7 @@ import { InfoTitle } from "src/components/InfoTitle"
 import { Input } from "src/components/Input"
 import { Modal } from "src/components/Modal"
 import { SchemeNotice } from "src/components/SchemeNotice"
+import { CopyButton } from "src/components/CopyButton"
 import { SeedCard } from "src/components/SeedCard"
 import { Select } from "src/components/Select"
 import { BadgeColorsEnum, ButtonColorsEnum, schemeOptions } from "src/constants/index"
@@ -208,6 +209,11 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
                   </svg>
                 )}
               </button>
+              <CopyButton
+                getText={() => mnemonic.join(",")}
+                className={classes.seedIconBtn}
+                title="Copy seed words as CSV"
+              />
               <button
                 type="button"
                 className={classes.seedIconBtn}

@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction, useState } from "react"
 
 import BinIcon from "src/assets/icons/Bin.svg"
 import { Button } from "src/components/Button"
+import { CopyButton } from "src/components/CopyButton"
 import { ShareCardHeader } from "src/components/ShareCardHeader"
 import { TextPlace } from "src/components/TextPlace"
 import { ButtonColorsEnum } from "src/constants/"
@@ -69,6 +70,11 @@ const Shares: React.FC<Props> = ({
                     </svg>
                   )}
                 </button>
+                <CopyButton
+                  getText={() => words.join(",")}
+                  className={classes.shareIconBtn}
+                  title="Copy share words as CSV"
+                />
                 <button
                   type="button"
                   className={classes.shareIconBtn}
