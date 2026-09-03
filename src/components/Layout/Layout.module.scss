@@ -10,7 +10,7 @@
 
 .nav {
   position: fixed;
-  width: 400px;
+  width: 320px;
   height: 100%;
   background-color: $colorBg200;
   display: flex;
@@ -117,7 +117,7 @@
 
 .mainContentContainer {
   width: 100%;
-  margin-left: 400px;
+  margin-left: 320px;
 
   @include md-d {
     margin-left: 0 !important;
