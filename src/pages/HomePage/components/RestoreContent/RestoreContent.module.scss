@@ -13,8 +13,8 @@
 // right of the header.
 .shareCard {
   padding: 2.4rem;
-  background-color: $colorBg100;
-  border: 1px solid #ececec;
+  // Flat card: a slightly darker fill than the page, no border (matches the seed card).
+  background-color: $colorBg200;
   border-radius: $radiiMedium;
   margin-bottom: 3.6rem;
 }
@@ -87,17 +87,31 @@
   @extend %validation;
 }
 
-.shareContainer {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  margin-bottom: 3.2rem;
+// The restore progress: a thin bar plus a single line saying how many more
+// shares are needed (or that the seed is recovered).
+.progress {
+  margin-bottom: 3.6rem;
 }
 
-.sharesCountContainer {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 3.6rem;
+.progressTrack {
+  height: 4px;
+  border-radius: 2px;
+  background-color: $colorBg300;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.25s ease;
+}
+
+.progressText {
+  font-size: 14px;
+  font-weight: $fwSemiBold;
+  color: $colorBg700;
+  text-align: center;
 }
 
 .title {
@@ -106,4 +120,78 @@
   color: $colorTextDarkish;
   font-weight: 600;
   margin-bottom: 1rem;
+}
+
+// The recovered-seed controls mirror the generated seed card.
+.seedIconBtn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid $colorBg400;
+  border-radius: $radiiSmall;
+  background: $colorBg100;
+  color: $colorBg700;
+  cursor: pointer;
+  transition: $transAll;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+  }
+
+  &:hover {
+    background: $colorBg200;
+    color: $colorTextDarkish;
+  }
+}
+
+.wordWrap {
+  position: relative;
+}
+
+// Row of icon actions in the share header (hide, copy, print, delete).
+.shareActions {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+// Deterministic two-column layout, filled column-first, so the boundary tile
+// (word 13 of a 24-word seed, word 14 of a 25-word share) never lands between
+// the columns the way the old flex-wrap + alignSelf hack let it.
+.wordGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-flow: column;
+  column-gap: 1.2rem;
+  row-gap: 1.2rem;
+  margin-bottom: 3.2rem;
+}
+
+.seedBlurred {
+  filter: blur(9px);
+  user-select: none;
+  pointer-events: none;
+}
+
+.seedReveal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: $radiiSmall;
+  background: $colorMain;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: $fwSemiBold;
+  cursor: pointer;
+  box-shadow: 0 6px 20px -6px rgba(0, 0, 0, 0.35);
 }

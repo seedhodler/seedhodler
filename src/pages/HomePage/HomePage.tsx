@@ -1,7 +1,8 @@
-import React, { lazy, Suspense, useRef, useState } from "react"
+import React, { lazy, Suspense, useContext, useRef } from "react"
 
 import GenerateIcon from "src/assets/icons/GenerateWithBg.svg"
 import RestoreIcon from "src/assets/icons/RestoreWithBg.svg"
+import { NavigationContext } from "src/context/navigationContext"
 
 import { Tab } from "./components/Tab"
 import classes from "./HomePage.module.scss"
@@ -11,7 +12,7 @@ const RestoreContent = lazy(() => import("./components/RestoreContent"))
 // HomePage is just the two tabs now. The generate and restore flow logic lives
 // in generateContext / restoreContext, where the state it drives already is.
 const HomePage: React.FC = () => {
-  const [activeTabId, setActiveTabId] = useState(0)
+  const { activeTabId, setActiveTabId } = useContext(NavigationContext)
   const tablistRef = useRef<HTMLDivElement>(null)
 
   // Arrow-key navigation for the tablist (audit 14). Move selection and carry

@@ -1,7 +1,8 @@
-import React, { Dispatch, SetStateAction, useState } from "react"
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "react"
 
 import BinIcon from "src/assets/icons/Bin.svg"
 import { Button } from "src/components/Button"
+import { CopyButton } from "src/components/CopyButton"
 import { ShareCardHeader } from "src/components/ShareCardHeader"
 import { TextPlace } from "src/components/TextPlace"
 import { ButtonColorsEnum } from "src/constants/"
@@ -36,9 +37,39 @@ const Shares: React.FC<Props> = ({
   // secret too; hide it for a screenshot or a glance.
   const [hidden, setHidden] = useState(false)
 
+  // On the generate side, focus the element as soon as a fresh split appears, so
+  // the left/right arrows work without a click first. Not on restore, where the
+  // focus belongs in the share-entry fields. preventScroll keeps the flow's own
+  // scroll-to-shares in charge.
+  const containerRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (!isRestore) containerRef.current?.focus({ preventScroll: true })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isRestore, shares.length, shares[0]])
+
+  // With the share element focused, left/right arrows step between shares, the
+  // same clamped navigation as the header's prev/next buttons.
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (shares.length <= 1) return
+    if (e.key === "ArrowLeft") {
+      e.preventDefault()
+      setActiveShareItemId(id => Math.max(0, id - 1))
+    } else if (e.key === "ArrowRight") {
+      e.preventDefault()
+      setActiveShareItemId(id => Math.min(shares.length - 1, id + 1))
+    }
+  }
+
   return (
     <>
-      <div className={classes.sharesContainer}>
+      <div
+        ref={containerRef}
+        className={classes.sharesContainer}
+        tabIndex={0}
+        role="group"
+        aria-label="Shares. Use the left and right arrow keys to switch between them."
+        onKeyDown={handleKeyDown}
+      >
         <ShareCardHeader
           activeIndex={activeShareItemId}
           total={shares.length}
@@ -69,6 +100,11 @@ const Shares: React.FC<Props> = ({
                     </svg>
                   )}
                 </button>
+                <CopyButton
+                  getText={() => words.join(" ")}
+                  className={classes.shareIconBtn}
+                  title="Copy share words"
+                />
                 <button
                   type="button"
                   className={classes.shareIconBtn}

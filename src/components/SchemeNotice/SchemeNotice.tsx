@@ -2,7 +2,6 @@ import React, { useContext } from "react"
 
 import InfoGrayIcon from "src/assets/icons/InfoGray.svg"
 import InfoRed from "src/assets/icons/InfoRed.svg"
-import { HelpModalTabs } from "src/constants"
 import { HelpModalContext } from "src/context/HelpModalContext"
 import type { Scheme } from "src/core"
 
@@ -26,7 +25,7 @@ type Props = {
 const SchemeNotice: React.FC<Props> = ({ selectedScheme }) => {
   const { setTab, setIsOpen } = useContext(HelpModalContext)
   const openFullWarning = () => {
-    setTab(HelpModalTabs.Warning)
+    setTab("methods")
     setIsOpen(true)
   }
 

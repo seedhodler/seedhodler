@@ -33,6 +33,15 @@ type Context = {
   handleGeneratePhase: () => void
   isValidMnemonic: boolean
   setIsValidMnemonic: Dispatch<SetStateAction<boolean>> | (() => void)
+  // Progress flags for the sidebar checklist. seed-generated and shares-split are
+  // derived from mnemonic/shares; these three record the manual steps, set when
+  // the matching action happens and reset on a new seed or a new split.
+  hasPrintedShares: boolean
+  setHasPrintedShares: Dispatch<SetStateAction<boolean>> | (() => void)
+  hasVerified: boolean
+  setHasVerified: Dispatch<SetStateAction<boolean>> | (() => void)
+  hasPrintedInserts: boolean
+  setHasPrintedInserts: Dispatch<SetStateAction<boolean>> | (() => void)
 }
 
 export const GenerateContext = createContext<Context>({
@@ -64,6 +73,12 @@ export const GenerateContext = createContext<Context>({
   handleGeneratePhase: () => { },
   isValidMnemonic: true,
   setIsValidMnemonic: () => { },
+  hasPrintedShares: false,
+  setHasPrintedShares: () => { },
+  hasVerified: false,
+  setHasVerified: () => { },
+  hasPrintedInserts: false,
+  setHasPrintedInserts: () => { },
 })
 
 type ProviderProps = {
@@ -89,6 +104,16 @@ export const GenerateContextProvider: React.FC<ProviderProps> = ({ children }) =
   const [thresholdNumber, setThresholdNumber] = useState(3)
   const [sharesNumber, setSharesNumber] = useState(5)
   const [isValidMnemonic, setIsValidMnemonic] = useState(true)
+  const [hasPrintedShares, setHasPrintedShares] = useState(false)
+  const [hasVerified, setHasVerified] = useState(false)
+  const [hasPrintedInserts, setHasPrintedInserts] = useState(false)
+
+  // A new share set means the earlier print/verify no longer apply.
+  const resetProgress = () => {
+    setHasPrintedShares(false)
+    setHasVerified(false)
+    setHasPrintedInserts(false)
+  }
 
   const { selectedEntropyAsBinary } = getEntropyDetails(entropyValue, minBits, entropyTypeId)
   const entropyToPass = selectedEntropyAsBinary.slice(-minBits)
@@ -96,6 +121,7 @@ export const GenerateContextProvider: React.FC<ProviderProps> = ({ children }) =
   const handleGeneratePhase = () => {
     setShares(null)
     setActiveShareItemId(0)
+    resetProgress()
 
     const generated = isAdvanced
       ? seedFromEntropy(selectedLang, entropyToPass)
@@ -106,6 +132,7 @@ export const GenerateContextProvider: React.FC<ProviderProps> = ({ children }) =
 
   const handleGenerateShares = () => {
     setActiveShareItemId(0)
+    resetProgress()
     const newShares = splitSeed(mnemonic.join(" "), {
       scheme: selectedScheme,
       threshold: thresholdNumber,
@@ -194,6 +221,12 @@ export const GenerateContextProvider: React.FC<ProviderProps> = ({ children }) =
     handleGeneratePhase,
     isValidMnemonic,
     setIsValidMnemonic,
+    hasPrintedShares,
+    setHasPrintedShares,
+    hasVerified,
+    setHasVerified,
+    hasPrintedInserts,
+    setHasPrintedInserts,
   }
 
   return <GenerateContext.Provider value={contextValue}>{children}</GenerateContext.Provider>

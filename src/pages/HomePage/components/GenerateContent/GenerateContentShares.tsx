@@ -1,7 +1,7 @@
 import * as bip39 from "bip39"
 import React, { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from "react"
 
-import CheckmarkFilledLight from "src/assets/icons/CheckmarkFilledLight.svg"
+import CheckmarkWhite from "src/assets/icons/CheckmarkWhite.svg"
 import InfoRed from "src/assets/icons/InfoRed.svg"
 import PrintIcon from "src/assets/icons/Print.svg"
 import { BadgeTitle } from "src/components/BadgeTitle"
@@ -10,9 +10,11 @@ import { InfoTitle } from "src/components/InfoTitle"
 import { Input } from "src/components/Input"
 import { Modal } from "src/components/Modal"
 import { SchemeNotice } from "src/components/SchemeNotice"
+import { CopyButton } from "src/components/CopyButton"
 import { SeedCard } from "src/components/SeedCard"
 import { Select } from "src/components/Select"
 import { BadgeColorsEnum, ButtonColorsEnum, schemeOptions } from "src/constants/index"
+import { GenerateContext } from "src/context/generateContext"
 import { OnlineStatusContext } from "src/context/onlineStatusContext"
 import type { Scheme } from "src/core"
 import { matchingFormKeys } from "src/helpers"
@@ -140,6 +142,8 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
   // red warning right where the secret is. This is the danger moment the pill
   // deliberately stays quiet for.
   const isOnline = useContext(OnlineStatusContext)
+  // Checklist progress flags (set here when the user prints or verifies).
+  const { setHasPrintedShares, setHasVerified, setHasPrintedInserts } = useContext(GenerateContext)
   const secretOnScreen = !isSomeEmptyWord
 
   // The app is one long page; each new step appears below the fold and the view
@@ -205,6 +209,11 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
                   </svg>
                 )}
               </button>
+              <CopyButton
+                getText={() => mnemonic.join(" ")}
+                className={classes.seedIconBtn}
+                title="Copy seed words"
+              />
               <button
                 type="button"
                 className={classes.seedIconBtn}
@@ -337,15 +346,14 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
             />
           )}
           <div className={classes.actionRow}>
-            {/* Print and Verify are a matched pair of post-split actions: same
-                colour, each with its own icon, so neither reads as more optional
-                than the other. */}
+            {/* Print and Verify are a matched pair of post-split actions in the
+                same brand-violet style as Generate and Split, each with its own
+                icon, so neither reads as more optional than the other. */}
             <Button
               onClick={() => openPrint()}
               disabled={!Boolean(shares)}
               fullWidth
               iconLeft={PrintIcon}
-              color={ButtonColorsEnum.Success}
             >
               Print
             </Button>
@@ -353,8 +361,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
               onClick={() => setIsExportSaveModalActive(true)}
               disabled={!Boolean(shares)}
               fullWidth
-              iconLeft={CheckmarkFilledLight}
-              color={ButtonColorsEnum.Success}
+              iconLeft={CheckmarkWhite}
             >
               Verify
             </Button>
@@ -370,6 +377,10 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
         selectedScheme={selectedScheme}
         sharesNumber={sharesNumber}
         initialSelection={printPreselect}
+        onPrinted={({ share, insert }) => {
+          if (share) setHasPrintedShares(true)
+          if (insert) setHasPrintedInserts(true)
+        }}
       />
       <ExportSaveModal
         isExportSaveModalActive={isExportSaveModalActive}
@@ -378,6 +389,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
         selectedScheme={selectedScheme}
         shares={shares!}
         sharesNumber={sharesNumber}
+        onVerified={() => setHasVerified(true)}
       />
       <Modal
         title="Create a new set?"

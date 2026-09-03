@@ -55,33 +55,86 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
       )
     }
 
-    useEffect(() => {
-      const onKeydown = (e: KeyboardEvent) => {
-        if (isOpen) {
-          if (e.key === "Tab" || e.key === "ArrowDown") {
-            e.preventDefault()
-            setFocusedItemId(prev => (focusedItemId < variants.length - 1 ? prev + 1 : 0))
-          } else if (e.key === "ArrowUp") {
-            e.preventDefault()
-            setFocusedItemId(prev => (focusedItemId <= 0 ? variants.length - 1 : prev - 1))
-          } else if (e.key === "Enter" && variants.length > 0) {
-            e.preventDefault()
-            onChange(mnemonicArr =>
-              mnemonicArr.map((word, wordIndex) =>
-                wordIndex === index ? variants[focusedItemId] : word,
-              ),
-            )
-            onEnter(index)
-          }
-        } else if (e.key === "Enter" && wordlist.some(word => word === value)) {
+    // Paste a whole list of words at once (the copy button produces CSV): each
+    // comma, or any whitespace, advances to the next field, so the words fall
+    // into consecutive fields from this one on, overwriting whatever was there.
+    // A single word with no separators pastes normally (replaces the selection).
+    const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+      const text = e.clipboardData?.getData("text") ?? ""
+      const parts = text
+        .split(/[\s,]+/)
+        .map(part => part.trim().toLowerCase())
+        .filter(Boolean)
+      if (parts.length <= 1) return
+      e.preventDefault()
+      onChange(mnemonicArr =>
+        mnemonicArr.map((word, wordIndex) =>
+          wordIndex >= index && wordIndex - index < parts.length ? parts[wordIndex - index] : word,
+        ),
+      )
+      // Land focus on the field just after the last one filled (onEnter is a
+      // no-op once there is no next field).
+      onEnter(index + parts.length - 1)
+    }
+
+    // Clicking (or tabbing) into a filled field selects the whole word with the
+    // caret at the start, so typing overwrites it straight away. The mouseup is
+    // suppressed so the click does not collapse that selection into a caret.
+    const selectWord = (el: HTMLInputElement) => {
+      if (value) el.setSelectionRange(0, value.length, "backward")
+    }
+    const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => selectWord(e.currentTarget)
+    const handleMouseUp = (e: React.MouseEvent<HTMLInputElement>) => {
+      if (!value) return
+      e.preventDefault()
+      selectWord(e.currentTarget)
+    }
+
+    // Keyboard, scoped to this field. Separator keys (comma, space, Tab, arrow
+    // down) advance to the next field, which then selects its word so the next
+    // keystroke overwrites it, turning the fields into a fast typed stream.
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      const listOpen = isOpen && variants.length > 0
+      if (listOpen) {
+        // Enter and Tab both take the highlighted suggestion, then advance.
+        if (e.key === "Enter" || e.key === "Tab") {
+          e.preventDefault()
+          onChange(mnemonicArr =>
+            mnemonicArr.map((word, wordIndex) => (wordIndex === index ? variants[focusedItemId] : word)),
+          )
           onEnter(index)
+          return
         }
+        // With the suggestion list open, the arrows navigate it.
+        if (e.key === "ArrowDown") {
+          e.preventDefault()
+          setFocusedItemId(prev => (focusedItemId < variants.length - 1 ? prev + 1 : 0))
+          return
+        }
+        if (e.key === "ArrowUp") {
+          e.preventDefault()
+          setFocusedItemId(prev => (focusedItemId <= 0 ? variants.length - 1 : prev - 1))
+          return
+        }
+      } else if (e.key === "Enter" && wordlist.some(word => word === value)) {
+        e.preventDefault()
+        onEnter(index)
+        return
       }
 
-      document.addEventListener("keydown", onKeydown)
-
-      return () => document.removeEventListener("keydown", onKeydown)
-    }, [focusedItemId, variants, isOpen, variants, index])
+      if (e.key === "Tab") {
+        // Keep Tab's default on the last field so focus can still leave the form.
+        if (typeof total === "number" && index < total - 1) {
+          e.preventDefault()
+          onEnter(index)
+        }
+        return
+      }
+      if (e.key === "," || e.key === " " || e.key === "ArrowDown") {
+        e.preventDefault()
+        onEnter(index)
+      }
+    }
 
     useEffect(() => {
       setFocusedItemId(0)
@@ -99,6 +152,10 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
           type="text"
           value={value}
           onChange={e => handleChange(e.target.value)}
+          onKeyDown={handleKeyDown}
+          onPaste={handlePaste}
+          onFocus={handleFocus}
+          onMouseUp={handleMouseUp}
           className={classNames}
           aria-label={count && total ? `Word ${count} of ${total}` : undefined}
         />

@@ -22,6 +22,8 @@ type Props = {
   selectedScheme: Scheme
   shares: string[]
   sharesNumber: number
+  // Fires when verification reaches the completion step, for the checklist.
+  onVerified?: () => void
 }
 
 const ExportSaveModal: React.FC<Props> = ({
@@ -31,8 +33,15 @@ const ExportSaveModal: React.FC<Props> = ({
   selectedScheme,
   shares,
   sharesNumber,
+  onVerified,
 }) => {
   const [currentStep, setCurrentStep] = useState(0)
+
+  // Step 1 is the completion screen; reaching it means the shares were verified.
+  useEffect(() => {
+    if (isExportSaveModalActive && currentStep === 1) onVerified?.()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentStep, isExportSaveModalActive])
   const [verifiedShareIds, setVerifiedShareIds] = useState<number[]>([])
 
   const wordlist = selectedScheme === "sskr" ? bytewordsList : slip39wordlist

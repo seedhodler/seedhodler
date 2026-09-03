@@ -30,10 +30,39 @@
 }
 
 .logo {
-  margin-bottom: 3rem;
+  margin-bottom: 0.9rem;
+  width: 289px;
 
   @include lg-d {
     width: 200px;
+  }
+}
+
+// The brand claim, locked up under the wordmark itself (not the icon): it sits
+// in the span from the "s" of seedhodler to the wordmark's right edge and is
+// justified flush to both, so it reads as a strapline hung under the logotype.
+// Says what Seedhodler does, not what any one sheet is (that antithesis lives
+// on the printed forms). Offsets are measured off the 289px logo box.
+.tagline {
+  margin-left: 51px;
+  width: 224px;
+  max-width: 100%;
+  font-size: 16px;
+  font-weight: $fwNormal;
+  line-height: 22px;
+  color: $colorMain;
+  // Tightened word gaps keep the full claim on one line at this size; justify
+  // then closes the last hair of slack so both edges stay flush with the logo.
+  word-spacing: -2px;
+  text-align: justify;
+  text-align-last: justify;
+  margin-bottom: 2.4rem;
+
+  // Logo scales to 200px here (factor ~0.69), so the offsets scale with it.
+  @include lg-d {
+    margin-left: 35px;
+    width: 155px;
+    font-size: 11px;
   }
 }
 
@@ -67,6 +96,63 @@
 
 .navContentTop {
   padding: 2.4rem 2.2rem 0 3.2rem;
+}
+
+// A checklist wired to the flow (audit 05 / 04): each step ticks green when
+// reached, so the sidebar is real orientation rather than a decorative list.
+.checklistHeading {
+  font-size: 17px;
+  font-weight: $fwBold;
+  letter-spacing: -0.01em;
+  color: $colorTextDark;
+  margin: 0.4rem 0 1.8rem;
+}
+
+.checklist {
+  margin: 0;
+  padding: 0;
+}
+
+.checklistItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.checklistText {
+  font-weight: $fwSemiBold;
+  font-size: 14px;
+  line-height: 24px;
+  color: $colorBg700;
+  margin-left: 1.4rem;
+}
+
+// Fixed marker column so the labels line up whether the step shows an open
+// bullet or a check (audit 05).
+.checklistMark {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Pending: an open brand-violet ring, so it reads as a bullet that is waiting
+// to be checked off rather than a plain decorative dot.
+.checklistDot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid $colorMain;
+  box-sizing: border-box;
+}
+
+// Reached: the app's green filled checkmark.
+.checklistCheck {
+  display: block;
+  width: 20px;
+  height: 20px;
 }
 
 .navContentBottom {
@@ -105,6 +191,12 @@
 
     & * {
       fill: $colorBg100;
+    }
+
+    // The separator sits at the button's top edge; on hover the violet fill
+    // reaches it, so hide it to avoid a stray grey line across the fill.
+    &::before {
+      background-color: transparent;
     }
   }
 }

@@ -1,122 +1,103 @@
 import React, { useContext } from "react"
+import parse from "html-react-parser"
 
-import TabContent from "./components/TabContent"
-
-import parse from 'html-react-parser'
 import { Button } from "src/components/Button"
 import { Modal } from "src/components/Modal"
-import { BadgeColorsEnum, HelpModalTabs, helpModalTabTexts, helpModalTabTitles } from "src/constants/"
+import { BadgeColorsEnum, helpChapters, type HelpBlock } from "src/constants/"
 
 import { HelpModalContext } from "src/context/HelpModalContext"
 import classes from "./HelpModal.module.scss"
 
+const renderBlock = (block: HelpBlock, index: number) => {
+  switch (block.type) {
+    case "h":
+      return (
+        <p key={index} className={classes.subhead}>
+          {parse(block.html)}
+        </p>
+      )
+    case "ul":
+      return (
+        <ul key={index} className={classes.list}>
+          {block.items.map((item, i) => (
+            <li key={i}>{parse(item)}</li>
+          ))}
+        </ul>
+      )
+    case "ol":
+      return (
+        <ol key={index} className={classes.olist}>
+          {block.items.map((item, i) => (
+            <li key={i}>{parse(item)}</li>
+          ))}
+        </ol>
+      )
+    default:
+      return (
+        <p key={index} className={classes.para}>
+          {parse(block.html)}
+        </p>
+      )
+  }
+}
 
 const HelpModal: React.FC = () => {
-
-  const { GENERATING, INTRODUCTION, RECONSTRUCTING, WARNING, TIPS_AND_BEST_PRACTICES, ABOUT, LEGAL } =
-    helpModalTabTexts
-
   const { isOpen, setIsOpen, tab, setTab } = useContext(HelpModalContext)
 
   const handleClose = () => {
     setIsOpen(false)
-    setTab(HelpModalTabs.Introduction)
+    setTab(helpChapters[0].id)
   }
+
+  const active = helpChapters.find(chapter => chapter.id === tab) ?? helpChapters[0]
 
   return (
     <Modal
       badgeColor={BadgeColorsEnum.Success}
       title="Help & getting started"
       isActive={isOpen}
-      setIsActive={(v) => setIsOpen(v)}
+      setIsActive={v => setIsOpen(v)}
       style={{ height: "auto" }}
     >
       <div className={classes.container}>
         <div className={classes.divider}></div>
-        <div className={classes.horizontalTabs}>
-          {helpModalTabTitles.map(({ title, index }) => (
-            <div
-              key={index}
-              className={tab === index ? `${classes.tab} ${classes.activeTab}` : classes.tab}
-              onClick={() => setTab(index)}
-            >
-              {title}
-            </div>
-          ))}
+
+        <div className={classes.layout}>
+          <nav className={classes.nav} aria-label="Help sections">
+            {helpChapters.map(chapter => (
+              <button
+                key={chapter.id}
+                type="button"
+                className={`${classes.navItem} ${chapter.id === active.id ? classes.navItemActive : ""}`}
+                aria-current={chapter.id === active.id || undefined}
+                onClick={() => setTab(chapter.id)}
+              >
+                {chapter.nav}
+              </button>
+            ))}
+          </nav>
+
+          <div className={classes.content}>
+            <p className={classes.contentTitle}>{active.title}</p>
+            <div className={classes.contentBody}>{active.blocks.map(renderBlock)}</div>
+          </div>
         </div>
-        <div className={classes.contentBlock}>
-          <TabContent title={INTRODUCTION.title} isActive={tab === HelpModalTabs.Introduction}>
-            {INTRODUCTION.toolDescription}{" "}
-            <a
-              href="https://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={classes.link}
-            >
-              {INTRODUCTION.link}
-            </a>{" "}
-            {INTRODUCTION.masterSeedDescription}
-            <div className={classes.margin} />
-            {INTRODUCTION.usageDescription}
-          </TabContent>
 
-          <TabContent title={GENERATING.title} isActive={tab === HelpModalTabs.Generating}>
-            <ul className={classes.list}>
-              <li>{GENERATING.firstPrgrph}</li>
-              <li>{GENERATING.secondPrgrph}</li>
-              <li>{GENERATING.thirdPrgrph}</li>
-              <li>{GENERATING.fourthPrgrph}</li>
-              <li>{GENERATING.fifthPrgrph}</li>
-              <li>{GENERATING.sixthPrgrph}</li>
-            </ul>
-          </TabContent>
-
-          <TabContent title={RECONSTRUCTING.title} isActive={tab === HelpModalTabs.Reconstructing}>
-            <ul className={classes.list}>
-              <li>{RECONSTRUCTING.firstPrgrph}</li>
-              <li>{RECONSTRUCTING.secondPrgrph}</li>
-              <li>{RECONSTRUCTING.thirdPrgrph}</li>
-            </ul>
-          </TabContent>
-
-          <TabContent title={WARNING.title} isActive={tab === HelpModalTabs.Warning}>
-            <p className={classes.introText}>
-              {parse(WARNING.intro)}
-            </p>
-            {WARNING.parts.map((warningPart, index) => (<div key={index}>
-              <p className={classes.warningSubTitle}>{warningPart.title}</p>
-              <ul className={classes.list}>
-                {warningPart.list.map((li, index2) => <li key={index2}>{parse(li)}</li>)}
-              </ul>
-            </div>))}
-            <p>
-              {parse(WARNING.outro)}
-            </p>
-          </TabContent>
-
-          <TabContent
-            title={TIPS_AND_BEST_PRACTICES.title}
-            isActive={tab === HelpModalTabs.Tips_and_best_practices}
+        <p className={classes.footer}>
+          Free and open source.{" "}
+          <a
+            href="https://github.com/seedhodler/seedhodler"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={classes.link}
           >
-            <ul className={classes.list}>
-              <li>{TIPS_AND_BEST_PRACTICES.firstPrgrph}</li>
-              <li>{TIPS_AND_BEST_PRACTICES.secondPrgrph}</li>
-              <li>{TIPS_AND_BEST_PRACTICES.thirdPrgrph}</li>
-              <li>{TIPS_AND_BEST_PRACTICES.fourthPrgrph}</li>
-            </ul>
-          </TabContent>
-
-          <TabContent title={ABOUT.title} isActive={tab === HelpModalTabs.About}>
-            {ABOUT.desc}
-          </TabContent>
-
-          <TabContent title={LEGAL.title} isActive={tab === HelpModalTabs.Legal}>
-            {LEGAL.desc}
-          </TabContent>
-        </div>
+            View the code on GitHub
+          </a>
+          . Provided as is, with no warranty; you are responsible for your own keys and backups.
+        </p>
 
         <div className={classes.buttonContainer}>
-          <Button onClick={handleClose}>Done</Button>
+          <Button onClick={handleClose}>Got it</Button>
         </div>
       </div>
     </Modal>

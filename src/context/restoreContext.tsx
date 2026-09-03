@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, SetStateAction, useEffect, useState } from "react"
+import React, { createContext, Dispatch, SetStateAction, useEffect, useMemo, useState } from "react"
 
 import { shareWordCountOptions } from "src/constants/"
 import { recoverSeed, type Scheme, sharesNeeded, validateShare } from "src/core"
@@ -15,8 +15,10 @@ type Context = {
   currentShare: string[]
   setCurrentShare: Dispatch<SetStateAction<string[]>> | (() => void)
   isCurrentShareValid: boolean
-  infoMessage: string
-  setInfoMessage: Dispatch<SetStateAction<string>> | (() => void)
+  // How many shares are needed to recover (the threshold), once it can be told
+  // from the entered shares. Null while unknown. Never the total number created:
+  // the share formats do not encode that.
+  threshold: number | null
   enteredShares: string[][]
   setEnteredShares: Dispatch<SetStateAction<string[][]>> | (() => void)
   activeShareItemId: number
@@ -36,8 +38,7 @@ export const RestoreContext = createContext<Context>({
   currentShare: [""],
   setCurrentShare: () => {},
   isCurrentShareValid: false,
-  infoMessage: "",
-  setInfoMessage: () => {},
+  threshold: null,
   enteredShares: [[""]],
   setEnteredShares: () => {},
   activeShareItemId: 0,
@@ -61,10 +62,16 @@ export const RestoreContextProvider: React.FC<ProviderProps> = ({ children }) =>
   const shareLength = +shareWordCount
   const [currentShare, setCurrentShare] = useState<string[]>(new Array(shareLength).fill(""))
   const isCurrentShareValid = validateShare(currentShare.join(" "), selectedScheme)
-  const [infoMessage, setInfoMessage] = useState("")
+  const [threshold, setThreshold] = useState<number | null>(null)
   const [enteredShares, setEnteredShares] = useState<string[][]>([])
   const [activeShareItemId, setActiveShareItemId] = useState(0)
-  const enteredSharesAsString = enteredShares.map(shareItem => shareItem.join(" "))
+  // Memoised so the recovery effect below runs only when the shares actually
+  // change, not on every render (a fresh array each render would loop the
+  // effect's setState).
+  const enteredSharesAsString = useMemo(
+    () => enteredShares.map(shareItem => shareItem.join(" ")),
+    [enteredShares],
+  )
   const [restoredMnemonic, setRestoredMnemonic] = useState<string[]>(
     new Array(+selectedWordCount).fill(""),
   )
@@ -74,34 +81,44 @@ export const RestoreContextProvider: React.FC<ProviderProps> = ({ children }) =>
   // changes the scheme and seed size): the in-progress share, the collected set,
   // and the recovered seed no longer fit.
   useEffect(() => {
-    setInfoMessage("")
+    setThreshold(null)
     setActiveShareItemId(0)
     setCurrentShare(new Array(shareLength).fill(""))
     setEnteredShares([])
     setRestoredMnemonic(new Array(+selectedWordCount).fill(""))
   }, [shareWordCount])
 
-  // Recover the seed from the shares entered so far. Below the threshold the
-  // core reports how many more are needed (per scheme) for the progress line;
-  // when that count can't be told yet, fall back to a plain count so the line
-  // never shows a bogus number.
+  // Recover the seed from the shares entered so far, and track the threshold.
+  //
+  // The threshold (how many shares are needed) is learned once and kept: SSKR
+  // carries it in every share, SLIP-39 reveals it only through its own
+  // below-threshold error. Recovery then runs over at most `threshold` shares,
+  // because both libraries throw when handed more than they need; slicing keeps
+  // a recovered seed recovered as further shares are added, instead of flipping
+  // the count negative.
   useEffect(() => {
-    if (enteredSharesAsString.length > 0) {
-      const restoreResult = recoverSeed(enteredSharesAsString)
-      if ("mnemonic" in restoreResult) {
-        setRestoredMnemonic(mnemonicToWords(restoreResult.mnemonic))
-        setInfoMessage(`${enteredShares.length} of ${enteredShares.length} shares added`)
-      } else {
-        const neededSplitNumber = sharesNeeded(enteredSharesAsString)
-        setInfoMessage(
-          neededSplitNumber
-            ? `${enteredShares.length} of ${neededSplitNumber} shares added - ${
-                neededSplitNumber - enteredShares.length
-              } shares remaining`
-            : `${enteredShares.length} shares added`,
-        )
+    if (enteredSharesAsString.length === 0) {
+      setThreshold(null)
+      setRestoredMnemonic(new Array(+selectedWordCount).fill(""))
+      return
+    }
+
+    let t = selectedScheme === "sskr" ? sharesNeeded(enteredSharesAsString) ?? threshold : threshold
+    const forRecovery = t ? enteredSharesAsString.slice(0, t) : enteredSharesAsString
+    const result = recoverSeed(forRecovery)
+
+    if ("mnemonic" in result) {
+      setRestoredMnemonic(mnemonicToWords(result.mnemonic))
+      if (!t) t = forRecovery.length
+    } else {
+      setRestoredMnemonic(new Array(+selectedWordCount).fill(""))
+      if (!t) {
+        const parsed = Number(result.error.split(" ")[5])
+        if (Number.isFinite(parsed)) t = parsed
       }
     }
+    setThreshold(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enteredShares, enteredSharesAsString])
 
   const contextValue = {
@@ -113,8 +130,7 @@ export const RestoreContextProvider: React.FC<ProviderProps> = ({ children }) =>
     currentShare,
     setCurrentShare,
     isCurrentShareValid,
-    infoMessage,
-    setInfoMessage,
+    threshold,
     enteredShares,
     setEnteredShares,
     activeShareItemId,

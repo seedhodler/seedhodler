@@ -2,10 +2,9 @@
 
 .seedCard {
   padding: 2.4rem;
-  background-color: $colorBg100;
-  // Flat card: a hairline border instead of a drop shadow, so it does not look
-  // like it floats and casts a shadow.
-  border: 1px solid #ececec;
+  // Flat card: a slightly darker fill than the page instead of a border, so it
+  // reads as a surface without a hairline frame.
+  background-color: $colorBg200;
   border-radius: $radiiMedium;
   margin-bottom: 3.6rem;
 }
