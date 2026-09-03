@@ -112,10 +112,7 @@
 .contentContainer {
   max-width: 968px;
   width: 100%;
-  // Left-align the content next to the sidebar instead of centring it in the
-  // remaining space, which on wide screens left a large empty gap between the
-  // sidebar and the content ("too much distance to the left").
-  margin: 0;
+  margin: 0 auto;
 }
 
 .mainContentContainer {
