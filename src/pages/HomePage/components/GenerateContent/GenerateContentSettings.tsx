@@ -36,14 +36,13 @@ export const GenerateContentSettings: React.FC<GenerateContentSettingsProps> = (
     <>
       <div className={classes.headerContainer} style={{ marginBottom: "3.6rem" }}>
         <BadgeTitle
-          title="Seed Type"
-          additionalInfo="BIP 39"
-          color={BadgeColorsEnum.SuccessLight}
+          title="Generate Master Seed"
+          color={BadgeColorsEnum.Main}
           headingLevel={2}
           style={{ marginBottom: 0 }}
         />
         <div className={classes.wordCountContainer}>
-          <p>Word number count:</p>
+          <p>Word count</p>
           <Select
             defaultValue={selectedWordCount}
             onChange={handleWordCountChange}
@@ -53,9 +52,7 @@ export const GenerateContentSettings: React.FC<GenerateContentSettingsProps> = (
       </div>
       <div className={classes.configContainer}>
         <div className={classes.configLabelContainer}>
-          <p>
-            Advanced Toolset - <span className={classes.entropyGeneration}>Entropy Generation</span>
-          </p>
+          <p>Entropy Generation</p>
           <Tooltip
             content="Don't trust the randomness of a computer? You can enter your own entropy here."
             label="About the advanced entropy toolset"
@@ -63,7 +60,9 @@ export const GenerateContentSettings: React.FC<GenerateContentSettingsProps> = (
         </div>
         <Switch checked={isAdvanced} onChange={setIsAdvanced} />
       </div>
-      <div className={classes.blockDivider} />
+      {/* The divider that closes this section is rendered by the parent, after the
+          advanced entropy block when it is expanded (so it sits below the field,
+          not below the heading). */}
     </>
   )
 }

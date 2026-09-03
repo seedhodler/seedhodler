@@ -11,7 +11,10 @@
 .trigger {
   display: inline-flex;
   align-items: center;
-  padding: 0;
+  // Grow the hit area to ~32px for touch without enlarging the icon (audit 15);
+  // the negative margin keeps the icon in the same visual spot.
+  padding: 6px;
+  margin: -6px;
   border: none;
   background: none;
   cursor: help;

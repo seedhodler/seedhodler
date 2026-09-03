@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState } from "react"
+import React, { lazy, Suspense, useRef, useState } from "react"
 
 import GenerateIcon from "src/assets/icons/GenerateWithBg.svg"
 import RestoreIcon from "src/assets/icons/RestoreWithBg.svg"
@@ -12,11 +12,31 @@ const RestoreContent = lazy(() => import("./components/RestoreContent"))
 // in generateContext / restoreContext, where the state it drives already is.
 const HomePage: React.FC = () => {
   const [activeTabId, setActiveTabId] = useState(0)
+  const tablistRef = useRef<HTMLDivElement>(null)
+
+  // Arrow-key navigation for the tablist (audit 14). Move selection and carry
+  // focus to the newly selected tab, the roving-tabindex pattern.
+  const onTablistKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return
+    e.preventDefault()
+    const next = activeTabId === 0 ? 1 : 0
+    setActiveTabId(next)
+    requestAnimationFrame(() => {
+      tablistRef.current?.querySelectorAll<HTMLElement>('[role="tab"]')[next]?.focus()
+    })
+  }
 
   return (
     <>
-      <div className={classes.tabsContainer}>
+      <div
+        className={classes.tabsContainer}
+        role="tablist"
+        aria-label="Generate or restore"
+        ref={tablistRef}
+        onKeyDown={onTablistKeyDown}
+      >
         <Tab
+          id="tab-generate"
           title="Generate"
           desc="Generate a BIP39 Master Seed and split it into shares"
           icon={GenerateIcon}
@@ -24,6 +44,7 @@ const HomePage: React.FC = () => {
           onClick={() => setActiveTabId(0)}
         />
         <Tab
+          id="tab-restore"
           title="Restore"
           desc="Combine enough shares to retrieve your Master Seed"
           icon={RestoreIcon}

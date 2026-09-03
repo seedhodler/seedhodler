@@ -4,9 +4,11 @@
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  padding: 12px 14px;
+  padding: 12px 16px;
   border-radius: $radiiSmall;
-  border-left: 4px solid;
+  // Full frame, matching the master seed online-warning box, instead of a
+  // left accent bar, so the two warnings read as the same kind of element.
+  border: 1px solid;
   margin-bottom: 2.4rem;
 }
 
@@ -32,14 +34,14 @@
 // brand violet, so danger and brand no longer share a colour.
 .danger {
   background: $colorErrorOnlineBg;
-  border-left-color: $colorError;
+  border-color: $colorError;
   color: #7f1d1d;
 }
 
 // Caution: SSKR, where the device refuses the shares. Calmer amber, not red.
 .note {
   background: rgba(255, 216, 141, 0.28);
-  border-left-color: #e0a63a;
+  border-color: #e0a63a;
   color: #6a4d12;
 }
 

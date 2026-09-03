@@ -1,11 +1,11 @@
-import React, { Dispatch, SetStateAction } from "react"
+import React, { Dispatch, SetStateAction, useState } from "react"
 
 import BinIcon from "src/assets/icons/Bin.svg"
-import NextIcon from "src/assets/icons/Next.svg"
-import PrevIcon from "src/assets/icons/Prev.svg"
 import { Button } from "src/components/Button"
+import { ShareCardHeader } from "src/components/ShareCardHeader"
 import { TextPlace } from "src/components/TextPlace"
 import { ButtonColorsEnum } from "src/constants/"
+import type { Scheme } from "src/core"
 
 import classes from "./Shares.module.scss"
 
@@ -13,59 +13,83 @@ type Props = {
   shares: string[]
   activeShareItemId: number
   setActiveShareItemId: Dispatch<SetStateAction<number>>
+  scheme?: Scheme
   isRestore?: boolean
   onDelete?: () => void
+  // When set, the header shows a print icon that prints the share form matching
+  // this exact share (scheme + length). Only the generate side passes it.
+  onPrint?: () => void
 }
 
 const Shares: React.FC<Props> = ({
   shares,
   activeShareItemId,
   setActiveShareItemId,
+  scheme,
   isRestore,
   onDelete = () => {},
+  onPrint,
 }) => {
-  const navigation = []
+  const words = shares[activeShareItemId].split(" ")
 
-  for (let i = 0; i < shares.length; i++) {
-    navigation.push(
-      <button
-        key={i}
-        onClick={() => setActiveShareItemId(i)}
-        className={i === activeShareItemId ? classes.navigationItemActive : classes.navigationItem}
-        aria-label={`Go to share ${i + 1}`}
-        aria-current={i === activeShareItemId ? "true" : undefined}
-      />,
-    )
-  }
+  // Blur toggle for the share words, mirroring the seed card. A share is a
+  // secret too; hide it for a screenshot or a glance.
+  const [hidden, setHidden] = useState(false)
 
   return (
     <>
       <div className={classes.sharesContainer}>
-        <div className={classes.sharesHeader}>
-          <button
-            disabled={activeShareItemId <= 0}
-            onClick={() => setActiveShareItemId(prev => (prev <= 0 ? prev : --prev))}
-            className={classes.navigationBtn}
-            aria-label="Previous share"
-          >
-            <img src={PrevIcon} alt="" aria-hidden="true" />
-          </button>
-          <div className={classes.shareNumberContainer}>
-            <div className={classes.dot}></div>
-            <h3 className={classes.shareNumberHeader}>Share - {activeShareItemId + 1}</h3>
-          </div>
-          <button
-            disabled={activeShareItemId >= shares.length - 1}
-            onClick={() => setActiveShareItemId(prev => (prev >= shares.length - 1 ? prev : ++prev))}
-            className={classes.navigationBtn}
-            aria-label="Next share"
-          >
-            <img src={NextIcon} alt="" aria-hidden="true" />
-          </button>
-        </div>
+        <ShareCardHeader
+          activeIndex={activeShareItemId}
+          total={shares.length}
+          wordCount={words.length}
+          scheme={scheme}
+          onNavigate={setActiveShareItemId}
+          actions={
+            onPrint && (
+              <div className={classes.shareActions}>
+                <button
+                  type="button"
+                  className={classes.shareIconBtn}
+                  onClick={() => setHidden(h => !h)}
+                  aria-label={hidden ? "Reveal share" : "Hide share"}
+                  title={hidden ? "Reveal share" : "Hide share"}
+                >
+                  {hidden ? (
+                    // Open eye: click to reveal.
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                      <circle cx="12" cy="12" r="3" />
+                    </svg>
+                  ) : (
+                    // Crossed-out eye: click to hide.
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                      <line x1="1" y1="1" x2="23" y2="23" />
+                    </svg>
+                  )}
+                </button>
+                <button
+                  type="button"
+                  className={classes.shareIconBtn}
+                  onClick={onPrint}
+                  aria-label="Print the matching share form"
+                  title="Print the matching share form"
+                >
+                  {/* Printer: opens the print dialog with the matching share form pre-selected. */}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <polyline points="6 9 6 2 18 2 18 9" />
+                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                    <rect x="6" y="14" width="12" height="8" />
+                  </svg>
+                </button>
+              </div>
+            )
+          }
+        />
         <div className={classes.blockDivider} style={{ marginBottom: "2.4rem" }}></div>
-        <div className={classes.shareItemsContainer}>
-          {shares[activeShareItemId].split(" ").map((shareItem, index) => (
+        <div className={`${classes.shareItemsContainer} ${hidden ? classes.shareBlurred : ""}`}>
+          {words.map((shareItem, index) => (
             <TextPlace
               key={index}
               text={shareItem}
@@ -74,20 +98,17 @@ const Shares: React.FC<Props> = ({
             />
           ))}
         </div>
-        <div className={classes.blockDivider} style={{ marginBottom: "2.4rem" }}></div>
-
-        <div className={classes.bottomInfoContainer}>
-          <p className={classes.shareNumberText}>
-            {activeShareItemId + 1}/{shares.length} splits
-          </p>
-          {isRestore && (
-            <Button onClick={onDelete} iconRight={BinIcon} color={ButtonColorsEnum.Neutral}>
-              Delete
-            </Button>
-          )}
-        </div>
+        {isRestore && (
+          <>
+            <div className={classes.blockDivider} style={{ marginBottom: "2.4rem" }}></div>
+            <div className={classes.bottomInfoContainer}>
+              <Button onClick={onDelete} iconRight={BinIcon} color={ButtonColorsEnum.Neutral}>
+                Delete
+              </Button>
+            </div>
+          </>
+        )}
       </div>
-      {shares.length > 1 && <div className={classes.navigationContainer}>{navigation}</div>}
     </>
   )
 }

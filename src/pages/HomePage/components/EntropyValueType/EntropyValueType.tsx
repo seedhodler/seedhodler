@@ -19,7 +19,7 @@ const EntropyValueType: React.FC<Props> = ({ title, subtitle, icon, isActive, on
       className={classes.container}
       style={{ border: isActive ? `2px solid ${variables.colorMain}` : "" }}
     >
-      <img src={icon} alt="Entropy item" style={{ marginRight: "1.2rem", color: "#e90e0e" }} />
+      <img src={icon} alt="" aria-hidden="true" className={classes.icon} />
       <div>
         <p className={classes.subtitle}>{subtitle}</p>
         <p className={classes.title}>{title}</p>

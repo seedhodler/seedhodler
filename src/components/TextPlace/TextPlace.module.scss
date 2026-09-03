@@ -2,8 +2,8 @@
 
 .textPlace {
   position: relative;
-  background-color: $colorBg200;
-  border: 1px dashed $colorBg670;
+  background-color: #e8e8e8;
+  border: none;
   border-radius: $radii;
   padding: 1.2rem 1.2rem 1.2rem 4.2rem;
   margin-bottom: 1.2rem;
@@ -11,7 +11,7 @@
 }
 
 .success {
-  border-color: $colorSuccess;
+  border: 1px solid $colorSuccess;
   background-color: $colorSuccessLightest;
 }
 

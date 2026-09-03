@@ -82,7 +82,9 @@ export const GenerateContextProvider: React.FC<ProviderProps> = ({ children }) =
   const [entropyValue, setEntropyValue] = useState("")
   const [shares, setShares] = useState<null | string[]>(null)
   const [activeShareItemId, setActiveShareItemId] = useState(0)
-  const [entropyTypeId, setEntropyTypeId] = useState(0)
+  // Numbers is the first tile and the default value type (id 3); the ids are the
+  // fixed conversion keys, not the display order.
+  const [entropyTypeId, setEntropyTypeId] = useState(3)
   const minBits: 128 | 256 = +selectedWordCount === 12 ? 128 : 256
   const [thresholdNumber, setThresholdNumber] = useState(3)
   const [sharesNumber, setSharesNumber] = useState(5)

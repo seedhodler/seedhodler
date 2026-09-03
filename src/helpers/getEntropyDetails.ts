@@ -1,3 +1,4 @@
+import { cardsCount, cardsRegex, cardsToBigInt } from "src/helpers/cards"
 import { diceToBigInt } from "src/helpers/index"
 
 export const getEntropyDetails = (entropyValue: string, minBits: number, entropyTypeId: number = 0) => {
@@ -6,6 +7,7 @@ export const getEntropyDetails = (entropyValue: string, minBits: number, entropy
     1: /[^0-1]/,
     2: /[^1-6]/,
     3: /[^0-9]/,
+    4: cardsRegex,
   }
   const regex = regexVariants[entropyTypeId as keyof typeof regexVariants]
 
@@ -15,6 +17,8 @@ export const getEntropyDetails = (entropyValue: string, minBits: number, entropy
     // replace(/6/g, "0") - workaround to use 1-6 in dice, instead of 0-5
     2: entropyTypeId === 2 ? diceToBigInt(entropyValue.replace(/6/g, "0") || "0").toString(2) : "0",
     3: entropyTypeId === 3 ? BigInt(entropyValue).toString(2) : "0",
+    // Cards read as a base-52 number; the parser only counts complete pairs.
+    4: entropyTypeId === 4 ? cardsToBigInt(entropyValue).toString(2) : "0",
   }
   const rawEntropyBinaryString = entropiesAsBinary[entropyTypeId as keyof typeof entropiesAsBinary]
   const entropyLength = entropyValue.length
@@ -35,6 +39,11 @@ export const getEntropyDetails = (entropyValue: string, minBits: number, entropy
     3: {
       totalBits: entropyLength * Math.log2(10),
       entropyType: "Numbers [0-9], 90834528",
+    },
+    4: {
+      // A partly typed trailing card carries no bits yet, so count complete cards.
+      totalBits: cardsCount(entropyValue) * Math.log2(52),
+      entropyType: "Cards [A-K cdhs], AsKh9d",
     },
   }
   const selectedEntropyDetails = entropyDetails[entropyTypeId as keyof typeof entropyDetails]

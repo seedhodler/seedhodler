@@ -3,9 +3,10 @@ import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "re
 import ArrowLeftIcon from "src/assets/icons/ArrowLeft.svg"
 import ArrowRightIcon from "src/assets/icons/ArrowRight.svg"
 import { Button } from "src/components/Button"
-import { ShareHeader } from "src/components/ShareHeader"
+import { ShareCardHeader } from "src/components/ShareCardHeader"
 import { TextPlace } from "src/components/TextPlace"
 import { NavigationEnum } from "src/constants"
+import type { Scheme } from "src/core"
 import variables from "src/styles/Variables.module.scss"
 
 import classes from "../../ExportSaveModal.module.scss"
@@ -13,6 +14,7 @@ import classes from "../../ExportSaveModal.module.scss"
 type Props = {
   shares: string[]
   sharesNumber: number
+  scheme?: Scheme
   setCurrentStep: Dispatch<SetStateAction<number>>
   verifiedShareIds: number[]
   setVerifiedShareIds: Dispatch<SetStateAction<number[]>>
@@ -43,6 +45,7 @@ type Props = {
 const VerificationContent: React.FC<Props> = ({
   shares,
   sharesNumber,
+  scheme,
   setCurrentStep,
   verifiedShareIds,
   setVerifiedShareIds,
@@ -138,15 +141,17 @@ const VerificationContent: React.FC<Props> = ({
   return (
     <div className={classes.modalContentContainer}>
       <div style={{ width: "100%" }}>
-        <div className={classes.descriptionContainer}>
-          <p ref={descRef} className={classes.description}>
-            Lets verify that we wrote them down correctly.
-          </p>
-          <p className={classes.shareNumberInfo}>
-            {currentShareId + 1} / {sharesNumber} Shares
-          </p>
+        {/* Same header as the share card (title + badges + navigation), without
+            the print/hide actions the verification step does not need. */}
+        <div ref={descRef}>
+          <ShareCardHeader
+            activeIndex={currentShareId}
+            total={sharesNumber}
+            wordCount={splitShareItem.length}
+            scheme={scheme}
+            onNavigate={setCurrentShareId}
+          />
         </div>
-        <ShareHeader text={`Share - ${currentShareId + 1}`} style={{ marginBottom: "1.2rem" }} />
         <div className={classes.blockDivider}></div>
         <div className={classes.textPlacesContainer} style={{ columnCount: 2, marginBottom: "1.6rem" }}>
           {splitShareItem.map((word, index) => {

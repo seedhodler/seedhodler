@@ -20,6 +20,8 @@
 }
 
 .input {
+  // No border: on screen the fields hold real words, so a border reads as a
+  // placeholder. A darker fill sets each field off from the card instead.
   border: none;
   outline: none;
   font-weight: inherit;
@@ -28,7 +30,7 @@
 
   width: 100%;
   padding: 1.2rem 1.2rem 1.2rem 4.2rem;
-  background-color: $colorBg200;
+  background-color: #e8e8e8;
   border-radius: $radii;
   color: $colorTextDarkish;
   outline: 2px solid transparent;

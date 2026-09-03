@@ -4,10 +4,11 @@ import CheckmarkIcon from "src/assets/icons/CheckmarkFilledLight.svg"
 import { BadgeTitle } from "src/components/BadgeTitle"
 import { Button } from "src/components/Button"
 import { Input } from "src/components/Input"
+import { SchemeBadge } from "src/components/SchemeBadge"
+import { SeedCard } from "src/components/SeedCard"
 import { Select } from "src/components/Select"
 import { TextPlace } from "src/components/TextPlace"
-import { BadgeColorsEnum, schemeOptions, wordCountOptions } from "src/constants"
-import type { Scheme } from "src/core"
+import { BadgeColorsEnum, shareWordCountOptions } from "src/constants"
 import { RestoreContext } from "src/context/restoreContext"
 import { useInputRefs } from "src/hooks"
 import variables from "src/styles/Variables.module.scss"
@@ -18,10 +19,10 @@ import classes from "./RestoreContent.module.scss"
 
 const RestoreContent: React.FC = () => {
   const {
+    shareWordCount,
+    setShareWordCount,
     selectedWordCount,
-    setSelectedWordCount,
     selectedScheme,
-    setSelectedScheme,
     shareLength,
     currentShare,
     setCurrentShare,
@@ -36,10 +37,6 @@ const RestoreContent: React.FC = () => {
     isFullMnemonic,
   } = useContext(RestoreContext)
   const inputRefs = useInputRefs(shareLength)
-
-  const handleWordCountChange = (wordCountValue: string) => {
-    setSelectedWordCount(wordCountValue)
-  }
 
   const handleAddShare = () => {
     setEnteredShares(prev => [...prev, currentShare])
@@ -65,70 +62,72 @@ const RestoreContent: React.FC = () => {
 
   return (
     <>
-      <div className={classes.headerContainer} style={{ marginBottom: "1.2rem" }}>
+      <div className={classes.headerContainer} style={{ marginBottom: "3.6rem" }}>
         <BadgeTitle
-          title="Enter Splits"
-          color={BadgeColorsEnum.MainLight}
-          additionalInfo={selectedScheme === "sskr" ? "SSKR" : "SLIP-39"}
+          title="Enter Shares"
+          color={BadgeColorsEnum.Main}
           headingLevel={2}
           style={{ marginBottom: 0 }}
         />
         <div className={classes.wordCountContainer}>
-          <p>Word number count:</p>
+          <p>Words per share</p>
           <Select
-            defaultValue={selectedWordCount}
-            onChange={handleWordCountChange}
-            options={wordCountOptions}
+            value={shareWordCount}
+            defaultValue={shareWordCount}
+            onChange={setShareWordCount}
+            options={shareWordCountOptions}
           />
         </div>
       </div>
-      <div className={classes.headerContainer} style={{ marginBottom: "3.6rem" }}>
-        <div className={classes.wordCountContainer}>
-          <p>Share scheme:</p>
-          <Select
-            defaultValue={selectedScheme}
-            onChange={value => setSelectedScheme(value as Scheme)}
-            options={schemeOptions}
-          />
-        </div>
-      </div>
-      <div className={classes.headerContainer} style={{ marginBottom: "1.2rem" }}>
-        <h2 className={classes.title}>BIP39 Master Seed</h2>
-        {currentShare.every(word => word.length !== 0) && (
-          <div
-            className={classes.validation}
-            style={{
-              backgroundColor: isCurrentShareValid
-                ? variables.colorSuccessLight
-                : variables.colorErrorLight,
-            }}
-          >
-            {isCurrentShareValid ? "Valid Entry" : "Invalid entry"}
+      {/* The share being entered sits in the same framed card with a header as
+          the share element under generate. */}
+      <div className={classes.shareCard}>
+        <div className={classes.shareCardHeader}>
+          <div className={classes.shareCardTitleGroup}>
+            <h3 className={classes.shareCardTitle}>Share</h3>
+            <div className={classes.shareCardMeta}>
+              <SchemeBadge scheme={selectedScheme} />
+              <span className={classes.shareCardCount}>{shareLength} words</span>
+            </div>
           </div>
-        )}
-      </div>
-      <div
-        className={classes.shareContainer}
-        style={{ height: `${Math.ceil(shareLength / 2) * 60}px` }}
-      >
-        {currentShare.map((word, index) => (
-          <Input
-            key={index}
-            ref={inputRefs[index]}
-            onEnter={onEnter}
-            onClick={onClick}
-            wordlist={selectedScheme === "sskr" ? bytewordsList : slip39wordlist}
-            count={index + 1}
-            index={index}
-            value={word}
-            onChange={setCurrentShare}
-            containerStyle={{
-              width: "49%",
-              marginBottom: "1.2rem",
-              alignSelf: index >= shareLength / 2 ? "flex-end" : "flex-start",
-            }}
-          />
-        ))}
+          {currentShare.every(word => word.length !== 0) && (
+            <div
+              className={classes.validation}
+              style={{
+                backgroundColor: isCurrentShareValid
+                  ? variables.colorSuccessLight
+                  : variables.colorErrorLight,
+              }}
+            >
+              {isCurrentShareValid ? "Valid Entry" : "Invalid entry"}
+            </div>
+          )}
+        </div>
+        <div className={classes.shareCardDivider} />
+        <div
+          className={classes.shareContainer}
+          style={{ height: `${Math.ceil(shareLength / 2) * 60}px` }}
+        >
+          {currentShare.map((word, index) => (
+            <Input
+              key={index}
+              ref={inputRefs[index]}
+              onEnter={onEnter}
+              onClick={onClick}
+              wordlist={selectedScheme === "sskr" ? bytewordsList : slip39wordlist}
+              count={index + 1}
+              total={shareLength}
+              index={index}
+              value={word}
+              onChange={setCurrentShare}
+              containerStyle={{
+                width: "49%",
+                marginBottom: "1.2rem",
+                alignSelf: index >= shareLength / 2 ? "flex-end" : "flex-start",
+              }}
+            />
+          ))}
+        </div>
       </div>
       <Button
         onClick={handleAddShare}
@@ -136,13 +135,13 @@ const RestoreContent: React.FC = () => {
         fullWidth
         style={{ marginBottom: "3.6rem" }}
       >
-        Add split
+        Add share
       </Button>
       {enteredShares.length >= 1 && (
         <>
           <BadgeTitle
-            title="Split Shares"
-            color={BadgeColorsEnum.ErrorLight}
+            title="Entered Shares"
+            color={BadgeColorsEnum.Main}
             headingLevel={2}
             style={{ marginBottom: "3.6rem" }}
           />
@@ -165,35 +164,38 @@ const RestoreContent: React.FC = () => {
             shares={enteredSharesAsString}
             activeShareItemId={activeShareItemId}
             setActiveShareItemId={setActiveShareItemId}
+            scheme={selectedScheme}
             onDelete={handleDeleteShare}
           />
         </>
       )}
-      <div className={classes.headerContainer} style={{ marginBottom: "3.6rem" }}>
-        <BadgeTitle
-          title="Recovered Master Seed"
-          color={BadgeColorsEnum.SuccessLight}
-          headingLevel={2}
-          style={{ marginBottom: 0 }}
-        />
-        {isFullMnemonic && <img src={CheckmarkIcon} alt="Checkmark" />}
-      </div>
-      <div
-        className={classes.shareContainer}
-        style={{ height: selectedWordCount === "12" ? "360px" : "710px" }}
+      {/* Recovering the seed is a new section: a full-width rule and generous
+          spacing set the recovered seed apart from the shares above it. */}
+      <div className={classes.sectionDivider} />
+      {/* Same framed card as the generated master seed, so the recovered seed
+          reads identically. */}
+      <SeedCard
+        title="Recovered Master Seed"
+        wordCount={selectedWordCount}
+        actions={isFullMnemonic ? <img src={CheckmarkIcon} alt="Checkmark" /> : undefined}
       >
-        {restoredMnemonic.map((word, index) => (
-          <TextPlace
-            key={index}
-            text={word}
-            count={index + 1}
-            isSuccess={isFullMnemonic}
-            style={{
-              alignSelf: index >= +selectedWordCount / 2 ? "flex-end" : "flex-start",
-            }}
-          />
-        ))}
-      </div>
+        <div
+          className={classes.shareContainer}
+          style={{ height: selectedWordCount === "12" ? "360px" : "710px" }}
+        >
+          {restoredMnemonic.map((word, index) => (
+            <TextPlace
+              key={index}
+              text={word}
+              count={index + 1}
+              isSuccess={isFullMnemonic}
+              style={{
+                alignSelf: index >= +selectedWordCount / 2 ? "flex-end" : "flex-start",
+              }}
+            />
+          ))}
+        </div>
+      </SeedCard>
     </>
   )
 }

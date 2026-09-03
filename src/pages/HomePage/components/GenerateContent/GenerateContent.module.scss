@@ -39,10 +39,6 @@
   gap: 0.5rem;
 }
 
-.entropyGeneration {
-  color: $colorMain;
-}
-
 .blockDivider {
   @extend %divider;
   margin-bottom: 3.2rem;
@@ -106,6 +102,28 @@
   scroll-margin-top: 2rem;
 }
 
+// A full section break between generating the seed and splitting it. The seed
+// card above carries its own 3.6rem bottom margin, so the rule sits with roughly
+// symmetric breathing room on both sides.
+.sectionDivider {
+  height: 1px;
+  background-color: $colorBg300;
+  margin-bottom: 3.6rem;
+}
+
+// The master seed sits in the same card as a share (see Shares .sharesContainer):
+// a seed and a share are the same thing, a set of words from a (partial) secret,
+// so they are shown alike.
+.seedCard {
+  padding: 2.4rem;
+  background-color: $colorBg100;
+  // Flat card: a hairline border instead of a drop shadow, so it does not look
+  // like it floats and casts a shadow.
+  border: 1px solid #ececec;
+  border-radius: $radiiMedium;
+  margin-bottom: 3.6rem;
+}
+
 // Master seed header with the hide/reveal toggle (audit 06).
 .seedHeaderRow {
   display: flex;
@@ -115,20 +133,37 @@
   margin-bottom: 2.4rem;
 }
 
-.hideToggle {
+.seedActions {
   flex: none;
-  padding: 0.4rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.seedIconBtn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
   border: 1px solid $colorBg400;
   border-radius: $radiiSmall;
   background: $colorBg100;
-  font-size: 13px;
-  font-weight: $fwSemiBold;
-  color: $colorTextDarkish;
+  color: $colorBg700;
   cursor: pointer;
   transition: $transAll;
 
+  svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+  }
+
   &:hover {
     background: $colorBg200;
+    color: $colorTextDarkish;
   }
 }
 
@@ -248,7 +283,7 @@
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-bottom: 3.6rem;
+  margin-bottom: 0;
 }
 
 .sharesInfo {
@@ -258,21 +293,28 @@
   margin-bottom: 3.6rem;
 }
 
-.thresholdSharesContainer {
+// Scheme, threshold and share count on one row: a single group that defines the
+// split. Each field stacks its label over its dropdown; the fields align at the
+// top so the labels sit on one line.
+.configRow {
   display: flex;
-  margin-bottom: 3.2rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 2.8rem;
+  margin-bottom: 2.4rem;
 }
 
-.calcContainer {
+.configField {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 50%;
 }
 
 .calcTitle {
-  margin-bottom: 2.5rem;
-  font-size: 18px;
+  // Match the other field labels (Share scheme, Value Type): 14px, not 18px, so
+  // Threshold/Shares no longer read as a heavier heading than their siblings.
+  margin-bottom: 1.4rem;
+  font-size: 14px;
   color: $colorTextDark;
 }
 
@@ -294,4 +336,48 @@
 .actionRow {
   display: flex;
   gap: 1.2rem;
+}
+
+// Seed card header: a plain stacked title + caption, deliberately different from
+// the green badge title of the top section, so it reads as an echo, not a copy.
+.seedTitleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.seedTitle {
+  font-size: 17px;
+  font-weight: $fwSemiBold;
+  color: $colorTextDark;
+  margin: 0;
+  line-height: 1.2;
+}
+.seedMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+// Flatter pill badges than AdditionalInfo (less vertical height).
+.seedBadge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: $fwSemiBold;
+  line-height: 1.4;
+  padding: 0.15rem 0.7rem;
+  border-radius: $radiiSmallish;
+}
+.seedBadgeType {
+  // Same luminosity as the SSKR/SLIP-39 scheme badges (colorSuccessLightest), so
+  // BIP-39 does not glow brighter than them across the interface.
+  background-color: $colorSuccessLightest;
+  color: $colorSuccessDark;
+}
+.seedBadgeCount {
+  background-color: $colorBg300;
+  color: $colorBg700;
+}
+.seedCaption {
+  font-size: 13px;
+  font-weight: 500;
+  color: $colorBg700;
 }

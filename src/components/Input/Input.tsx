@@ -6,6 +6,8 @@ import classes from "./Input.module.scss"
 
 type Props = {
   count?: number
+  // Total number of words, used with count for the "Word 7 of 25" field label.
+  total?: number
   index: number
   value: string
   onChange: Dispatch<SetStateAction<string[]>>
@@ -19,8 +21,8 @@ type Props = {
 
 const Input = React.forwardRef<HTMLInputElement, Props>(
   (
-    { 
-      count, index, value, onChange, onClick, onEnter, 
+    {
+      count, total, index, value, onChange, onClick, onEnter,
       wordlist, isError, className, containerStyle
     },
     ref,
@@ -91,13 +93,14 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
         className={classes.container}
         style={containerStyle}
       >
-        {count && <span className={classes.count}>{count}.</span>}
+        {count && <span className={classes.count}>{count}</span>}
         <input
           ref={ref}
           type="text"
           value={value}
           onChange={e => handleChange(e.target.value)}
           className={classNames}
+          aria-label={count && total ? `Word ${count} of ${total}` : undefined}
         />
         {isOpen && (
           <div className={classes.dropdownList}>

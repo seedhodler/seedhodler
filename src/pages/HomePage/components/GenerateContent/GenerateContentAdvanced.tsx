@@ -2,9 +2,9 @@ import React, { Dispatch, SetStateAction } from "react"
 import CardsIcon from "src/assets/icons/Cards.svg"
 import CoinIcon from "src/assets/icons/Coin.svg"
 import DiceIcon from "src/assets/icons/Dice.svg"
+import HexIcon from "src/assets/icons/Hex.svg"
 import NumbersIcon from "src/assets/icons/Numbers.svg"
 
-import { BadgeTitle } from "src/components/BadgeTitle"
 import { InfoTitle } from "src/components/InfoTitle"
 import { Textarea } from "src/components/Textarea"
 import { assessEntropy, getEntropyDetails } from "src/helpers"
@@ -40,27 +40,21 @@ export const GenerateContentAdvanced: React.FC<GenerateContentAdvancedProps> = (
 
   return (
     <>
-      <BadgeTitle title="Entropy Generation" headingLevel={2} style={{ marginBottom: "2.6rem" }} />
       <div className={classes.entropyContainer}>
         <div className={classes.wrapperColumn}>
           <InfoTitle
-            title="Entropy Value Type"
-            desc="Choose what type of random number generator you are using. Such as a deck of cards or flipping a coin"
+            title="Value Type"
+            desc="Choose the source of randomness you are entering: hex characters, coin flips, dice throws, digits, or cards drawn from a shuffled deck"
           />
           <div className={classes.entropyOptionsContainer}>
+            {/* Display order only; the entropyTypeId of each type is fixed by the
+                conversion logic and must not change. */}
             <EntropyValueType
-              title="HEX"
-              subtitle="[0-9A-F]"
-              isActive={entropyTypeId === 0}
-              onClick={() => handleEntropyChange(0)}
-              icon={CardsIcon}
-            />
-            <EntropyValueType
-              title="Coin Flip"
-              subtitle="[0,1]"
-              isActive={entropyTypeId === 1}
-              onClick={() => handleEntropyChange(1)}
-              icon={CoinIcon}
+              title="Numbers"
+              subtitle="[0-9]"
+              isActive={entropyTypeId === 3}
+              onClick={() => handleEntropyChange(3)}
+              icon={NumbersIcon}
             />
             <EntropyValueType
               title="Dice"
@@ -70,18 +64,32 @@ export const GenerateContentAdvanced: React.FC<GenerateContentAdvancedProps> = (
               icon={DiceIcon}
             />
             <EntropyValueType
-              title="Numbers"
-              subtitle="[0-9]"
-              isActive={entropyTypeId === 3}
-              onClick={() => handleEntropyChange(3)}
-              icon={NumbersIcon}
+              title="Coin Flip"
+              subtitle="[0,1]"
+              isActive={entropyTypeId === 1}
+              onClick={() => handleEntropyChange(1)}
+              icon={CoinIcon}
+            />
+            <EntropyValueType
+              title="Cards"
+              subtitle="[A-K cdhs]"
+              isActive={entropyTypeId === 4}
+              onClick={() => handleEntropyChange(4)}
+              icon={CardsIcon}
+            />
+            <EntropyValueType
+              title="HEX"
+              subtitle="[0-9A-F]"
+              isActive={entropyTypeId === 0}
+              onClick={() => handleEntropyChange(0)}
+              icon={HexIcon}
             />
           </div>
         </div>
       </div>
       <div className={classes.infoAndValidation}>
         <InfoTitle
-          title="Manual - Enter your own entropy"
+          title="Enter your own entropy"
           // eslint-disable-next-line max-len
           desc="Use this text input field to manually enter your entropy. Seedhodler will only generate your master seed upon having entered a sufficient amount of data. This is shown in the small text field on the right side."
         />

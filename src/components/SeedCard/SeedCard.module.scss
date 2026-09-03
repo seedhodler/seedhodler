@@ -1,0 +1,71 @@
+@import "src/styles/Variables.module.scss";
+
+.seedCard {
+  padding: 2.4rem;
+  background-color: $colorBg100;
+  // Flat card: a hairline border instead of a drop shadow, so it does not look
+  // like it floats and casts a shadow.
+  border: 1px solid #ececec;
+  border-radius: $radiiMedium;
+  margin-bottom: 3.6rem;
+}
+
+.seedHeaderRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  margin-bottom: 2.4rem;
+}
+
+.seedTitleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.seedTitle {
+  font-size: 17px;
+  font-weight: $fwSemiBold;
+  color: $colorTextDark;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.seedMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.seedBadge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: $fwSemiBold;
+  line-height: 1.4;
+  padding: 0.15rem 0.7rem;
+  border-radius: $radiiSmallish;
+}
+
+// BIP-39 at the same luminosity as the scheme badges.
+.seedBadgeType {
+  background-color: $colorSuccessLightest;
+  color: $colorSuccessDark;
+}
+
+.seedBadgeCount {
+  background-color: $colorBg300;
+  color: $colorBg700;
+}
+
+.seedActions {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.blockDivider {
+  @extend %divider;
+  margin-bottom: 2.4rem;
+}
