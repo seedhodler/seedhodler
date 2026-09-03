@@ -166,6 +166,7 @@ const RestoreContent: React.FC = () => {
             shares={enteredSharesAsString}
             activeShareItemId={activeShareItemId}
             setActiveShareItemId={setActiveShareItemId}
+            scheme={selectedScheme}
             onDelete={handleDeleteShare}
           />
         </>

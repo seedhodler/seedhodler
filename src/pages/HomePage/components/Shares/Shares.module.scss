@@ -21,20 +21,51 @@
   margin-bottom: 2.4rem;
 }
 
-.shareNumberContainer {
+// Header mirrors the master seed card: a plain title with badges beneath it.
+.shareTitleGroup {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 0.7rem;
 }
 
-.dot {
-  @extend %dot;
-}
-
-.shareNumberHeader {
-  margin-left: 1rem;
+.shareTitle {
+  font-size: 17px;
   font-weight: $fwSemiBold;
   color: $colorTextDark;
-  font-size: 20px;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.shareMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.shareBadge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: $fwSemiBold;
+  line-height: 1.4;
+  padding: 0.15rem 0.7rem;
+  border-radius: $radiiSmallish;
+}
+
+.shareBadgeType {
+  background-color: $colorSuccessLight;
+  color: $colorSuccessDark;
+}
+
+.shareBadgeCount {
+  background-color: $colorBg300;
+  color: $colorBg700;
+}
+
+.shareNav {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
 }
 
 .navigationBtn {
@@ -75,12 +106,6 @@
     break-inside: avoid;
     -webkit-column-break-inside: avoid;
   }
-}
-
-.shareNumberText {
-  color: $colorBg700;
-  font-weight: $fwSemiBold;
-  font-size: 18px;
 }
 
 .navigationContainer {

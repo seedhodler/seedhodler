@@ -316,6 +316,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
               shares={shares}
               activeShareItemId={activeShareItemId}
               setActiveShareItemId={setActiveShareItemId}
+              scheme={selectedScheme}
             />
           )}
           <div className={classes.actionRow}>
