@@ -326,15 +326,22 @@
   gap: 1.2rem;
 }
 
-// Seed card header: "Master Seed" badge title + word count caption.
+// Seed card header: a plain stacked title + caption, deliberately different from
+// the green badge title of the top section, so it reads as an echo, not a copy.
 .seedTitleGroup {
   display: flex;
-  align-items: center;
-  gap: 1.6rem;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.seedTitle {
+  font-size: 17px;
+  font-weight: $fwSemiBold;
+  color: $colorTextDark;
+  margin: 0;
+  line-height: 1.2;
 }
 .seedCaption {
   font-size: 13px;
   font-weight: 500;
   color: $colorBg700;
-  white-space: nowrap;
 }
