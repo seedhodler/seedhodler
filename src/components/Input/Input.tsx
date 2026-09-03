@@ -93,7 +93,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
         className={classes.container}
         style={containerStyle}
       >
-        {count && <span className={classes.count}>{count}.</span>}
+        {count && <span className={classes.count}>{count}</span>}
         <input
           ref={ref}
           type="text"

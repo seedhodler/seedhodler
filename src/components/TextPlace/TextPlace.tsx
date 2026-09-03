@@ -19,7 +19,7 @@ const TextPlace: React.FC<Props> = ({ text, count, isSuccess, className, style }
 
   return (
     <div className={classNames.join(" ")} style={style}>
-      <span className={classes.count}>{count}.</span>
+      <span className={classes.count}>{count}</span>
       {text}&nbsp;
     </div>
   )
