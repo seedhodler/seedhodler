@@ -77,6 +77,19 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
       onEnter(index + parts.length - 1)
     }
 
+    // Clicking (or tabbing) into a filled field selects the whole word with the
+    // caret at the start, so typing overwrites it straight away. The mouseup is
+    // suppressed so the click does not collapse that selection into a caret.
+    const selectWord = (el: HTMLInputElement) => {
+      if (value) el.setSelectionRange(0, value.length, "backward")
+    }
+    const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => selectWord(e.currentTarget)
+    const handleMouseUp = (e: React.MouseEvent<HTMLInputElement>) => {
+      if (!value) return
+      e.preventDefault()
+      selectWord(e.currentTarget)
+    }
+
     useEffect(() => {
       const onKeydown = (e: KeyboardEvent) => {
         if (isOpen) {
@@ -122,6 +135,8 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
           value={value}
           onChange={e => handleChange(e.target.value)}
           onPaste={handlePaste}
+          onFocus={handleFocus}
+          onMouseUp={handleMouseUp}
           className={classNames}
           aria-label={count && total ? `Word ${count} of ${total}` : undefined}
         />
