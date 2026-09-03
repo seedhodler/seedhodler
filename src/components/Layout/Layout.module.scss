@@ -47,10 +47,13 @@
   margin-left: 51px;
   width: 224px;
   max-width: 100%;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: $fwNormal;
-  line-height: 18px;
+  line-height: 22px;
   color: $colorMain;
+  // Tightened word gaps keep the full claim on one line at this size; justify
+  // then closes the last hair of slack so both edges stay flush with the logo.
+  word-spacing: -2px;
   text-align: justify;
   text-align-last: justify;
   margin-bottom: 2.4rem;
@@ -59,7 +62,7 @@
   @include lg-d {
     margin-left: 35px;
     width: 155px;
-    font-size: 9px;
+    font-size: 11px;
   }
 }
 
