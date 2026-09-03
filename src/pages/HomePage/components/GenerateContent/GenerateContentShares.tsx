@@ -187,6 +187,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
           </div>
         )}
       </div>
+      <div className={classes.blockDivider} style={{ marginBottom: "2.4rem" }} />
       <div className={classes.seedWrap}>
         <div
           className={`${classes.seedPhraseContainer} ${seedHidden ? classes.seedBlurred : ""}`}
