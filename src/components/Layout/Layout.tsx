@@ -58,6 +58,7 @@ const Layout: React.FC<Props> = ({
           <Link to="/">
             <img src={Logo} alt="Seedhodler" className={classes.logo} />
           </Link>
+          <p className={classes.tagline}>Split the seed. Spread the risk.</p>
           <p className={classes.subtitle}>
             Seedhodler is a tool that uses Shamir's secret sharing to generate, split, and rejoin master
             seeds for cryptocurrency wallets. By Splitting a master seed into shares and distributing

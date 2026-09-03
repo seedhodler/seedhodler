@@ -30,11 +30,22 @@
 }
 
 .logo {
-  margin-bottom: 3rem;
+  margin-bottom: 1.8rem;
 
   @include lg-d {
     width: 200px;
   }
+}
+
+// The brand claim, right under the wordmark: says what Seedhodler does rather
+// than what any one sheet is (that antithesis lives on the printed forms).
+.tagline {
+  font-size: 19px;
+  font-weight: $fwBold;
+  line-height: 26px;
+  letter-spacing: -0.01em;
+  color: $colorTextDark;
+  margin-bottom: 2.4rem;
 }
 
 .subtitle {
