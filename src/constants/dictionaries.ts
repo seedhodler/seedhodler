@@ -153,18 +153,18 @@ export const helpChapters: HelpChapter[] = [
       { type: "h", html: `SLIP-39` },
       {
         type: "p",
-        html: `SLIP-39 shares are word lists, 20 or 33 words, the same format a Trezor uses for its on-device Shamir backup. They enjoy the widest support, but that shared format is also a trap. Moving SLIP-39 shares between Seedhodler and a Trezor is dangerous in <b>both</b> directions:`,
+        html: `SLIP-39 shares are word lists, 20 or 33 words, the same format a Trezor uses for its built-in Shamir backup. A Trezor is a perfectly good BIP-39 wallet to use with Seedhodler; the trap is only its <b>built-in</b> Shamir feature. Because both speak SLIP-39, moving shares between Seedhodler and a Trezor's own Shamir is dangerous in <b>both</b> directions:`,
       },
       {
         type: "ul",
         items: [
-          `<b>Seedhodler shares in a Trezor:</b> the device accepts them and rebuilds a secret, but it reads that secret as a native SLIP-39 seed and derives a <b>different</b> wallet than your BIP-39 one. No error, no warning, an empty wallet. If you had already destroyed your original seed, the funds are gone.`,
-          `<b>Trezor shares in Seedhodler:</b> the reverse goes wrong just as quietly. Seedhodler rebuilds the secret and re-encodes it as a BIP-39 mnemonic, which derives yet another wallet, not your Trezor one.`,
+          `<b>Seedhodler shares in a Trezor's Shamir recovery:</b> the device accepts them and rebuilds a secret, but it reads that secret as a native SLIP-39 seed and derives a <b>different</b> wallet than your BIP-39 one. No error, no warning, an empty wallet. If you had already destroyed your original seed, the funds are gone.`,
+          `<b>Trezor's own Shamir shares in Seedhodler:</b> the reverse goes wrong just as quietly. Seedhodler rebuilds the secret and re-encodes it as a BIP-39 mnemonic, which derives yet another wallet, not your Trezor one.`,
         ],
       },
       {
         type: "p",
-        html: `The reason is the same each way: the shares carry an identical secret, but the two systems interpret that secret differently, so each derives its own wallet and nothing flags the mismatch. <b>Restore SLIP-39 shares only in the tool that made them.</b> Do not move them between Seedhodler and Trezor.`,
+        html: `The reason is the same each way: the shares carry an identical secret, but the two systems interpret that secret differently, so each derives its own wallet and nothing flags the mismatch. <b>Restore SLIP-39 shares only in the tool that made them,</b> and never mix Seedhodler with a Trezor's built-in Shamir.`,
       },
       { type: "h", html: `SSKR` },
       {
@@ -221,7 +221,7 @@ export const helpChapters: HelpChapter[] = [
       },
       {
         type: "p",
-        html: `Seedhodler is for <b>BIP-39</b> wallets, such as Ledger, and your shares are standard, so any compatible tool can recombine them; your recovery never depends on this website. Before combining shares with a different tool, read <b>Methods: SLIP-39 and SSKR</b>. The wrong mix can silently open a different wallet.`,
+        html: `Seedhodler works with <b>any BIP-39 wallet</b>, Ledger, Trezor, Coldcard and the rest, and brings Shamir backup to all of them. Your shares are standard, so any compatible tool can recombine them; your recovery never depends on this website. Before combining shares with a different tool, read <b>Methods: SLIP-39 and SSKR</b>. The wrong mix can silently open a different wallet.`,
       },
     ],
   },
