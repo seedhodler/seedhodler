@@ -25,6 +25,11 @@ jobs:
   release:
     name: Build, verify and publish
     runs-on: ubuntu-latest
+    # Job-level so the sign step's `if` can read MINISIGN_KEY. Empty (no secret)
+    # until the key is configured, which cleanly disables signing.
+    env:
+      MINISIGN_KEY: ${{ secrets.MINISIGN_KEY }}
+      MINISIGN_PASSWORD: ${{ secrets.MINISIGN_PASSWORD }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -72,20 +77,41 @@ jobs:
       # First-party GitHub action. Binds the file to this repo, commit and
       # workflow run; verifiable later with:
       #   gh attestation verify <file> --repo ${{ github.repository }}
-      # Pin to a commit SHA before relying on this for security-critical trust.
       - name: Attest build provenance
-        uses: actions/attest-build-provenance@v2
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
         with:
           subject-path: ${{ steps.asset.outputs.name }}
 
+      # Independent signature with the project's own minisign key, so trust does
+      # not rest solely on GitHub. Runs only once MINISIGN_KEY is configured
+      # (below), so the workflow keeps working until the key is set up. The
+      # public key lives in the repo as minisign.pub for verification.
+      - name: Sign with minisign
+        id: minisign
+        if: ${{ env.MINISIGN_KEY != '' }}
+        env:
+          ASSET: ${{ steps.asset.outputs.name }}
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq && sudo apt-get install -y -qq minisign
+          umask 077
+          printf '%s\n' "$MINISIGN_KEY" > minisign.key
+          for f in "$ASSET" SHA256SUMS.txt; do
+            printf '%s' "${MINISIGN_PASSWORD:-}" | minisign -S -s minisign.key -m "$f" -t "seedhodler ${GITHUB_REF_NAME}"
+          done
+          rm -f minisign.key
+          echo "signed=true" >> "$GITHUB_OUTPUT"
+          ls -la ./*.minisig
+
       # Always available for inspection, including on workflow_dispatch runs.
       - name: Upload workflow artifact
-        uses: actions/upload-artifact@v4 # pin to a commit SHA before relying on it
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: seedhodler-html
           path: |
             ${{ steps.asset.outputs.name }}
             SHA256SUMS.txt
+            *.minisig
           if-no-files-found: error
 
       - name: Create or update the GitHub Release
@@ -95,23 +121,26 @@ jobs:
         run: |
           set -euo pipefail
           tag="${GITHUB_REF_NAME}"
-          notes=$(cat <<'NOTES'
-          Single-file, self-contained Seedhodler build. One file, no network at runtime.
+          asset="${{ steps.asset.outputs.name }}"
 
-          **Verify before you trust it with a seed:**
+          # Assets: the file, its checksums, and any minisign signatures.
+          files=( "$asset" SHA256SUMS.txt )
+          for s in "$asset.minisig" SHA256SUMS.txt.minisig; do
+            [ -f "$s" ] && files+=( "$s" )
+          done
 
-          - Checksum: `sha256sum -c SHA256SUMS.txt`
-          - Provenance: `gh attestation verify seedhodler-<tag>.html --repo ${{ github.repository }}`
-          - Reproduce from source: check out this tag and run `npm ci && npm run build`; `build/index.html` has the same SHA-256 as the published file.
+          notes="Single-file, self-contained Seedhodler build. One file, no network at runtime."
+          notes+=$'\n\n'"**Verify before you trust it with a seed:**"
+          notes+=$'\n\n'"- Checksum: \`sha256sum -c SHA256SUMS.txt\`"
+          notes+=$'\n'"- Provenance: \`gh attestation verify $asset --repo ${{ github.repository }}\`"
+          notes+=$'\n'"- Reproduce from source: check out this tag and run \`npm ci && npm run build\`; \`build/index.html\` has the same SHA-256 as the published file."
+          if [ "${{ steps.minisign.outputs.signed }}" = "true" ]; then
+            notes+=$'\n'"- Signature: \`minisign -Vm $asset -p minisign.pub\` (public key in the repo)"
+          fi
+          notes+=$'\n\n'"**Run it offline.** Ideally boot a live USB OS with no network and open the file there. Do not use it on a machine that has been online with your seed."
 
-          **Run it offline.** Ideally boot a live USB OS with no network and open the file there. Do not use it on a machine that has been online with your seed.
-          NOTES
-          )
           if gh release view "$tag" >/dev/null 2>&1; then
-            gh release upload "$tag" "${{ steps.asset.outputs.name }}" SHA256SUMS.txt --clobber
+            gh release upload "$tag" "${files[@]}" --clobber
           else
-            gh release create "$tag" \
-              --title "$tag" \
-              --notes "$notes" \
-              "${{ steps.asset.outputs.name }}" SHA256SUMS.txt
+            gh release create "$tag" --title "$tag" --notes "$notes" "${files[@]}"
           fi
