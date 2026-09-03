@@ -6,7 +6,7 @@ import Logo from "src/assets/icons/Logo.svg"
 import QuestionMarkIcon from "src/assets/icons/QuestionMark.svg?react"
 import { ConnectionStatus } from "src/components/ConnectionStatus"
 
-import { HelpModalTabs } from "src/constants"
+import { helpChapters } from "src/constants"
 import { GenerateContext } from "src/context/generateContext"
 import { HelpModalContext } from "src/context/HelpModalContext"
 import { NavigationContext } from "src/context/navigationContext"
@@ -101,7 +101,7 @@ const Layout: React.FC<Props> = ({
           <div className={classes.helpButtonContainer}>
             <button onClick={() => {
               setHelpModalOpen(true)
-              setTab(HelpModalTabs.Introduction)
+              setTab(helpChapters[0].id)
             }} className={classes.helpButton}>
               <QuestionMarkIcon />
               Help & getting started
