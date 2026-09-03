@@ -84,7 +84,10 @@
 .contentBody {
   // Fixed height (not max-height) so the modal stays the same size for every
   // chapter; otherwise a shorter chapter shrinks the centred modal and it jumps.
-  height: 44vh;
+  // Sized a touch above the tallest everyday chapter (Store & pass on) so most
+  // chapters show without scrolling; only the long SLIP-39 & SSKR one scrolls.
+  // The vh cap keeps it inside short viewports.
+  height: min(500px, 64vh);
   overflow-y: auto;
   padding-right: 8px;
 }
