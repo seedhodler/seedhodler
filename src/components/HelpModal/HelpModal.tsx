@@ -97,7 +97,7 @@ const HelpModal: React.FC = () => {
         </p>
 
         <div className={classes.buttonContainer}>
-          <Button onClick={handleClose}>Done</Button>
+          <Button onClick={handleClose}>Got it</Button>
         </div>
       </div>
     </Modal>
