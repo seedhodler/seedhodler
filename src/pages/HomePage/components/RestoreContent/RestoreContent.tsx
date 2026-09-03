@@ -131,8 +131,8 @@ const RestoreContent: React.FC = () => {
         />
         <div className={classes.shareCardDivider} />
         <div
-          className={classes.shareContainer}
-          style={{ height: `${Math.ceil(shareLength / 2) * 60}px` }}
+          className={classes.wordGrid}
+          style={{ gridTemplateRows: `repeat(${Math.ceil(shareLength / 2)}, auto)` }}
         >
           {isEntryPage
             ? currentShare.map((word, index) => (
@@ -147,11 +147,7 @@ const RestoreContent: React.FC = () => {
                   index={index}
                   value={word}
                   onChange={setCurrentShare}
-                  containerStyle={{
-                    width: "49%",
-                    marginBottom: "1.2rem",
-                    alignSelf: index >= shareLength / 2 ? "flex-end" : "flex-start",
-                  }}
+                  containerStyle={{ marginBottom: 0 }}
                 />
               ))
             : enteredShares[pageIndex].map((word, index) => (
@@ -159,10 +155,7 @@ const RestoreContent: React.FC = () => {
                   key={index}
                   text={word}
                   count={index + 1}
-                  style={{
-                    marginBottom: "1.2rem",
-                    alignSelf: index >= shareLength / 2 ? "flex-end" : "flex-start",
-                  }}
+                  style={{ width: "auto", marginBottom: 0 }}
                 />
               ))}
         </div>
@@ -247,7 +240,7 @@ const RestoreContent: React.FC = () => {
           {/* Deterministic column-first grid: exactly N/2 tiles per column, so
               the boundary tile never lands between the columns. */}
           <div
-            className={`${classes.recoveredGrid} ${seedHidden ? classes.seedBlurred : ""}`}
+            className={`${classes.wordGrid} ${seedHidden ? classes.seedBlurred : ""}`}
             style={{ gridTemplateRows: `repeat(${Math.ceil(+selectedWordCount / 2)}, auto)` }}
           >
             {restoredMnemonic.map((word, index) => (
