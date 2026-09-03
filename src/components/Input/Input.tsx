@@ -96,7 +96,8 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
       const listOpen = isOpen && variants.length > 0
       if (listOpen) {
-        if (e.key === "Enter") {
+        // Enter and Tab both take the highlighted suggestion, then advance.
+        if (e.key === "Enter" || e.key === "Tab") {
           e.preventDefault()
           onChange(mnemonicArr =>
             mnemonicArr.map((word, wordIndex) => (wordIndex === index ? variants[focusedItemId] : word)),
