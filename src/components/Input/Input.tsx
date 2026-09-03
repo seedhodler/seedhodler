@@ -90,33 +90,43 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
       selectWord(e.currentTarget)
     }
 
-    useEffect(() => {
-      const onKeydown = (e: KeyboardEvent) => {
-        if (isOpen) {
-          if (e.key === "Tab" || e.key === "ArrowDown") {
-            e.preventDefault()
-            setFocusedItemId(prev => (focusedItemId < variants.length - 1 ? prev + 1 : 0))
-          } else if (e.key === "ArrowUp") {
-            e.preventDefault()
-            setFocusedItemId(prev => (focusedItemId <= 0 ? variants.length - 1 : prev - 1))
-          } else if (e.key === "Enter" && variants.length > 0) {
-            e.preventDefault()
-            onChange(mnemonicArr =>
-              mnemonicArr.map((word, wordIndex) =>
-                wordIndex === index ? variants[focusedItemId] : word,
-              ),
-            )
-            onEnter(index)
-          }
-        } else if (e.key === "Enter" && wordlist.some(word => word === value)) {
+    // Keyboard, scoped to this field. Separator keys (comma, space, Tab, arrow
+    // down) advance to the next field, which then selects its word so the next
+    // keystroke overwrites it, turning the fields into a fast typed stream.
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (isOpen && variants.length > 0) {
+        if (e.key === "Enter") {
+          e.preventDefault()
+          onChange(mnemonicArr =>
+            mnemonicArr.map((word, wordIndex) => (wordIndex === index ? variants[focusedItemId] : word)),
+          )
           onEnter(index)
+          return
         }
+        if (e.key === "ArrowUp") {
+          e.preventDefault()
+          setFocusedItemId(prev => (focusedItemId <= 0 ? variants.length - 1 : prev - 1))
+          return
+        }
+      } else if (e.key === "Enter" && wordlist.some(word => word === value)) {
+        e.preventDefault()
+        onEnter(index)
+        return
       }
 
-      document.addEventListener("keydown", onKeydown)
-
-      return () => document.removeEventListener("keydown", onKeydown)
-    }, [focusedItemId, variants, isOpen, variants, index])
+      if (e.key === "Tab") {
+        // Keep Tab's default on the last field so focus can still leave the form.
+        if (typeof total === "number" && index < total - 1) {
+          e.preventDefault()
+          onEnter(index)
+        }
+        return
+      }
+      if (e.key === "," || e.key === " " || e.key === "ArrowDown") {
+        e.preventDefault()
+        onEnter(index)
+      }
+    }
 
     useEffect(() => {
       setFocusedItemId(0)
@@ -134,6 +144,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
           type="text"
           value={value}
           onChange={e => handleChange(e.target.value)}
+          onKeyDown={handleKeyDown}
           onPaste={handlePaste}
           onFocus={handleFocus}
           onMouseUp={handleMouseUp}
