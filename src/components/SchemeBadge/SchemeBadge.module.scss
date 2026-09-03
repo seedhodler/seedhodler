@@ -1,0 +1,32 @@
+@import "src/styles/Variables.module.scss";
+
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: $fwSemiBold;
+  line-height: 1.4;
+  padding: 0.15rem 0.7rem;
+  border-radius: $radiiSmallish;
+  white-space: nowrap;
+}
+
+.small {
+  font-size: 11px;
+  padding: 0.1rem 0.55rem;
+}
+
+// Three distinct hues at the same soft luminosity, so no badge glows louder than
+// the others: SLIP-39 violet, SSKR blue, BIP-39 green (the last on the seed card
+// and print rows). Kept apart so a share's scheme reads at a glance.
+
+// SLIP-39: the brand violet.
+.slip39 {
+  background-color: #ece9fb;
+  color: $colorMain;
+}
+
+// SSKR: a soft blue, distinct from BIP-39's green and SLIP-39's violet.
+.sskr {
+  background-color: #e4edfb;
+  color: #2f5aa6;
+}

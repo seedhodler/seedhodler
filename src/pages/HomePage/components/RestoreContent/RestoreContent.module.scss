@@ -1,5 +1,68 @@
 @import "src/styles/Variables.module.scss";
 
+// A full section break before the recovered-seed card, with generous spacing on
+// both sides so it reads as its own step.
+.sectionDivider {
+  height: 1px;
+  background-color: $colorBg300;
+  margin: 2.4rem 0 4rem;
+}
+
+// The share-entry card: same framed look and header as the share element under
+// generate (title + scheme/word-count badges), with the entry validation on the
+// right of the header.
+.shareCard {
+  padding: 2.4rem;
+  background-color: $colorBg100;
+  border: 1px solid #ececec;
+  border-radius: $radiiMedium;
+  margin-bottom: 3.6rem;
+}
+
+.shareCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  margin-bottom: 2.4rem;
+}
+
+.shareCardTitleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.shareCardTitle {
+  font-size: 17px;
+  font-weight: $fwSemiBold;
+  color: $colorTextDark;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.shareCardMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.shareCardCount {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: $fwSemiBold;
+  line-height: 1.4;
+  padding: 0.15rem 0.7rem;
+  border-radius: $radiiSmallish;
+  background-color: $colorBg300;
+  color: $colorBg700;
+}
+
+.shareCardDivider {
+  @extend %divider;
+  margin-bottom: 2.4rem;
+}
+
 .headerContainer {
   display: flex;
   justify-content: space-between;

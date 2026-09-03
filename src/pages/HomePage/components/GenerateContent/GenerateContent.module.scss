@@ -39,10 +39,6 @@
   gap: 0.5rem;
 }
 
-.entropyGeneration {
-  color: $colorMain;
-}
-
 .blockDivider {
   @extend %divider;
   margin-bottom: 3.2rem;
@@ -104,6 +100,15 @@
 .scrollAnchor {
   height: 0;
   scroll-margin-top: 2rem;
+}
+
+// A full section break between generating the seed and splitting it. The seed
+// card above carries its own 3.6rem bottom margin, so the rule sits with roughly
+// symmetric breathing room on both sides.
+.sectionDivider {
+  height: 1px;
+  background-color: $colorBg300;
+  margin-bottom: 3.6rem;
 }
 
 // The master seed sits in the same card as a share (see Shares .sharesContainer):
@@ -288,21 +293,28 @@
   margin-bottom: 3.6rem;
 }
 
-.thresholdSharesContainer {
+// Scheme, threshold and share count on one row: a single group that defines the
+// split. Each field stacks its label over its dropdown; the fields align at the
+// top so the labels sit on one line.
+.configRow {
   display: flex;
-  margin-bottom: 3.2rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 2.8rem;
+  margin-bottom: 2.4rem;
 }
 
-.calcContainer {
+.configField {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 50%;
 }
 
 .calcTitle {
-  margin-bottom: 2.5rem;
-  font-size: 18px;
+  // Match the other field labels (Share scheme, Value Type): 14px, not 18px, so
+  // Threshold/Shares no longer read as a heavier heading than their siblings.
+  margin-bottom: 1.4rem;
+  font-size: 14px;
   color: $colorTextDark;
 }
 
@@ -355,7 +367,9 @@
   border-radius: $radiiSmallish;
 }
 .seedBadgeType {
-  background-color: $colorSuccessLight;
+  // Same luminosity as the SSKR/SLIP-39 scheme badges (colorSuccessLightest), so
+  // BIP-39 does not glow brighter than them across the interface.
+  background-color: $colorSuccessLightest;
   color: $colorSuccessDark;
 }
 .seedBadgeCount {

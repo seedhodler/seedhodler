@@ -46,6 +46,11 @@
   }
 }
 
+.tabLabel {
+  display: inline-flex;
+  align-items: center;
+}
+
 .infoIcon {
   margin-left: 0.5rem;
 }

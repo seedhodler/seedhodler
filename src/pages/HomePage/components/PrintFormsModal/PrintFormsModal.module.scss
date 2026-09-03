@@ -29,48 +29,172 @@
   font-weight: $fwSemiBold;
 }
 
+// Two columns: the selectable form list on the left, a live preview on the right.
+.layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 2.4rem;
+  // Breathing room before the sticky print-summary footer, so the preview caption
+  // does not sit right on its divider.
+  margin-bottom: 2.4rem;
+}
+
+.list {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+// Sticky preview of the hovered form, filling the space beside the list. Hidden
+// on narrow screens, where each row carries its own small thumbnail instead.
+.previewPane {
+  flex: 0 0 440px;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+
+  @include md-d {
+    display: none;
+  }
+}
+
+.previewImg {
+  width: 100%;
+  height: auto;
+  max-height: 72vh;
+  object-fit: contain;
+  object-position: top;
+  background: #ffffff;
+  border: 1px solid $colorBg400;
+  border-radius: $radiiSmall;
+  box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.35);
+}
+
+.previewCaption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin: 1rem 0 0;
+  line-height: 1.4;
+}
+
+.previewCaptionLabel {
+  font-size: 14px;
+  font-weight: $fwSemiBold;
+  color: $colorTextDark;
+}
+
+.previewCaptionDetail {
+  font-size: 12px;
+  color: $colorBg700;
+}
+
+// Each form group sits in its own lightly tinted block so the rows read as
+// belonging together.
+.groupBlock {
+  background: $colorBg200;
+  border-radius: $radiiMedium;
+  padding: 1.6rem;
+  margin-bottom: 1.4rem;
+}
+
 .groupTitle {
   font-size: 13px;
   font-weight: $fwSemiBold;
   color: $colorTextDark;
-  margin-bottom: 1rem;
+  margin: 0;
+}
+
+// Disclosure header of a collapsed group; full width so groups stack. The label
+// stays constant (only the chevron rotates) to avoid a jumpy relabel.
+.disclosure {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: $fwSemiBold;
+  color: $colorTextDark;
+  text-align: left;
+
+  &:hover {
+    color: $colorMain;
+  }
+}
+
+.disclosureHint {
+  font-weight: $fwNormal;
+  color: $colorBg700;
+}
+
+.disclosureChevron {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  color: $colorBg700;
+  transition: transform 0.15s ease;
+
+  &[data-open] {
+    transform: rotate(90deg);
+  }
+}
+
+// Print summary above the sticky action button.
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin: 0 0 1rem;
+  line-height: 1.4;
+}
+
+.summaryTotal {
+  font-size: 14px;
+  font-weight: $fwSemiBold;
+  color: $colorTextDark;
+}
+
+.summaryBreakdown {
+  font-size: 13px;
+  color: $colorBg700;
 }
 
 .group {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin-bottom: 2.4rem;
+  margin: 1.2rem 0 0;
 }
 
+// Uniform row: a white card on the tinted group block. The only strong state is
+// "selected" (below), so what will print is obvious at a glance; relevance is
+// conveyed by the group it sits in.
 .row {
   display: flex;
   align-items: center;
-  gap: 1.4rem;
-  padding: 1.4rem 1.6rem;
+  gap: 1.2rem;
+  padding: 1.2rem 1.4rem;
   border-radius: $radii;
-  border: 1px solid transparent;
+  border: 1px solid $colorBg300;
+  background-color: $colorBg100;
   cursor: pointer;
   transition: $transAll;
-}
 
-// The forms that fit the current split: accent border and tint, drawn forward.
-.rowMatch {
-  background-color: $colorSuccessLightest;
-  border-color: $colorSuccess;
-
-  .rowDetail {
-    color: $colorSuccessDark;
+  &:hover {
+    border-color: $colorBg670;
   }
 }
 
-// Valid but not matching the current split: muted, still selectable.
-.rowOther {
-  background-color: $colorBg200;
+.rowSelected {
+  background-color: rgba($colorMain, 0.08);
+  border-color: $colorMain;
 
-  .rowLabel,
-  .rowDetail {
-    color: $colorBg700;
+  &:hover {
+    border-color: $colorMain;
   }
 }
 
@@ -78,39 +202,73 @@
   width: 18px;
   height: 18px;
   flex: 0 0 auto;
-  accent-color: $colorSuccess;
+  accent-color: $colorMain;
   cursor: pointer;
+}
+
+// Small first-page thumbnail; shown only on narrow screens (the preview pane is
+// hidden there), so a preview is always available somewhere.
+.rowThumb {
+  display: none;
+  flex: 0 0 auto;
+  width: 40px;
+  height: 54px;
+  object-fit: cover;
+  object-position: top;
+  background: #ffffff;
+  border: 1px solid $colorBg400;
+  border-radius: 4px;
+
+  @include md-d {
+    display: block;
+  }
 }
 
 .rowText {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.4rem;
   flex: 1 1 auto;
+  min-width: 0;
 }
 
 .rowLabel {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
   font-size: 14px;
   font-weight: $fwSemiBold;
   color: $colorTextDark;
 }
 
-.matchBadge {
-  font-size: 10px;
-  font-weight: $fwSemiBold;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: $colorSuccessDark;
-  background-color: $colorSuccessLight;
-  padding: 0.2rem 0.6rem;
-  border-radius: $radiiSmallest;
-}
-
 .rowDetail {
   font-size: 12px;
+  color: $colorBg700;
+}
+
+// Seed/share rows show badges instead of a text description.
+.rowBadges {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: $fwSemiBold;
+  line-height: 1.4;
+  padding: 0.1rem 0.55rem;
+  border-radius: $radiiSmallish;
+  white-space: nowrap;
+}
+
+// BIP-39 badge, matching the master seed card and the scheme badges' luminosity.
+.badgeBip39 {
+  background-color: $colorSuccessLightest;
+  color: $colorSuccessDark;
+}
+
+.badgeCount {
+  background-color: $colorBg300;
   color: $colorBg700;
 }
 

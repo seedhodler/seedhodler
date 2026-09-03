@@ -1,10 +1,10 @@
 /**
- * Prove that the four advanced-mode entropy input types convert correctly.
+ * Prove that the five advanced-mode entropy input types convert correctly.
  *
  *   npx vite-node tools/check-entropy-inputs.mjs
  *
- * A user in advanced mode supplies raw entropy as hex, binary, dice, or
- * decimal digits. getEntropyDetails turns each into the binary string that is
+ * A user in advanced mode supplies raw entropy as hex, binary, dice, decimal
+ * digits, or drawn cards. getEntropyDetails turns each into the binary string that is
  * later split. A silent bug here means a seed that does not match what the user
  * entered, so the conversion is worth pinning down.
  *
@@ -22,6 +22,27 @@ const check = (ok, message) => {
   if (!ok) failures.push(message)
 }
 
+// Cards: rank (A2-9TJQK) + suit (cdhs), index rank*4+suit, read as base 52.
+// Parsed defensively into complete pairs, mirroring the helper.
+const RANKS = "A23456789TJQK"
+const SUITS = "cdhs"
+const cardsOracle = v => {
+  let n = 0n
+  let i = 0
+  while (i < v.length) {
+    const r = RANKS.indexOf(v[i])
+    if (r === -1) {
+      i += 1
+      continue
+    }
+    const s = i + 1 < v.length ? SUITS.indexOf(v[i + 1]) : -1
+    if (s === -1) break
+    n = n * 52n + BigInt(r * 4 + s)
+    i += 2
+  }
+  return n
+}
+
 // Independent value of the digits under each input type.
 const oracle = {
   0: v => (v === "" ? 0n : BigInt("0x" + v)), // hex
@@ -29,9 +50,20 @@ const oracle = {
   // dice: faces 1-6, where 6 stands for 0, read as a base-6 number.
   2: v => [...v].reduce((a, c) => a * 6n + BigInt(c === "6" ? 0 : Number(c)), 0n),
   3: v => (v === "" ? 0n : BigInt(v)), // decimal
+  4: cardsOracle, // cards, base 52
 }
 
-const name = { 0: "hex", 1: "binary", 2: "dice", 3: "decimal" }
+const name = { 0: "hex", 1: "binary", 2: "dice", 3: "decimal", 4: "cards" }
+
+// A deterministic run of valid cards, so the long conversion cases are stable
+// without hand-typing dozens of rank/suit pairs.
+const buildCards = (n, seed) => {
+  let s = seed
+  const next = () => ((s = (s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff)
+  let out = ""
+  for (let i = 0; i < n; i++) out += RANKS[Math.floor(next() * 13)] + SUITS[Math.floor(next() * 4)]
+  return out
+}
 
 // [type, value, minBits]
 const cases = [
@@ -46,6 +78,10 @@ const cases = [
   [2, "5555555555555555555555555555555555555555555555555555", 256],
   [3, "123456789012345678901234567890", 128],
   [3, "1", 128],
+  [4, "AsKh9d7cThQs2c", 128],
+  [4, "AcAc", 128], // ace of clubs is index 0, so two of them stand for value 0
+  [4, buildCards(30, 7), 128],
+  [4, buildCards(50, 13), 256],
 ]
 
 for (const [type, value, minBits] of cases) {
@@ -63,7 +99,7 @@ for (const [type, value, minBits] of cases) {
 }
 
 // Empty input must be a defined zero, never NaN or a throw.
-for (const type of [0, 1, 2, 3]) {
+for (const type of [0, 1, 2, 3, 4]) {
   const { selectedEntropyAsBinary } = getEntropyDetails("", 128, type)
   const v = selectedEntropyAsBinary === "" ? 0n : BigInt("0b" + selectedEntropyAsBinary)
   check(v === 0n, `${name[type]}: empty input did not yield zero`)
@@ -74,4 +110,4 @@ if (failures.length) {
   for (const f of failures) console.error("  - " + f)
   process.exit(1)
 }
-console.log(`OK: ${checks} checks passed, all four entropy input types convert correctly`)
+console.log(`OK: ${checks} checks passed, all five entropy input types convert correctly`)

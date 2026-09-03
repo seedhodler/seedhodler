@@ -1,0 +1,126 @@
+@import "src/styles/Variables.module.scss";
+
+.sharesHeader {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.4rem;
+}
+
+// A plain title with badges beneath it.
+.shareTitleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.shareTitle {
+  font-size: 17px;
+  font-weight: $fwSemiBold;
+  color: $colorTextDark;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.shareMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.shareBadge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: $fwSemiBold;
+  line-height: 1.4;
+  padding: 0.15rem 0.7rem;
+  border-radius: $radiiSmallish;
+}
+
+.shareBadgeCount {
+  background-color: $colorBg300;
+  color: $colorBg700;
+}
+
+// The navigation sits centred in the header: prev/next arrows flanking the
+// clickable dots. Absolutely centred so it stays mid-header regardless of the
+// title and action widths on either side.
+.navigationContainer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.dotsRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+// Many shares: shrink only the dots so they still fit centred between the arrows
+// instead of spilling out of the row.
+.navigationContainerSmall .dotsRow button {
+  width: 10px;
+  height: 10px;
+  margin-right: 0.6rem;
+  margin-bottom: 0.4rem;
+}
+
+.navigationBtn {
+  background-color: $colorBg300;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: $transAll;
+
+  &:hover:not([disabled]),
+  &:focus:not([disabled]) {
+    background-color: darken($colorBg300, 10%);
+  }
+
+  &:disabled,
+  &[disabled] {
+    cursor: default;
+    background-color: transparent;
+    border-color: transparent;
+  }
+}
+
+%navigationItemBase {
+  @extend %dot;
+  position: relative;
+  margin-right: 1rem;
+  transition: $transAll;
+  margin-bottom: 0.6rem;
+
+  // The visible dot is 18px; extend an invisible hit area to ~26px for touch
+  // (audit 15) without changing how the dot looks.
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+  }
+
+  &:last-child() {
+    margin-right: 0;
+  }
+}
+
+.navigationItem {
+  @extend %navigationItemBase;
+  background-color: $colorBg670;
+}
+
+.navigationItemActive {
+  @extend %navigationItemBase;
+}

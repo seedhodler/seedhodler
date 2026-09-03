@@ -14,80 +14,38 @@
   margin-bottom: 4.5rem;
 }
 
-.sharesHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2.4rem;
-}
-
-// Header mirrors the master seed card: a plain title with badges beneath it.
-.shareTitleGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-}
-
-.shareTitle {
-  font-size: 17px;
-  font-weight: $fwSemiBold;
-  color: $colorTextDark;
-  margin: 0;
-  line-height: 1.2;
-}
-
-.shareMeta {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  flex-wrap: wrap;
-}
-
-.shareBadge {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: $fwSemiBold;
-  line-height: 1.4;
-  padding: 0.15rem 0.7rem;
-  border-radius: $radiiSmallish;
-}
-
-.shareBadgeType {
-  background-color: $colorSuccessLight;
-  color: $colorSuccessDark;
-}
-
-.shareBadgeCount {
-  background-color: $colorBg300;
-  color: $colorBg700;
-}
-
-.shareNav {
+// The hide/print actions on the right of the header, mirroring the seed card.
+.shareActions {
+  flex: none;
   display: flex;
   align-items: center;
   gap: 0.8rem;
 }
 
-.navigationBtn {
-  background-color: $colorBg300;
-  border-radius: 50%;
+.shareIconBtn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 36px;
   height: 36px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 0;
+  border: 1px solid $colorBg400;
+  border-radius: $radiiSmall;
+  background: $colorBg100;
+  color: $colorBg700;
+  cursor: pointer;
   transition: $transAll;
 
-  &:hover:not([disabled]),
-  &:focus:not([disabled]) {
-    background-color: darken($colorBg300, 10%);
+  svg {
+    width: 20px;
+    height: 20px;
+    display: block;
   }
 
-  &:disabled,
-  &[disabled] {
-    cursor: default;
-    background-color: transparent;
-    border-color: transparent;
+  &:hover {
+    background: $colorBg200;
+    color: $colorTextDarkish;
   }
 }
 
@@ -108,40 +66,11 @@
   }
 }
 
-.navigationContainer {
-  margin: 3.2rem 0;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-%navigationItemBase {
-  @extend %dot;
-  position: relative;
-  margin-right: 1rem;
-  transition: $transAll;
-  margin-bottom: 0.6rem;
-
-  // The visible dot is 18px; extend an invisible hit area to ~26px for touch
-  // (audit 15) without changing how the dot looks.
-  &::after {
-    content: "";
-    position: absolute;
-    inset: -4px;
-  }
-
-  &:last-child() {
-    margin-right: 0;
-  }
-}
-
-.navigationItem {
-  @extend %navigationItemBase;
-  background-color: $colorBg670;
-}
-
-.navigationItemActive {
-  @extend %navigationItemBase;
+// Blur the share words for a screenshot or a glance, like the seed card.
+.shareBlurred {
+  filter: blur(9px);
+  user-select: none;
+  pointer-events: none;
 }
 
 .bottomInfoContainer {

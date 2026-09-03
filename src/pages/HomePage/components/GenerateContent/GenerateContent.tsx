@@ -48,7 +48,7 @@ const GenerateContent: React.FC = () => {
         setIsAdvanced={setIsAdvanced}
         setEntropyValue={setEntropyValue}
       />
-      {isAdvanced ? (
+      {isAdvanced && (
         <GenerateContentAdvanced
           minBits={minBits}
           setEntropyValue={setEntropyValue}
@@ -56,9 +56,13 @@ const GenerateContent: React.FC = () => {
           entropyTypeId={entropyTypeId}
           setEntropyTypeId={setEntropyTypeId}
         />
-      ) : (
+      )}
+      {/* Divider closes the entropy-generation section: below the advanced field
+          when expanded, below the toggle when collapsed. */}
+      <div className={classes.blockDivider} />
+      {!isAdvanced && (
         <Button fullWidth style={{ marginBottom: "3.4rem" }} onClick={handleGeneratePhase}>
-          Generate Master Seed
+          Generate
         </Button>
       )}
       <GenerateContentShares

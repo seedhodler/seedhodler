@@ -12,4 +12,11 @@
   font-size: 14px;
   font-weight: $fwSemiBold;
   color: $colorTextDarkish;
+
+  // Ghost example of the expected format for the chosen value type; it vanishes
+  // as soon as the field holds real entropy.
+  &::placeholder {
+    color: $colorBg800;
+    font-weight: $fwNormal;
+  }
 }

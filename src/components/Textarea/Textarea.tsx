@@ -1,7 +1,7 @@
 import CSS from "csstype"
 import React, { ChangeEvent, Dispatch, SetStateAction } from "react"
 
-import { symbolsForMinBits } from "src/helpers"
+import { maxInputChars } from "src/helpers"
 
 import classes from "./Textarea.module.scss"
 
@@ -12,6 +12,16 @@ type Props = {
   minBits: 128 | 256
   entropyTypeId: number
   style?: CSS.Properties
+}
+
+// A ghost example of the expected format per entropy type (0 HEX, 1 Coin Flip,
+// 2 Dice, 3 Numbers), shown as a placeholder so the field hints at what to enter.
+const placeholderByType: Record<number, string> = {
+  0: "9f3ac71e0b8d4a…",
+  1: "011010011001…",
+  2: "2432551346…",
+  3: "4820573198…",
+  4: "AsKh9d7cThQs…",
 }
 
 const Textarea: React.FC<Props> = ({ value, onChange, regex, minBits, entropyTypeId, style }) => {
@@ -27,7 +37,7 @@ const Textarea: React.FC<Props> = ({ value, onChange, regex, minBits, entropyTyp
     // the fewest symbols that carry minBits fills to just past the target and
     // stops (a paste is truncated the same way); the entropy is trimmed to
     // exactly minBits downstream.
-    onChange(filtered.slice(0, symbolsForMinBits(entropyTypeId, minBits)))
+    onChange(filtered.slice(0, maxInputChars(entropyTypeId, minBits)))
   }
 
   return (
@@ -36,6 +46,7 @@ const Textarea: React.FC<Props> = ({ value, onChange, regex, minBits, entropyTyp
       onChange={e => handleChange(e)}
       rows={3}
       className={classes.textarea}
+      placeholder={placeholderByType[entropyTypeId]}
       style={style}
     />
   )

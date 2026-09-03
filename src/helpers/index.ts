@@ -1,8 +1,9 @@
 export { mnemonicToWords } from "./mnemonicWords"
 
 export { diceToBigInt } from "./parseUtils"
+export { cardsToBigInt, cardsToIndices, cardsCount, cardsRegex } from "./cards"
 export { getEntropyDetails } from "./getEntropyDetails"
-export { assessEntropy, symbolsForMinBits } from "./entropyQuality"
+export { assessEntropy, symbolsForMinBits, maxInputChars } from "./entropyQuality"
 export type { EntropyAssessment } from "./entropyQuality"
 
 export { getRandomInt, getUniqueArr } from "./randomnessUtils"

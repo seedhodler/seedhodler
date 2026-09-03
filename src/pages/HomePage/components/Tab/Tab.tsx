@@ -1,6 +1,7 @@
 import React from "react"
 
 import InfoGrayIcon from "src/assets/icons/InfoGray.svg"
+import { Tooltip } from "src/components/Tooltip"
 
 import classes from "./Tab.module.scss"
 
@@ -32,9 +33,16 @@ const Tab: React.FC<Props> = ({ title, desc, icon, active, onClick, id }) => {
       }}
     >
       <img src={icon} alt="" aria-hidden="true" className={classes.icon} />
-      <div title={desc}>
+      <div className={classes.tabLabel}>
         {title}
-        <img src={InfoGrayIcon} alt="" aria-hidden="true" className={classes.infoIcon} />
+        {/* Instant styled bubble to match the rest of the interface, replacing the
+            slow native title. stopPropagation so opening the tooltip does not also
+            switch tabs. */}
+        <Tooltip content={desc} label={`About the ${title} tab`}>
+          <span onClick={e => e.stopPropagation()}>
+            <img src={InfoGrayIcon} alt="" aria-hidden="true" className={classes.infoIcon} />
+          </span>
+        </Tooltip>
       </div>
     </div>
   )
