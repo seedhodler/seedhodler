@@ -1,20 +1,20 @@
 import React, { useContext } from "react"
 
+import BinIcon from "src/assets/icons/Bin.svg"
 import CheckmarkIcon from "src/assets/icons/CheckmarkFilledLight.svg"
 import { BadgeTitle } from "src/components/BadgeTitle"
 import { Button } from "src/components/Button"
 import { Input } from "src/components/Input"
-import { SchemeBadge } from "src/components/SchemeBadge"
 import { SeedCard } from "src/components/SeedCard"
 import { Select } from "src/components/Select"
+import { ShareCardHeader } from "src/components/ShareCardHeader"
 import { TextPlace } from "src/components/TextPlace"
-import { BadgeColorsEnum, shareWordCountOptions } from "src/constants"
+import { BadgeColorsEnum, ButtonColorsEnum, shareWordCountOptions } from "src/constants"
 import { RestoreContext } from "src/context/restoreContext"
 import { useInputRefs } from "src/hooks"
 import variables from "src/styles/Variables.module.scss"
 
 import { bytewordsList, slip39wordlist } from "src/constants/"
-import { Shares } from "../Shares"
 import classes from "./RestoreContent.module.scss"
 
 const RestoreContent: React.FC = () => {
@@ -32,20 +32,32 @@ const RestoreContent: React.FC = () => {
     setEnteredShares,
     activeShareItemId,
     setActiveShareItemId,
-    enteredSharesAsString,
     restoredMnemonic,
     isFullMnemonic,
   } = useContext(RestoreContext)
   const inputRefs = useInputRefs(shareLength)
 
+  // One paged card holds every share: the already-entered ones as read-only
+  // pages, and a final page of empty fields for the next share. total = entered
+  // + that entry page; the entry page is the last index.
+  const totalPages = enteredShares.length + 1
+  const pageIndex = Math.min(Math.max(activeShareItemId, 0), totalPages - 1)
+  const isEntryPage = pageIndex >= enteredShares.length
+  const isCurrentShareFull = currentShare.every(word => word.length !== 0)
+
   const handleAddShare = () => {
+    // After adding, land on the fresh empty entry page and focus its first field.
+    const nextEntryPage = enteredShares.length + 1
     setEnteredShares(prev => [...prev, currentShare])
     setCurrentShare(new Array(shareLength).fill(""))
+    setActiveShareItemId(nextEntryPage)
+    requestAnimationFrame(() => inputRefs[0]?.current?.focus())
   }
 
   const handleDeleteShare = () => {
-    setEnteredShares(prev => prev.filter((_, index) => index !== activeShareItemId))
-    setActiveShareItemId(0)
+    setEnteredShares(prev => prev.filter((_, index) => index !== pageIndex))
+    // Fall back to the entry page of the shortened list.
+    setActiveShareItemId(Math.max(0, enteredShares.length - 1))
   }
 
   const onEnter = (index: number) => {
@@ -79,95 +91,98 @@ const RestoreContent: React.FC = () => {
           />
         </div>
       </div>
-      {/* The share being entered sits in the same framed card with a header as
-          the share element under generate. */}
+      {/* One paged card holds every share: the entered ones as read-only pages
+          and a final page of empty fields for the next share, all under the same
+          "Share N of M" header and prev/next navigation. */}
       <div className={classes.shareCard}>
-        <div className={classes.shareCardHeader}>
-          <div className={classes.shareCardTitleGroup}>
-            <h3 className={classes.shareCardTitle}>Share</h3>
-            <div className={classes.shareCardMeta}>
-              <SchemeBadge scheme={selectedScheme} />
-              <span className={classes.shareCardCount}>{shareLength} words</span>
-            </div>
-          </div>
-          {currentShare.every(word => word.length !== 0) && (
-            <div
-              className={classes.validation}
-              style={{
-                backgroundColor: isCurrentShareValid
-                  ? variables.colorSuccessLight
-                  : variables.colorErrorLight,
-              }}
-            >
-              {isCurrentShareValid ? "Valid Entry" : "Invalid entry"}
-            </div>
-          )}
-        </div>
+        <ShareCardHeader
+          activeIndex={pageIndex}
+          total={totalPages}
+          wordCount={shareLength}
+          scheme={selectedScheme}
+          onNavigate={setActiveShareItemId}
+          actions={
+            isEntryPage ? (
+              isCurrentShareFull ? (
+                <div
+                  className={classes.validation}
+                  style={{
+                    backgroundColor: isCurrentShareValid
+                      ? variables.colorSuccessLight
+                      : variables.colorErrorLight,
+                  }}
+                >
+                  {isCurrentShareValid ? "Valid entry" : "Invalid entry"}
+                </div>
+              ) : undefined
+            ) : (
+              <Button onClick={handleDeleteShare} iconRight={BinIcon} color={ButtonColorsEnum.Neutral}>
+                Delete
+              </Button>
+            )
+          }
+        />
         <div className={classes.shareCardDivider} />
         <div
           className={classes.shareContainer}
           style={{ height: `${Math.ceil(shareLength / 2) * 60}px` }}
         >
-          {currentShare.map((word, index) => (
-            <Input
-              key={index}
-              ref={inputRefs[index]}
-              onEnter={onEnter}
-              onClick={onClick}
-              wordlist={selectedScheme === "sskr" ? bytewordsList : slip39wordlist}
-              count={index + 1}
-              total={shareLength}
-              index={index}
-              value={word}
-              onChange={setCurrentShare}
-              containerStyle={{
-                width: "49%",
-                marginBottom: "1.2rem",
-                alignSelf: index >= shareLength / 2 ? "flex-end" : "flex-start",
-              }}
-            />
-          ))}
+          {isEntryPage
+            ? currentShare.map((word, index) => (
+                <Input
+                  key={index}
+                  ref={inputRefs[index]}
+                  onEnter={onEnter}
+                  onClick={onClick}
+                  wordlist={selectedScheme === "sskr" ? bytewordsList : slip39wordlist}
+                  count={index + 1}
+                  total={shareLength}
+                  index={index}
+                  value={word}
+                  onChange={setCurrentShare}
+                  containerStyle={{
+                    width: "49%",
+                    marginBottom: "1.2rem",
+                    alignSelf: index >= shareLength / 2 ? "flex-end" : "flex-start",
+                  }}
+                />
+              ))
+            : enteredShares[pageIndex].map((word, index) => (
+                <TextPlace
+                  key={index}
+                  text={word}
+                  count={index + 1}
+                  style={{
+                    marginBottom: "1.2rem",
+                    alignSelf: index >= shareLength / 2 ? "flex-end" : "flex-start",
+                  }}
+                />
+              ))}
         </div>
       </div>
-      <Button
-        onClick={handleAddShare}
-        disabled={currentShare.some(word => word.length === 0) || !isCurrentShareValid}
-        fullWidth
-        style={{ marginBottom: "3.6rem" }}
-      >
-        Add share
-      </Button>
-      {enteredShares.length >= 1 && (
-        <>
-          <BadgeTitle
-            title="Entered Shares"
-            color={BadgeColorsEnum.Main}
-            headingLevel={2}
-            style={{ marginBottom: "3.6rem" }}
-          />
-          {infoMessage.length > 0 && (
-            <div className={classes.sharesCountContainer}>
-              <div
-                className={classes.validation}
-                style={{
-                  backgroundColor: restoredMnemonic[0].length
-                    ? variables.colorSuccessLight
-                    : variables.colorBg200,
-                }}
-              >
-                {infoMessage}
-              </div>
-            </div>
-          )}
-          <Shares
-            isRestore
-            shares={enteredSharesAsString}
-            activeShareItemId={activeShareItemId}
-            setActiveShareItemId={setActiveShareItemId}
-            scheme={selectedScheme}
-            onDelete={handleDeleteShare}
-          />
-        </>
+      {isEntryPage && (
+        <Button
+          onClick={handleAddShare}
+          disabled={!isCurrentShareFull || !isCurrentShareValid}
+          fullWidth
+          style={{ marginTop: "2.4rem", marginBottom: "3.6rem" }}
+        >
+          Add share
+        </Button>
+      )}
+      {enteredShares.length >= 1 && infoMessage.length > 0 && (
+        <div className={classes.sharesCountContainer}>
+          <div
+            className={classes.validation}
+            style={{
+              backgroundColor: restoredMnemonic[0].length
+                ? variables.colorSuccessLight
+                : variables.colorBg200,
+            }}
+          >
+            {infoMessage}
+          </div>
+        </div>
       )}
       {/* Recovering the seed is a new section: a full-width rule and generous
           spacing set the recovered seed apart from the shares above it. */}
