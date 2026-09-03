@@ -22,7 +22,9 @@ type Props = {
   selectedWordCount: number
   selectedScheme: Scheme
   sharesNumber: number
-  onPrinted?: () => void
+  // Reports what was actually printed, so the sidebar checklist can tick off the
+  // "print shares" and "fill custody inserts" steps.
+  onPrinted?: (kinds: { share: boolean; insert: boolean }) => void
   // When given, open with exactly these forms pre-selected instead of the full
   // set matching the split (used by the seed print icon to pre-select just the
   // seed form). The others stay available, only the initial ticks differ.
@@ -100,7 +102,10 @@ const PrintFormsModal: React.FC<Props> = ({
     docWindow?.focus()
     docWindow?.print()
     setIsBuilding(false)
-    onPrinted?.()
+    onPrinted?.({
+      share: selectedForms.some(f => f.kind === "share"),
+      insert: selectedForms.some(f => f.kind === "insert"),
+    })
   }
 
   // Scheme/count badges for a seed or share form (used in the row and the preview

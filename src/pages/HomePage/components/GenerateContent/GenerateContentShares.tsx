@@ -13,6 +13,7 @@ import { SchemeNotice } from "src/components/SchemeNotice"
 import { SeedCard } from "src/components/SeedCard"
 import { Select } from "src/components/Select"
 import { BadgeColorsEnum, ButtonColorsEnum, schemeOptions } from "src/constants/index"
+import { GenerateContext } from "src/context/generateContext"
 import { OnlineStatusContext } from "src/context/onlineStatusContext"
 import type { Scheme } from "src/core"
 import { matchingFormKeys } from "src/helpers"
@@ -140,6 +141,8 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
   // red warning right where the secret is. This is the danger moment the pill
   // deliberately stays quiet for.
   const isOnline = useContext(OnlineStatusContext)
+  // Checklist progress flags (set here when the user prints or verifies).
+  const { setHasPrintedShares, setHasVerified, setHasPrintedInserts } = useContext(GenerateContext)
   const secretOnScreen = !isSomeEmptyWord
 
   // The app is one long page; each new step appears below the fold and the view
@@ -370,6 +373,10 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
         selectedScheme={selectedScheme}
         sharesNumber={sharesNumber}
         initialSelection={printPreselect}
+        onPrinted={({ share, insert }) => {
+          if (share) setHasPrintedShares(true)
+          if (insert) setHasPrintedInserts(true)
+        }}
       />
       <ExportSaveModal
         isExportSaveModalActive={isExportSaveModalActive}
@@ -378,6 +385,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
         selectedScheme={selectedScheme}
         shares={shares!}
         sharesNumber={sharesNumber}
+        onVerified={() => setHasVerified(true)}
       />
       <Modal
         title="Create a new set?"

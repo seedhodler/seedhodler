@@ -5,6 +5,7 @@ import { HelpModal } from "src/components/HelpModal"
 import { Notification } from "src/components/Notification"
 import { GenerateContextProvider } from "src/context/generateContext"
 import { HelpModalContextProvider } from "src/context/HelpModalContext"
+import { NavigationContextProvider } from "src/context/navigationContext"
 import { OnlineStatusContext } from "src/context/onlineStatusContext"
 import { RestoreContextProvider } from "src/context/restoreContext"
 import Routes from "src/Routes"
@@ -26,6 +27,7 @@ const App: React.FC = () => {
     <GenerateContextProvider>
       <RestoreContextProvider>
         <HelpModalContextProvider>
+          <NavigationContextProvider>
           <>
             <HelpModal />
             <Notification isActive={isNotification} setIsActive={setIsNotification} />
@@ -50,6 +52,7 @@ const App: React.FC = () => {
               )}
             />
           </>
+          </NavigationContextProvider>
         </HelpModalContextProvider>
       </RestoreContextProvider>
     </GenerateContextProvider>

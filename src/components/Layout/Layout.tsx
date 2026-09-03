@@ -6,7 +6,10 @@ import QuestionMarkIcon from "src/assets/icons/QuestionMark.svg?react"
 import { ConnectionStatus } from "src/components/ConnectionStatus"
 
 import { HelpModalTabs } from "src/constants"
+import { GenerateContext } from "src/context/generateContext"
 import { HelpModalContext } from "src/context/HelpModalContext"
+import { NavigationContext } from "src/context/navigationContext"
+import { RestoreContext } from "src/context/restoreContext"
 import classes from "./Layout.module.scss"
 import BuildStamp from "src/components/BuildStamp"
 
@@ -18,6 +21,28 @@ const Layout: React.FC<Props> = ({
   isOnline,
 }) => {
   const { setIsOpen: setHelpModalOpen, setTab } = useContext(HelpModalContext)
+  const { activeTabId } = useContext(NavigationContext)
+  const { mnemonic, shares, hasPrintedShares, hasVerified, hasPrintedInserts } =
+    useContext(GenerateContext)
+  const { enteredShares, isFullMnemonic } = useContext(RestoreContext)
+
+  // A checklist wired to the flow's state (audit 05 / 04): steps tick green as the
+  // user reaches them, so the sidebar is real orientation, not a decorative list.
+  const seedDone = mnemonic.length > 0 && mnemonic.every(word => word.length > 0)
+  const isRestore = activeTabId === 1
+  const heading = isRestore ? "To recover your seed" : "To split your Master Seed"
+  const steps = isRestore
+    ? [
+        { label: "Enter your shares", done: enteredShares.length > 0 },
+        { label: "Recover your Master Seed", done: isFullMnemonic },
+      ]
+    : [
+        { label: "Generate your Master Seed", done: seedDone },
+        { label: "Split it into shares", done: shares !== null },
+        { label: "Print the forms, write the shares down", done: hasPrintedShares },
+        { label: "Verify your shares", done: hasVerified },
+        { label: "Fill the custody inserts", done: hasPrintedInserts },
+      ]
 
   return (
     <div className={classes.mainContainer}>
@@ -47,16 +72,35 @@ const Layout: React.FC<Props> = ({
               GitHub
             </a>
           </p>
-          {/* A plain capability list, not a progress tracker (audit 05): a real
-              <ul> with a heading and muted bullets, so nobody waits for a step to
-              light up or become clickable. */}
-          <p className={classes.featuresHeading}>What you can do</p>
-          <ul className={classes.features}>
-            <li>Generate your own BIP39 Master Seed</li>
-            <li>Manually enter your own entropy</li>
-            <li>Split your master seed using SSS</li>
-            <li>Print templates and fill split words</li>
-            <li>Restore your master seed</li>
+          {/* A checklist wired to the flow's state: steps tick green as they are
+              reached, so the list is real orientation instead of a decorative one
+              that looks like progress but never moves (audit 05 / 04). */}
+          <p className={classes.checklistHeading}>{heading}</p>
+          <ul className={classes.checklist}>
+            {steps.map(step => (
+              <li key={step.label} className={step.done ? classes.checklistDone : undefined}>
+                <span className={classes.checklistMark} aria-hidden="true">
+                  {step.done ? (
+                    <svg viewBox="0 0 20 20" fill="none">
+                      <circle cx="10" cy="10" r="10" fill="#e0f1e8" />
+                      <path
+                        d="M5.5 10.4l2.9 2.9 6-6.6"
+                        stroke="#1c7a4e"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  ) : (
+                    <svg viewBox="0 0 20 20" fill="none">
+                      <circle cx="10" cy="10" r="8.5" stroke="#c4c4c4" strokeWidth="1.6" />
+                    </svg>
+                  )}
+                </span>
+                <span>{step.label}</span>
+                <span className={classes.visuallyHidden}>{step.done ? " (done)" : ""}</span>
+              </li>
+            ))}
           </ul>
         </div>
         <div className={classes.navContentBottom}>
