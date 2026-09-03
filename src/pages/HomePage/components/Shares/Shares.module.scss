@@ -11,6 +11,14 @@
   background-color: $colorBg200;
   border-radius: $radiiMedium;
   margin-bottom: 4.5rem;
+  outline: none;
+
+  // Keyboard focus only: shows the element is selected, so the left/right arrows
+  // step between shares.
+  &:focus-visible {
+    outline: 2px solid $colorMain;
+    outline-offset: 2px;
+  }
 }
 
 // The hide/print actions on the right of the header, mirroring the seed card.

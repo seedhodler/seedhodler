@@ -37,9 +37,28 @@ const Shares: React.FC<Props> = ({
   // secret too; hide it for a screenshot or a glance.
   const [hidden, setHidden] = useState(false)
 
+  // With the share element focused, left/right arrows step between shares, the
+  // same clamped navigation as the header's prev/next buttons.
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (shares.length <= 1) return
+    if (e.key === "ArrowLeft") {
+      e.preventDefault()
+      setActiveShareItemId(id => Math.max(0, id - 1))
+    } else if (e.key === "ArrowRight") {
+      e.preventDefault()
+      setActiveShareItemId(id => Math.min(shares.length - 1, id + 1))
+    }
+  }
+
   return (
     <>
-      <div className={classes.sharesContainer}>
+      <div
+        className={classes.sharesContainer}
+        tabIndex={0}
+        role="group"
+        aria-label="Shares. Use the left and right arrow keys to switch between them."
+        onKeyDown={handleKeyDown}
+      >
         <ShareCardHeader
           activeIndex={activeShareItemId}
           total={shares.length}
