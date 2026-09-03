@@ -343,7 +343,24 @@
 .seedMeta {
   display: flex;
   align-items: center;
-  gap: 0.9rem;
+  gap: 0.8rem;
+}
+// Flatter pill badges than AdditionalInfo (less vertical height).
+.seedBadge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: $fwSemiBold;
+  line-height: 1.4;
+  padding: 0.15rem 0.7rem;
+  border-radius: $radiiSmallish;
+}
+.seedBadgeType {
+  background-color: $colorSuccessLight;
+  color: $colorSuccessDark;
+}
+.seedBadgeCount {
+  background-color: $colorBg300;
+  color: $colorBg700;
 }
 .seedCaption {
   font-size: 13px;

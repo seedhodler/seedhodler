@@ -2,7 +2,6 @@ import * as bip39 from "bip39"
 import React, { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from "react"
 
 import InfoRed from "src/assets/icons/InfoRed.svg"
-import { AdditionalInfo } from "src/components/AdditionalInfo"
 import { BadgeTitle } from "src/components/BadgeTitle"
 import { Button } from "src/components/Button"
 import { Calc } from "src/components/Calc"
@@ -150,8 +149,10 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
         <div className={classes.seedTitleGroup}>
           <h3 className={classes.seedTitle}>Master Seed</h3>
           <div className={classes.seedMeta}>
-            <AdditionalInfo info="BIP-39" color={BadgeColorsEnum.SuccessLight} />
-            <span className={classes.seedCaption}>{selectedWordCount} words</span>
+            <span className={`${classes.seedBadge} ${classes.seedBadgeType}`}>BIP-39</span>
+            <span className={`${classes.seedBadge} ${classes.seedBadgeCount}`}>
+              {selectedWordCount} words
+            </span>
           </div>
         </div>
         {!isSomeEmptyWord && (
