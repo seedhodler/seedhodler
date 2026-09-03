@@ -50,7 +50,9 @@ const Shares: React.FC<Props> = ({
             navigation on the right, so a share and the seed read alike. */}
         <div className={classes.sharesHeader}>
           <div className={classes.shareTitleGroup}>
-            <h3 className={classes.shareTitle}>Share {activeShareItemId + 1}</h3>
+            <h3 className={classes.shareTitle}>
+              Share {activeShareItemId + 1} of {shares.length}
+            </h3>
             <div className={classes.shareMeta}>
               {scheme && (
                 <span className={`${classes.shareBadge} ${classes.shareBadgeType}`}>
@@ -59,9 +61,6 @@ const Shares: React.FC<Props> = ({
               )}
               <span className={`${classes.shareBadge} ${classes.shareBadgeCount}`}>
                 {words.length} words
-              </span>
-              <span className={`${classes.shareBadge} ${classes.shareBadgeCount}`}>
-                {activeShareItemId + 1} of {shares.length}
               </span>
             </div>
           </div>
