@@ -192,6 +192,12 @@
     & * {
       fill: $colorBg100;
     }
+
+    // The separator sits at the button's top edge; on hover the violet fill
+    // reaches it, so hide it to avoid a stray grey line across the fill.
+    &::before {
+      background-color: transparent;
+    }
   }
 }
 
