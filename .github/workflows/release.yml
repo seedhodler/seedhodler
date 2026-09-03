@@ -1,0 +1,117 @@
+name: Release
+
+# Publishes the single-file, self-contained build as a GitHub Release asset when
+# a version tag (vX.Y.Z) is pushed. The whole point of Seedhodler is one file you
+# can verify once and run offline, so a release must be: validated by the same
+# checks as CI, reproducible (the build is byte-identical for a given commit, so
+# the published SHA-256 can be re-derived from source), checksummed, and backed
+# by build provenance that binds the file to this commit and workflow.
+#
+# workflow_dispatch runs everything and uploads the file as a workflow artifact
+# for inspection, but only a tag push creates a Release.
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write # create the release and upload assets
+  id-token: write # provenance attestation signing
+  attestations: write # write the provenance attestation
+
+jobs:
+  release:
+    name: Build, verify and publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "20.x"
+          cache: "npm"
+
+      - name: Install pinned dependencies
+        run: npm ci
+
+      # The same gates as CI, so a released artifact is never less checked than
+      # a normal build.
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Conformance tests
+        run: npm test
+
+      - name: Entropy input tests
+        run: npm run test:entropy
+
+      # The commit is taken from the GitHub context rather than the working tree,
+      # so the footer stamp can never pick up a "-dirty" suffix. The commit date
+      # is still derived from git (deterministic per commit).
+      - name: Build single-file HTML
+        run: npm run build
+        env:
+          SEEDHODLER_COMMIT: ${{ github.sha }}
+
+      - name: Verify the build loads nothing external
+        run: npm run check:selfcontained
+
+      - name: Name the asset and write checksums
+        id: asset
+        run: |
+          set -euo pipefail
+          name="seedhodler-${GITHUB_REF_NAME}.html"
+          cp build/index.html "$name"
+          sha256sum "$name" > SHA256SUMS.txt
+          echo "name=$name" >> "$GITHUB_OUTPUT"
+          echo "Published asset: $name"
+          cat SHA256SUMS.txt
+
+      # First-party GitHub action. Binds the file to this repo, commit and
+      # workflow run; verifiable later with:
+      #   gh attestation verify <file> --repo ${{ github.repository }}
+      # Pin to a commit SHA before relying on this for security-critical trust.
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: ${{ steps.asset.outputs.name }}
+
+      # Always available for inspection, including on workflow_dispatch runs.
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4 # pin to a commit SHA before relying on it
+        with:
+          name: seedhodler-html
+          path: |
+            ${{ steps.asset.outputs.name }}
+            SHA256SUMS.txt
+          if-no-files-found: error
+
+      - name: Create or update the GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="${GITHUB_REF_NAME}"
+          notes=$(cat <<'NOTES'
+          Single-file, self-contained Seedhodler build. One file, no network at runtime.
+
+          **Verify before you trust it with a seed:**
+
+          - Checksum: `sha256sum -c SHA256SUMS.txt`
+          - Provenance: `gh attestation verify seedhodler-<tag>.html --repo ${{ github.repository }}`
+          - Reproduce from source: check out this tag and run `npm ci && npm run build`; `build/index.html` has the same SHA-256 as the published file.
+
+          **Run it offline.** Ideally boot a live USB OS with no network and open the file there. Do not use it on a machine that has been online with your seed.
+          NOTES
+          )
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "${{ steps.asset.outputs.name }}" SHA256SUMS.txt --clobber
+          else
+            gh release create "$tag" \
+              --title "$tag" \
+              --notes "$notes" \
+              "${{ steps.asset.outputs.name }}" SHA256SUMS.txt
+          fi
