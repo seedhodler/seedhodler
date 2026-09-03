@@ -146,7 +146,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
       )}
       <div className={classes.seedCard}>
       <div className={classes.seedHeaderRow}>
-        <h2 className={classes.title} style={{ marginBottom: 0 }}>BIP39 Master Seed</h2>
+        <h2 className={classes.title} style={{ marginBottom: 0 }}>{selectedWordCount} words</h2>
         {!isSomeEmptyWord && (
           <div className={classes.seedActions}>
             <button
