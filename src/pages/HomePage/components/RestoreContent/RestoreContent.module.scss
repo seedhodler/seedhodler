@@ -129,8 +129,16 @@
   }
 }
 
-.recoveredWrap {
+.wordWrap {
   position: relative;
+}
+
+// Row of icon actions in the share header (hide, copy, print, delete).
+.shareActions {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
 }
 
 // Deterministic two-column layout, filled column-first, so the boundary tile
