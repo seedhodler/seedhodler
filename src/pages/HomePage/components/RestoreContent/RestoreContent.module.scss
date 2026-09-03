@@ -87,10 +87,31 @@
   @extend %validation;
 }
 
-.sharesCountContainer {
-  display: flex;
-  justify-content: center;
+// The restore progress: a thin bar plus a single line saying how many more
+// shares are needed (or that the seed is recovered).
+.progress {
   margin-bottom: 3.6rem;
+}
+
+.progressTrack {
+  height: 4px;
+  border-radius: 2px;
+  background-color: $colorBg300;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.25s ease;
+}
+
+.progressText {
+  font-size: 14px;
+  font-weight: $fwSemiBold;
+  color: $colorBg700;
+  text-align: center;
 }
 
 .title {

@@ -28,7 +28,7 @@ const RestoreContent: React.FC = () => {
     currentShare,
     setCurrentShare,
     isCurrentShareValid,
-    infoMessage,
+    threshold,
     enteredShares,
     setEnteredShares,
     activeShareItemId,
@@ -241,18 +241,31 @@ const RestoreContent: React.FC = () => {
           Add share
         </Button>
       )}
-      {enteredShares.length >= 1 && infoMessage.length > 0 && (
-        <div className={classes.sharesCountContainer}>
-          <div
-            className={classes.validation}
-            style={{
-              backgroundColor: restoredMnemonic[0].length
-                ? variables.colorSuccessLight
-                : variables.colorBg200,
-            }}
-          >
-            {infoMessage}
+      {enteredShares.length >= 1 && (
+        <div className={classes.progress}>
+          <div className={classes.progressTrack}>
+            <div
+              className={classes.progressFill}
+              style={{
+                width: `${threshold ? Math.min(100, (enteredShares.length / threshold) * 100) : 0}%`,
+                backgroundColor: isFullMnemonic ? variables.colorSuccess : variables.colorMain,
+              }}
+            />
           </div>
+          <p
+            className={classes.progressText}
+            style={isFullMnemonic ? { color: variables.colorSuccess } : undefined}
+          >
+            {isFullMnemonic
+              ? "Master seed recovered"
+              : threshold
+                ? `${threshold - enteredShares.length} more share${
+                    threshold - enteredShares.length === 1 ? "" : "s"
+                  } needed`
+                : `${enteredShares.length} share${
+                    enteredShares.length === 1 ? "" : "s"
+                  } entered`}
+          </p>
         </div>
       )}
       {/* Recovering the seed is a new section: a full-width rule and generous
