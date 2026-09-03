@@ -38,24 +38,28 @@
   }
 }
 
-// The brand claim, locked up under the wordmark: constrained to the logo width
-// and justified so its edges sit flush with the logo, reading as a strapline
-// rather than a floating line. Says what Seedhodler does, not what any one
-// sheet is (that antithesis lives on the printed forms).
+// The brand claim, locked up under the wordmark itself (not the icon): it sits
+// in the span from the "s" of seedhodler to the wordmark's right edge and is
+// justified flush to both, so it reads as a strapline hung under the logotype.
+// Says what Seedhodler does, not what any one sheet is (that antithesis lives
+// on the printed forms). Offsets are measured off the 289px logo box.
 .tagline {
-  width: 289px;
+  margin-left: 51px;
+  width: 224px;
   max-width: 100%;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: $fwNormal;
-  line-height: 22px;
+  line-height: 18px;
   color: $colorMain;
   text-align: justify;
   text-align-last: justify;
   margin-bottom: 2.4rem;
 
+  // Logo scales to 200px here (factor ~0.69), so the offsets scale with it.
   @include lg-d {
-    width: 200px;
-    font-size: 14px;
+    margin-left: 35px;
+    width: 155px;
+    font-size: 9px;
   }
 }
 
