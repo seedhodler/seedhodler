@@ -1,6 +1,7 @@
 import React, { useContext } from "react"
 import { Link, Outlet } from "react-router-dom"
 
+import CheckmarkFilledIcon from "src/assets/icons/CheckmarkFilled.svg"
 import Logo from "src/assets/icons/Logo.svg"
 import QuestionMarkIcon from "src/assets/icons/QuestionMark.svg?react"
 import { ConnectionStatus } from "src/components/ConnectionStatus"
@@ -78,29 +79,21 @@ const Layout: React.FC<Props> = ({
               reached, so the list is real orientation instead of a decorative one
               that looks like progress but never moves (audit 05 / 04). */}
           <p className={classes.checklistHeading}>{heading}</p>
-          <ul className={classes.checklist}>
+          <div className={classes.checklist}>
             {steps.map(step => (
-              <li key={step.label} className={step.done ? classes.checklistDone : undefined}>
+              <div key={step.label} className={classes.checklistItem}>
                 <span className={classes.checklistMark} aria-hidden="true">
                   {step.done ? (
-                    <svg viewBox="0 0 16 16" fill="none">
-                      <path
-                        d="M2.5 8.5l3.4 3.4L13.5 4.3"
-                        stroke="#1c7a4e"
-                        strokeWidth="2.2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                    <img src={CheckmarkFilledIcon} alt="" className={classes.checklistCheck} />
                   ) : (
                     <span className={classes.checklistDot} />
                   )}
                 </span>
-                <span>{step.label}</span>
+                <span className={classes.checklistText}>{step.label}</span>
                 <span className={classes.visuallyHidden}>{step.done ? " (done)" : ""}</span>
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
         <div className={classes.navContentBottom}>
           <div className={classes.helpButtonContainer}>

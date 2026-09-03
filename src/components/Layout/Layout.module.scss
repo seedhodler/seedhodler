@@ -80,51 +80,50 @@
 }
 
 .checklist {
-  list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.checklist li {
+.checklistItem {
   display: flex;
-  align-items: flex-start;
-  gap: 1.1rem;
-  margin-bottom: 1.4rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.checklistText {
   font-weight: $fwSemiBold;
   font-size: 14px;
-  line-height: 20px;
+  line-height: 24px;
   color: $colorBg700;
-  transition: color 0.15s ease;
+  margin-left: 1.4rem;
 }
 
-// Reached steps turn green.
-.checklistDone {
-  color: #1c7a4e;
-}
-
-// The marker column: a small muted bullet while pending, a slim green check
-// once reached (audit 05). Kept light so the list reads as a bullet list, not
-// a row of chunky checkboxes.
+// Fixed marker column so the labels line up whether the step shows an open
+// bullet or a check (audit 05).
 .checklistMark {
   flex: none;
-  width: 16px;
+  width: 20px;
   height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  svg {
-    display: block;
-    width: 15px;
-    height: 15px;
-  }
 }
 
+// Pending: an open brand-violet ring, so it reads as a bullet that is waiting
+// to be checked off rather than a plain decorative dot.
 .checklistDot {
-  width: 6px;
-  height: 6px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  background-color: $colorBg700;
+  border: 2px solid $colorMain;
+  box-sizing: border-box;
+}
+
+// Reached: the app's green filled checkmark.
+.checklistCheck {
+  display: block;
+  width: 20px;
+  height: 20px;
 }
 
 .navContentBottom {
