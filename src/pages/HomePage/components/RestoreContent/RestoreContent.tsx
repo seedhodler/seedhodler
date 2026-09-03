@@ -1,9 +1,9 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 
 import BinIcon from "src/assets/icons/Bin.svg"
-import CheckmarkIcon from "src/assets/icons/CheckmarkFilledLight.svg"
 import { BadgeTitle } from "src/components/BadgeTitle"
 import { Button } from "src/components/Button"
+import { CopyButton } from "src/components/CopyButton"
 import { Input } from "src/components/Input"
 import { SeedCard } from "src/components/SeedCard"
 import { Select } from "src/components/Select"
@@ -11,10 +11,12 @@ import { ShareCardHeader } from "src/components/ShareCardHeader"
 import { TextPlace } from "src/components/TextPlace"
 import { BadgeColorsEnum, ButtonColorsEnum, shareWordCountOptions } from "src/constants"
 import { RestoreContext } from "src/context/restoreContext"
+import type { FormKey } from "src/helpers"
 import { useInputRefs } from "src/hooks"
 import variables from "src/styles/Variables.module.scss"
 
 import { bytewordsList, slip39wordlist } from "src/constants/"
+import { PrintFormsModal } from "../PrintFormsModal"
 import classes from "./RestoreContent.module.scss"
 
 const RestoreContent: React.FC = () => {
@@ -44,6 +46,11 @@ const RestoreContent: React.FC = () => {
   const pageIndex = Math.min(Math.max(activeShareItemId, 0), totalPages - 1)
   const isEntryPage = pageIndex >= enteredShares.length
   const isCurrentShareFull = currentShare.every(word => word.length !== 0)
+
+  // The recovered seed carries the same controls as the generated one.
+  const [seedHidden, setSeedHidden] = useState(false)
+  const [isPrintModalActive, setIsPrintModalActive] = useState(false)
+  const seedFormKey: FormKey = selectedWordCount === "12" ? "seed12" : "seed24"
 
   const handleAddShare = () => {
     // After adding, land on the fresh empty entry page and focus its first field.
@@ -192,25 +199,83 @@ const RestoreContent: React.FC = () => {
       <SeedCard
         title="Recovered Master Seed"
         wordCount={selectedWordCount}
-        actions={isFullMnemonic ? <img src={CheckmarkIcon} alt="Checkmark" /> : undefined}
+        actions={
+          isFullMnemonic ? (
+            <>
+              <button
+                type="button"
+                className={classes.seedIconBtn}
+                onClick={() => setSeedHidden(hidden => !hidden)}
+                aria-label={seedHidden ? "Reveal seed" : "Hide seed"}
+                title={seedHidden ? "Reveal seed" : "Hide seed"}
+              >
+                {seedHidden ? (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                ) : (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                    <line x1="1" y1="1" x2="23" y2="23" />
+                  </svg>
+                )}
+              </button>
+              <CopyButton
+                getText={() => restoredMnemonic.join(" ")}
+                className={classes.seedIconBtn}
+                title="Copy seed words"
+              />
+              <button
+                type="button"
+                className={classes.seedIconBtn}
+                onClick={() => setIsPrintModalActive(true)}
+                aria-label={`Print the blank ${selectedWordCount}-word seed form`}
+                title={`Print the blank ${selectedWordCount}-word seed form`}
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <polyline points="6 9 6 2 18 2 18 9" />
+                  <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                  <rect x="6" y="14" width="12" height="8" />
+                </svg>
+              </button>
+            </>
+          ) : undefined
+        }
       >
-        <div
-          className={classes.shareContainer}
-          style={{ height: selectedWordCount === "12" ? "360px" : "710px" }}
-        >
-          {restoredMnemonic.map((word, index) => (
-            <TextPlace
-              key={index}
-              text={word}
-              count={index + 1}
-              isSuccess={isFullMnemonic}
-              style={{
-                alignSelf: index >= +selectedWordCount / 2 ? "flex-end" : "flex-start",
-              }}
-            />
-          ))}
+        <div className={classes.recoveredWrap}>
+          {/* Deterministic column-first grid: exactly N/2 tiles per column, so
+              the boundary tile never lands between the columns. */}
+          <div
+            className={`${classes.recoveredGrid} ${seedHidden ? classes.seedBlurred : ""}`}
+            style={{ gridTemplateRows: `repeat(${Math.ceil(+selectedWordCount / 2)}, auto)` }}
+          >
+            {restoredMnemonic.map((word, index) => (
+              <TextPlace
+                key={index}
+                text={word}
+                count={index + 1}
+                isSuccess={isFullMnemonic}
+                style={{ width: "auto", marginBottom: 0 }}
+              />
+            ))}
+          </div>
+          {seedHidden && (
+            <button type="button" className={classes.seedReveal} onClick={() => setSeedHidden(false)}>
+              Reveal seed
+            </button>
+          )}
         </div>
       </SeedCard>
+
+      <PrintFormsModal
+        isActive={isPrintModalActive}
+        setIsActive={setIsPrintModalActive}
+        selectedWordCount={+selectedWordCount}
+        selectedScheme={selectedScheme}
+        sharesNumber={1}
+        initialSelection={[seedFormKey]}
+      />
     </>
   )
 }
