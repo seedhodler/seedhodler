@@ -60,10 +60,11 @@ const Layout: React.FC<Props> = ({
           </Link>
           <p className={classes.tagline}>Split the seed. Spread the risk.</p>
           <p className={classes.subtitle}>
-            Seedhodler is a tool that uses Shamir's secret sharing to generate, split, and rejoin master
-            seeds for cryptocurrency wallets. By Splitting a master seed into shares and distributing
-            them on various safe locations we are removing a single point of failure in the crypto
-            toolchain by decentralizing it. Seedhodler is free and open source software.
+            Seedhodler uses Shamir's Secret Sharing to split a wallet's master seed into several
+            shares. You choose how many it takes to restore it, say any 3 of 5: fewer than that
+            reveal nothing, while the number you set brings the whole seed back. So you can lose some
+            shares and still recover, and a single stolen share stays worthless. Free and open source
+            software.
           </p>
           <p className={classes.githubInfo}>
             In need of the source code?{" "}
