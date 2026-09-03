@@ -210,9 +210,9 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
                 )}
               </button>
               <CopyButton
-                getText={() => mnemonic.join(",")}
+                getText={() => mnemonic.join(" ")}
                 className={classes.seedIconBtn}
-                title="Copy seed words as CSV"
+                title="Copy seed words"
               />
               <button
                 type="button"

@@ -71,9 +71,9 @@ const Shares: React.FC<Props> = ({
                   )}
                 </button>
                 <CopyButton
-                  getText={() => words.join(",")}
+                  getText={() => words.join(" ")}
                   className={classes.shareIconBtn}
-                  title="Copy share words as CSV"
+                  title="Copy share words"
                 />
                 <button
                   type="button"
