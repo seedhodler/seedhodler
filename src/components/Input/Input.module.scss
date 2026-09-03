@@ -20,20 +20,17 @@
 }
 
 .input {
-  // Dashed border to match the share fields (TextPlace), so the seed and share
-  // fields share one "form" look.
-  border: 1px dashed $colorBg670;
+  // No border: on screen the fields hold real words, so a border reads as a
+  // placeholder. A darker fill sets each field off from the card instead.
+  border: none;
   outline: none;
   font-weight: inherit;
   font-size: inherit;
   line-height: inherit;
 
   width: 100%;
-  // The 1px dashed border must not change the field height: the seed grid wraps
-  // into columns at a fixed container height, so an extra 2px would push a word
-  // into a third column. Take the border's 1px back out of the vertical padding.
-  padding: calc(1.2rem - 1px) 1.2rem calc(1.2rem - 1px) 4.2rem;
-  background-color: $colorBg200;
+  padding: 1.2rem 1.2rem 1.2rem 4.2rem;
+  background-color: $colorBg400;
   border-radius: $radii;
   color: $colorTextDarkish;
   outline: 2px solid transparent;
