@@ -82,7 +82,9 @@
 }
 
 .contentBody {
-  max-height: 44vh;
+  // Fixed height (not max-height) so the modal stays the same size for every
+  // chapter; otherwise a shorter chapter shrinks the centred modal and it jumps.
+  height: 44vh;
   overflow-y: auto;
   padding-right: 8px;
 }
