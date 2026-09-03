@@ -55,6 +55,28 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
       )
     }
 
+    // Paste a whole list of words at once (the copy button produces CSV): each
+    // comma, or any whitespace, advances to the next field, so the words fall
+    // into consecutive fields from this one on, overwriting whatever was there.
+    // A single word with no separators pastes normally (replaces the selection).
+    const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+      const text = e.clipboardData?.getData("text") ?? ""
+      const parts = text
+        .split(/[\s,]+/)
+        .map(part => part.trim().toLowerCase())
+        .filter(Boolean)
+      if (parts.length <= 1) return
+      e.preventDefault()
+      onChange(mnemonicArr =>
+        mnemonicArr.map((word, wordIndex) =>
+          wordIndex >= index && wordIndex - index < parts.length ? parts[wordIndex - index] : word,
+        ),
+      )
+      // Land focus on the field just after the last one filled (onEnter is a
+      // no-op once there is no next field).
+      onEnter(index + parts.length - 1)
+    }
+
     useEffect(() => {
       const onKeydown = (e: KeyboardEvent) => {
         if (isOpen) {
@@ -99,6 +121,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
           type="text"
           value={value}
           onChange={e => handleChange(e.target.value)}
+          onPaste={handlePaste}
           className={classNames}
           aria-label={count && total ? `Word ${count} of ${total}` : undefined}
         />
