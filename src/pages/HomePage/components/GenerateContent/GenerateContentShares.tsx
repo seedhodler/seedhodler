@@ -1,7 +1,7 @@
 import * as bip39 from "bip39"
 import React, { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from "react"
 
-import CheckmarkFilledLight from "src/assets/icons/CheckmarkFilledLight.svg"
+import CheckmarkWhite from "src/assets/icons/CheckmarkWhite.svg"
 import InfoRed from "src/assets/icons/InfoRed.svg"
 import PrintIcon from "src/assets/icons/Print.svg"
 import { BadgeTitle } from "src/components/BadgeTitle"
@@ -346,15 +346,14 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
             />
           )}
           <div className={classes.actionRow}>
-            {/* Print and Verify are a matched pair of post-split actions: same
-                colour, each with its own icon, so neither reads as more optional
-                than the other. */}
+            {/* Print and Verify are a matched pair of post-split actions in the
+                same brand-violet style as Generate and Split, each with its own
+                icon, so neither reads as more optional than the other. */}
             <Button
               onClick={() => openPrint()}
               disabled={!Boolean(shares)}
               fullWidth
               iconLeft={PrintIcon}
-              color={ButtonColorsEnum.Success}
             >
               Print
             </Button>
@@ -362,8 +361,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
               onClick={() => setIsExportSaveModalActive(true)}
               disabled={!Boolean(shares)}
               fullWidth
-              iconLeft={CheckmarkFilledLight}
-              color={ButtonColorsEnum.Success}
+              iconLeft={CheckmarkWhite}
             >
               Verify
             </Button>
