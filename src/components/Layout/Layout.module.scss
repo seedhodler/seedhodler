@@ -40,11 +40,10 @@
 // The brand claim, right under the wordmark: says what Seedhodler does rather
 // than what any one sheet is (that antithesis lives on the printed forms).
 .tagline {
-  font-size: 19px;
-  font-weight: $fwBold;
+  font-size: 18px;
+  font-weight: $fwNormal;
   line-height: 26px;
-  letter-spacing: -0.01em;
-  color: $colorTextDark;
+  color: $colorMain;
   margin-bottom: 2.4rem;
 }
 
