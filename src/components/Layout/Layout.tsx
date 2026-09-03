@@ -3,7 +3,6 @@ import { Link, Outlet } from "react-router-dom"
 
 import Logo from "src/assets/icons/Logo.svg"
 import QuestionMarkIcon from "src/assets/icons/QuestionMark.svg?react"
-import CheckmarkInfo from "src/components/CheckmarkInfo"
 import { ConnectionStatus } from "src/components/ConnectionStatus"
 
 import { HelpModalTabs } from "src/constants"
@@ -48,11 +47,17 @@ const Layout: React.FC<Props> = ({
               GitHub
             </a>
           </p>
-          <CheckmarkInfo isCheckmark={false}>Generate your own BIP39 Master Seed</CheckmarkInfo>
-          <CheckmarkInfo isCheckmark={false}>Manually enter your own entropy</CheckmarkInfo>
-          <CheckmarkInfo isCheckmark={false}>Split your master seed using SSS</CheckmarkInfo>
-          <CheckmarkInfo isCheckmark={false}>Print templates and fill split words</CheckmarkInfo>
-          <CheckmarkInfo isCheckmark={false}>Restore your master seed</CheckmarkInfo>
+          {/* A plain capability list, not a progress tracker (audit 05): a real
+              <ul> with a heading and muted bullets, so nobody waits for a step to
+              light up or become clickable. */}
+          <p className={classes.featuresHeading}>What you can do</p>
+          <ul className={classes.features}>
+            <li>Generate your own BIP39 Master Seed</li>
+            <li>Manually enter your own entropy</li>
+            <li>Split your master seed using SSS</li>
+            <li>Print templates and fill split words</li>
+            <li>Restore your master seed</li>
+          </ul>
         </div>
         <div className={classes.navContentBottom}>
           <div className={classes.helpButtonContainer}>

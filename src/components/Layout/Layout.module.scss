@@ -69,6 +69,44 @@
   padding: 2.4rem 2.2rem 0 3.2rem;
 }
 
+// A plain capability list (audit 05): a small heading and muted bullets, so it
+// reads as an enumeration rather than a clickable, stateful progress tracker.
+.featuresHeading {
+  font-size: 12px;
+  font-weight: $fwSemiBold;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: $colorBg700;
+  margin: 0.4rem 0 1.6rem;
+}
+
+.features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.features li {
+  position: relative;
+  padding-left: 1.8rem;
+  margin-bottom: 1.4rem;
+  font-weight: $fwSemiBold;
+  font-size: 14px;
+  line-height: 22px;
+  color: $colorBg700;
+}
+
+.features li::before {
+  content: "";
+  position: absolute;
+  left: 0.2rem;
+  top: 8px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: $colorBg670;
+}
+
 .navContentBottom {
   padding: 2.4rem 2.2rem 0 3.2rem;
 }
