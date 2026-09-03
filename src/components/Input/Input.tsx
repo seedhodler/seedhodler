@@ -94,13 +94,20 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
     // down) advance to the next field, which then selects its word so the next
     // keystroke overwrites it, turning the fields into a fast typed stream.
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (isOpen && variants.length > 0) {
+      const listOpen = isOpen && variants.length > 0
+      if (listOpen) {
         if (e.key === "Enter") {
           e.preventDefault()
           onChange(mnemonicArr =>
             mnemonicArr.map((word, wordIndex) => (wordIndex === index ? variants[focusedItemId] : word)),
           )
           onEnter(index)
+          return
+        }
+        // With the suggestion list open, the arrows navigate it.
+        if (e.key === "ArrowDown") {
+          e.preventDefault()
+          setFocusedItemId(prev => (focusedItemId < variants.length - 1 ? prev + 1 : 0))
           return
         }
         if (e.key === "ArrowUp") {
