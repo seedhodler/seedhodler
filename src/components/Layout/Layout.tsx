@@ -30,7 +30,6 @@ const Layout: React.FC<Props> = ({
   // user reaches them, so the sidebar is real orientation, not a decorative list.
   const seedDone = mnemonic.length > 0 && mnemonic.every(word => word.length > 0)
   const isRestore = activeTabId === 1
-  const heading = isRestore ? "To recover your seed" : "To split your Master Seed"
   const steps = isRestore
     ? [
         { label: "Enter your shares", done: enteredShares.length > 0 },
@@ -43,6 +42,9 @@ const Layout: React.FC<Props> = ({
         { label: "Verify your shares", done: hasVerified },
         { label: "Fill the custody inserts", done: hasPrintedInserts },
       ]
+  const heading = isRestore
+    ? `Recover your seed in ${steps.length} steps`
+    : `Back up your seed in ${steps.length} steps`
 
   return (
     <div className={classes.mainContainer}>
@@ -81,20 +83,17 @@ const Layout: React.FC<Props> = ({
               <li key={step.label} className={step.done ? classes.checklistDone : undefined}>
                 <span className={classes.checklistMark} aria-hidden="true">
                   {step.done ? (
-                    <svg viewBox="0 0 20 20" fill="none">
-                      <circle cx="10" cy="10" r="10" fill="#e0f1e8" />
+                    <svg viewBox="0 0 16 16" fill="none">
                       <path
-                        d="M5.5 10.4l2.9 2.9 6-6.6"
+                        d="M2.5 8.5l3.4 3.4L13.5 4.3"
                         stroke="#1c7a4e"
-                        strokeWidth="2"
+                        strokeWidth="2.2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
                     </svg>
                   ) : (
-                    <svg viewBox="0 0 20 20" fill="none">
-                      <circle cx="10" cy="10" r="8.5" stroke="#c4c4c4" strokeWidth="1.6" />
-                    </svg>
+                    <span className={classes.checklistDot} />
                   )}
                 </span>
                 <span>{step.label}</span>

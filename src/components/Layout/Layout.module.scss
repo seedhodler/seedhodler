@@ -72,11 +72,10 @@
 // A checklist wired to the flow (audit 05 / 04): each step ticks green when
 // reached, so the sidebar is real orientation rather than a decorative list.
 .checklistHeading {
-  font-size: 12px;
-  font-weight: $fwSemiBold;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: $colorBg700;
+  font-size: 17px;
+  font-weight: $fwBold;
+  letter-spacing: -0.01em;
+  color: $colorTextDark;
   margin: 0.4rem 0 1.8rem;
 }
 
@@ -89,8 +88,8 @@
 .checklist li {
   display: flex;
   align-items: flex-start;
-  gap: 1rem;
-  margin-bottom: 1.6rem;
+  gap: 1.1rem;
+  margin-bottom: 1.4rem;
   font-weight: $fwSemiBold;
   font-size: 14px;
   line-height: 20px;
@@ -103,17 +102,29 @@
   color: #1c7a4e;
 }
 
+// The marker column: a small muted bullet while pending, a slim green check
+// once reached (audit 05). Kept light so the list reads as a bullet list, not
+// a row of chunky checkboxes.
 .checklistMark {
   flex: none;
-  width: 18px;
-  height: 18px;
-  margin-top: 1px;
+  width: 16px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   svg {
     display: block;
-    width: 100%;
-    height: 100%;
+    width: 15px;
+    height: 15px;
   }
+}
+
+.checklistDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: $colorBg700;
 }
 
 .navContentBottom {
