@@ -13,8 +13,8 @@
 // right of the header.
 .shareCard {
   padding: 2.4rem;
-  background-color: $colorBg100;
-  border: 1px solid #ececec;
+  // Flat card: a slightly darker fill than the page, no border (matches the seed card).
+  background-color: $colorBg200;
   border-radius: $radiiMedium;
   margin-bottom: 3.6rem;
 }
