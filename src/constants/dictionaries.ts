@@ -142,6 +142,42 @@ export const helpChapters: HelpChapter[] = [
     ],
   },
   {
+    id: "methods",
+    nav: "SLIP-39 & SSKR",
+    title: "Methods: SLIP-39 and SSKR",
+    blocks: [
+      {
+        type: "p",
+        html: `Seedhodler can split your seed two ways. Both are real Shamir secret sharing; they differ in how the shares are encoded, and in how safely they mix with other tools.`,
+      },
+      { type: "h", html: `SLIP-39` },
+      {
+        type: "p",
+        html: `SLIP-39 shares are word lists, 20 or 33 words, the same format a Trezor uses for its on-device Shamir backup. They enjoy the widest support, but that shared format is also a trap. Moving SLIP-39 shares between Seedhodler and a Trezor is dangerous in <b>both</b> directions:`,
+      },
+      {
+        type: "ul",
+        items: [
+          `<b>Seedhodler shares in a Trezor:</b> the device accepts them and rebuilds a secret, but it reads that secret as a native SLIP-39 seed and derives a <b>different</b> wallet than your BIP-39 one. No error, no warning, an empty wallet. If you had already destroyed your original seed, the funds are gone.`,
+          `<b>Trezor shares in Seedhodler:</b> the reverse goes wrong just as quietly. Seedhodler rebuilds the secret and re-encodes it as a BIP-39 mnemonic, which derives yet another wallet, not your Trezor one.`,
+        ],
+      },
+      {
+        type: "p",
+        html: `The reason is the same each way: the shares carry an identical secret, but the two systems interpret that secret differently, so each derives its own wallet and nothing flags the mismatch. <b>Restore SLIP-39 shares only in the tool that made them.</b> Do not move them between Seedhodler and Trezor.`,
+      },
+      { type: "h", html: `SSKR` },
+      {
+        type: "p",
+        html: `SSKR, from <a href="https://developer.blockchaincommons.com/sskr/" target="_blank" rel="noopener noreferrer"><b>Blockchain Commons</b></a>, is the safer option for exactly this reason. Its shares are encoded as bytewords, not as SLIP-39 word lists, so a hardware wallet cannot mistake them for a device seed; it rejects them outright. The silent wrong-wallet trap simply cannot happen.`,
+      },
+      {
+        type: "p",
+        html: `SSKR is an open standard with reference tools, so you can restore its shares here or with any Blockchain Commons implementation. If you want the format itself to rule out the dangerous mix-up, choose SSKR. If you need the broadest tool support and will honor the rule above, SLIP-39 is fine.`,
+      },
+    ],
+  },
+  {
     id: "store",
     nav: "Store & pass on",
     title: "Store & pass on",
@@ -183,14 +219,9 @@ export const helpChapters: HelpChapter[] = [
         type: "p",
         html: `To rebuild a seed, open Restore and enter the shares one by one. Once you reach the threshold, the master seed reappears. Before you use it, confirm the first receiving address matches the wallet you expect.`,
       },
-      { type: "h", html: `Compatibility, read this first` },
       {
-        type: "ul",
-        items: [
-          `Seedhodler is for <b>BIP-39</b> wallets, such as Ledger. Use it only for those.`,
-          `<b>Do not mix systems.</b> Trezor and other native SLIP-39 shares are not interchangeable with Seedhodler shares. Combining them reconstructs a <b>different</b> wallet, with no error and no warning.`,
-          `Your shares are standard <b>SLIP-0039</b>. Any compatible implementation can recombine them, so your recovery never depends on this website staying online.`,
-        ],
+        type: "p",
+        html: `Seedhodler is for <b>BIP-39</b> wallets, such as Ledger, and your shares are standard, so any compatible tool can recombine them; your recovery never depends on this website. Before combining shares with a different tool, read <b>Methods: SLIP-39 and SSKR</b>. The wrong mix can silently open a different wallet.`,
       },
     ],
   },

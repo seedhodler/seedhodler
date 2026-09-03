@@ -25,7 +25,7 @@ type Props = {
 const SchemeNotice: React.FC<Props> = ({ selectedScheme }) => {
   const { setTab, setIsOpen } = useContext(HelpModalContext)
   const openFullWarning = () => {
-    setTab("restore")
+    setTab("methods")
     setIsOpen(true)
   }
 

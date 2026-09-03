@@ -91,6 +91,19 @@
   margin-bottom: 1.6rem;
 }
 
+// Inline links inside parsed chapter html (e.g. Blockchain Commons).
+.contentBody a {
+  color: $colorMain;
+  font-weight: $fwSemiBold;
+  text-decoration: none;
+  transition: $transAll;
+
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
 .subhead {
   font-weight: $fwSemiBold;
   color: $colorTextDark;
