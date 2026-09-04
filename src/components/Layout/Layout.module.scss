@@ -27,6 +27,13 @@
 
   // allow separate scrolling inside the navbar when shorter then window height
   overflow-y: auto;
+  // ...but hide the scrollbar chrome. The content fits at laptop heights, so a
+  // few pixels of bottom padding must never draw an unnecessary bar (seen on a
+  // 1366x768 screen). Wheel scrolling still works if a very short screen needs it.
+  scrollbar-width: none; // Firefox
+  &::-webkit-scrollbar {
+    display: none; // WebKit / Chromium (the kiosk browser)
+  }
 }
 
 .logo {
@@ -173,6 +180,13 @@
   font-size: 15px;
   transition: $transAll;
   color: $colorBg700;
+
+  // On short screens (a laptop at 768px), trim the generous bottom padding so the
+  // sidebar content fits within the viewport instead of overflowing into empty
+  // space below the fold. The full padding stays on taller screens.
+  @media (max-height: 820px) {
+    padding-bottom: 2.4rem;
+  }
 
   &::before {
     content: "";
