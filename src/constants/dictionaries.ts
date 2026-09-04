@@ -148,12 +148,12 @@ export const helpChapters: HelpChapter[] = [
     blocks: [
       {
         type: "p",
-        html: `Seedhodler can split your seed two ways. Both are real Shamir secret sharing; they differ in how the shares are encoded, and in how safely they mix with other tools.`,
+        html: `Seedhodler can split your seed two ways, both real Shamir secret sharing. <b>Use SSKR.</b> SLIP-39 is kept mainly for compatibility, and it carries a real mix-up risk that SSKR does not.`,
       },
       { type: "h", html: `SLIP-39` },
       {
         type: "p",
-        html: `SLIP-39 shares are word lists, 20 or 33 words, the same format a Trezor uses for its built-in Shamir backup. A Trezor is a perfectly good BIP-39 wallet to use with Seedhodler; the trap is only its <b>built-in</b> Shamir feature. Because both speak SLIP-39, moving shares between Seedhodler and a Trezor's own Shamir is dangerous in <b>both</b> directions:`,
+        html: `SLIP-39 shares are word lists, 20 or 33 words, the same format a Trezor uses for its built-in Shamir backup. A Trezor works fine with Seedhodler as an ordinary BIP-39 wallet; the trap is only its <b>built-in</b> Shamir feature. Because both speak SLIP-39, moving shares between Seedhodler and a Trezor's own Shamir is dangerous in <b>both</b> directions, and easy to do by accident:`,
       },
       {
         type: "ul",
@@ -164,16 +164,16 @@ export const helpChapters: HelpChapter[] = [
       },
       {
         type: "p",
-        html: `The reason is the same each way: the shares carry an identical secret, but the two systems interpret that secret differently, so each derives its own wallet and nothing flags the mismatch. <b>Restore SLIP-39 shares only in the tool that made them,</b> and never mix Seedhodler with a Trezor's built-in Shamir.`,
+        html: `The reason is the same each way: the shares carry an identical secret, but the two systems interpret that secret differently, so each derives its own wallet and nothing flags the mismatch. If you do use SLIP-39, <b>restore its shares only in the tool that made them,</b> and never mix Seedhodler with a Trezor's built-in Shamir. Its one advantage over SSKR is shorter word lists: 20 or 33 words instead of 25 or 41.`,
       },
       { type: "h", html: `SSKR` },
       {
         type: "p",
-        html: `SSKR, from <a href="https://developer.blockchaincommons.com/sskr/" target="_blank" rel="noopener noreferrer"><b>Blockchain Commons</b></a>, is the safer option for exactly this reason. Its shares are encoded as bytewords, not as SLIP-39 word lists, so a hardware wallet cannot mistake them for a device seed; it rejects them outright. The silent wrong-wallet trap simply cannot happen.`,
+        html: `SSKR, from <a href="https://developer.blockchaincommons.com/sskr/" target="_blank" rel="noopener noreferrer"><b>Blockchain Commons</b></a>, avoids all of this. Its shares are encoded as bytewords, not as SLIP-39 word lists, so a hardware wallet cannot mistake them for a device seed; it rejects them outright. The silent wrong-wallet trap simply cannot happen.`,
       },
       {
         type: "p",
-        html: `SSKR is an open standard with reference tools, so you can restore its shares here or with any Blockchain Commons implementation. If you want the format itself to rule out the dangerous mix-up, choose SSKR. If you need the broadest tool support and will honor the rule above, SLIP-39 is fine.`,
+        html: `It is an open standard with reference tools, so you can restore SSKR shares here or with any Blockchain Commons implementation. For real funds, this is the one to pick. Reach for SLIP-39 only when you specifically need a tool that speaks it.`,
       },
     ],
   },
