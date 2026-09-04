@@ -7,7 +7,6 @@ import QuestionMarkIcon from "src/assets/icons/QuestionMark.svg?react"
 import { ConnectionStatus } from "src/components/ConnectionStatus"
 
 import { helpChapters } from "src/constants"
-import { PRINTING_ENABLED } from "src/constants/config"
 import { GenerateContext } from "src/context/generateContext"
 import { HelpModalContext } from "src/context/HelpModalContext"
 import { NavigationContext } from "src/context/navigationContext"
@@ -40,16 +39,9 @@ const Layout: React.FC<Props> = ({
     : [
         { label: "Generate your Master Seed", done: seedDone },
         { label: "Split it into shares", done: shares !== null },
-        // The offline build cannot print, so the forms are printed elsewhere and
-        // filled by hand: reword those steps and key their done to verification
-        // (the last signal the app actually has) instead of a print action.
-        PRINTING_ENABLED
-          ? { label: "Print the forms, write the shares down", done: hasPrintedShares }
-          : { label: "Write the shares onto your forms", done: hasVerified },
+        { label: "Print the forms, write the shares down", done: hasPrintedShares },
         { label: "Verify your shares", done: hasVerified },
-        PRINTING_ENABLED
-          ? { label: "Fill the custody inserts", done: hasPrintedInserts }
-          : { label: "Fill the custody inserts", done: hasVerified },
+        { label: "Fill the custody inserts", done: hasPrintedInserts },
       ]
   const heading = isRestore
     ? `Recover your seed in ${steps.length} steps`

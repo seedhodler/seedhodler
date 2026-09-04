@@ -24,6 +24,7 @@ import { useInputRefs } from "src/hooks"
 
 import { ExportSaveModal } from "../ExportSaveModal"
 import { PrintFormsModal } from "../PrintFormsModal"
+import { PrintUnavailableModal } from "../PrintUnavailableModal"
 import { Shares } from "../Shares"
 import classes from "./GenerateContent.module.scss"
 
@@ -75,8 +76,15 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
   // seed print icon uses it to pre-select just the matching seed form; the main
   // Print button leaves it undefined and gets the full matching set.
   const [printPreselect, setPrintPreselect] = useState<FormKey[] | undefined>(undefined)
+  // The offline build keeps the print controls for orientation but cannot print;
+  // clicking one explains where to print instead (see PrintUnavailableModal).
+  const [isPrintUnavailableActive, setIsPrintUnavailableActive] = useState(false)
   const seedFormKey: FormKey = selectedWordCount === "12" ? "seed12" : "seed24"
   const openPrint = (preselect?: FormKey[]) => {
+    if (!PRINTING_ENABLED) {
+      setIsPrintUnavailableActive(true)
+      return
+    }
     setPrintPreselect(preselect)
     setIsPrintModalActive(true)
   }
@@ -215,7 +223,6 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
                 className={classes.seedIconBtn}
                 title="Copy seed words"
               />
-              {PRINTING_ENABLED && (
               <button
                 type="button"
                 className={classes.seedIconBtn}
@@ -230,7 +237,6 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
                   <rect x="6" y="14" width="12" height="8" />
                 </svg>
               </button>
-              )}
             </>
           )
         }
@@ -340,32 +346,26 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
               activeShareItemId={activeShareItemId}
               setActiveShareItemId={setActiveShareItemId}
               scheme={selectedScheme}
-              onPrint={
-                PRINTING_ENABLED
-                  ? () => {
-                      // Print only the share form matching this scheme and length
-                      // (matchingFormKeys returns [seed, share]).
-                      const shareForm = matchingFormKeys(+selectedWordCount, selectedScheme)[1]
-                      if (shareForm) openPrint([shareForm])
-                    }
-                  : undefined
-              }
+              onPrint={() => {
+                // Print only the share form matching this scheme and length
+                // (matchingFormKeys returns [seed, share]).
+                const shareForm = matchingFormKeys(+selectedWordCount, selectedScheme)[1]
+                if (shareForm) openPrint([shareForm])
+              }}
             />
           )}
           <div className={classes.actionRow}>
             {/* Print and Verify are a matched pair of post-split actions in the
                 same brand-violet style as Generate and Split, each with its own
                 icon, so neither reads as more optional than the other. */}
-            {PRINTING_ENABLED && (
-              <Button
-                onClick={() => openPrint()}
-                disabled={!Boolean(shares)}
-                fullWidth
-                iconLeft={PrintIcon}
-              >
-                Print
-              </Button>
-            )}
+            <Button
+              onClick={() => openPrint()}
+              disabled={!Boolean(shares)}
+              fullWidth
+              iconLeft={PrintIcon}
+            >
+              Print
+            </Button>
             <Button
               onClick={() => setIsExportSaveModalActive(true)}
               disabled={!Boolean(shares)}
@@ -390,6 +390,10 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
           if (share) setHasPrintedShares(true)
           if (insert) setHasPrintedInserts(true)
         }}
+      />
+      <PrintUnavailableModal
+        isActive={isPrintUnavailableActive}
+        setIsActive={setIsPrintUnavailableActive}
       />
       <ExportSaveModal
         isExportSaveModalActive={isExportSaveModalActive}

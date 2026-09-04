@@ -1,5 +1,3 @@
-import { PRINTING_ENABLED } from "src/constants/config"
-
 export const cardDictionary = {
   ac: 0,
   "2c": 1,
@@ -111,9 +109,7 @@ export const helpChapters: HelpChapter[] = [
       {
         type: "ul",
         items: [
-          PRINTING_ENABLED
-            ? `Print the <b>blank</b> forms and write every word by hand. The words are never sent to the printer.`
-            : `Write every word by hand onto a blank form. Print the blank forms beforehand on a normal printer; they hold no secret.`,
+          `Print the <b>blank</b> forms and write every word by hand. The words are never sent to the printer.`,
           `Never type a full seed or share into anything that could store or send it: notes apps, photos, cloud, email.`,
           `Keep the screen private. Anyone who sees a full seed, or enough shares, can take the funds.`,
         ],
@@ -139,9 +135,7 @@ export const helpChapters: HelpChapter[] = [
           `<b>Generate your Master Seed.</b> Let Seedhodler create a fresh one, or enter a seed you already have. For extra assurance, open the advanced toolset and supply your own entropy from dice or cards.`,
           `<b>Choose the split.</b> Pick how many shares to make and how many are needed to restore, for example 5 shares with a threshold of 3.`,
           `<b>Split.</b> Seedhodler produces the shares. Step through them with the arrows.`,
-          PRINTING_ENABLED
-            ? `<b>Print and write.</b> Print one blank form per share and copy each share onto it by hand.`
-            : `<b>Write.</b> Copy each share by hand onto a blank form (printed beforehand on a normal printer, one per share).`,
+          `<b>Print and write.</b> Print one blank form per share and copy each share onto it by hand.`,
           `<b>Verify.</b> Check every share back against the tool, so a slip of the pen surfaces now, not years later.`,
         ],
       },
@@ -204,9 +198,7 @@ export const helpChapters: HelpChapter[] = [
       { type: "h", html: `The custody inserts` },
       {
         type: "p",
-        html: PRINTING_ENABLED
-          ? `Seedhodler can print optional sheets that make the system survivable:`
-          : `Optional sheets make the system survivable (print them on a normal printer):`,
+        html: `Seedhodler can print optional sheets that make the system survivable:`,
       },
       {
         type: "ul",

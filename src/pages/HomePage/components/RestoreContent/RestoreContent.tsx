@@ -17,6 +17,7 @@ import variables from "src/styles/Variables.module.scss"
 
 import { bytewordsList, slip39wordlist } from "src/constants/"
 import { PrintFormsModal } from "../PrintFormsModal"
+import { PrintUnavailableModal } from "../PrintUnavailableModal"
 import classes from "./RestoreContent.module.scss"
 
 const RestoreContent: React.FC = () => {
@@ -53,7 +54,14 @@ const RestoreContent: React.FC = () => {
   const [shareHidden, setShareHidden] = useState(false)
   const [isPrintModalActive, setIsPrintModalActive] = useState(false)
   const [printPreselect, setPrintPreselect] = useState<FormKey[] | undefined>(undefined)
+  // The offline build keeps the print controls but cannot print; a click points
+  // to the website instead (see PrintUnavailableModal).
+  const [isPrintUnavailableActive, setIsPrintUnavailableActive] = useState(false)
   const openPrint = (keys?: FormKey[]) => {
+    if (!PRINTING_ENABLED) {
+      setIsPrintUnavailableActive(true)
+      return
+    }
     setPrintPreselect(keys)
     setIsPrintModalActive(true)
   }
@@ -162,7 +170,6 @@ const RestoreContent: React.FC = () => {
                   title="Copy share words"
                 />
               )}
-              {PRINTING_ENABLED && (
               <button
                 type="button"
                 className={classes.seedIconBtn}
@@ -176,7 +183,6 @@ const RestoreContent: React.FC = () => {
                   <rect x="6" y="14" width="12" height="8" />
                 </svg>
               </button>
-              )}
               {!isEntryPage && (
                 <button
                   type="button"
@@ -306,7 +312,6 @@ const RestoreContent: React.FC = () => {
                 className={classes.seedIconBtn}
                 title="Copy seed words"
               />
-              {PRINTING_ENABLED && (
               <button
                 type="button"
                 className={classes.seedIconBtn}
@@ -320,7 +325,6 @@ const RestoreContent: React.FC = () => {
                   <rect x="6" y="14" width="12" height="8" />
                 </svg>
               </button>
-              )}
             </>
           ) : undefined
         }
@@ -357,6 +361,10 @@ const RestoreContent: React.FC = () => {
         selectedScheme={selectedScheme}
         sharesNumber={1}
         initialSelection={printPreselect}
+      />
+      <PrintUnavailableModal
+        isActive={isPrintUnavailableActive}
+        setIsActive={setIsPrintUnavailableActive}
       />
     </>
   )
