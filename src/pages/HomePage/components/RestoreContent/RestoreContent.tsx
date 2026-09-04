@@ -9,6 +9,7 @@ import { Select } from "src/components/Select"
 import { ShareCardHeader } from "src/components/ShareCardHeader"
 import { TextPlace } from "src/components/TextPlace"
 import { BadgeColorsEnum, shareWordCountOptions } from "src/constants"
+import { PRINTING_ENABLED } from "src/constants/config"
 import { RestoreContext } from "src/context/restoreContext"
 import { matchingFormKeys, type FormKey } from "src/helpers"
 import { useInputRefs } from "src/hooks"
@@ -161,6 +162,7 @@ const RestoreContent: React.FC = () => {
                   title="Copy share words"
                 />
               )}
+              {PRINTING_ENABLED && (
               <button
                 type="button"
                 className={classes.seedIconBtn}
@@ -174,6 +176,7 @@ const RestoreContent: React.FC = () => {
                   <rect x="6" y="14" width="12" height="8" />
                 </svg>
               </button>
+              )}
               {!isEntryPage && (
                 <button
                   type="button"
@@ -303,6 +306,7 @@ const RestoreContent: React.FC = () => {
                 className={classes.seedIconBtn}
                 title="Copy seed words"
               />
+              {PRINTING_ENABLED && (
               <button
                 type="button"
                 className={classes.seedIconBtn}
@@ -316,6 +320,7 @@ const RestoreContent: React.FC = () => {
                   <rect x="6" y="14" width="12" height="8" />
                 </svg>
               </button>
+              )}
             </>
           ) : undefined
         }

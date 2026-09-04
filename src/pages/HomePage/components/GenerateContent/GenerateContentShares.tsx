@@ -14,6 +14,7 @@ import { CopyButton } from "src/components/CopyButton"
 import { SeedCard } from "src/components/SeedCard"
 import { Select } from "src/components/Select"
 import { BadgeColorsEnum, ButtonColorsEnum, schemeOptions } from "src/constants/index"
+import { PRINTING_ENABLED } from "src/constants/config"
 import { GenerateContext } from "src/context/generateContext"
 import { OnlineStatusContext } from "src/context/onlineStatusContext"
 import type { Scheme } from "src/core"
@@ -214,6 +215,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
                 className={classes.seedIconBtn}
                 title="Copy seed words"
               />
+              {PRINTING_ENABLED && (
               <button
                 type="button"
                 className={classes.seedIconBtn}
@@ -228,6 +230,7 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
                   <rect x="6" y="14" width="12" height="8" />
                 </svg>
               </button>
+              )}
             </>
           )
         }
@@ -337,26 +340,32 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
               activeShareItemId={activeShareItemId}
               setActiveShareItemId={setActiveShareItemId}
               scheme={selectedScheme}
-              onPrint={() => {
-                // Print only the share form matching this scheme and length
-                // (matchingFormKeys returns [seed, share]).
-                const shareForm = matchingFormKeys(+selectedWordCount, selectedScheme)[1]
-                if (shareForm) openPrint([shareForm])
-              }}
+              onPrint={
+                PRINTING_ENABLED
+                  ? () => {
+                      // Print only the share form matching this scheme and length
+                      // (matchingFormKeys returns [seed, share]).
+                      const shareForm = matchingFormKeys(+selectedWordCount, selectedScheme)[1]
+                      if (shareForm) openPrint([shareForm])
+                    }
+                  : undefined
+              }
             />
           )}
           <div className={classes.actionRow}>
             {/* Print and Verify are a matched pair of post-split actions in the
                 same brand-violet style as Generate and Split, each with its own
                 icon, so neither reads as more optional than the other. */}
-            <Button
-              onClick={() => openPrint()}
-              disabled={!Boolean(shares)}
-              fullWidth
-              iconLeft={PrintIcon}
-            >
-              Print
-            </Button>
+            {PRINTING_ENABLED && (
+              <Button
+                onClick={() => openPrint()}
+                disabled={!Boolean(shares)}
+                fullWidth
+                iconLeft={PrintIcon}
+              >
+                Print
+              </Button>
+            )}
             <Button
               onClick={() => setIsExportSaveModalActive(true)}
               disabled={!Boolean(shares)}

@@ -45,9 +45,16 @@ function buildInfoPlugin() {
     load(id) {
       if (id === resolvedId) {
         const info = buildInfo()
+        // The offline build (VITE_NOPRINT=1) hides every print option: on the
+        // air-gapped Seedhodler OS printing is unreliable, and the blank forms
+        // carry no secret, so they are printed on a normal printer instead. The
+        // default (online) build keeps printing. Routed through the same virtual
+        // module as the build stamp so it resolves the same in dev and build.
+        const printingEnabled = process.env.VITE_NOPRINT !== "1"
         return (
           `export const commit = ${JSON.stringify(info.commit)}\n` +
-          `export const date = ${JSON.stringify(info.date)}\n`
+          `export const date = ${JSON.stringify(info.date)}\n` +
+          `export const printingEnabled = ${JSON.stringify(printingEnabled)}\n`
         )
       }
     },
