@@ -58,27 +58,31 @@ const Layout: React.FC<Props> = ({
       <h1 className={classes.visuallyHidden}>Seedhodler</h1>
       <nav className={classes.nav}>
         <div className={classes.navContentTop}>
-          <Link to="/">
-            <img src={Logo} alt="Seedhodler" className={classes.logo} />
-          </Link>
-          <p className={classes.tagline}>Split the seed. Spread the risk.</p>
-          <p className={classes.intro}>
-            Split a wallet's master seed into{" "}
-            <a
-              href="https://en.wikipedia.org/wiki/Shamir%27s_secret_sharing"
-              target="_blank"
-              rel="noreferrer noopener"
-              className={classes.introLink}
-            >
-              Shamir shares
-            </a>
-            . Losing some is survivable, and a single stolen share stays worthless.
-          </p>
+          <div className={classes.brandBlock}>
+            <Link to="/">
+              <img src={Logo} alt="Seedhodler" className={classes.logo} />
+            </Link>
+            <p className={classes.tagline}>Split the seed. Spread the risk.</p>
+            <p className={classes.intro}>
+              Split a wallet's master seed into{" "}
+              <a
+                href="https://en.wikipedia.org/wiki/Shamir%27s_secret_sharing"
+                target="_blank"
+                rel="noreferrer noopener"
+                className={classes.introLink}
+              >
+                Shamir shares
+              </a>
+              . Losing some is survivable, and a single stolen share stays worthless.
+            </p>
+          </div>
           {/* A checklist wired to the flow's state (audit 05 / 04): each step is
               done, current or upcoming, so the sidebar is real orientation rather
-              than a decorative list that never moves. */}
-          <p className={classes.sectionLabel}>{sectionLabel}</p>
-          <div className={classes.checklist}>
+              than a decorative list that never moves. Set off from the brand block
+              above by its own divider. */}
+          <div className={classes.progressBlock}>
+            <p className={classes.sectionLabel}>{sectionLabel}</p>
+            <div className={classes.checklist}>
             {steps.map((step, i) => {
               const state = step.done ? "done" : i === currentIndex ? "current" : "todo"
               const textClass =
@@ -105,6 +109,7 @@ const Layout: React.FC<Props> = ({
                 </div>
               )
             })}
+            </div>
           </div>
         </div>
         <div className={classes.navContentBottom}>

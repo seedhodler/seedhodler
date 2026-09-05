@@ -55,11 +55,11 @@
   font-weight: $fwNormal;
   line-height: 1.35;
   color: $colorMain;
-  margin-bottom: 3.4rem;
+  margin-bottom: 2rem;
 
   @include lg-d {
     font-size: 14px;
-    margin-bottom: 2.8rem;
+    margin-bottom: 1.6rem;
   }
 }
 
@@ -70,7 +70,7 @@
   line-height: 1.62;
   font-weight: $fwNormal;
   color: $colorBg700;
-  margin-bottom: 4.4rem;
+  margin-bottom: 0;
 }
 
 .introLink {
@@ -86,7 +86,20 @@
 }
 
 .navContentTop {
-  padding: 3.4rem 2.8rem 0;
+  padding: 3.4rem 0 0;
+}
+
+// Zone 1: brand and the short explanation.
+.brandBlock {
+  padding: 0 2.8rem 3.4rem;
+}
+
+// Zone 2: the functional progress tracker, set off from the brand/explanation
+// above it by a full-width divider (matching the footer divider), so the
+// sidebar reads as distinct zones rather than one running column.
+.progressBlock {
+  border-top: 1px solid $colorBg400;
+  padding: 3rem 2.8rem 0;
 }
 
 // A checklist wired to the flow (audit 05 / 04): each step is done, current or
