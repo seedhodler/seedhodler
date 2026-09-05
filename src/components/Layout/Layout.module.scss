@@ -85,21 +85,23 @@
   }
 }
 
+// Horizontal padding lives on the container so the zone dividers (below) inset
+// to the content edges instead of bleeding to the sidebar edges.
 .navContentTop {
-  padding: 3.4rem 0 0;
+  padding: 3.4rem 2.8rem 0;
 }
 
 // Zone 1: brand and the short explanation.
 .brandBlock {
-  padding: 0 2.8rem 3.4rem;
+  padding: 0 0 3.4rem;
 }
 
 // Zone 2: the functional progress tracker, set off from the brand/explanation
-// above it by a full-width divider (matching the footer divider), so the
-// sidebar reads as distinct zones rather than one running column.
+// above it by an inset divider (matching the footer divider), so the sidebar
+// reads as distinct zones rather than one running column.
 .progressBlock {
   border-top: 1px solid $colorBg400;
-  padding: 3rem 2.8rem 0;
+  padding: 3rem 0 0;
 }
 
 // A checklist wired to the flow (audit 05 / 04): each step is done, current or
@@ -184,21 +186,24 @@
   height: 20px;
 }
 
-// One divider for the whole footer, so the Help action and the meta links read
-// as a single group below the same line.
+// Horizontal padding on the container so the footer divider insets to the
+// content edges rather than running the full sidebar width.
 .navContentBottom {
-  border-top: 1px solid $colorBg400;
+  padding: 0 2.8rem;
 }
 
+// One inset divider for the whole footer, so the Help action and the meta links
+// read as a single group below the same line.
 .helpButtonContainer {
   position: relative;
+  border-top: 1px solid $colorBg400;
 }
 
 .helpButton {
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 1.6rem 2.8rem 1.2rem;
+  padding: 1.6rem 0 1.2rem;
   font-weight: $fwSemiBold;
   font-size: 15px;
   transition: $transAll;
@@ -234,7 +239,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 0.4rem 2.8rem 2.6rem;
+  padding: 0.4rem 0 2.6rem;
 }
 
 .metaLink {
