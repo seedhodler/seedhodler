@@ -246,6 +246,12 @@
   b {
     font-weight: $fwSemiBold;
   }
+
+  a {
+    color: inherit;
+    font-weight: $fwSemiBold;
+    text-decoration: underline;
+  }
 }
 
 .insightsLabel {

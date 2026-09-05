@@ -14,7 +14,7 @@ import { CopyButton } from "src/components/CopyButton"
 import { SeedCard } from "src/components/SeedCard"
 import { Select } from "src/components/Select"
 import { BadgeColorsEnum, ButtonColorsEnum, schemeOptions } from "src/constants/index"
-import { PRINTING_ENABLED } from "src/constants/config"
+import { PRINTING_ENABLED, SEEDHODLER_OS_RELEASES_URL } from "src/constants/config"
 import { GenerateContext } from "src/context/generateContext"
 import { OnlineStatusContext } from "src/context/onlineStatusContext"
 import type { Scheme } from "src/core"
@@ -187,7 +187,11 @@ export const GenerateContentShares: React.FC<GenerateContentSharesProps> = ({
           <p>
             <b>A seed shown on an online computer is not safe.</b> Disconnecting now is too late: the
             machine may already have leaked it, or leak it later. For real funds, generate and split
-            on a machine that stays offline the whole time, such as the Seedhodler live ISO.
+            on a machine that stays offline the whole time, such as the{" "}
+            <a href={SEEDHODLER_OS_RELEASES_URL} target="_blank" rel="noreferrer noopener">
+              Seedhodler live ISO
+            </a>
+            .
           </p>
         </div>
       )}
