@@ -7,6 +7,7 @@ import QuestionMarkIcon from "src/assets/icons/QuestionMark.svg?react"
 import { ConnectionStatus } from "src/components/ConnectionStatus"
 
 import { helpChapters } from "src/constants"
+import { SEEDHODLER_OS_RELEASES_URL } from "src/constants/config"
 import { GenerateContext } from "src/context/generateContext"
 import { HelpModalContext } from "src/context/HelpModalContext"
 import { NavigationContext } from "src/context/navigationContext"
@@ -75,6 +76,17 @@ const Layout: React.FC<Props> = ({
               className={classes.link}
             >
               GitHub
+            </a>
+          </p>
+          <p className={classes.githubInfo}>
+            Want to run it air-gapped?{" "}
+            <a
+              href={SEEDHODLER_OS_RELEASES_URL}
+              target="_blank"
+              rel="noreferrer noopener"
+              className={classes.link}
+            >
+              Seedhodler OS
             </a>
           </p>
           {/* A checklist wired to the flow's state: steps tick green as they are

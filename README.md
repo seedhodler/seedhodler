@@ -35,8 +35,9 @@ late. Generate or restore a seed on a machine with no network:
 
 - Download a release, [verify it](./SECURITY.md#verifying-a-release), copy the
   single file to an offline machine, and open it there; or
-- Boot [Seedhodler OS](https://github.com/seedhodler/seedhodler-os), a live USB
-  system that comes up air-gapped and opens the app for you.
+- Download [Seedhodler OS](https://github.com/seedhodler/seedhodler-os/releases),
+  a live USB system that comes up air-gapped and opens the app for you, and boot
+  a spare machine from it.
 
 [THREAT-MODEL.md](./THREAT-MODEL.md) states exactly which assumptions this rests
 on, and where the protection ends.

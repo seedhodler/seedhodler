@@ -1,3 +1,5 @@
+import { SEEDHODLER_OS_RELEASES_URL } from "./config"
+
 export const cardDictionary = {
   ac: 0,
   "2c": 1,
@@ -103,7 +105,7 @@ export const helpChapters: HelpChapter[] = [
       },
       {
         type: "p",
-        html: `The answer is not to unplug now. It is to start clean: boot a <b>live USB operating system</b> with no network and run Seedhodler there. Nothing you do is written to the machine, and nothing can reach the network.`,
+        html: `The answer is not to unplug now. It is to start clean: boot <a href="${SEEDHODLER_OS_RELEASES_URL}" target="_blank" rel="noopener noreferrer"><b>Seedhodler OS</b></a>, a live USB operating system with no network, and run Seedhodler there. Nothing you do is written to the machine, and nothing can reach the network.`,
       },
       { type: "h", html: `While you work` },
       {
