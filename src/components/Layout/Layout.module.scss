@@ -81,26 +81,6 @@
 }
 
 
-.githubInfo {
-  font-size: 13px;
-  line-height: 16px;
-  color: $colorTextLighter;
-  font-weight: $fwSemiBold;
-  margin-bottom: 4rem;
-}
-
-.link {
-  outline: none;
-  text-decoration: none;
-  color: $colorTextDark;
-  transition: $transAll;
-
-  &:hover,
-  &:focus {
-    color: $colorMain;
-  }
-}
-
 .navContentTop {
   padding: 2.4rem 2.2rem 0 3.2rem;
 }
@@ -166,6 +146,51 @@
   padding: 2.4rem 2.2rem 0 3.2rem;
 }
 
+// Compact footer row: GitHub mark (recognizable, icon-only) and the offline
+// live OS link, replacing the two full sentences that used to sit in the body.
+.metaLinks {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  padding: 0 2.2rem 4rem 3.2rem;
+
+  // Match the short-screen trim the help button used, so the sidebar still fits
+  // a 768px laptop without overflowing.
+  @media (max-height: 820px) {
+    padding-bottom: 2.4rem;
+  }
+}
+
+.metaLink {
+  display: inline-flex;
+  align-items: center;
+  outline: none;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: $fwSemiBold;
+  color: $colorTextLighter;
+  transition: $transAll;
+
+  // The GitHub mark inherits currentColor, so it follows the link color, hover
+  // included.
+  svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+  }
+
+  &:hover,
+  &:focus {
+    color: $colorMain;
+  }
+}
+
+.metaSeparator {
+  width: 1px;
+  height: 14px;
+  background-color: $colorBg400;
+}
+
 .helpButtonContainer {
   position: relative;
 }
@@ -175,18 +200,11 @@
   display: flex;
   align-items: center;
   column-gap: 1.4rem;
-  padding: 2.4rem 2.2rem 5rem 3.2rem;
+  padding: 2.4rem 2.2rem 2.4rem 3.2rem;
   font-weight: $fwSemiBold;
   font-size: 15px;
   transition: $transAll;
   color: $colorBg700;
-
-  // On short screens (a laptop at 768px), trim the generous bottom padding so the
-  // sidebar content fits within the viewport instead of overflowing into empty
-  // space below the fold. The full padding stays on taller screens.
-  @media (max-height: 820px) {
-    padding-bottom: 2.4rem;
-  }
 
   &::before {
     content: "";

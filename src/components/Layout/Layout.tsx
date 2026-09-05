@@ -4,6 +4,7 @@ import { Link, Outlet } from "react-router-dom"
 import CheckmarkFilledIcon from "src/assets/icons/CheckmarkFilled.svg"
 import Logo from "src/assets/icons/Logo.svg"
 import QuestionMarkIcon from "src/assets/icons/QuestionMark.svg?react"
+import GitHubIcon from "src/assets/icons/GitHub.svg?react"
 import { ConnectionStatus } from "src/components/ConnectionStatus"
 
 import { helpChapters } from "src/constants"
@@ -67,28 +68,6 @@ const Layout: React.FC<Props> = ({
             shares and still recover, and a single stolen share stays worthless. Free and open source
             software.
           </p>
-          <p className={classes.githubInfo}>
-            In need of the source code?{" "}
-            <a
-              href="https://github.com/seedhodler/seedhodler"
-              target="_blank"
-              rel="noreferrer noopener"
-              className={classes.link}
-            >
-              GitHub
-            </a>
-          </p>
-          <p className={classes.githubInfo}>
-            Want to run it air-gapped?{" "}
-            <a
-              href={SEEDHODLER_OS_RELEASES_URL}
-              target="_blank"
-              rel="noreferrer noopener"
-              className={classes.link}
-            >
-              Seedhodler OS
-            </a>
-          </p>
           {/* A checklist wired to the flow's state: steps tick green as they are
               reached, so the list is real orientation instead of a decorative one
               that looks like progress but never moves (audit 05 / 04). */}
@@ -118,6 +97,31 @@ const Layout: React.FC<Props> = ({
               <QuestionMarkIcon />
               Help & getting started
             </button>
+          </div>
+          {/* Compact footer: the source on GitHub (recognizable mark, no label
+              needed) and the offline live OS, so both external links live in one
+              tidy row instead of two sentences in the sidebar body. */}
+          <div className={classes.metaLinks}>
+            <a
+              href="https://github.com/seedhodler/seedhodler"
+              target="_blank"
+              rel="noreferrer noopener"
+              className={classes.metaLink}
+              title="Source code on GitHub"
+              aria-label="Source code on GitHub"
+            >
+              <GitHubIcon />
+            </a>
+            <span className={classes.metaSeparator} aria-hidden="true" />
+            <a
+              href={SEEDHODLER_OS_RELEASES_URL}
+              target="_blank"
+              rel="noreferrer noopener"
+              className={classes.metaLink}
+              title="Run it air-gapped: download Seedhodler OS"
+            >
+              Seedhodler OS
+            </a>
           </div>
         </div>
       </nav>
