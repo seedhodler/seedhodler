@@ -37,82 +37,85 @@
 }
 
 .logo {
-  margin-bottom: 0.9rem;
-  width: 289px;
+  display: block;
+  margin-bottom: 1.4rem;
+  width: 184px;
 
   @include lg-d {
-    width: 200px;
+    width: 150px;
   }
 }
 
-// The brand claim, locked up under the wordmark itself (not the icon): it sits
-// in the span from the "s" of seedhodler to the wordmark's right edge and is
-// justified flush to both, so it reads as a strapline hung under the logotype.
-// Says what Seedhodler does, not what any one sheet is (that antithesis lives
-// on the printed forms). Offsets are measured off the 289px logo box.
+// The brand claim, left-aligned under the wordmark. (It used to be a hand-tuned
+// justified lockup pinned to the 289px logo box; that stretched or wrapped
+// whenever the font metrics shifted, so it is a plain left-aligned strapline
+// now.) Says what Seedhodler does, not what any one sheet is.
 .tagline {
-  margin-left: 51px;
-  width: 224px;
-  max-width: 100%;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: $fwNormal;
-  line-height: 22px;
+  line-height: 1.35;
   color: $colorMain;
-  // Tightened word gaps keep the full claim on one line at this size; justify
-  // then closes the last hair of slack so both edges stay flush with the logo.
-  word-spacing: -2px;
-  text-align: justify;
-  text-align-last: justify;
-  margin-bottom: 2.4rem;
+  margin-bottom: 2rem;
 
-  // Logo scales to 200px here (factor ~0.69), so the offsets scale with it.
   @include lg-d {
-    margin-left: 35px;
-    width: 155px;
-    font-size: 11px;
+    font-size: 14px;
+    margin-bottom: 1.6rem;
   }
 }
 
-.subtitle {
-  font-size: 14px;
-  line-height: 24px;
-  color: $colorText;
-  margin-bottom: 1.6rem;
+// A short, two-sentence value prop with room to breathe below it, so it reads as
+// an intro rather than a dense column pressed against the checklist.
+.intro {
+  font-size: 13.5px;
+  line-height: 1.62;
+  font-weight: $fwNormal;
+  color: $colorBg700;
+  margin-bottom: 0;
 }
 
-
-.githubInfo {
-  font-size: 13px;
-  line-height: 16px;
-  color: $colorTextLighter;
-  font-weight: $fwSemiBold;
-  margin-bottom: 4rem;
-}
-
-.link {
-  outline: none;
-  text-decoration: none;
-  color: $colorTextDark;
+.introLink {
+  color: $colorMain;
+  text-decoration: underline;
+  text-underline-offset: 2px;
   transition: $transAll;
 
   &:hover,
   &:focus {
-    color: $colorMain;
+    color: $colorTextDark;
   }
 }
 
+// Horizontal padding lives on the container so the zone dividers (below) inset
+// to the content edges instead of bleeding to the sidebar edges.
 .navContentTop {
-  padding: 2.4rem 2.2rem 0 3.2rem;
+  padding: 3.4rem 2.8rem 0;
 }
 
-// A checklist wired to the flow (audit 05 / 04): each step ticks green when
-// reached, so the sidebar is real orientation rather than a decorative list.
-.checklistHeading {
-  font-size: 17px;
-  font-weight: $fwBold;
-  letter-spacing: -0.01em;
-  color: $colorTextDark;
-  margin: 0.4rem 0 1.8rem;
+// Zone 1: brand and the short explanation.
+.brandBlock {
+  padding: 0 0 3.4rem;
+}
+
+// Zone 2: the functional progress tracker, set off from the brand/explanation
+// above it by an inset divider (matching the footer divider), so the sidebar
+// reads as distinct zones rather than one running column.
+.progressBlock {
+  border-top: 1px solid $colorBg400;
+  padding: 3rem 0 0;
+}
+
+// A checklist wired to the flow (audit 05 / 04): each step is done, current or
+// upcoming, so the sidebar answers "where am I now" rather than being decorative.
+// A quiet section label, not a shouting near-black headline: size, tracking and a
+// muted colour carry the hierarchy so it orders the list without competing with
+// the brand accent.
+.sectionLabel {
+  font-size: 11.5px;
+  font-weight: $fwSemiBold;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: $colorTextLighter;
+  margin: 0 0 2.4rem;
 }
 
 .checklist {
@@ -123,36 +126,57 @@
 .checklistItem {
   display: flex;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.9rem;
 }
 
 .checklistText {
-  font-weight: $fwSemiBold;
   font-size: 14px;
-  line-height: 24px;
-  color: $colorBg700;
+  line-height: 1.3;
   margin-left: 1.4rem;
 }
 
-// Fixed marker column so the labels line up whether the step shows an open
-// bullet or a check (audit 05).
+// Three states so the sidebar shows progress, not just a binary tick.
+.stepDone {
+  color: $colorBg700;
+  font-weight: $fwNormal;
+}
+.stepCurrent {
+  color: $colorTextDark;
+  font-weight: $fwSemiBold;
+}
+.stepTodo {
+  color: $colorTextLighter;
+  font-weight: $fwNormal;
+}
+
+// Fixed marker column so the labels line up whether the step shows a ring, the
+// current disc or a check (audit 05). Shared with the help and GitHub icons so
+// everything sits on one left rail.
 .checklistMark {
   flex: none;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-// Pending: an open brand-violet ring, so it reads as a bullet that is waiting
-// to be checked off rather than a plain decorative dot.
+// Upcoming: a light open ring.
 .checklistDot {
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
-  border: 2px solid $colorMain;
+  border: 2px solid #cfd2d6;
   box-sizing: border-box;
+}
+
+// Current: a filled brand-violet disc with a soft halo, the one emphasised marker.
+.checklistCurrent {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: $colorMain;
+  box-shadow: 0 0 0 4px rgba(92, 88, 187, 0.16);
 }
 
 // Reached: the app's green filled checkmark.
@@ -162,57 +186,99 @@
   height: 20px;
 }
 
+// Horizontal padding on the container so the footer divider insets to the
+// content edges rather than running the full sidebar width.
 .navContentBottom {
-  padding: 2.4rem 2.2rem 0 3.2rem;
+  padding: 0 2.8rem;
 }
 
+// One inset divider for the whole footer, so the Help action and the meta links
+// read as a single group below the same line.
 .helpButtonContainer {
   position: relative;
+  border-top: 1px solid $colorBg400;
 }
 
 .helpButton {
   width: 100%;
   display: flex;
   align-items: center;
-  column-gap: 1.4rem;
-  padding: 2.4rem 2.2rem 5rem 3.2rem;
+  padding: 1.6rem 0 1.2rem;
   font-weight: $fwSemiBold;
   font-size: 15px;
   transition: $transAll;
-  color: $colorBg700;
-
-  // On short screens (a laptop at 768px), trim the generous bottom padding so the
-  // sidebar content fits within the viewport instead of overflowing into empty
-  // space below the fold. The full padding stays on taller screens.
-  @media (max-height: 820px) {
-    padding-bottom: 2.4rem;
-  }
-
-  &::before {
-    content: "";
-    height: 2px;
-    background-color: $colorBg400;
-    width: calc(100% - 5.4rem);
-    position: absolute;
-    top: 0;
-    left: 3.2rem;
-  }
+  color: $colorTextDarkish;
 
   &:hover,
   &:active {
-    background-color: $colorMain;
-    color: $colorBg100;
+    color: $colorMain;
 
-    & * {
-      fill: $colorBg100;
-    }
-
-    // The separator sits at the button's top edge; on hover the violet fill
-    // reaches it, so hide it to avoid a stray grey line across the fill.
-    &::before {
-      background-color: transparent;
+    & svg {
+      fill: $colorMain;
     }
   }
+}
+
+// Slots that centre the help and GitHub icons on the same left rail as the
+// checklist markers.
+.helpIconSlot {
+  width: 22px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1.4rem;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.metaLinks {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.4rem 0 2.6rem;
+}
+
+.metaLink {
+  display: inline-flex;
+  align-items: center;
+  outline: none;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: $fwSemiBold;
+  color: $colorBg700;
+  transition: $transAll;
+
+  &:hover,
+  &:focus {
+    color: $colorMain;
+  }
+}
+
+.metaRail {
+  width: 22px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1.4rem;
+
+  // The GitHub mark inherits currentColor, so it follows the link colour, hover
+  // included.
+  svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+  }
+}
+
+.metaSeparator {
+  width: 1px;
+  height: 14px;
+  background-color: $colorBg400;
 }
 
 .contentContainer {
